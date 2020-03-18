@@ -17,10 +17,6 @@ class CreatesCadeirasTable extends Migration
             $table->increments('id');
             $table->integer('ano');
             $table->integer('cod_cadeiras');
-            
-
-            
-
             $table->timestamps();
         });
     }

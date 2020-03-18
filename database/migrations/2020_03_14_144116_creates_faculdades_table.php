@@ -16,7 +16,6 @@ class CreatesFaculdadesTable extends Migration
         Schema::create('faculdades', function (Blueprint $table) {
             $table->integer('cod_faculdade');
             $table->string('nome');
-
             $table->timestamps();
         });
     }

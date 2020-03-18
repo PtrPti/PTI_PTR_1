@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-3 pb-6">
           
-            <img src=https://sigzine.com/wp-content/uploads/2019/10/Ciencias_Logo_Azul-01.png class="rounded" width="300" height="180">
+            <img src="{{ asset('images/logo_ciencias.png') }}" class="rounded" height="180">
 
         </div>
         <div class="row">
