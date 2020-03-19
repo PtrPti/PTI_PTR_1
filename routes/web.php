@@ -20,9 +20,14 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
+
+
 Route::get('/registar', 'AuthController@getRegistar')->name('registar');
 Route::post('/registar', 'AuthController@postRegistar')->name('registarPost');
 Route::get('/registar/getCursos', 'AuthController@changeDepartamentoId')->name('changeDepartamentoId');
 
 
 
+//Docentes
+Route::get('/docenteHome', 'HomeController@indexDocente')->name('homeDocente');
+Route::get('/projetosDocente', 'HomeController@projetosDocente')->name('projetosDocente');

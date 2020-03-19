@@ -29,4 +29,18 @@ class HomeController extends Controller
         return view('home');
     }
 
+
+    //Docente
+
+    public function indexDocente(){
+        return view('docenteHome');
+    }
+
+    public function projetosDocente(){
+        return view('projetosDocente');
+    }
+
+
+    
+
 }
