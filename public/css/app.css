@@ -1422,14 +1422,15 @@ textarea {
 }
 
 a {
-  color: #3097D1;
+  color: black;
   text-decoration: none;
+  
 }
 
 a:hover,
 a:focus {
-  color: #216a94;
-  text-decoration: underline;
+  color: grey;
+  
 }
 
 a:focus {
@@ -5388,6 +5389,7 @@ tbody.collapse.in {
   .container-fluid > .navbar-collapse {
     margin-right: 0;
     margin-left: 0;
+    margin-bottom: -40px;
   }
 }
 
@@ -5422,7 +5424,7 @@ tbody.collapse.in {
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
-    margin-left: -15px;
+    margin-left: -10%;
   }
 }
 
@@ -5669,8 +5671,8 @@ tbody.collapse.in {
 }
 
 .navbar-default {
-  background-color: #fff;
-  border-color: #d3e0e9;
+  background-color: #e6e16c;
+ 
 }
 
 .navbar-default .navbar-brand {
@@ -8331,5 +8333,42 @@ button.close {
   .hidden-print {
     display: none !important;
   }
+
+
+
+
+}
+
+.logout_style{
+
+  display: block;
+  margin-top: 13px;
+}
+
+
+.nav_icons{
+  display: block;
+  margin-left: 10%;
+
+}
+
+.nav_icons a{
+  padding-left: 1.5%;
+  border-bottom: 1.5px solid #e6e16c;
+  display: inline-block;
+  padding-right: 1.5%;
+  padding-bottom: 0.5%;
+}
+
+.chat_icon img{
+  position: absolute;
+  right: 40px;
+  bottom: 30px;
+
+}
+
+.chat{
+  background-color: grey;
+  
 }
 

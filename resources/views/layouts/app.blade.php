@@ -36,8 +36,8 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        WeGroup
+                    <a class="navbar-brand" href="{{ url('/home') }}">
+                        <img src="{{ asset('images/big_logo.png') }}" width=88px >
                     </a>
                 </div>
 
@@ -52,9 +52,9 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Inicar Sessão</a></li>
-                            <li><a href="{{ route('register') }}">Registo</a></li>
+                            <li><a href="{{ route('registar') }}">Registo</a></li>
                         @else
-                            <li class="dropdown">
+                            <!-- <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->nome }} <span class="caret"></span>
                                 </a>
@@ -72,7 +72,20 @@
                                         </form>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
+                            <div class="logout_style">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->nome }} <span class="caret"></span>
+                                </a>                          
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form> 
+                            </div>
                         @endif
                     </ul>
                 </div>
