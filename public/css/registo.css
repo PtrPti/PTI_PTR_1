@@ -1,0 +1,37 @@
+.registo-active {
+    background-color: #e6e16c !important;
+}
+
+#registoProfessor {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#registoAluno {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#formProfessor {
+    display: none;
+}
+
+#registoProfessor:hover {
+    opacity: 50%;
+    cursor: pointer;
+}
+
+.registo-active#registoProfessor:hover {
+    opacity: 100%;
+    cursor: default;
+}
+
+#registoAluno:hover {
+    opacity: 50%;
+    cursor: pointer;
+}
+
+.registo-active#registoAluno:hover {
+    opacity: 100%;
+    cursor: default;
+}

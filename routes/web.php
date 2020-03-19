@@ -21,7 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/registar', 'AuthController@getRegistar')->name('registar');
-Route::post('/registar', 'AuthController@registar')->name('registarPost');
+Route::post('/registar', 'AuthController@postRegistar')->name('registarPost');
+Route::get('/registar/getCursos', 'AuthController@changeDepartamentoId')->name('changeDepartamentoId');
 
 
 

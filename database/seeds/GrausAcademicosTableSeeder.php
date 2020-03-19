@@ -15,6 +15,8 @@ class GrausAcademicosTableSeeder extends Seeder
             ['nome' => '9º ano'],
             ['nome' => '12º ano'],
             ['nome' => 'Licenciatura'],
+            ['nome' => 'Mestrado'],
+            ['nome' => 'Doutoramento'],
         ];
 
         DB::table('graus_academicos')->insert($graus_academicos);
