@@ -165,13 +165,13 @@
 
                     <form class="form-horizontal" method="POST" action="{{ route ('registarPost') }}" id="formProfessor">
                         {{ csrf_field() }}
-                        {{ Form::hidden('perfil_id', 1) }}
+                        {{ Form::hidden('perfil_id', 2) }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Nome</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name2" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -185,7 +185,7 @@
                             <label for="numero" class="col-md-4 control-label">Nº Aluno</label>
 
                             <div class="col-md-6">
-                                <input id="numero" type="text" class="form-control" name="numero" value="{{ old('numero') }}" required autofocus>
+                                <input id="numero2" type="text" class="form-control" name="numero" value="{{ old('numero') }}" required autofocus>
 
                                 @if ($errors->has('numero'))
                                     <span class="help-block">
@@ -199,7 +199,7 @@
                             <label for="data_nascimento" class="col-md-4 control-label">Data de nascimento</label>
 
                             <div class="col-md-6">
-                                <input id="data_nascimento" type="text" class="date form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" required autofocus>
+                                <input id="data_nascimento2" type="text" class="date form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" required autofocus>
 
                                 @if ($errors->has('data_nascimento'))
                                     <span class="help-block">
@@ -213,7 +213,7 @@
                             <label for="departamento_id" class="col-md-4 control-label">Departamento</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="departamento_id" id="departamento_id" required>
+                                <select class="form-control" name="departamento_id" id="departamento_id2" required>
                                     <option value="">-- Selecionar --</option>
                                     @foreach($departamentos as $departamento)
                                         @if ($departamento->id == old('departamento_id'))
@@ -236,7 +236,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email2" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -251,7 +251,7 @@
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password2" type="password" class="form-control" name="password" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -265,7 +265,7 @@
                             <label for="password-confirm" class="col-md-4 control-label">Confirmar Password</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm2" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
                         

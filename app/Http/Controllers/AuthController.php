@@ -19,7 +19,6 @@ class AuthController extends Controller
 
     public function getRegistar() {
         $departamentos = Departamento::orderBy('nome')->get();
-        // $cursos = Curso::orderBy('nome')->get();
         $graus_academicos = GrauAcademico::all();
 
         return view('auth.register', compact('graus_academicos', 'departamentos'));
