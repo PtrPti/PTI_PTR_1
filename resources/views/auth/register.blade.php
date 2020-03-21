@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route ('registarPost') }}" id="formAluno">
                         {{ csrf_field() }}
-                        {{ Form::hidden('perfil_id', 1) }}
+                        <input type="hidden" name="perfil_id" id="perfil_id" value="1">
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Nome</label>
@@ -181,7 +181,7 @@
 
                     <form class="form-horizontal" method="POST" action="{{ route ('registarPost') }}" id="formProfessor">
                         {{ csrf_field() }}
-                        {{ Form::hidden('perfil_id', 2) }}
+                        <input type="hidden" name="perfil_id" id="perfil_id" value="2">
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Nome</label>
