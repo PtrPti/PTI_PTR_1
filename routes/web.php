@@ -19,14 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-
-
+//Registo
 Route::get('/registar', 'AuthController@getRegistar')->name('registar');
 Route::post('/registar', 'AuthController@postRegistar')->name('registarPost');
 Route::get('/registar/getCursos', 'AuthController@changeDepartamentoId')->name('changeDepartamentoId');
-
-
+Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('changeCursoId');
+Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
 
 //Docentes
 Route::get('/docenteHome', 'HomeController@indexDocente')->name('homeDocente');

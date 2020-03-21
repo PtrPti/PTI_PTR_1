@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Curso;
+use App\CursoCadeira;
 use App\GrauAcademico;
 use App\Departamento;
+use App\UserCadeira;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -26,6 +28,10 @@ class AuthController extends Controller
     
     public function postRegistar(Request $request) {
         if($request->perfil_id == 1) { //aluno
+            foreach ($request->cadeiras as $cadeira) {
+                error_log($cadeira);
+            }
+
             $this->validate($request, [
                 'name' => 'bail|required|string|max:255',
                 'email' => 'bail|required|email|string|max:255|unique:users',
@@ -35,6 +41,7 @@ class AuthController extends Controller
                 'curso_id' => 'bail|required|int|',
                 'grau_academico_id' => 'bail|required|int|',
                 'data_nascimento' => 'bail|required|date|',
+                'cadeiras'  => 'bail|required|array|min:1',
             ]); 
     
             $user = new User;
@@ -50,6 +57,15 @@ class AuthController extends Controller
             $user->perfil_id = $request->perfil_id;
     
             $user->save();
+
+            foreach ($request->cadeiras as $cadeira) {
+                $cadeira_insert = new UserCadeira;
+
+                $cadeira_insert->user_id = $user->id;
+                $cadeira_insert->cadeira_id = $cadeira;
+
+                $cadeira_insert->save();
+            }
     
             return redirect('home');
         }
@@ -61,6 +77,7 @@ class AuthController extends Controller
                 'numero' => 'bail|required|int|',
                 'departamento_id' => 'bail|required|int|',
                 'data_nascimento' => 'bail|required|date|',
+                'cadeiras'  => 'bail|required|array|min:1',
             ]); 
     
             $user = new User;
@@ -95,6 +112,40 @@ class AuthController extends Controller
             $cursos = Curso::where('departamento_id', $request->departamento_id)->orderBy('nome')->get();
             foreach ($cursos as $curso) {
                 $html .= '<option value="'.$curso->id.'">'.$curso->nome.'</option>';
+            }
+        }
+
+        return response()->json(['html' => $html]);
+    }
+
+    public function changeDepartamentoProfId(Request $request) {
+        if (!$request->departamento_id) {
+            $html = '<option value="">-- Escolha um departamento --</option>';
+        } 
+        else {
+            $html = '';
+            $cadeiras = CursoCadeira::join('cursos', 'cursos_cadeiras.curso_id', '=', 'cursos.id')->
+                    join('departamentos', 'cursos.departamento_id', '=', 'departamentos.id')->
+                    join('cadeiras', 'cursos_cadeiras.cadeira_id', '=', 'cadeiras.id')->
+                    where('departamento_id', $request->departamento_id)->orderBy('cadeiras.nome')->get();
+            error_log($cadeiras);
+            foreach ($cadeiras as $cadeira) {
+                $html .= '<option value="'.$cadeira->cadeira_id.'">'.$cadeira->nome.'</option>';
+            }
+        }
+
+        return response()->json(['html' => $html]);
+    }
+
+    public function changeCursoId(Request $request) {
+        if (!$request->curso_id) {
+            $html = '<option value="">-- Escolha um curso --</option>';
+        } 
+        else {
+            $html = '';
+            $cadeiras = CursoCadeira::join('cadeiras', 'cursos_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('curso_id', $request->curso_id)->orderBy('cadeiras.nome')->get();
+            foreach ($cadeiras as $cadeira) {
+                $html .= '<option value="'.$cadeira->cadeira_id.'">'.$cadeira->nome.'</option>';
             }
         }
 

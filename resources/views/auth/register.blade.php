@@ -153,6 +153,22 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+
+                        <div class="form-group{{ $errors->has('cadeiras') ? ' has-error' : '' }}">
+                            <label for="cadeiras" class="col-md-4 control-label">Disciplinas</label>
+
+                            <div class="col-md-6">
+                                <select multiple="multiple" class="form-control" name="cadeiras[]" id="cadeirasAluno" required>
+                                    <option value="">-- Escolha um curso --</option>
+                                </select>
+
+                                @if ($errors->has('cadeiras'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('cadeiras') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -268,6 +284,22 @@
                                 <input id="password-confirm2" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+
+                        <div class="form-group{{ $errors->has('cadeiras') ? ' has-error' : '' }}">
+                            <label for="cadeiras" class="col-md-4 control-label">Disciplinas</label>
+
+                            <div class="col-md-6">
+                                <select multiple="multiple" class="form-control" name="cadeiras[]" id="cadeirasProfessor" required>
+                                    <option value="">-- Escolha um departamento --</option>
+                                </select>
+
+                                @if ($errors->has('cadeiras'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('cadeiras') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -294,6 +326,26 @@
             method: 'GET',
             success: function(data) {
                 $('#curso_id').html(data.html);
+            }
+        });
+    });
+
+    $("#departamento_id2").change(function(){
+        $.ajax({
+            url: "{{ route('changeDepartamentoProfId') }}?departamento_id=" + $(this).val(),
+            method: 'GET',
+            success: function(data) {
+                $('#cadeirasProfessor').html(data.html);
+            }
+        });
+    });
+
+    $("#curso_id").change(function(){
+        $.ajax({
+            url: "{{ route('changeCursoId') }}?curso_id=" + $(this).val(),
+            method: 'GET',
+            success: function(data) {
+                $('#cadeirasAluno').html(data.html);
             }
         });
     });

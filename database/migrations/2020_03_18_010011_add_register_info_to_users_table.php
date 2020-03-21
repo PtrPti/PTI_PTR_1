@@ -53,7 +53,6 @@ class AddRegisterInfoToUsersTable extends Migration
             $table->dropForeign(['curso_id']);
             $table->dropForeign(['grau_academico_id']);
             $table->dropColumn('curso_id');
-            $table->dropColumn('n_aluno');
             $table->dropColumn('grau_academico_id');
             $table->dropColumn('data_nascimento');
         });
