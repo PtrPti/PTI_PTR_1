@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\UserCadeira;
 use Auth;
 
 
@@ -29,18 +30,11 @@ class HomeController extends Controller
         return view('home');
     }
 
-
     //Docente
+    public function indexDocente(){      
+        $user = Auth::user()->getUser();  
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
 
-    public function indexDocente(){
-        return view('docenteHome');
+        return view('docente.docenteHome', compact('disciplinas'));
     }
-
-    public function projetosDocente(){
-        return view('projetosDocente');
-    }
-
-
-    
-
 }

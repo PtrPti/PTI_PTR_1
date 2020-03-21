@@ -21,11 +21,6 @@ class User extends Authenticatable
         'password'
     ];
 
-
-    public function aluno() {
-        return $this->hasOne('App\Aluno');
-    }
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -48,5 +43,9 @@ class User extends Authenticatable
     public function perfil()
     {
         return $this->belongsTo('App\Perfil');
+    }
+
+    public function getUser() {
+        return $this;
     }
 }

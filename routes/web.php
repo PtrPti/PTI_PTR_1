@@ -28,4 +28,3 @@ Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId
 
 //Docentes
 Route::get('/docenteHome', 'HomeController@indexDocente')->name('homeDocente');
-Route::get('/projetosDocente', 'HomeController@projetosDocente')->name('projetosDocente');

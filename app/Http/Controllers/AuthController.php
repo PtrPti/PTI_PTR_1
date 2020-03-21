@@ -28,10 +28,6 @@ class AuthController extends Controller
     
     public function postRegistar(Request $request) {
         if($request->perfil_id == 1) { //aluno
-            foreach ($request->cadeiras as $cadeira) {
-                error_log($cadeira);
-            }
-
             $this->validate($request, [
                 'name' => 'bail|required|string|max:255',
                 'email' => 'bail|required|email|string|max:255|unique:users',
@@ -91,6 +87,15 @@ class AuthController extends Controller
             $user->perfil_id = $request->perfil_id;
     
             $user->save();
+
+            foreach ($request->cadeiras as $cadeira) {
+                $cadeira_insert = new UserCadeira;
+
+                $cadeira_insert->user_id = $user->id;
+                $cadeira_insert->cadeira_id = $cadeira;
+
+                $cadeira_insert->save();
+            }
     
             return redirect('home');
         }   

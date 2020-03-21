@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'WeGroup') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>    
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app_docente.js') }}"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app_docente.css') }}" rel="stylesheet">

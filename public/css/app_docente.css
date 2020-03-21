@@ -8333,14 +8333,9 @@ button.close {
   .hidden-print {
     display: none !important;
   }
-
-
-
-
 }
 
 .logout_style{
-
   display: block;
   margin-top: 13px;
 }
@@ -8349,19 +8344,7 @@ button.close {
 .nav_icons{
   display: block;
   margin-left: 10%;
-
 }
-
-.nav_icons a{
-  padding-left: 1.5%;
-  border-bottom: 1.5px solid #acc;
-  display: inline-block;
-  padding-right: 1.5%;
-  padding-bottom: 0.5%;
-}
-
-
-
 
 p {
   font-size: 20px;
@@ -8369,4 +8352,149 @@ p {
   display: inline-block;
   padding-right: 1.5%;
   padding-bottom: 3%;
+}
+
+.active {
+  background-color: #acc;
+}
+
+.nav_icons div{
+  padding: 0.5% 1.5% 0.5% 1.5%;
+  border-bottom: 1.5px solid #acc;
+  display: inline-block;
+}
+
+.nav_icons div img{
+  width: 23px;
+}
+
+.nav_icons div:hover{
+  cursor: pointer;
+  background-color: #acc;
+}
+
+.nav_icons div.active:hover{
+  cursor: default;
+  opacity: 1;  
+}
+
+#projetos {
+  display: none;
+}
+
+#disciplinas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 2%;
+}
+
+.disciplina {
+  flex: 1 0 21%; 
+  margin: 5px;
+  height: 100px;
+  border: 1px solid black;
+}
+
+.split{
+  height: 85%;
+  width: 50%;
+  position: fixed;
+  z-index: -1;
+  overflow-x: hidden;
+  padding-top: 150px;
+}
+
+.left {
+  left: 19.7%;
+  background-color: #E9E0DF;
+  width: 30%;
+}
+
+.right {
+  right: 19.7%;
+  background-color: #E9E0DF;
+  width: 30%;  
+}
+
+.centered {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.bg-modal{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  z-index: -1;  
+}
+
+.model-content{
+  width: 400px;
+  height: 350px;
+  background-color: white;
+  opacity: 1;
+  border-radius: 4px;
+  text-align: center;
+  position: relative;
+  z-index: -1;
+  top: 200px;
+  left: 350px;
+}
+
+input{
+  width: 50%;
+  display: block;
+  margin:15px auto;
+}
+
+.close{
+  position: absolute;
+  top: 0;
+  right: 14px;
+  font-size: 30px; 
+  cursor: pointer;
+}
+
+h4{
+  padding-top: 30px;
+}
+
+@viewport {
+  width: device-width ;
+  zoom: 1.0 ;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class*="split"] {
+    width: 30%;
+  }
+  [class*="left"] {
+    width: 43%;
+    left: 5%;
+  }
+  [class*="right"] {
+    width: 43%;
+    right: 5%;
+  }
+  [class*="btn"] {
+    width: 96%;
+  }
+  [class*="model-content"] {
+    width: 341px;
+    height: 319px;
+    position: fixed;
+    left: 35px;
+  }
 }
