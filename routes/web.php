@@ -27,4 +27,7 @@ Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
 
 //Docentes
-Route::get('/docenteHome', 'HomeController@indexDocente')->name('homeDocente');
+Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente');
+Route::post('/docenteHome', 'HomeController@store')->name('projetoPost');
+
+Route::get('/docenteHome', 'HomeController@perfil')->name('perfil');
