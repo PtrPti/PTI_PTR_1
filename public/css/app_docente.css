@@ -8345,7 +8345,6 @@ button.close {
   margin-top: 13px;
 }
 
-
 .nav_icons{
   display: block;
   margin-left: 10%;
@@ -8400,7 +8399,39 @@ p {
   flex: 1 0 21%; 
   margin: 5px;
   height: 100px;
-  border: 1px solid black;
+  border: 3px solid #acc;
+  border-radius: 15%;
+  text-align: center;
+}
+
+.emptyDiv {
+  flex: 1 0 21%; 
+  margin: 5px;
+  height: 100px;
+  text-align: center;
+}
+
+.disciplina p {
+  font-size: small;
+  padding: 0;
+  display: block;
+}
+
+.disciplina p:first-child {
+  font-size: medium;
+}
+
+.disciplina a {
+  color: inherit;
+  float: right;
+  margin: 0 10px 5px 5px;
+}
+
+.disciplina a:hover {
+  color: black;
+  text-decoration: underline;
+  float: right;
+  margin: 0 10px 5px 5px;
 }
 
 .split{
