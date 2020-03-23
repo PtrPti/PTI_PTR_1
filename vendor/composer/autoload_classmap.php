@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddColunasProjetoTable' => $baseDir . '/database/migrations/2020_03_22_162817_add_colunas_projeto_table.php',
     'AddRegisterInfoToUsersTable' => $baseDir . '/database/migrations/2020_03_18_010011_add_register_info_to_users_table.php',
     'App\\Cadeira' => $baseDir . '/app/Cadeira.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',

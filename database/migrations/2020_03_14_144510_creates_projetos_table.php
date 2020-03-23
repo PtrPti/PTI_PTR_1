@@ -18,6 +18,14 @@ class CreatesProjetosTable extends Migration
             $table->string('nome');
             $table->timestamps();
         });
+
+        Schema::table('projetos', function (Blueprint $table) {
+            $table->integer('cadeira_id')->unsigned();
+        });
+
+        Schema::table('projetos', function (Blueprint $table) {
+            $table->foreign('cadeira_id')->references('id')->on('cadeiras')->onDelete('cascade');
+        });
     }
 
     /**

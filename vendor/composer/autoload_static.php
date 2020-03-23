@@ -329,6 +329,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
     );
 
     public static $classMap = array (
+        'AddColunasProjetoTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_22_162817_add_colunas_projeto_table.php',
         'AddRegisterInfoToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_18_010011_add_register_info_to_users_table.php',
         'App\\Cadeira' => __DIR__ . '/../..' . '/app/Cadeira.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',

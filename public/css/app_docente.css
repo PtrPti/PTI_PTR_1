@@ -3372,9 +3372,9 @@ output {
 
 .form-control {
   display: block;
-  width: 100%;
+  width: 90%;
   height: 36px;
-  padding: 6px 12px;
+  padding: 8px 50px;
   font-size: 14px;
   line-height: 1.6;
   color: #555555;
@@ -3389,7 +3389,12 @@ output {
   transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  position: relative;
+  left: 20px;
 }
+
+
+
 
 .form-control:focus {
   border-color: #98cbe8;
@@ -8453,7 +8458,7 @@ p {
 }
 
 input{
-  width: 50%;
+  width: 90%;
   display: block;
   margin:15px auto;
 }

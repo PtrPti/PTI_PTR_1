@@ -1,3 +1,5 @@
+
+
 <div id="projetos">
     <div class="split left">
             <div class="centered">  
@@ -7,7 +9,12 @@
 
         <div class="split right">
             <div class="centered">
-                <p> Projetos <p>
+                <p>Projetos</p>
+                <ul>
+                @foreach($projetos as $projeto)
+                    <li>{{$projeto->nome}}</li>
+                @endForeach
+                </ul>
             </div>
         </div>
 
@@ -17,15 +24,33 @@
             <div class="close" onclick="closeForm()" >x</div>
             <h4>Novo Projeto</h4>
             
-            <form action="" enctype="multipart/form-data" method="post">
-                <input type="text" placeholder="Nome do Projeto">
-                <input type="text" placeholder="Disciplina">
-                <input type="file" name="adicionar ficheiro">
+            <form id="add_project" action="{{ route('projetoPost') }}" enctype="multipart/form-data" method="post">
+                {{ csrf_field() }}
+                <input type="text" placeholder="Nome do Projeto" name="nome">
+                <input type="number" placeholder="Número de elementos" name="n_elem">
+                <div>
+                    <select class="form-control" name="cadeira_id" id="cadeirasProfessor" required>
+                        <option value="" style="text align: center;"> Escolha uma Disciplina </option>
+                        @foreach($disciplinas as $disciplina)
+                            @if($disciplina->id == old('disciplina_id'))
+                                <option value="{{$disciplina->id}}" selected>{{$disciplina->nome}}</option>
+                            @else
+                                <option value="{{$disciplina->id}}">{{$disciplina->nome}}</option>
+                            @endif
+                        @endForeach
+                    </select>                    
+                </div>
+                <input type="file" name="ficheiro">
                     
-                <input type="date" name="Data de Fim">
+                <input type="date" name="datafim">
 
-                <a href=""  >Adicionar</a>
+                <button type="submit">Adicionar</button>
             </form>
         </div>
     </div> 
 </div>
+
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+

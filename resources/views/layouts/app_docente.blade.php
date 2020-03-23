@@ -37,7 +37,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/home') }}">
+                    <a class="navbar-brand" href="{{ url('/docenteHome') }}">
                         <img src="{{ asset('images/big_logo.png') }}" width=88px >
                     </a>
                 </div>
@@ -56,7 +56,7 @@
                             <li><a href="{{ route('registar') }}">Registo</a></li>
                         @else
                             <div class="logout_style">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="{{ url('/docenteProfile') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->nome }} <span class="caret"></span>
                                 </a>                          
                                 <a href="{{ route('logout') }}"
