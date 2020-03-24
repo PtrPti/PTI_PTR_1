@@ -19,10 +19,12 @@ class CreateUsersCadeirasTable extends Migration
 
         Schema::table('users_cadeiras', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
+            $table->integer('cadeira_id')->unsigned();
         });
 
         Schema::table('users_cadeiras', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('cadeira_id')->references('id')->on('cadeiras')->onDelete('cascade');
         });
 
         Schema::table('cadeiras', function (Blueprint $table) {
