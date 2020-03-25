@@ -33,7 +33,7 @@ class AddRegisterInfoToUsersTable extends Migration
             $table->integer('curso_id')->unsigned();
             $table->integer('n_aluno')->unique();
             $table->integer('grau_academico_id')->unsigned();
-            $table->date('data_nascimento');
+            $table->dateTime('data_nascimento');
         });
 
         Schema::table('users', function (Blueprint $table) {

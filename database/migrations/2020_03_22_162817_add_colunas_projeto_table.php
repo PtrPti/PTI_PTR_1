@@ -15,7 +15,7 @@ class AddColunasProjetoTable extends Migration
     {
         Schema::table('projetos', function (Blueprint $table) {
             $table->integer('n_max_elementos');
-            $table->date('data_fim');
+            $table->dateTime('data_fim');
         });   
     }
 

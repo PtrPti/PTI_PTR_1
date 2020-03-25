@@ -29,5 +29,9 @@ Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId
 //Docentes
 Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente');
 Route::post('/docenteHome', 'HomeController@store')->name('projetoPost');
-
 Route::get('/docenteHome', 'HomeController@perfil')->name('perfil');
+
+//Disciplinas
+Route::get('/docenteHome/disciplina/{id}', 'DisciplinaController@indexDocente')->name('indexDisciplinaDocente');
+Route::get('addGrupo', 'DisciplinaController@addGrupo');
+Route::get('showGrupos', 'DisciplinaController@showGrupos');

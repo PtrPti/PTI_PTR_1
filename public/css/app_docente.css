@@ -8386,7 +8386,7 @@ p {
   display: none;
 }
 
-#disciplinas {
+.container-flex {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -8427,11 +8427,16 @@ p {
   margin: 0 10px 5px 5px;
 }
 
-.disciplina a:hover {
+.disciplina a:hover{
   color: black;
   text-decoration: underline;
   float: right;
   margin: 0 10px 5px 5px;
+}
+
+li a:hover {
+  color: black;
+  text-decoration: underline;
 }
 
 .split{
@@ -8504,6 +8509,44 @@ input{
 
 h4{
   padding-top: 30px;
+}
+
+.flex-left {
+  display: flex;
+  flex-direction: column;
+  flex: 30%;
+  border-right: 3px solid #acc;
+}
+
+.flex-right {
+  flex: 70%;
+}
+
+.projeto {
+  flex: 1;
+  border: 1px solid black;
+  margin: 10px 20px 10px 20px;
+  min-height: 150px;
+  text-align: left;
+}
+
+.projeto h4 {
+  padding: 0;
+  text-align: center;
+}
+
+.tableGrupos {
+  border: 1px solid black;
+  margin: auto;
+  padding: 5px;
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+
+.tableGrupos td {
+  border: 1px solid black;
+  padding: 5px 20px 5px 20px;
+  text-align: center;
 }
 
 @viewport {

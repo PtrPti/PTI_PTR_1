@@ -1,9 +1,9 @@
-<div id="disciplinas">
+<div class="container-flex" id="disciplinas">
     @foreach($disciplinas as $disciplina)
         <div class="disciplina">
             <p>{{$disciplina->nome}} ({{$disciplina->cod_cadeiras}})</p>
             <p>{{$disciplina->ano}}º ano </p>
-            <a href="#">Entrar »</a>
+            <a href="{{ route('indexDisciplinaDocente', ['id' => $disciplina->id])  }}">Entrar »</a>
         </div>
     @endForeach
 

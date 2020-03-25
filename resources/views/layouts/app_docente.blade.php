@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'WeGroup') }}</title>
 
     <!-- Scripts -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/app_docente.js') }}"></script>
 
@@ -21,6 +22,8 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link href="{{ asset('css/datetimepicker.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/datetimepicker.js') }}"></script>
 </head>
 <body>
     <div id="app">
