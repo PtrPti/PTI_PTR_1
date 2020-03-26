@@ -12,7 +12,7 @@
                 <p>Projetos</p>
                 <ul>
                 @foreach($projetos as $projeto)
-                    <li>{{$projeto->nome}}</li>
+                    <li><a href="#">{{$projeto->nome}}</a></li>
                 @endForeach
                 </ul>
             </div>
@@ -33,7 +33,7 @@
                         <option value="" style="text align: center;"> Escolha uma Disciplina </option>
                         @foreach($disciplinas as $disciplina)
                             @if($disciplina->id == old('disciplina_id'))
-                                <option value="{{$disciplina->id}}" selected>{{$disciplina->nome}}</option>
+                                <option value="{{$disciplina->id}}" selected><{{$disciplina->nome}}</option>
                             @else
                                 <option value="{{$disciplina->id}}">{{$disciplina->nome}}</option>
                             @endif
@@ -42,7 +42,7 @@
                 </div>
                 <input type="file" name="ficheiro">
                     
-                <input type="date" name="datafim">
+                <input type="text" class="date" name="datafim" required>
 
                 <button type="submit">Adicionar</button>
             </form>
@@ -50,7 +50,8 @@
     </div> 
 </div>
 
-
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+<script>
+    $('.date').datetimepicker({
+        dateFormat: "dd-mm-yy"
+    });
+</script>

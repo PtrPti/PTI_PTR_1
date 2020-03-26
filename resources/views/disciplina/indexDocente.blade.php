@@ -9,12 +9,12 @@
 
 <div class="container-flex">
     <div class="flex-left">
-        <button type="button" class="btnAdd">Criar Projeto</button>
+        <button type="button" class="addBtn">Criar Projeto</button>
         @foreach ($projetos as $projeto)
         <div class="projeto">
             <h4>{{ $projeto->nome }}</h4>
-            <span>Data de entrega: {{ $projeto->data_fim->format('d-m-Y H:i') }}</span>
-            <button type="button" onclick="ShowGrupos({{$projeto->id}})">Ver grupos</button>
+            <p><span class="dueDate">Data de entrega: </span><span>{{ $projeto->data_fim->format('l jS F Y H:i') }}</span></p>
+            <button type="button" class="showGrupos" onclick="ShowGrupos({{$projeto->id}})">Ver grupos <i class="fa fa-users"></i></button>
         </div>
         @endforeach
     </div>

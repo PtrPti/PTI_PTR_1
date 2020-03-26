@@ -55,7 +55,7 @@ class HomeController extends Controller
         $this->validate($request, [
             'nome' => 'bail|required|string|max:255',
             'cadeira_id' => 'bail|required|int',
-            'datafim' => 'bail|required|date',
+            'datafim' => 'bail|required|date_format:d-m-Y H:i',
             'n_elem' => 'bail|required|int',
         ]); 
 
@@ -64,16 +64,13 @@ class HomeController extends Controller
         $projetos->nome = $request->nome;
         $projetos->cadeira_id = $request->cadeira_id;
         $projetos->n_max_elementos = $request->n_elem;
-        $projetos->data_fim = $request->datafim;
+        $projetos->data_fim = DateTime::createFromFormat('d-m-Y H:i', $request->datafim);
 
         $projetos->save();
         return redirect()->action('HomeController@indexDocente', ['tab' => 'tab2']);
     }
 
-
     public function perfil(){
         return view('docenteProfile');
     }
-
-
 }

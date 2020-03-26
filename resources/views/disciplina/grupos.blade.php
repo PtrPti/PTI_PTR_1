@@ -1,12 +1,12 @@
 
-<button type="button" class="btnAdd" onclick="AddGrupo(<?php echo $projeto ?>)">Adicionar Grupo</button>
+<button type="button" class="addBtn" onclick="AddGrupo(<?php echo $projeto ?>)">Adicionar Grupo</button>
 <table class="tableGrupos">
     @foreach ($grupos as $grupo)
     <tr>
         <td>Grupo {{$grupo->numero}}</td>
         <td>0/<?php echo $max_elementos ?></td>
         <td>-</td>
-        <td>Entrar</td>
+        <td><i class="fa fa-sign-in fa-2x"></i></td>
     <tr>
     @endforeach
 </table>
