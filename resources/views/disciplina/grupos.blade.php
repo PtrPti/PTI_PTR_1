@@ -6,7 +6,6 @@
         <td>Grupo {{$grupo->numero}}</td>
         <td>0/<?php echo $max_elementos ?></td>
         <td>-</td>
-        <td><i class="fa fa-sign-in fa-2x"></i></td>
     <tr>
     @endforeach
 </table>
@@ -20,7 +19,7 @@
             success: 'success',
             data: {'id': id},
             success: function(data){
-                $(".tableGrupos").append("<tr><td>Grupo " + data.numero + "</td><td>0/" + data.max_elem + "</td><td>-</td><td>Entrar</td></tr>");
+                $(".tableGrupos").append("<tr><td>Grupo " + data.numero + "</td><td>0/" + data.max_elem + "</td><td>-</td></tr>");
             }
         });
     }
