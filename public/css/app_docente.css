@@ -8386,7 +8386,7 @@ p {
   display: none;
 }
 
-#disciplinas {
+.container-flex {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -8427,11 +8427,16 @@ p {
   margin: 0 10px 5px 5px;
 }
 
-.disciplina a:hover {
+.disciplina a:hover{
   color: black;
   text-decoration: underline;
   float: right;
   margin: 0 10px 5px 5px;
+}
+
+li a:hover {
+  color: black;
+  text-decoration: underline;
 }
 
 .split{
@@ -8506,6 +8511,102 @@ h4{
   padding-top: 30px;
 }
 
+.flex-left {
+  display: flex;
+  flex-direction: column;
+  flex: 30%;
+  border-right: 3px groove #acc;
+}
+
+.flex-right {
+  display: flex;
+  flex-direction: column;
+  flex: 70%;
+}
+
+.projeto {
+  display: flex;
+  flex: 1;
+  border: 3px ridge #acc;
+  margin: 10px 20px 10px 20px;
+  min-height: 120px;
+  text-align: left;
+  color: #222;
+  padding: 0 10px 10px 10px;
+  flex-direction: column;
+}
+
+.projeto h4 {
+  padding: 0;
+  text-align: center;
+}
+
+.projeto p {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.projeto .dueDate {
+  font-weight: bold;
+}
+
+.addBtn {
+  align-self: center;
+  color: #222;
+  border-color: #acc;
+  border-radius: 2px;
+  border-style: solid;
+  padding: 5px 20px 5px 20px;
+}
+.addBtn:hover {
+  background-color: #acc;
+}
+
+.showGrupos {
+  align-self: flex-end;
+  margin-top: auto;
+  /* color: #222; */
+  border-color: #acc;
+  border-radius: 2px;
+  border-style: solid;
+}
+
+.showGrupos:hover {
+  background-color: #acc;
+}
+
+.tableGrupos {
+  border: 3px ridge #acc;
+  margin: auto;
+  margin-top: 20px;
+  padding: 5px;
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+
+.tableGrupos td {
+  border: 2px double #636b6f;
+  padding: 5px 20px 5px 20px;
+  text-align: center;
+}
+
+.nome_projeto{
+  position: absolute;
+  right: 50%;
+  border-bottom: 3px solid #acc;
+}
+
+.nome_cadeira{
+  position: absolute;
+  left: 570px;
+  top: 160px;
+  font-size: 30px;
+
+}
+
+
+
 @viewport {
   width: device-width ;
   zoom: 1.0 ;
@@ -8533,4 +8634,89 @@ h4{
     position: fixed;
     left: 35px;
   }
+
+
+  
+
+
+
+
+}
+
+
+
+
+
+
+.lado{
+  
+    height: 100%;
+    width: 23%;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+ 
+}
+
+.esquerdo {
+  left: 0;
+  background-color: #acc;
+}
+
+.grupos{
+  position: absolute;
+  top: 200px;
+  left: 300px;
+  z-index: 1;
+}
+
+.botao_projetos{
+  align-self: center;
+  position: fixed;
+  left: 100px;
+  top: 110px;
+  z-index: 0;
+  color: #245269;
+  border-radius: 20px;
+  border-style: solid;
+  padding: 8px 40px 5px 40px;
+}
+
+.botao_projetos:hover {
+  background-color: white;
+  color: #000;
+}
+
+
+textarea {
+  overflow: hidden;
+  line-height:1.5;
+  border:0;
+  border-radius:3px;
+  background: linear-gradient(#F9EFAF, #F7E98D);
+  box-shadow:0 4px 6px rgba(0,0,0,0.1);
+  
+  transition:box-shadow 0.5s ease;
+  font-smoothing:subpixel-antialiased;
+  max-width:520px;
+  max-height:250px;
+  position: fixed;
+  top: 400px;
+  right: 50px;
+  width: 290px;
+  height: 300px;
+}
+
+textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
+
+.inline{
+  display: inline;
+}
+
+#nome_disciplina{
+  color: #acc;
+  margin-left: 10px;
+  
 }

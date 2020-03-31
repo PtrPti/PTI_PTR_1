@@ -29,7 +29,7 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         if (Auth::user()->isAluno())
-            return route('homeAluno');
+            return route('home');
         else if (Auth::user()->isProfessor())
             return route('homeDocente');
         else
