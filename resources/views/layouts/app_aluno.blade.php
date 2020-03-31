@@ -8,33 +8,26 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'WeGroup') }}</title>    
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/app_docente.js') }}"></script>    
-
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>{{ config('app_aluno.name', 'WeGroup') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app_docente.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app_aluno.css') }}" rel="stylesheet">
 
     <!-- DatePicker -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link href="{{ asset('css/datetimepicker.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/datetimepicker.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    
+    <!-- Scripts -->
+    <script src="{{ asset('js/app_aluno.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
@@ -44,7 +37,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/docenteHome') }}">
+                    <a class="navbar-brand" href="{{ url('/alunosHome') }}">
                         <img src="{{ asset('images/big_logo.png') }}" width=88px >
                     </a>
                 </div>
@@ -63,7 +56,7 @@
                             <li><a href="{{ route('registar') }}">Registo</a></li>
                         @else
                             <div class="logout_style">
-                                <a href="{{ url('/docenteProfile') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->nome }} <span class="caret"></span>
                                 </a>                          
                                 <a href="{{ route('logout') }}"
@@ -81,6 +74,46 @@
             </div>
         </nav>
 
+        <div id="apps">
+            <div class="nav_icons">
+                <div style="border-bottom: 1.5px solid #e6e16c;">
+                    <a> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
+                </div>
+                <div style="border-bottom: 1.5px solid #e6e16c;">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        <img src="{{ asset('images/disciplinas_icon.png') }}" width=23px> Disciplinas
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach ($cadeiras as $cadeira)
+                        <li><a href="{{ route('pagDisciplina', ['cadeira_id' => $cadeira->id]) }}"> {{$cadeira->nome}} </a></li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div style="border-bottom: 1.5px solid #e6e16c;">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        <img src="{{ asset('images/projetos_icon.png') }}" width=23px> Projetos
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach ($grupos as $grupo)
+                        <li><a href="{{ route('pagProjeto') }}"> {{$grupo->nome}} </a></li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div style="border-bottom: 1.5px solid #e6e16c;">
+                    <a class="nav_calendario"> <img src="{{ asset('images/calendario_icon.png') }}" width=23px> Calendário </a>                
+                </div>
+            </div>
+
+            <div id="menuProjetos">
+            </div>                
+        </div>
+
+            <div class="chat_icon">
+                <img src="{{ asset('images/chat_icon.png') }}" width=40px>
+            </div>
+
+            <div class=chat>        
+            </div>
         @yield('content')
     </div>
 

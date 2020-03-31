@@ -13,26 +13,10 @@ class AddRegisterInfoToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('password_resets', function (Blueprint $table) {
-            $table->increments('id');
-        });
-
-        Schema::table('faculdades', function (Blueprint $table) {
-            $table->increments('id');
-        });
-
-        Schema::table('universidades', function (Blueprint $table) {
-            $table->increments('id');
-        });
-
-        Schema::table('grupos', function (Blueprint $table) {
-            $table->increments('id');
-        });
-
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('curso_id')->unsigned();
-            $table->integer('n_aluno')->unique();
-            $table->integer('grau_academico_id')->unsigned();
+            $table->integer('curso_id')->nullable()->unsigned();
+            $table->integer('numero')->unique();
+            $table->integer('grau_academico_id')->nullable()->unsigned();
             $table->dateTime('data_nascimento');
         });
 
@@ -54,6 +38,7 @@ class AddRegisterInfoToUsersTable extends Migration
             $table->dropForeign(['grau_academico_id']);
             $table->dropColumn('curso_id');
             $table->dropColumn('grau_academico_id');
+            $table->dropColumn('numero');
             $table->dropColumn('data_nascimento');
         });
     }

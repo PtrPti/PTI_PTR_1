@@ -15,7 +15,6 @@ class CreateProjetosGruposTable extends Migration
     {    
         Schema::table('grupos', function (Blueprint $table) {
             $table->integer('projeto_id')->unsigned();
-            $table->integer('numero')->nullable()->change();
         });
 
         Schema::table('grupos', function (Blueprint $table) {

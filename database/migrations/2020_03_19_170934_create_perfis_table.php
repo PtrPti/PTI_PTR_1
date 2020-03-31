@@ -18,10 +18,6 @@ class CreatePerfisTable extends Migration
             $table->string('nome');
         });
 
-        Schema::table('users', function(Blueprint $table) {
-            $table->renameColumn('n_aluno', 'numero');
-        });
-
         Schema::table('users', function (Blueprint $table) {
             $table->integer('perfil_id')->unsigned();
             $table->integer('departamento_id')->unsigned();

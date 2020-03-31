@@ -28,9 +28,13 @@ Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId
 
 //Docentes
 Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente');
-Route::post('/docenteHome', 'HomeController@store')->name('projetoPost');
+Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost');
 Route::get('/docenteHome', 'HomeController@perfil')->name('perfil');
 
+//Alunos
+Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
+Route::get('/disciplinasAluno/{cadeira_id}', 'HomeController@pagDisciplina')->name('pagDisciplina');
+Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto');  
 
 //Disciplinas
 Route::get('/docenteHome/disciplina/{id}', 'DisciplinaController@indexDocente')->name('indexDisciplinaDocente');

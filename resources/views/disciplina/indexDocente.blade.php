@@ -9,7 +9,7 @@
 
 <div class="container-flex">
     <div class="flex-left">
-        <button type="button" class="addBtn">Criar Projeto</button>
+        <button type="button" class="addBtn" onclick="$('.bg-modal').slideToggle();">Criar Projeto</button>
         @foreach ($projetos as $projeto)
         <div class="projeto">
             <h4>{{ $projeto->nome }}</h4>
@@ -21,6 +21,24 @@
 
     <div class="flex-right">
         
+    </div>
+    
+</div>
+
+<div class="bg-modal">
+    <div class="model-content">
+        <div class="close" onclick="closeForm()" >x</div>
+        <h4>Novo Projeto</h4>
+        
+        <form id="add_project" action="{{ route('projetoPost', 'indexDcoente') }}" enctype="multipart/form-data" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" name="cadeira_id" value="{{ $cadeira->id }}" required>
+            <input type="text" placeholder="Nome do Projeto" name="nome">
+            <input type="number" placeholder="Número de elementos" name="n_elem">
+            <input type="text" class="date" placeholder="Data de entrega" name="datafim" required>
+
+            <button type="submit">Adicionar</button>
+        </form>
     </div>
 </div>
 
@@ -38,6 +56,10 @@
             }
         });
     }
+
+    $('.date').datetimepicker({
+        dateFormat: "dd-mm-yy"
+    });
 </script>
 
 @endsection

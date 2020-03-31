@@ -26,10 +26,6 @@ class CreateUsersCadeirasTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('cadeira_id')->references('id')->on('cadeiras')->onDelete('cascade');
         });
-
-        Schema::table('cadeiras', function (Blueprint $table) {
-            $table->string('nome');
-        });
     }
 
     /**

@@ -29,7 +29,8 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         if (Auth::user()->isAluno())
-            return route('home');
+            // return route('home');
+            return route('homeAluno');
         else if (Auth::user()->isProfessor())
             return route('homeDocente');
         else

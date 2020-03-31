@@ -16,7 +16,6 @@ class CreateGrausAcademicosTable extends Migration
         Schema::create('graus_academicos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->timestamps();
         });
     }
 
