@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Projeto;
 use App\UserCadeira;
+use App\UsersGrupos;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use DateTime;
@@ -27,9 +28,40 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('home');
+    // public function indexAluno($tab = "tab1"){
+    //     $user = Auth::user()->getUser();  
+    //     $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
+    //     $projetos = DB::select('select * from projetos p
+    //                             where p.cadeira_id in (select ca.id from users_cadeiras uc
+        //                             inner join cadeiras ca
+        //                             on uc.cadeira_id = ca.id
+        //                             where uc.user_id = ?)', [$user->id]);
+    //     $active_tab = $tab;
+    //     return view('aluno.alunoHome', compact('disciplinas', 'projetos', 'active_tab'));
+    // }
+
+    public function indexAluno(){
+        $user = Auth::user()->getUser();
+        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+                                  ->where('users_cadeiras.user_id', $user->id)->get();
+        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                                  ->where('users_grupos.grupo_id', $user->id)->get();
+        return view('aluno.alunoHome', compact('cadeiras','grupos'));
+    }
+    
+
+    public function pagDisciplina(int $cadeira_id){
+        $user = Auth::user()->getUser();
+        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+                                  ->where('users_cadeiras.user_id', $user->id)->get();
+        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                                  ->where('users_grupos.grupo_id', $user->id)->get();
+        $cadeira = DB::table('cadeiras')->where('cadeiras.id', $cadeira_id)->get();
+        return view('aluno.disciplinasAluno', compact('cadeiras','grupos','cadeira'));
+    }
+
+    public function pagProjeto(){
+        return view('aluno.projetosAluno');
     }
 
     //Docente
@@ -41,7 +73,6 @@ class HomeController extends Controller
                                 inner join cadeiras ca
                                  on uc.cadeira_id = ca.id
                                  where uc.user_id = ?)', [$user->id]);
-        
         $active_tab = $tab;
 
         return view('docente.docenteHome', compact('disciplinas', 'projetos', 'active_tab'));
@@ -55,7 +86,7 @@ class HomeController extends Controller
         $this->validate($request, [
             'nome' => 'bail|required|string|max:255',
             'cadeira_id' => 'bail|required|int',
-            'datafim' => 'bail|required|date_format:d-m-Y H:i',
+            'datafim' => 'bail|required|date',
             'n_elem' => 'bail|required|int',
         ]); 
 
@@ -64,13 +95,16 @@ class HomeController extends Controller
         $projetos->nome = $request->nome;
         $projetos->cadeira_id = $request->cadeira_id;
         $projetos->n_max_elementos = $request->n_elem;
-        $projetos->data_fim = DateTime::createFromFormat('d-m-Y H:i', $request->datafim);
+        $projetos->data_fim = $request->datafim;
 
         $projetos->save();
         return redirect()->action('HomeController@indexDocente', ['tab' => 'tab2']);
     }
 
+
     public function perfil(){
         return view('docenteProfile');
     }
+
+
 }
