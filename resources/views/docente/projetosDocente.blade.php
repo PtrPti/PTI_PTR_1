@@ -12,7 +12,7 @@
                 <p>Projetos</p>
                 <ul>
                 @foreach($projetos as $projeto)
-                    <li><a href="#">{{$projeto->nome}}</a></li>
+                <li> <a href="{{ route('id_projeto', ['id' => $projeto->id]) }}">{{$projeto->nome}} </a> <a href='#'><img src="{{ asset('images/edit.png') }}" width=10px style="position: relative; left: 30px;"></a><a href='#'><img src="{{ asset('images/lixo.png') }}" width=10px style="position: relative; left: 50px;"></a></li>
                 @endForeach
                 </ul>
             </div>
