@@ -95,17 +95,5 @@ class HomeController extends Controller
         }
 
         return redirect()->action('HomeController@indexDocente', ['tab' => 'tab2']);
-    }
-
-    public function nome_projetos(){
-        $projetos = DB::table('projetos')->get();
-        return view ('docente.paginaProjetos')->with('projetos',$projetos); }
-
-
-    public function id_projetos(int $id){
-        $projetos = Projeto::where('id', $id)->get();
-        $user = Auth::user()->getUser();  
-        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
-        return view ('docente.paginaProjetos', compact('projetos', 'disciplinas')); 
-    } 
+    }    
 }
