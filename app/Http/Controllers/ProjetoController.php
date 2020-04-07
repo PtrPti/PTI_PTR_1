@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Projeto;
 use App\UserCadeira;
-use App\UsersGrupos;
+use Illuminate\Support\Facades\DB;
+use Auth;
+use DateTime;
 
 class ProjetoController extends Controller
 {
@@ -33,8 +34,11 @@ class ProjetoController extends Controller
         $projetos = Projeto::where('id', $id)->get();
         $user = Auth::user()->getUser();  
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
-        return view ('projeto.paginaProjetos', compact('projetos', 'disciplinas')); 
-    } 
+        $grupos = Grupo::where('projeto_id', $id)->get();
+        $gruposcount = $grupos->count(); 
+
+        return view ('docente.paginaProjetos', compact('projetos', 'disciplinas', 'gruposcount', 'grupos')); 
+    }
 
     public function eraseProject($id){
         DB::delete('delete from projetos where id=?', [$id]);
@@ -42,4 +46,3 @@ class ProjetoController extends Controller
         return redirect()->action('HomeController@indexDocente', ['tab' => 'tab2']);
     }    
 }
-
