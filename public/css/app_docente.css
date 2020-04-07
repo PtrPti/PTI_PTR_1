@@ -8386,7 +8386,7 @@ p {
   display: none;
 }
 
-.container-flex {
+.flex-disciplina {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -8508,6 +8508,16 @@ h4{
   padding-top: 30px;
 }
 
+.container-flex {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 2%;
+  flex-basis: 100%;
+}
+
 .flex-left {
   display: flex;
   flex-direction: column;
@@ -8546,6 +8556,18 @@ h4{
 
 .projetosLabels {
   font-weight: bold;
+}
+
+.addBtn {
+  align-self: center;
+  color: #222;
+  border-color: #acc;
+  border-radius: 2px;
+  border-style: solid;
+  padding: 5px 20px 5px 20px;
+}
+.addBtn:hover {
+  background-color: #acc;
 }
 
 .open-dropdown {
@@ -8642,7 +8664,7 @@ h4{
 
 .nome_projeto{
   position: absolute;
-  right: 50%;
+  right: 45%;
   border-bottom: 3px solid #acc;
 }
 
@@ -8713,8 +8735,7 @@ h4{
   }
 }
 
-.lado{
-  
+.lado{  
     height: 100%;
     width: 23%;
     position: absolute;
@@ -8731,8 +8752,8 @@ h4{
 
 .grupos{
   position: absolute;
-  top: 200px;
-  left: 300px;
+  left: 570px;
+  top: 220px;
   z-index: 1;
 }
 
@@ -8753,7 +8774,7 @@ h4{
   color: #000;
 }
 
-textarea {
+/* textarea {
   overflow: hidden;
   line-height:1.5;
   border:0;
@@ -8771,7 +8792,7 @@ textarea {
   height: 300px;
 }
 
-textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
+textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); } */
 
 .inline{
   display: inline;

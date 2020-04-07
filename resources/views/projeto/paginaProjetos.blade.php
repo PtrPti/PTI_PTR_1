@@ -6,17 +6,13 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />   
 </head>
 
-<div class="nome_projeto">
-    @foreach($projetos as $projeto)        
-        <h2>{{ $projeto->nome }}</h2>
-    @endForeach 
+<div class="nome_projeto">  
+    <h2>{{ $projeto->nome }}</h2>
 </div>
 
 <div class="nome_cadeira">
-    @foreach($disciplinas as $disciplina)
         <h3 class='inline'>Disciplina:</h3>
-        <h3 class ='inline' id="nome_disciplina"> {{ $disciplina->nome }} </h3>
-    @endForeach 
+        <h3 class ='inline' id="nome_disciplina"> {{ $cadeira->nome }} </h3>
 </div>
 
 <div>
@@ -27,11 +23,7 @@
 @foreach ($grupos as $grupo)
     <tr>
         <td>Grupo {{$grupo->numero}}</td>
-
-        @foreach($projetos as $projeto)
-            <td>0/{{$projeto->n_max_elementos}}</td>
-        @endForeach
-
+        <td>0/{{$projeto->n_max_elementos}}</td>
         <td>-</td>
     <tr>
     @endforeach

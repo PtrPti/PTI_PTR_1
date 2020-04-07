@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Projeto;
 use App\UserCadeira;
+use App\Cadeira;
+use App\Grupo;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use DateTime;
@@ -25,19 +27,17 @@ class ProjetoController extends Controller
         return view('docente.docenteHome', compact('disciplinas', 'projetos', 'active_tab'));
     }
 
-    public function nome_projetos(){
-        $projetos = DB::table('projetos')->get();
-        return view ('projeto.paginaProjetos')->with('projetos',$projetos); 
-    }
-
     public function id_projetos(int $id){
-        $projetos = Projeto::where('id', $id)->get();
-        $user = Auth::user()->getUser();  
-        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
+        $projeto = Projeto::where('id', $id)->first();
+        $user = Auth::user()->getUser();
+        $id_disciplina = $projeto->cadeira_id;
+        $cadeira = Cadeira::where('id', $id_disciplina)->first();
         $grupos = Grupo::where('projeto_id', $id)->get();
         $gruposcount = $grupos->count(); 
 
-        return view ('docente.paginaProjetos', compact('projetos', 'disciplinas', 'gruposcount', 'grupos')); 
+        error_log($cadeira->nome);
+
+        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos')); 
     }
 
     public function eraseProject($id){
