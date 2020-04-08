@@ -33,7 +33,6 @@ class DisciplinaController extends Controller
                                 left join projetos_ficheiros pf
                                     on p.id = pf.projeto_id
                                 where p.cadeira_id = ?', [$id]);
-                                // error_log( print_r($projetos, TRUE) );
         $cadeira = Cadeira::where('id', $id)->first();
         return view('disciplina.indexDocente', compact('projetos', 'cadeira'));
     }
@@ -42,8 +41,11 @@ class DisciplinaController extends Controller
         $id = $_GET['id'];
         $grupos = Grupo::where('projeto_id', $id)->get();
         $projeto = Projeto::where('id', $id)->first();
+        $id_disciplina = $projeto->cadeira_id;
+        $cadeira = Cadeira::where('id', $id_disciplina)->first();
 
         $data = array(
+            'nome_disciplina' => $cadeira->nome,
             'grupos'  => $grupos,
             'projeto' => $id,
             'max_elementos' => $projeto->n_max_elementos

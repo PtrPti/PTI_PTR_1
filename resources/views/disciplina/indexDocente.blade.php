@@ -2,13 +2,13 @@
 
 @section('content')
 
-<div class="nav_icons">
-    <a class="back" href="{{ route ('homeDocente') }}">« Voltar</a>
-    <h1><?php echo $cadeira->nome ?></h1>
-</div>
-
 <div class="container-flex">
-    <div class="flex-left">        
+    <div class="left-pane-bg">        
+    </div> 
+
+    <div class="flex-left">
+        <a class="back" href="{{ route ('homeDocente') }}">« Voltar</a>
+
         <li class="open-dropdown has-dropdown">
           <a id="open-dropdown">Criar/Adicionar <i class="fa fa-caret-down"></i></a>
           <ul class="dropdown">
@@ -32,7 +32,7 @@
     </div>
 
     <div class="flex-right">
-        
+        <h1><?php echo $cadeira->nome ?></h1>
     </div>
     
 </div>

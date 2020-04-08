@@ -1,5 +1,5 @@
 @extends('layouts.app_aluno')
 
 <div class=pagDisciplina>
-    <h1> {{$cadeira->nome}} </h1>
+    <h1> {{$cadeira[0]->nome}} </h1>
 </div>

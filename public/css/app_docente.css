@@ -16,6 +16,7 @@ html {
 
 body {
   margin: 0;
+  overflow: hidden;
 }
 
 article,
@@ -8510,64 +8511,45 @@ h4{
 
 .container-flex {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding-left: 10%;
-  padding-right: 10%;
-  padding-top: 2%;
-  flex-basis: 100%;
+  margin: 0;
+  margin-top: -22px;
+}
+
+.left-pane-bg {
+  position: absolute;
+  background-color: #acc;
+  width: 25%;
+  height: 100%;  
+  z-index: -1;
 }
 
 .flex-left {
+  flex: 25%;
+  background-color: #acc;
   display: flex;
   flex-direction: column;
-  flex: 30%;
-  border-right: 3px groove #acc;
+  padding-top: 20px;
+  align-items: center;
 }
 
 .flex-right {
   display: flex;
   flex-direction: column;
-  flex: 70%;
+  flex: 75%;
+  padding-top: 3rem;
 }
 
-.projeto {
-  display: flex;
-  flex: 1;
-  border: 3px ridge #acc;
-  margin: 10px 20px 10px 20px;
-  min-height: 120px;
-  text-align: left;
-  color: #222;
-  padding: 0 10px 10px 10px;
-  flex-direction: column;
+.flex-left .back {
+  margin-bottom: 25px;
+  font-size: 16px;
 }
 
-.projeto h4 {
-  padding: 0;
-  text-align: center;
-}
-
-.projeto p {
-  font-size: 14px;
+.flex-right h1 {
   margin: 0;
+  margin-bottom: 40px;
+  margin-left: 25px;
   padding: 0;
-}
-
-.projetosLabels {
-  font-weight: bold;
-}
-
-.addBtn {
-  align-self: center;
-  color: #222;
-  border-color: #acc;
-  border-radius: 2px;
-  border-style: solid;
-  padding: 5px 20px 5px 20px;
-}
-.addBtn:hover {
-  background-color: #acc;
+  align-self: flex-start;
 }
 
 .open-dropdown {
@@ -8581,17 +8563,21 @@ h4{
   padding: 5px 20px 5px 20px;
 }
 
+.open-dropdown a {
+  border: 2px solid #9b9b9b;
+  border-radius: 4px;
+  padding: 5px 20px 5px 20px;
+  width: 200px;
+}
+
 .open-dropdown a:hover {
   text-decoration: none;
   cursor: pointer;
 }
 
-.open-dropdown a:focus {
-  color: black;
-}
-
-.has-dropdown:hover  .dropdown{
+.has-dropdown:hover .dropdown{
   opacity: 1;
+  z-index: 2;
   pointer-events: auto;
 }
 
@@ -8599,7 +8585,7 @@ h4{
   position: absolute;
   width: 200px;
   opacity: 0;
-  z-index: 2;
+  z-index: -1;
   border-color: #acc;
   border-radius: 2px;
   border-style: solid;
@@ -8632,7 +8618,39 @@ h4{
   padding: 5px 20px 5px 20px;
 }
 .dropdown-item button:hover {
-  background-color: #acc;
+  background-color: #9b9b9b;
+}
+
+.projeto {
+  display: flex;
+  flex: 1;
+  border: 3px ridge #9b9b9b;
+  margin: 10px 20px 10px 20px;
+  min-height: 120px;
+  text-align: left;
+  color: #222;
+  padding: 0 10px 10px 10px;
+  flex-direction: column;
+}
+
+.projeto h4 {
+  padding: 0;
+  text-align: center;
+}
+
+.projeto p {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.projetosLabels {
+  font-weight: bold;
+}
+
+.projetosLabels ~ a:hover{
+  color: black;
+  text-decoration: underline;
 }
 
 .showGrupos {
@@ -8644,6 +8662,19 @@ h4{
 }
 
 .showGrupos:hover {
+  background-color: #acc;
+  border-color: #9b9b9b;
+}
+
+.addBtn {
+  align-self: center;
+  color: #222;
+  border-color: #acc;
+  border-radius: 2px;
+  border-style: solid;
+  padding: 5px 20px 5px 20px;
+}
+.addBtn:hover {
   background-color: #acc;
 }
 
