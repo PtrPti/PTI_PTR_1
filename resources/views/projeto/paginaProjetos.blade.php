@@ -54,6 +54,27 @@
                 @endforeach
             </table>
         </div>
+        <div class="flex-right-footer">
+            <button class="footer-icon" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-2x"></i></button>
+        </div>
+
+        <div id='calendarContainer'>
+            <div id='external-events'>
+                <div id='external-events-listing'>
+                    <h4>Elementos do grupo</h4>
+                    <div class='fc-event'>My Event 1</div>
+                    <div class='fc-event'>My Event 2</div>
+                    <div class='fc-event'>My Event 3</div>
+                    <div class='fc-event'>My Event 4</div>
+                    <div class='fc-event'>My Event 5</div>
+                </div>
+            </div>
+
+            <div id='calendar'></div>
+
+            <div style='clear:both'></div>
+
+        </div>
     </div>    
 </div>
 

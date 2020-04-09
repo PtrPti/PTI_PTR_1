@@ -8588,6 +8588,16 @@ h4{
   padding-top: 0px;
 }
 
+.flex-right-footer {
+  display: flex;
+  align-content: flex-end;
+  margin-right: 50px;
+}
+
+.flex-right-footer .footer-icon{
+  margin-right: 70px;
+}
+
 .open-dropdown {
   list-style-type: none;
   align-self: center;
@@ -8827,18 +8837,17 @@ h4{
   opacity: 0.6;
 }
 
-.open-chat{
+.footer-icon{
   background-color: #555;
   color: white;
-  padding: 14px 10px;
+  padding: 14px 14px;
   border-radius: 40px;
   border: none;
   cursor: pointer;
-  opacity: 0.8;
+  width: 60px;
   position: fixed;
-  bottom: 40px;
-  right: 40px;
-  width: 240px;
+  bottom: 20px;
+  right: 20px;
 }
 
 .chat-popup {
