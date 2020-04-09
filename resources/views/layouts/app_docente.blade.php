@@ -81,6 +81,36 @@
             </div>
         </nav>
 
+        <button class="open-chat" onclick="openForm()">Chat</button>
+        <div class="chat-popup" id="chat">
+            <form action="/action_page.php" class="form-container">
+                <h2 class="chat_name">chat</h2>
+        
+                <div class="dropup">
+                    <button type="button" class="btgrupos"> <i class="fa fa-users"></i> Escolha um grupo</button>
+                    <div class="dropup-content">
+                        <a href="#"> Grupo 1</a>
+                    </div>
+                </div>
+
+                <label for="msg"><b>Mensagens</b></label>
+                <textarea placeholder="Escreva a sua mensagem" name="msg" required></textarea>
+
+                <button type="submit" class="btn">Enviar Feedback</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Fechar</button>
+            </form>
+        </div>
+
+    <script>
+        function openForm() {
+            document.getElementById("chat").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("chat").style.display = "none";
+        }
+    </script>
+
         @yield('content')
     </div>
 

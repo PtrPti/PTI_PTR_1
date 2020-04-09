@@ -1,6 +1,4 @@
 
-<h1><?php echo $nome_disciplina ?></h1>
-
 <button type="button" class="addBtn" onclick="AddGrupo(<?php echo $projeto ?>)">Adicionar Grupo</button>
 
 <table class="tableGrupos">

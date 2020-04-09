@@ -25,14 +25,18 @@
             <h4>{{ $projeto->nome }}</h4>
             <!-- <p><span class="projetosLabels">Data de entrega: </span><span>{{ $projeto->data_fim }}</span></p> --><!-- ->format('l jS F Y H:i')*@ -->
             <p><span class="projetosLabels">Data de entrega: </span><span>{{ $projeto->data_fim }}</span></p>
-            <p><span class="projetosLabels">Enunciado: </span><a href="{{ url('/download', $projeto->ficheiro) }}">{{ explode("_", $projeto->ficheiro, 2)[1] }}</a></p>
+            @if ($projeto->ficheiro != "")
+                <p><span class="projetosLabels">Enunciado: </span><a href="{{ url('/download', $projeto->ficheiro) }}">{{ explode("_", $projeto->ficheiro, 2)[1] }}</a></p>
+            @endif
             <button type="button" class="showGrupos" onclick="ShowGrupos({{$projeto->id}})">Ver grupos <i class="fa fa-users"></i></button>
         </div>
         @endforeach
     </div>
 
     <div class="flex-right">
-        <h1><?php echo $cadeira->nome ?></h1>
+        <h2><?php echo $cadeira->nome ?></h2>
+        <div class="flex-right-container">
+        </div>
     </div>
     
 </div>
@@ -86,8 +90,8 @@
             success: 'success',
             data: {'id': id},
             success: function(data){
-                $(".flex-right").empty();
-                $(".flex-right").append(data.html);
+                $(".flex-right-container").empty();
+                $(".flex-right-container").append(data.html);
             }
         });
     }

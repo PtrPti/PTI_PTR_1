@@ -8544,12 +8544,48 @@ h4{
   font-size: 16px;
 }
 
-.flex-right h1 {
+.flex-right-header {
+  display: flex;
+  flex: 100%;
+}
+
+.flex-right h2, .flex-right-header h2 {
+  align-self: flex-start;
+  padding: 0;
+  padding-bottom: 10px;
   margin: 0;
   margin-bottom: 40px;
   margin-left: 25px;
-  padding: 0;
-  align-self: flex-start;
+  border-bottom: 3px solid #acc;
+}
+
+.flex-right-header h3 {
+  flex: 50%;
+  text-align: right;
+  margin: 0;
+  margin-right: 25px;
+  font-size: 18px;
+}
+
+.flex-right-header h3 * {
+  color: #acc;
+}
+
+.flex-right-header h3 a:hover {
+  color: #636b6f;
+  text-decoration: underline;
+}
+
+.flex-right-container {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  flex: 100%;
+}
+
+.flex-right-container h4 {
+  align-self: center;
+  padding-top: 0px;
 }
 
 .open-dropdown {
@@ -8564,10 +8600,10 @@ h4{
 }
 
 .open-dropdown a {
-  border: 2px solid #9b9b9b;
   border-radius: 4px;
   padding: 5px 20px 5px 20px;
   width: 200px;
+  background-color: white;
 }
 
 .open-dropdown a:hover {
@@ -8624,13 +8660,15 @@ h4{
 .projeto {
   display: flex;
   flex: 1;
+  flex-direction: column;
   border: 3px ridge #9b9b9b;
   margin: 10px 20px 10px 20px;
-  min-height: 120px;
+  height: 120px;
+  max-height: 120px;
+  width: 80%;
   text-align: left;
   color: #222;
   padding: 0 10px 10px 10px;
-  flex-direction: column;
 }
 
 .projeto h4 {
@@ -8666,6 +8704,18 @@ h4{
   border-color: #9b9b9b;
 }
 
+.flex-left-links {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.flex-left-icon {
+  width: 30px;
+  margin-right: 10px;
+}
+
 .addBtn {
   align-self: center;
   color: #222;
@@ -8682,28 +8732,17 @@ h4{
   border: 3px ridge #acc;
   margin: auto;
   margin-top: 20px;
-  padding: 5px;
   border-collapse: separate;
   border-spacing: 5px;
+  padding: 40px 70px;
+  background-color: #E9E0DF;
 }
 
 .tableGrupos td {
   border: 2px double #636b6f;
   padding: 5px 20px 5px 20px;
   text-align: center;
-}
-
-.nome_projeto{
-  position: absolute;
-  right: 45%;
-  border-bottom: 3px solid #acc;
-}
-
-.nome_cadeira{
-  position: absolute;
-  left: 570px;
-  top: 160px;
-  font-size: 30px;
+  background-color: white;  
 }
 
 @viewport {
@@ -8739,53 +8778,11 @@ h4{
     width: 15%;
     padding-left: 10%;
   }
-
-  [class="nome_projeto"]{
-    margin-right: -93px;
-  }
   
-  [class="img_projeto"]{
+  [class="flex-left-icon"]{
     margin-left:-40px;
     width: 20px;
   }
-
-  [class="tasks_proj"]{
-    margin-left:-70px ;
-    font-size: 12px;
-    margin-top: -6px;
-  }
-
-  [class="inline"]{
-    font-size: 10px;
-    margin-left: -435px;
-  }
-
-  [class="lado esquerdo"]{
-    width: 30px;
-    background-color: red;
-  }
-}
-
-.lado{  
-    height: 100%;
-    width: 23%;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-.esquerdo {
-  left: 0;
-  background-color: #acc;
-}
-
-.grupos{
-  position: absolute;
-  left: 570px;
-  top: 220px;
-  z-index: 1;
 }
 
 .botao_projetos{
@@ -8803,35 +8800,6 @@ h4{
 .botao_projetos:hover {
   background-color: white;
   color: #000;
-}
-
-/* textarea {
-  overflow: hidden;
-  line-height:1.5;
-  border:0;
-  border-radius:3px;
-  background: linear-gradient(#F9EFAF, #F7E98D);
-  box-shadow:0 4px 6px rgba(0,0,0,0.1);  
-  transition:box-shadow 0.5s ease;
-  font-smoothing:subpixel-antialiased;
-  max-width:520px;
-  max-height:250px;
-  position: fixed;
-  top: 400px;
-  right: 50px;
-  width: 290px;
-  height: 300px;
-}
-
-textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); } */
-
-.inline{
-  display: inline;
-}
-
-#nome_disciplina{
-  color: #acc;
-  margin-left: 10px;  
 }
 
 .popup{
@@ -8859,7 +8827,7 @@ textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); } */
   opacity: 0.6;
 }
 
-.open-button {
+.open-chat{
   background-color: #555;
   color: white;
   padding: 14px 10px;
@@ -8952,22 +8920,6 @@ textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); } */
   position: relative;
   top: -30px;
   text-align: center;
-}
-
-.tableGrupos_p{  
-  background-color: #E9E0DF;
-  margin: auto;
-  margin-left: 615px;
-  margin-top: 220px;
-  padding: 40px 70px;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
-.tableGrupos_p td {  
-  padding: 5px 20px 5px 20px;
-  text-align: center;
-  background-color: white;  
 }
 
 .dropup-content {
