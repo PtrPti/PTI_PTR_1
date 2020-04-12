@@ -27,12 +27,15 @@
     <link href="{{ asset('css/datetimepicker.css') }}" rel="stylesheet">
     <script src="{{ asset('js/datetimepicker.js') }}"></script>
 
-    <!-- Calendario Disponibilidades -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.6/fullcalendar.min.css">    
+   <!-- Calendario Disponibilidades -->
+    <link rel="stylesheet" href="{{ asset('fullcalendar/core/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('fullcalendar/daygrid/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('fullcalendar/timegrid/main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/calendar.css') }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.6/fullcalendar.min.js"></script>
+    <script src="{{ asset('fullcalendar/core/main.js') }}"></script>
+    <script src="{{ asset('fullcalendar/daygrid/main.js') }}"></script>
+    <script src="{{ asset('fullcalendar/timegrid/main.js') }}"></script>
+    <script src="{{ asset('fullcalendar/interaction/main.js') }}"></script>
     <script src="{{ asset('js/calendar.js') }}"></script>
 </head>
 <body>

@@ -1,0 +1,57 @@
+/* #calendar {
+    position: absolute;
+    width: 1000px;
+    border: 3px solid black;
+    border-radius: 10px;
+    display: block;
+    background-color: white;
+    padding: 5px;
+    margin: auto;
+}
+   */
+
+   #calendarContainer {
+    position: absolute;
+    width: 1000px;
+    border: 3px solid black;
+    border-radius: 10px;
+    visibility: hidden;
+    background-color: white;
+    padding: 5px;
+}
+    
+#external-events {
+    float: left;
+    width: 10%;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: center;
+}
+    
+#external-events h4 {
+    font-size: 14px;
+    margin-top: 0;
+    padding-top: 1em;
+}
+    
+#external-events .fc-event {
+    margin: 10px 0;
+    cursor: pointer;
+}
+    
+#external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+}
+    
+#external-events p input {
+    margin: 0;
+    vertical-align: middle;
+}
+
+#calendar {
+    float: right;
+    width: 88%;
+}
