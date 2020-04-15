@@ -44,7 +44,6 @@ Route::get('projetos/{id}', 'ProjetoController@id_projetos')->name('id_projeto')
 Route::get('delete-records','ProjetoController@index');
 Route::get('delete/{id}','ProjetoController@eraseProject');
 
-<<<<<<< HEAD
 //---------------- ALUNOS ----------------//
 //Home
 Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
@@ -55,7 +54,8 @@ Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina
 
 //Projeto
 Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto');
-=======
+
+//---------------- DOWNLOAD ----------------//
 //Download
 Route::get('download/{filename}', function($filename)
 {
@@ -78,4 +78,3 @@ Route::get('download/{filename}', function($filename)
     }
 })
 ->where('filename', '[A-Za-z0-9\-\_\.]+');
->>>>>>> 9177a3fcedf88aa481acb5ca7101508295fc0fc4
