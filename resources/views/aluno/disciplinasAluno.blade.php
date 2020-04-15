@@ -23,14 +23,14 @@
         
         <div class="projetosDisciplina">
             <div class="todos_projetos">
-                <!-- @foreach ($cadeiraProjetos as $projeto)
+                @foreach ($cadeiraProjetos as $projeto)
                 <div>
                     <h4 style="text-transform: capitalize;">{{$projeto->nome}}</h4>          
                     <b>Data de entrega: </b>{{$projeto->data_fim}}  
                     <br>                
                     <button type="button" class="showGrupos" onclick="ShowGrupos({{$projeto->id}})"> Ver projeto </button>
                 </div>
-                @endforeach  -->
+                @endforeach  
             </div>
 
             <div class="inforcao_projeto">
