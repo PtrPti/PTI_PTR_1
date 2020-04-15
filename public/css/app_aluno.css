@@ -5424,7 +5424,7 @@ tbody.collapse.in {
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
-    margin-left: -10%;
+    margin-left: -30%;
   }
 }
 
@@ -8367,7 +8367,7 @@ button.close {
 .nav_icons {
   display: grid;
   grid-template-columns: 120px 120px 120px 120px;
-  margin-left: 30px;
+  margin-left: 100px;
 }
 
 .nav_icons div{
@@ -8438,3 +8438,71 @@ button.close {
 }
 
 .show {display: block;}
+
+.pagDisciplina{
+  position: absolute;
+  margin-top:115px;
+  margin-left: 120px;
+}
+
+.navDisciplina{
+  position: fixed;
+  display: grid;
+  grid-template-columns: auto;
+  /* width:100px;
+  height:100px; */
+  left: 112px;
+  top: 181px;
+}
+
+.navDisciplina button{
+  background-color: #f5f8fa;
+  border: none;
+  width: 180px;
+  height: 85px;
+  margin: 4px 8px;
+  padding: 25px 20px;
+  text-align: center;
+}
+
+.navDisciplina button:hover{
+  background-color: #e6e16c;
+}
+
+.disciplinasAluno{
+  position: fixed;
+  background-color: #eee9e9;
+  width: 70%;
+  height: 58%;
+  left: 300px;
+  top: 185px;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.disciplinasAluno div{
+  height: auto;
+  padding: 10px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.projetosDisciplina{
+  width: auto;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 20px;
+  margin: 15px
+}
+
+.projetosDisciplina div{
+  height: 130px;
+  width: 443px;
+  padding: 10px;
+  text-align: center;
+  opacity: 0.8;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #e6e16c;
+}

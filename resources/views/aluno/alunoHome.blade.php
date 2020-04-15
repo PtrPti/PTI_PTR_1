@@ -6,11 +6,11 @@
     <div class="divDisciplinas ">
         <h4 style="margin-left:15px;">Disciplinas</h4>
         <div class="disciplina">
-            @foreach ($cadeiras as $cadeira)
+            @foreach ($disciplinas as $disciplina)
             <div>
-                {{$cadeira->nome}}  
+                {{$disciplina->nome}}  
                 <br>                
-                <a href="{{ route('pagDisciplina', ['cadeira_id' => $cadeira->id]) }}"> Entrar </a>
+                <a href="{{ route('pagDisciplina', ['cadeira_id' => $disciplina->id]) }}"> Entrar </a>
             </div>
             @endforeach
         </div>
@@ -19,9 +19,9 @@
     <div class="divGrupos">
         <h4 style="margin-left:15px;">Projetos</h4>
         <div class="grupo">
-            @foreach ($grupos as $grupo)
+            @foreach ($projetos as $projeto)
             <div>
-                {{$grupo->nome}}  
+                {{$projeto->nome}}  
                 <br>                
                 <a href="{{ route('pagProjeto')}}"> Entrar </a>
             </div>

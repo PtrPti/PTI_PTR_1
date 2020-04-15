@@ -7,6 +7,8 @@ use App\User;
 use App\Grupo;
 use App\Projeto;
 use App\Cadeira;
+use App\UserCadeira;
+use App\UsersGrupos;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use DateTime;
@@ -28,8 +30,30 @@ class DisciplinaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexDocente(int $id)
-    {
+
+    //Aluno
+    public function showProjetos(int $cadeira_id, int $projeto_id){
+        $grupos = Grupo::where('grupos.projeto_id', $projeto_id);
+        return view('aluno.disciplinasAluno', compact('grupos'));
+    }
+
+    public function pagDisciplina(int $cadeira_id){
+        //Navbar
+        $user = Auth::user()->getUser();
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+                                  ->where('users_cadeiras.user_id', $user->id)->get();
+        $projetos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                                  ->where('users_grupos.grupo_id', $user->id)->get();
+
+        //Inf da cadeira
+        $cadeira = Cadeira::where('cadeiras.id', $cadeira_id)->get();
+        $cadeiraProjetos = Projeto::where('projetos.cadeira_id', $cadeira_id)->get();
+        
+        return view('aluno.disciplinasAluno', compact('disciplinas','projetos','cadeira','cadeiraProjetos'));
+    }
+
+    //Docente
+    public function indexDocente(int $id){
         $projetos = Projeto::where('cadeira_id', $id)->get();
         $cadeira = Cadeira::where('id', $id)->first();
         return view('disciplina.indexDocente', compact('projetos', 'cadeira'));

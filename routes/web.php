@@ -26,15 +26,11 @@ Route::get('/registar/getCursos', 'AuthController@changeDepartamentoId')->name('
 Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('changeCursoId');
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
 
-//Docentes
+//---------------- DOCENTES ----------------//
+//Home
 Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente');
 Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost');
 Route::get('/docenteHome', 'HomeController@perfil')->name('perfil');
-
-//Alunos
-Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
-Route::get('/disciplinasAluno/{cadeira_id}', 'HomeController@pagDisciplina')->name('pagDisciplina');
-Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto');  
 
 //Disciplinas
 Route::get('/docenteHome/disciplina/{id}', 'DisciplinaController@indexDocente')->name('indexDisciplinaDocente');
@@ -45,3 +41,13 @@ Route::get('showGrupos', 'DisciplinaController@showGrupos');
 Route::get('projetos', 'HomeController@nome_projetos')->name('projeto');
 Route::get('projetos/{id}', 'HomeController@id_projetos')->name('id_projeto');
 
+//---------------- ALUNOS ----------------//
+//Home
+Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
+Route::get('/alunoHome', 'HomeController@alunoHome')->name('alunoHome');
+  
+//Disciplina
+Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina')->name('pagDisciplina');
+
+//Projeto
+Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto');

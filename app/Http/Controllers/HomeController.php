@@ -28,31 +28,22 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         return view('home');
     }
 
     //Aluno
-    public function indexAluno(){
-        $user = Auth::user()->getUser();
-        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
-                                  ->where('users_cadeiras.user_id', $user->id)->get();
-        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-                                  ->where('users_grupos.grupo_id', $user->id)->get();
-                                  
-        return view('aluno.alunoHome', compact('cadeiras','grupos'));
+    public function alunoHome(){
+        return view('aluno.alunoHome');
     }
 
-    public function pagDisciplina(int $cadeira_id){
+    public function indexAluno(){
         $user = Auth::user()->getUser();
-        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
-        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+        $projetos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
                                   ->where('users_grupos.grupo_id', $user->id)->get();
-        $cadeira = DB::table('cadeiras')->where('cadeiras.id', $cadeira_id)->get();
-
-        return view('aluno.disciplinasAluno', compact('cadeiras','grupos','cadeira'));
+        return view('aluno.alunoHome', compact('disciplinas','projetos'));
     }
 
     public function pagProjeto(){
@@ -62,7 +53,8 @@ class HomeController extends Controller
     //Docente
     public function indexDocente($tab = "tab1"){
         $user = Auth::user()->getUser();  
-        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+                                ->where('users_cadeiras.user_id', $user->id)->get();
         $projetos = DB::select('select * from projetos p
                                 where p.cadeira_id in (select ca.id from users_cadeiras uc
                                 inner join cadeiras ca

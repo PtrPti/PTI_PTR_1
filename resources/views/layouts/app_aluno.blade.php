@@ -76,47 +76,50 @@
 
         <div id="apps">
             <div class="nav_icons">
+
                 <div style="border-bottom: 1.5px solid #e6e16c;">
-                    <a> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
+                    <a href="{{ route('alunoHome') }}"> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
                 </div>
+
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         <img src="{{ asset('images/disciplinas_icon.png') }}" width=23px> Disciplinas
                     </button>
                     <ul class="dropdown-menu">
-                        @foreach ($cadeiras as $cadeira)
-                        <li><a href="{{ route('pagDisciplina', ['cadeira_id' => $cadeira->id]) }}"> {{$cadeira->nome}} </a></li>
+                        @foreach ($disciplinas as $disciplina)
+                        <li><a href="{{ route('pagDisciplina', ['cadeira_id' => $disciplina->id]) }}"> {{$disciplina->nome}} </a></li>
                         @endforeach
                     </ul>
                 </div>
+
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         <img src="{{ asset('images/projetos_icon.png') }}" width=23px> Projetos
                     </button>
                     <ul class="dropdown-menu">
-                        @foreach ($grupos as $grupo)
-                        <li><a href="{{ route('pagProjeto') }}"> {{$grupo->nome}} </a></li>
+                        @foreach ($projetos as $projeto)
+                        <li><a href="{{ route('pagProjeto') }}"> {{$projeto->nome}} </a></li>
                         @endforeach
                     </ul>
                 </div>
+
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <a class="nav_calendario"> <img src="{{ asset('images/calendario_icon.png') }}" width=23px> Calendário </a>                
                 </div>
+                
             </div>
 
             <div id="menuProjetos">
             </div>                
         </div>
 
-            <div class="chat_icon">
-                <img src="{{ asset('images/chat_icon.png') }}" width=40px>
-            </div>
+        <div class="chat_icon">
+            <img src="{{ asset('images/chat_icon.png') }}" width=40px>
+        </div>
 
-            <div class=chat>        
-            </div>
+        <div class=chat>        
+        </div>
         @yield('content')
     </div>
-
-
 </body>
 </html>
