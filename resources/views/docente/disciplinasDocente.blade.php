@@ -1,4 +1,4 @@
-<div class="container-flex" id="disciplinas">
+<div class="flex-disciplina" id="disciplinas">
     @foreach($disciplinas as $disciplina)
         <div class="disciplina">
             <p>{{$disciplina->nome}} ({{$disciplina->cod_cadeiras}})</p>

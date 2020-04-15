@@ -8386,7 +8386,7 @@ p {
   display: none;
 }
 
-.container-flex {
+.flex-disciplina {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -8468,37 +8468,36 @@ li a:hover {
   text-align: center;
 }
 
-.bg-modal{
+.bg-modal {
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
-  display: flex;
   justify-content: center;
   align-items: center;
   display: none;
+  margin: auto;
 }
 
-.model-content{
+.model-content {
   width: 400px;
   height: 350px;
   background-color: white;
   opacity: 1;
+  border: 2px solid #acc;
   border-radius: 4px;
   text-align: center;
-  position: relative;
-  top: 200px;
-  left: 350px;
+  align-self: center;
 }
 
 input{
   width: 90%;
   display: block;
-  margin:15px auto;
+  margin: 15px auto;
 }
 
 .close{
-  position: absolute;
+  position: relative;
   top: 0;
   right: 14px;
   font-size: 30px; 
@@ -8507,6 +8506,16 @@ input{
 
 h4{
   padding-top: 30px;
+}
+
+.container-flex {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 2%;
+  flex-basis: 100%;
 }
 
 .flex-left {
@@ -8545,7 +8554,7 @@ h4{
   padding: 0;
 }
 
-.projeto .dueDate {
+.projetosLabels {
   font-weight: bold;
 }
 
@@ -8561,10 +8570,74 @@ h4{
   background-color: #acc;
 }
 
+.open-dropdown {
+  list-style-type: none;
+  align-self: center;
+  color: #222;
+  background-color: #acc;
+  border-color: #acc;
+  border-radius: 2px;
+  border-style: solid;
+  padding: 5px 20px 5px 20px;
+}
+
+.open-dropdown a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.open-dropdown a:focus {
+  color: black;
+}
+
+.has-dropdown:hover  .dropdown{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dropdown {
+  position: absolute;
+  width: 200px;
+  opacity: 0;
+  z-index: 2;
+  border-color: #acc;
+  border-radius: 2px;
+  border-style: solid;
+
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+ 
+  box-shadow: rgba(2, 8, 20, 0.1) 0px 0.175em 0.5em;
+  transform: translate(-11%, 10%);
+
+  transition: opacity .15s ease-out;
+}
+
+.dropdown-item {
+  list-style-type: none;
+  width: 100%;
+}
+
+.dropdown-item button {
+  width: 100%;
+  align-self: center;
+  color: #222;
+  background-color: white;
+  border: none;
+  padding: 5px 20px 5px 20px;
+}
+.dropdown-item button:hover {
+  background-color: #acc;
+}
+
 .showGrupos {
   align-self: flex-end;
   margin-top: auto;
-  /* color: #222; */
   border-color: #acc;
   border-radius: 2px;
   border-style: solid;
@@ -8591,7 +8664,7 @@ h4{
 
 .nome_projeto{
   position: absolute;
-  right: 50%;
+  right: 45%;
   border-bottom: 3px solid #acc;
 }
 
@@ -8629,10 +8702,40 @@ h4{
     position: fixed;
     left: 35px;
   }
+
+  [class="botao_projetos"]{
+    margin-left: -93px;
+    width: 15%;
+    padding-left: 10%;
+  }
+
+  [class="nome_projeto"]{
+    margin-right: -93px;
+  }
+  
+  [class="img_projeto"]{
+    margin-left:-40px;
+    width: 20px;
+  }
+
+  [class="tasks_proj"]{
+    margin-left:-70px ;
+    font-size: 12px;
+    margin-top: -6px;
+  }
+
+  [class="inline"]{
+    font-size: 10px;
+    margin-left: -435px;
+  }
+
+  [class="lado esquerdo"]{
+    width: 30px;
+    background-color: red;
+  }
 }
 
-.lado{
-  
+.lado{  
     height: 100%;
     width: 23%;
     position: absolute;
@@ -8649,8 +8752,8 @@ h4{
 
 .grupos{
   position: absolute;
-  top: 200px;
-  left: 300px;
+  left: 570px;
+  top: 220px;
   z-index: 1;
 }
 
@@ -8671,7 +8774,7 @@ h4{
   color: #000;
 }
 
-textarea {
+/* textarea {
   overflow: hidden;
   line-height:1.5;
   border:0;
@@ -8689,7 +8792,7 @@ textarea {
   height: 300px;
 }
 
-textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
+textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); } */
 
 .inline{
   display: inline;
@@ -8698,4 +8801,168 @@ textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
 #nome_disciplina{
   color: #acc;
   margin-left: 10px;  
+}
+
+.popup{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.popupadd{
+  width: 200px;
+  height: 150px;
+  background-color: white;
+  opacity: 1;
+  border-radius: 4px;
+  text-align: center;
+  position: relative;
+  top: 130px;
+  left: 90px;
+  z-index: auto;
+  opacity: 0.6;
+}
+
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 14px 10px;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 240px;
+}
+
+.chat-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;  
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: #acc;
+  border-radius: 10px;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 9px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  min-height: 200px;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/send button */
+.form-container .btn {
+  background-color: #133d55;
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+  margin-left: 30px;
+  margin-bottom:10px;
+  opacity: 0.8;
+  border-radius: 80px;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: #133d55;
+}
+
+.btgrupos{
+  background-color: #133d55;
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+  margin-left: 30px;
+  margin-bottom:10px;
+  opacity: 0.8;
+  border-radius: 80px;
+}
+
+.btgrupos:hover{
+  opacity:1;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+.chat_name{
+  position: relative;
+  top: -30px;
+  text-align: center;
+}
+
+.tableGrupos_p{  
+  background-color: #E9E0DF;
+  margin: auto;
+  margin-left: 615px;
+  margin-top: 220px;
+  padding: 40px 70px;
+  border-collapse: separate;
+  border-spacing: 10px;
+}
+
+.tableGrupos_p td {  
+  padding: 5px 20px 5px 20px;
+  text-align: center;
+  background-color: white;  
+}
+
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  bottom: 20px;
+  z-index: 1;
+  right: 50px;
+}
+
+.dropup-content a {
+  color: black;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.dropup-content a:hover {background-color: #ccc}
+
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+.dropup:hover .dropbtn {
+  background-color: #2980B9;
 }

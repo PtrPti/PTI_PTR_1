@@ -47,8 +47,6 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
             'Symfony\\Polyfill\\Php56\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
-            'Symfony\\Contracts\\Translation\\' => 30,
-            'Symfony\\Contracts\\EventDispatcher\\' => 34,
             'Symfony\\Component\\Yaml\\' => 23,
             'Symfony\\Component\\VarDumper\\' => 28,
             'Symfony\\Component\\Translation\\' => 30,
@@ -157,14 +155,6 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
-        ),
-        'Symfony\\Contracts\\Translation\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/translation-contracts',
-        ),
-        'Symfony\\Contracts\\EventDispatcher\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts',
         ),
         'Symfony\\Component\\Yaml\\' => 
         array (
@@ -349,7 +339,6 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DisciplinaController' => __DIR__ . '/../..' . '/app/Http/Controllers/DisciplinaController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
-        'App\\Http\\Controllers\\ProjetoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProjetoController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
@@ -366,6 +355,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'App\\Universidade' => __DIR__ . '/../..' . '/app/Universidade.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\UserCadeira' => __DIR__ . '/../..' . '/app/UserCadeira.php',
+        'App\\UsersGrupos' => __DIR__ . '/../..' . '/app/UsersGrupos.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
         'CadeirasTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CadeirasTableSeeder.php',
@@ -376,11 +366,12 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'Carbon\\Laravel\\ServiceProvider' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Laravel/ServiceProvider.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'Carbon\\Upgrade' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Upgrade.php',
-        'CreateCadeirasGruposTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_25_020948_create_cadeiras_grupos_table.php',
         'CreateCursosCadeirasTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_21_002330_create_cursos_cadeiras_table.php',
         'CreateGrausAcademicosTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_18_010010_create_graus_academicos_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePerfisTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_19_170934_create_perfis_table.php',
+        'CreateProjetosFicheirosTable' => __DIR__ . '/../..' . '/database/migrations/2020_04_06_160451_create_projetos_ficheiros_table.php',
+        'CreateProjetosGruposTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_25_020948_create_projetos_grupos_table.php',
         'CreateUsersCadeirasTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_20_235241_create_users_cadeiras_table.php',
         'CreateUsersGruposTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_25_111915_create_users_grupos_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
@@ -2183,7 +2174,6 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'Monolog\\ResettableInterface' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ResettableInterface.php',
         'Monolog\\SignalHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/SignalHandler.php',
         'Monolog\\Utils' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Utils.php',
-        'NullableColumns' => __DIR__ . '/../..' . '/database/migrations/2020_03_19_215005_nullable_columns.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/AssertionFailedError.php',
         'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
@@ -3697,12 +3687,6 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'Symfony\\Component\\Yaml\\Tag\\TaggedValue' => __DIR__ . '/..' . '/symfony/yaml/Tag/TaggedValue.php',
         'Symfony\\Component\\Yaml\\Unescaper' => __DIR__ . '/..' . '/symfony/yaml/Unescaper.php',
         'Symfony\\Component\\Yaml\\Yaml' => __DIR__ . '/..' . '/symfony/yaml/Yaml.php',
-        'Symfony\\Contracts\\EventDispatcher\\Event' => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts/Event.php',
-        'Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface' => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts/EventDispatcherInterface.php',
-        'Symfony\\Contracts\\Translation\\LocaleAwareInterface' => __DIR__ . '/..' . '/symfony/translation-contracts/LocaleAwareInterface.php',
-        'Symfony\\Contracts\\Translation\\Test\\TranslatorTest' => __DIR__ . '/..' . '/symfony/translation-contracts/Test/TranslatorTest.php',
-        'Symfony\\Contracts\\Translation\\TranslatorInterface' => __DIR__ . '/..' . '/symfony/translation-contracts/TranslatorInterface.php',
-        'Symfony\\Contracts\\Translation\\TranslatorTrait' => __DIR__ . '/..' . '/symfony/translation-contracts/TranslatorTrait.php',
         'Symfony\\Polyfill\\Ctype\\Ctype' => __DIR__ . '/..' . '/symfony/polyfill-ctype/Ctype.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
         'Symfony\\Polyfill\\Php56\\Php56' => __DIR__ . '/..' . '/symfony/polyfill-php56/Php56.php',

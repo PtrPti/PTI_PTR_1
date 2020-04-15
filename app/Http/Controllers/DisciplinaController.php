@@ -7,9 +7,15 @@ use App\User;
 use App\Grupo;
 use App\Projeto;
 use App\Cadeira;
+<<<<<<< HEAD
 use App\UserCadeira;
 use App\UsersGrupos;
+=======
+use App\ProjetoFicheiro;
+>>>>>>> 9177a3fcedf88aa481acb5ca7101508295fc0fc4
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 use DateTime;
 
@@ -25,6 +31,7 @@ class DisciplinaController extends Controller
         $this->middleware('auth');
     }
 
+<<<<<<< HEAD
     /**
      * Show the application dashboard.
      *
@@ -55,6 +62,16 @@ class DisciplinaController extends Controller
     //Docente
     public function indexDocente(int $id){
         $projetos = Projeto::where('cadeira_id', $id)->get();
+=======
+    public function indexDocente(int $id)
+    {
+        $projetos = DB::select('select p.id, p.nome, p.data_fim, pf.nome as ficheiro 
+                                from projetos p
+                                left join projetos_ficheiros pf
+                                    on p.id = pf.projeto_id
+                                where p.cadeira_id = ?', [$id]);
+                                // error_log( print_r($projetos, TRUE) );
+>>>>>>> 9177a3fcedf88aa481acb5ca7101508295fc0fc4
         $cadeira = Cadeira::where('id', $id)->first();
         return view('disciplina.indexDocente', compact('projetos', 'cadeira'));
     }
@@ -85,5 +102,19 @@ class DisciplinaController extends Controller
         $grupo->save();
 
         return response()->json(['numero' => ($numero == null ? 1 : $numero + 1), 'max_elem' => $projeto->n_max_elementos]);
+    }
+
+    function uploadFile(Request $request) {
+        if (Input::hasFile('file')) {
+            $filename = $request->projeto_id . '_' . $request->file('file')->getClientOriginalName();
+            $request->file('file')->storeAs('public/disciplina', $filename);
+
+            $ficheiro = new ProjetoFicheiro();
+            $ficheiro->nome = $filename;
+            $ficheiro->projeto_id = $request->projeto_id;
+            $ficheiro->save();
+        }
+
+        return redirect()->action('DisciplinaController@indexDocente', ['id' => $request->cadeira_id]);
     }
 }
