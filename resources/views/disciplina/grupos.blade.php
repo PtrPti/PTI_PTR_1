@@ -1,5 +1,6 @@
 
 <button type="button" class="addBtn" onclick="AddGrupo(<?php echo $projeto ?>)">Adicionar Grupo</button>
+
 <table class="tableGrupos">
     @foreach ($grupos as $grupo)
     <tr>
