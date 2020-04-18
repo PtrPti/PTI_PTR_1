@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+//Login
+Route::get('/login', 'AuthController@getLogin')->name('login');
 
 //Registo
 Route::get('/registar', 'AuthController@getRegistar')->name('registar');
@@ -27,14 +28,14 @@ Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
 
 //Docentes
-Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente');
-Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost');
-Route::get('/docenteHome', 'HomeController@perfil')->name('perfil');
+Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente')->middleware('checkUserRole:2');
+Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost')->middleware('checkUserRole:2');
+Route::get('/docenteHome', 'HomeController@perfil')->name('perfil')->middleware('checkUserRole:2');
 
 //Alunos
-Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
-Route::get('/disciplinasAluno/{cadeira_id}', 'HomeController@pagDisciplina')->name('pagDisciplina');
-Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto');  
+Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno')->middleware('checkUserRole:1');
+Route::get('/disciplinasAluno/{cadeira_id}', 'HomeController@pagDisciplina')->name('pagDisciplina')->middleware('checkUserRole:1');
+Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto')->middleware('checkUserRole:1');
 
 //Disciplinas
 Route::get('/docenteHome/disciplina/{id}', 'DisciplinaController@indexDocente')->name('indexDisciplinaDocente');
