@@ -10,6 +10,11 @@ use App\Cadeira;
 use App\UserCadeira;
 use App\UsersGrupos;
 use App\ProjetoFicheiro;
+<<<<<<< HEAD
+use App\ForumDuvidas;
+use App\ForumMensagens;
+=======
+>>>>>>> cdc42ecf7a66e1fba5bc810e0fb77ba2b3778961
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -35,27 +40,105 @@ class DisciplinaController extends Controller
      */
 
     //Aluno
-    public function showProjetos(int $cadeira_id, int $projeto_id){
-        $grupos = Grupo::where('grupos.projeto_id', $projeto_id);
-        return view('aluno.disciplinasAluno', compact('grupos'));
-    }
-
     public function pagDisciplina(int $cadeira_id){
         //Navbar
         $user = Auth::user()->getUser();
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
-                                  ->where('users_cadeiras.user_id', $user->id)->get();
+                          ->where('users_cadeiras.user_id', $user->id)->get();
         $projetos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-                                  ->where('users_grupos.grupo_id', $user->id)->get();
+                          ->where('users_grupos.grupo_id', $user->id)->get();
 
         //Inf da cadeira
         $cadeira = Cadeira::where('cadeiras.id', $cadeira_id)->get();
         $cadeiraProjetos = Projeto::where('projetos.cadeira_id', $cadeira_id)->get();
-        
-        return view('aluno.disciplinasAluno', compact('disciplinas','projetos','cadeira','cadeiraProjetos'));
+        $docentes = User::join('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')
+                          ->where('users.perfil_id', 2)
+                          ->where('users_cadeiras.cadeira_id', $cadeira_id)->get();
+        $duvidas = ForumDuvidas::where('forum_duvidas.cadeira_id', $cadeira_id)->get();
+        $mensagens = ForumMensagens::join('forum_duvidas', 'forum_duvida_id', '=', 'forum_duvidas.id')->get();
+        //$totalMensagens = $mensagens->count();
+                                
+        return view('aluno.disciplinasAluno', compact('user','disciplinas','projetos','cadeira','cadeiraProjetos','docentes','duvidas','mensagens'));
+    }
+
+    public function addTopico(Request $request){
+        $user = Auth::user()->getUser()->id;
+
+        $novoTopico = new ForumDuvidas;
+        $novoTopico->assunto = $request->assunto;
+        $novoTopico->primeiro_user = $user;
+        $novoTopico->ultimo_user = $user;
+        $novoTopico->cadeira_id = $request->cadeira_id;
+        $novoTopico->save();
+
+        $novaMensagem = new ForumMensagens;
+        $novaMensagem->forum_duvida_id = $novoTopico->id;
+        $novaMensagem->user_id = $user;
+        $novaMensagem->mensagem = $request->mensagem;
+        $novaMensagem->save();
+    
+        return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
+    }
+
+    public function verMensagens(Request $request) {
+        $id = $_GET['id'];
+        $mensagens = ForumMensagens::where('forum_duvida_id', $id)->get();
+        $duvida = ForumDuvidas::where('id', $id)->get();
+
+        $data = array(
+            'mensagens'  => $mensagens,
+            'duvida' => $duvida,
+        );
+
+        $returnHTML = view('aluno.mensagens')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function addMensagem(Request $request){
+        $user = Auth::user()->getUser()->id;
+
+        ForumDuvidas::update(['ultimo_user'=>$user]);
+
+        $novaMensagem = new ForumMensagens;
+        $novaMensagem->forum_duvida_id = $request->duvida_id;
+        $novaMensagem->user_id = $user;
+        $novaMensagem->mensagem = $request->mensagem;
+        $novaMensagem->save();
+    
+        return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
+    }
+    public function showGruposA(Request $request) {
+        $id = $_GET['id'];
+        $grupos = Grupo::where('projeto_id', $id)->get();
+        $projeto = Projeto::where('id', $id)->first();
+        // $users = UsersGrupos::where('grupo_id', '=', $grupo_id)->get();
+        // $numero_users = $users->count();
+        // $grupos_id = DB::table('grupos')->select('id')->get();
+        // $numero_users = DB::select('select count(user_id) as users, ug.grupo_id, g.numero 
+        //                             from users_grupos ug
+        //                             inner join grupos g
+        //                             on ug.grupo_id = g.id
+        //                             where grupo_id in (?))', $grupos_id);
+        $data = array(
+            'grupos'  => $grupos,
+            'projeto' => $id,
+            'max_elementos' => $projeto->n_max_elementos
+            // 'elementos_grupo' => $numero_users->users,
+            // 'grupos_id' => $numero_users->grupo_id,
+            // 'num_grupo' => $numero_users->numero
+        );
+
+        $returnHTML = view('aluno.grupos')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
     }
 
     //Docente
+<<<<<<< HEAD
+    // public function indexDocente(int $id){
+    //     $projetos = Projeto::where('cadeira_id', $id)->get();
+
+=======
+>>>>>>> cdc42ecf7a66e1fba5bc810e0fb77ba2b3778961
     public function indexDocente(int $id)
     {
         $projetos = DB::select('select p.id, p.nome, p.data_fim, pf.nome as ficheiro 
@@ -63,6 +146,11 @@ class DisciplinaController extends Controller
                                 left join projetos_ficheiros pf
                                     on p.id = pf.projeto_id
                                 where p.cadeira_id = ?', [$id]);
+<<<<<<< HEAD
+                                // error_log( print_r($projetos, TRUE) );
+
+=======
+>>>>>>> cdc42ecf7a66e1fba5bc810e0fb77ba2b3778961
         $cadeira = Cadeira::where('id', $id)->first();
         return view('disciplina.indexDocente', compact('projetos', 'cadeira'));
     }
