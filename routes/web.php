@@ -51,6 +51,11 @@ Route::get('/alunoHome', 'HomeController@alunoHome')->name('alunoHome');
   
 //Disciplina
 Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina')->name('pagDisciplina');
+Route::get('showGruposA', 'DisciplinaController@showGruposA');
+Route::get('verMensagens', 'DisciplinaController@verMensagens');
+Route::post('/addTopico', 'DisciplinaController@addTopico');
+Route::post('/addMensagem', 'DisciplinaController@addMensagem');
+
 
 //Projeto
 Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto');
