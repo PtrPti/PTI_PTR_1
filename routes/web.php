@@ -28,11 +28,6 @@ Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
 
 //---------------- DOCENTES ----------------//
-//Home
-Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente');
-Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost');
-Route::get('/docenteHome', 'HomeController@perfil')->name('perfil');
-
 //Docentes
 Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente')->middleware('checkUserRole:2');
 Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost')->middleware('checkUserRole:2');
@@ -66,7 +61,6 @@ Route::get('showGruposA', 'DisciplinaController@showGruposA');
 Route::get('verMensagens', 'DisciplinaController@verMensagens');
 Route::post('/addTopico', 'DisciplinaController@addTopico');
 Route::post('/addMensagem', 'DisciplinaController@addMensagem');
-
 
 //Projeto
 Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto');
