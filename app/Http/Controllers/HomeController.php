@@ -41,9 +41,33 @@ class HomeController extends Controller
         $user = Auth::user()->getUser();
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
-        $projetos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+
+        $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
+                                  ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                                  ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
+                                  ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
+                                      ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id')->get();
+
+        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+            ->where('users_grupos.grupo_id', $user->id)->get();
+    
+        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+            from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+            where users.id != " . Auth::id() . " 
+            group by users.id, users.nome, users.email");
+
+        return view('aluno.alunoHome', compact('disciplinas','projetos','grupos', 'utilizadores'));
+    }
+
+    public function pagDisciplina(int $cadeira_id){
+        $user = Auth::user()->getUser();
+        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+                                  ->where('users_cadeiras.user_id', $user->id)->get();
+        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
                                   ->where('users_grupos.grupo_id', $user->id)->get();
-        return view('aluno.alunoHome', compact('disciplinas','projetos'));
+        $cadeira = DB::table('cadeiras')->where('cadeiras.id', $cadeira_id)->get();
+
+        return view('aluno.disciplinasAluno', compact('cadeiras','grupos','cadeira'));
     }
 
     public function pagProjeto(){

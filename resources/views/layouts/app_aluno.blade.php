@@ -19,9 +19,15 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Scripts -->
     <script src="{{ asset('js/app_aluno.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- Pusher -->
+    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -97,8 +103,8 @@
                         <img src="{{ asset('images/projetos_icon.png') }}" width=23px> Projetos
                     </button>
                     <ul class="dropdown-menu">
-                        @foreach ($projetos as $projeto)
-                        <li><a href="{{ route('pagProjeto') }}"> {{$projeto->nome}} </a></li>
+                        @foreach ($projetos as $proj)
+                            <li><a href="{{ route('pagProjeto', ['id' => $proj->id]) }}"> {{$proj->projeto}} | Grupo Nº{{$proj->numero}}</a></li>
                         @endforeach
                     </ul>
                 </div>

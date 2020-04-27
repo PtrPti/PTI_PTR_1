@@ -64,6 +64,15 @@ Route::post('/addMensagem', 'DisciplinaController@addMensagem');
 
 //Projeto
 Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto');
+Route::get('editTarefa', 'ProjetoController@editTarefa');
+Route::get('editAllTarefa', 'ProjetoController@editAllTarefa');
+Route::get('addLink', 'ProjetoController@addLink');
+Route::get('addPasta', 'ProjetoController@addPasta');
+Route::post('uploadFicheiro', 'ProjetoController@uploadFicheiro')->name('uploadFicheiro');
+
+//Messages
+Route::get('/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
+Route::post('message', 'ChatController@sendMessage');
 
 //---------------- DOWNLOAD ----------------//
 //Download

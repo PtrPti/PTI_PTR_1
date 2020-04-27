@@ -80,7 +80,6 @@
     </div>
 </div>
 
-
 <script>
     function ShowGrupos(id) {
         $.ajax({
