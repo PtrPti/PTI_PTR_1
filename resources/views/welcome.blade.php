@@ -78,14 +78,16 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
+                @if(Auth::user() != null)
                     @if (Auth::user()->isAluno())
                         <a href="{{ route('homeAluno') }}">Home</a>
                     @elseif (Auth::user()->isProfessor())
                         <a href="{{ route('homeDocente') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Iniciar Sessão</a>
-                        <a href="{{ url('/registar') }}">Registo</a>
-                    @endif
+                    @endif                    
+                @else
+                    <a href="{{ url('/login') }}">Iniciar Sessão</a>
+                    <a href="{{ url('/registar') }}">Registo</a>
+                @endif
                 </div>
             @endif
 

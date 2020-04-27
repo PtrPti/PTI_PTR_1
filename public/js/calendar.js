@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
 function ShowCalendar() {
     if ($('#calendarContainer').css('visibility') === 'visible') {
         $('#calendarContainer').css('visibility', 'hidden');
-        console.log(calendar);
     }
     else {
         $('#calendarContainer').css('visibility', 'visible');
