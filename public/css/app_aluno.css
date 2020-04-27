@@ -5424,7 +5424,7 @@ tbody.collapse.in {
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
-    margin-left: -30%;
+    margin-left: -10%;
   }
 }
 
@@ -8367,7 +8367,7 @@ button.close {
 .nav_icons {
   display: grid;
   grid-template-columns: 120px 120px 120px 120px;
-  margin-left: 100px;
+  margin-left: 30px;
 }
 
 .nav_icons div{
@@ -8385,7 +8385,6 @@ button.close {
   grid-gap: 20px 20px;
   margin: 30px;
   margin-top: 125px;
-  left: 74px;
 }
 
 .divDisciplinas{
@@ -9168,3 +9167,4 @@ li{
 .closebtn:hover{
   cursor: pointer;
 }
+.show {display: block;}
