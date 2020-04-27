@@ -52,9 +52,8 @@ class HomeController extends Controller
 
     //Docente
     public function indexDocente($tab = "tab1"){
-        $user = Auth::user()->getUser();  
-        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
-                                ->where('users_cadeiras.user_id', $user->id)->get();
+        $user = Auth::user()->getUser();
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
         $projetos = DB::select('select * from projetos p
                                 where p.cadeira_id in (select ca.id from users_cadeiras uc
                                 inner join cadeiras ca

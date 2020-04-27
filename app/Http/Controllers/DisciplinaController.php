@@ -10,8 +10,11 @@ use App\Cadeira;
 use App\UserCadeira;
 use App\UsersGrupos;
 use App\ProjetoFicheiro;
+<<<<<<< HEAD
 use App\ForumDuvidas;
 use App\ForumMensagens;
+=======
+>>>>>>> cdc42ecf7a66e1fba5bc810e0fb77ba2b3778961
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -130,9 +133,12 @@ class DisciplinaController extends Controller
     }
 
     //Docente
+<<<<<<< HEAD
     // public function indexDocente(int $id){
     //     $projetos = Projeto::where('cadeira_id', $id)->get();
 
+=======
+>>>>>>> cdc42ecf7a66e1fba5bc810e0fb77ba2b3778961
     public function indexDocente(int $id)
     {
         $projetos = DB::select('select p.id, p.nome, p.data_fim, pf.nome as ficheiro 
@@ -140,8 +146,11 @@ class DisciplinaController extends Controller
                                 left join projetos_ficheiros pf
                                     on p.id = pf.projeto_id
                                 where p.cadeira_id = ?', [$id]);
+<<<<<<< HEAD
                                 // error_log( print_r($projetos, TRUE) );
 
+=======
+>>>>>>> cdc42ecf7a66e1fba5bc810e0fb77ba2b3778961
         $cadeira = Cadeira::where('id', $id)->first();
         return view('disciplina.indexDocente', compact('projetos', 'cadeira'));
     }

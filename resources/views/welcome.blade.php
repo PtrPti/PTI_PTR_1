@@ -18,7 +18,6 @@
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
-                
             }
 
             body {
@@ -26,8 +25,6 @@
                 background-size:70%;
                 background-repeat:no-repeat;
                 background-position-y:bottom;
-                
-                
             }
 
             .full-height {
@@ -52,7 +49,6 @@
 
             .content {
                 text-align: center;
-                
             }
 
             .title {
@@ -73,8 +69,6 @@
                 margin-bottom: 30px;
             }
 
-            
-
             h3{
                 margin-top: -37px
             }
@@ -84,9 +78,10 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
-                    @if (Auth::check())
+                    @if (Auth::user()->isAluno())
                         <a href="{{ route('homeAluno') }}">Home</a>
-                        <a href="{{ route('homeDocente') }}">docenteHome</a>
+                    @elseif (Auth::user()->isProfessor())
+                        <a href="{{ route('homeDocente') }}">Home</a>
                     @else
                         <a href="{{ url('/login') }}">Iniciar Sessão</a>
                         <a href="{{ url('/registar') }}">Registo</a>

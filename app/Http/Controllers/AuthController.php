@@ -16,7 +16,7 @@ use DateTime;
 class AuthController extends Controller
 {
     public function getLogin() {
-        return view('login');
+        return view('auth.login');
     }
 
     public function getRegistar() {
@@ -63,7 +63,7 @@ class AuthController extends Controller
                 $cadeira_insert->save();
             }
     
-            return redirect('home');
+            return redirect()->action('AuthController@getLogin');
         }
         else { //professor
             $this->validate($request, [
@@ -97,7 +97,7 @@ class AuthController extends Controller
                 $cadeira_insert->save();
             }
     
-            return redirect('home');
+            return redirect()->action('AuthController@getLogin');
         }   
     }
 
@@ -133,7 +133,6 @@ class AuthController extends Controller
                     join('departamentos', 'cursos.departamento_id', '=', 'departamentos.id')->
                     join('cadeiras', 'cursos_cadeiras.cadeira_id', '=', 'cadeiras.id')->
                     where('departamento_id', $request->departamento_id)->orderBy('cadeiras.nome')->get();
-            error_log($cadeiras);
             foreach ($cadeiras as $cadeira) {
                 $html .= '<option value="'.$cadeira->cadeira_id.'">'.$cadeira->nome.'</option>';
             }
