@@ -5424,7 +5424,7 @@ tbody.collapse.in {
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
-    margin-left: -30%;
+    margin-left: -10%;
   }
 }
 
@@ -8367,7 +8367,7 @@ button.close {
 .nav_icons {
   display: grid;
   grid-template-columns: 120px 120px 120px 120px;
-  margin-left: 100px;
+  margin-left: 30px;
 }
 
 .nav_icons div{
@@ -8385,7 +8385,6 @@ button.close {
   grid-gap: 20px 20px;
   margin: 30px;
   margin-top: 125px;
-  left: 74px;
 }
 
 .divDisciplinas{
@@ -8439,236 +8438,3 @@ button.close {
 }
 
 .show {display: block;}
-
-.pagDisciplina{
-  position: absolute;
-  margin-top:115px;
-  margin-left: 120px;
-}
-
-.navDisciplina{
-  position: fixed;
-  display: grid;
-  grid-template-columns: auto;
-  /* width:100px;
-  height:100px; */
-  left: 112px;
-  top: 132px;
-}
-
-.navDisciplina button{
-  background-color: #f5f8fa;
-  border: none;
-  width: 180px;
-  height: 85px;
-  margin: 4px 8px;
-  padding: 25px 20px;
-  text-align: center;
-}
-
-.navDisciplina button:hover{
-  background-color: #e6e16c;
-}
-
-.disciplinasAluno{
-  position: fixed;
-  background-color: #eee9e9;
-  width: 70%;
-  height: 66%;
-  left: 300px;
-  top: 136px;
-  display: grid;
-  grid-template-columns: auto auto;
-}
-
-.projetosDisciplina{
-  width: auto;
-  position: relative;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 20px;
-  margin: 15px
-}
-
-.projeto{
-  height: 130px;
-  width: 443px;
-  padding: 10px;
-  text-align: center;
-  opacity: 0.8;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #e6e16c;
-}
-
-.infProjeto{
-  position: relative;
-  margin-left: 216px;
-}
-
-.infDisciplina{
-  position: relative;
-  left: 40px;
-  top: 15px;
-}
-
-.forumDuvidas{
-  position: relative;
-  top: 30px;
-  left: 30px;
-}
-
-.forumDuvidas_btn{
-  top:5px;
-}
-
-.forumDuvidas_btn:hover{
-  cursor: pointer;
-}
-
-#add_topico{
-  margin-left: 50%;
-}
-
-.tableGrupos{
-  position: relative;
-  border-collapse: collapse;
-  width: 127%;
-  margin-tgitop: 10px;
-}
-
-.tableGrupos th, td {
-  text-align: center;
-  padding: 8px;
-}
-
-.tableGrupos tr:nth-child(even){background-color: #f2f2f2}
-
-.tableGrupos th {
-  background-color: #e6e16c;
-  color: white;
-  text-align: center;
-}
-
-.addBtn{
-  position:relative;
-}
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.novo_topico {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.inputTopico {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
-
-label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
-}
-
-.sub_novoTopico {
-  background-color: #e6e16c;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
-  margin-top: 10px;
-}
-
-.col-25 {
-  float: left;
-  width: 25%;
-  margin-top: 6px;
-}
-
-.col-75 {
-  float: left;
-  width: 75%;
-  margin-top: 6px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
-    width: 100%; 
-    margin-top: 0;
-  }
-}
-
-#return_btn:hover{
-  color:#d4cf5f;
-  cursor: pointer;
-}
-
-.divMensagens{
-  position: relative;
-  top: 30px;
-  left: 30px;
-}
-
-.mensagem{
-  position: relative;
-  height: auto;
-  width: 895px;
-  padding: 10px;
-  text-align: left;
-  opacity: 0.8;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #e6e16c;
-}
-
-#add_mensagem{
-  position:relative;
-  top: 10px;
-  left: 808px;
-}
