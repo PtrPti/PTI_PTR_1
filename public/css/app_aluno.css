@@ -8341,7 +8341,7 @@ button.close {
 }
 
 .chat_icon img{
-  position: absolute;
+  position: fixed;
   right: 40px;
   bottom: 30px;
 }
@@ -8384,7 +8384,6 @@ button.close {
   grid-template-columns: auto auto;
   grid-gap: 20px 20px;
   margin: 30px;
-  margin-top: 125px;
 }
 
 .divDisciplinas{
@@ -8429,10 +8428,10 @@ button.close {
   margin: 15px
 }
 
-.grupos div{
+.grupo div{
   height: auto;
   background: #e6e16c;
-  padding: 20px;
+  padding: 15px;
   text-align: center;
   opacity: 0.8;
 }
@@ -9157,6 +9156,21 @@ li{
 	padding-top: 20px;
 }
 
+#addSubTarefa{
+	display: block;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 350px;
+  height: 150px;
+	background-color: white;
+	text-align: center;
+	padding-top: 20px;
+}
+
 .closebtn{
   position: absolute;
   right: 5px;
@@ -9167,4 +9181,3 @@ li{
 .closebtn:hover{
   cursor: pointer;
 }
-.show {display: block;}

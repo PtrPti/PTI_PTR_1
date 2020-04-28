@@ -82,13 +82,14 @@
                 <!-- <p><a class="pagInicia_btn" id="return_btn"><b>Página Inicia</b></a> > <a class="forumDuvidas_btn" id="return_btn"><b>Forum de Dúvidas</b></a> > </p> -->
             </div>
             <button type="button" id="add_mensagem">Responder</button>
-        <div>
+</div>
 
         <div class="addMensagem">
             <div id="novaMensagem" class="modal">
                 <form action="/addMensagem" method="post"> 
                     {{csrf_field()}}
-                    <input type="hidden" name="duvida_id" value="<?php echo $duvida ?>">
+                    <!-- <input type="hidden" name="duvida_id" value="<?php/* echo $duvida*/ ?>"> -->
+                    <input type="hidden" name="duvida_id">
                     <div class="novo_topico">
                         <span class="close">&times;</span>
                         <h4> Nova mensagem </h5><br>

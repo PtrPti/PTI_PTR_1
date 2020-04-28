@@ -2,10 +2,6 @@
 
 @section('content')
 
-<head>
-    <meta content="width=device-width, initial-scale=1" name="viewport" />  
-</head> 
-
 <div class="nav_icons">
     <div class="@if($active_tab == 1) active @endif" id="tab1" onclick="ShowHome()"><img src="{{ asset('images/home_icon.png') }}"> Home </div>
     <div class="@if($active_tab == 2) active @endif" id="tab2" onclick="ShowProjetos()"><img src="{{ asset('images/projetos_icon.png') }}"> Projetos </div>

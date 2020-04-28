@@ -3,15 +3,15 @@
 @section('content')
 
 <div class="homeAluno">
-    <div class="divDisciplinas ">
+<div class="divDisciplinas ">
         <h4 style="margin-left:15px;">Disciplinas</h4>
         <div class="disciplina">
             @foreach ($cadeiras as $cadeira)
-            <div>
-                {{$cadeira->nome}}  
-                <br>                
-                <a href="{{ route('pagDisciplina', ['cadeira_id' => $cadeira->id]) }}"> Entrar </a>
-            </div>
+            <a href="{{ route('pagDisciplina', ['cadeira_id' => $cadeira->id]) }}"> 
+                <div> 
+                    {{$cadeira->nome}} 
+                </div>
+            </a>
             @endforeach
         </div>
     </div>
@@ -26,43 +26,37 @@
                     <small>{{$proj->cadeiras}}</small>
                 </div>
             </a>
-            <!-- @foreach ($grupos as $grupo)
-            <div>
-                {{$grupo->nome}}  
-                <br>                
-                <a href="{{ route('pagProjeto')}}"> Entrar </a>
-            </div>
-            @endforeach -->
+            @endforeach
         </div>
     </div>
     
-    <!-- Chat -->
-    {{ csrf_field() }}
-    <div class="user-wrapper">
+          <!-- Chat -->
+          {{ csrf_field() }}
+      <div class="user-wrapper">
         <ul class="users">
-            @foreach ($utilizadores as $utilizador)
+          @foreach ($utilizadores as $utilizador)
             <li class="user" id="{{$utilizador->id}}">
-                @if($utilizador->unread)
+              @if($utilizador->unread)
                 <span class="pending">{{ $utilizador->unread }}</span>
-                @endif
+              @endif
 
-                <div class="media">
+              <div class="media">
                 <div class="media-left">
-                    <img src="{{ asset('images/user.png') }}" width=30px class="media-object">
+                  <img src="{{ asset('images/user.png') }}" width=30px class="media-object">
                 </div>
                 <div class="media-body">
-                    <p class="username"> {{$utilizador->nome}}</p>
-                    <p class="email">{{$utilizador->email}}</p>
+                  <p class="username"> {{$utilizador->nome}}</p>
+                  <p class="email">{{$utilizador->email}}</p>
                 </div>
-                </div>
+              </div>
             </li>
-            @endforeach
+          @endforeach
         </ul>
-    </div>      
-    
-    <div class="message-wrapper" id="messages">
-    </div>
-</div>
+      </div>      
+      
+      <div class="message-wrapper" id="messages">
+      </div>
+  </div>
 
 <script>
     var receiver_id = '';

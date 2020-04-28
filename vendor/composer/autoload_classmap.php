@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddColunasProjetoTable' => $baseDir . '/database/migrations/2020_03_22_162817_add_colunas_projeto_table.php',
+    'AddNomeTarefa' => $baseDir . '/database/migrations/2020_04_20_133018_add_nome_tarefa.php',
+    'AddOrdemTarefas' => $baseDir . '/database/migrations/2020_04_27_161028_add_ordem_tarefas.php',
     'AddRegisterInfoToUsersTable' => $baseDir . '/database/migrations/2020_03_18_010011_add_register_info_to_users_table.php',
     'AddTarefasProjetos' => $baseDir . '/database/migrations/2020_03_24_174747_add_tarefas_projetos.php',
     'AlterGruposFicheirosTable' => $baseDir . '/database/migrations/2020_04_22_115310_alter_grupos_ficheiros_table.php',

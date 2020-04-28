@@ -49,8 +49,8 @@ class ProjetoController extends Controller
         $disciplina = Cadeira::where('id', $id_disciplina)->first();
 
         /* Tarefas Grupo */
-        $tarefas = Tarefa::where('grupo_id',$grupo_id)->get();
-
+        $tarefas = Tarefa::where('grupo_id',$grupo_id)->orderBy('ordem','ASC')->get();
+        
         /* Ficheiros Grupo */
         $ficheiros = GrupoFicheiros::where('grupo_id',$grupo_id)->get();
 
@@ -95,6 +95,79 @@ class ProjetoController extends Controller
         $pasta->save();
 
         return response()->json('Adicionado com sucesso');
+    }
+
+    public function addTarefa(Request $request) {
+        $nome = $_GET['nome'];
+        $ordemT = $_GET['ordem'];
+        $grupoId = $_GET['grupoId'];
+        $projetoId = $_GET['projetoId'];
+        $prazo = $_GET['prazo'];
+
+        $tarefas = Tarefa::whereNull('tarefa_id')->get();
+
+        foreach ($tarefas as $tarefa) {
+            if ($tarefa->ordem > $ordemT ){
+                $ord = $tarefa->ordem + 1;
+                $tarefa->ordem = $ord;
+                $tarefa->save();
+            }
+        }
+
+        $novaTarefa = new Tarefa;
+        $novaTarefa->nome = $nome;
+        $novaTarefa->ordem = $ordemT+1;
+        $novaTarefa->grupo_id = $grupoId;
+        $novaTarefa->projeto_id = $projetoId;
+        $novaTarefa->prazo = $prazo;
+        $novaTarefa->estado = FALSE;
+        $novaTarefa->save();
+
+        return response()->json('Adicionado com sucesso');
+    }
+
+    public function addSubTarefa(Request $request) {
+        $nome = $_GET['nome'];
+        $tarefaId = $_GET['tarefaId'];
+        $ordemT = $_GET['ordem'];
+        $grupoId = $_GET['grupoId'];
+        $projetoId = $_GET['projetoId'];
+        $prazo = $_GET['prazo'];
+
+        $subtarefas = Tarefa::where('tarefa_id',$tarefaId)->get();
+
+        foreach ($subtarefas as $sub) {
+            if ($sub->ordem > $ordemT ){
+                $ord = $sub->ordem + 1;
+                $sub->ordem = $ord;
+                $sub->save();
+            }
+        }
+
+        $novaSubTarefa = new Tarefa;
+        $novaSubTarefa->nome = $nome;
+        $novaSubTarefa->ordem = $ordemT+1;
+        $novaSubTarefa->tarefa_id = $tarefaId;
+        $novaSubTarefa->grupo_id = $grupoId;
+        $novaSubTarefa->projeto_id = $projetoId;
+        $novaSubTarefa->prazo = $prazo;
+        $novaSubTarefa->estado = FALSE;
+        $novaSubTarefa->save();
+        
+        return response()->json('Adicionado com sucesso');
+    }
+
+    public function subTarefas(Request $request) {
+        $id = $_GET['tarefaId'];
+        $str = '';
+        $subtarefas = Tarefa::where('tarefa_id',$id)->get();
+
+        foreach ($subtarefas as $sub) {
+
+            $str .= "<option value='".$sub->ordem."'>".$sub->nome."</option>";
+        }
+
+        return response()->json($str);
     }
 
     public function addLink(Request $request) {

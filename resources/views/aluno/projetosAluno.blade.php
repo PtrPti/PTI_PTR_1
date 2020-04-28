@@ -31,7 +31,8 @@
 				<a class="siteadd"><img src="{{ asset('images/drive.png') }}" width="37"><span>Google Drive</span></a>
 				<a class="siteadd"><img src="{{ asset('images/github.png') }}" width="37"><span>Github</span></a>
 				<hr>
-				<a class="taskadd"><img src="{{ asset('images/addtarefa.png') }}"width="40"><span>Adicionar Tarefa</span></a>
+                <a class="taskadd"><img src="{{ asset('images/addtarefa.png') }}"width="40"><span>Adicionar Tarefa</span></a>
+                <a class="taskSubadd"><img src="{{ asset('images/addtarefa.png') }}"width="40"><span>Adicionar Subtarefa</span></a>
 				<a class="taskadd"><img src="{{ asset('images/edittarefa.png') }}"width="40"><span>Editar Tarefa</span></a>
 				<hr>
 				<a><img src="{{ asset('images/nota.png') }}" width="40"><span>Nota</span></a>
@@ -39,6 +40,7 @@
 			</div>
 		</div>
 
+        <!-- Popup Adicionar site/link -->
         <div id="all1" class="popUpBack">
 			<div id="addSite">
                 <img class='closebtn' src="{{ asset('images/cancel.png') }}">
@@ -61,14 +63,67 @@
 			</div>
 		</div>
 
+        <!-- Popup Adicionar Tarefa -->
 		<div id="all2" class="popUpBack">
 			<div id="addTarefa">
-                <img class='closebtn' src="{{ asset('images/cancel.png') }}">
-				<input type="text" placeholder="Tarefa.."><br>
-				<button type="submit">Adicionar</button>
+            <img class='closebtn' src="{{ asset('images/cancel.png') }}">
+            <h4>Adicione uma Tarefa</h4>
+                <form id='formAddTarefa'>
+                    <label for='nT'>Nome: </label>
+                    <input type="text" name='nome' id='nT' placeholder="tarefa..."><br>
+                    <label for="tarefaPrincipal">Adicionar depois de:</label>
+                    <select name='ordem' id='tarefaPrincipal' require>
+                        <option disable >tarefas..</option>
+                        @foreach ($tarefas as $tarefa)
+                            @if (is_null($tarefa->tarefa_id))
+                                <option value="{{$tarefa->ordem}}">{{$tarefa->nome}}</option>
+                            @endif
+                        @endforeach  
+                    </select>
+                    <label for='dtT'>Prazo: </label>
+                    <input type="date" name='prazo' id='dtT' ><br>
+                    <input type="hidden" name='grupoId' value="{{ $IdGrupo }}"><br>
+                    <input type="hidden" name='projetoId' value="{{$projeto->id}}"><br>
+				    <input type="submit" value='Adicionar'>
+                </form>
+			</div>
+        </div>
+
+        <!-- Popup Adicionar Subtarefa -->
+        <div id="all5" class="popUpBack">
+			<div id="addSubTarefa">
+            <img class='closebtn' src="{{ asset('images/cancel.png') }}">
+            <h4>Adicione uma Subtarefa</h4>
+                <form id='formAddSubTarefa'>
+                    <label for='nT'>Nome: </label>
+                    <input type="text" name='nome' id='nT' placeholder="tarefa..."><br>
+        
+                    <label for="slc">Tarefa principal:</label>
+                    <select name='tarefaId' id='slc' require>
+                        <option disable >tarefas</option>
+                        @foreach ($tarefas as $tarefa)
+                            @if (is_null($tarefa->tarefa_id))
+                                <option value="{{$tarefa->id}}">{{$tarefa->nome}}</option>
+                            @endif
+                        @endforeach
+                    </select><br>
+
+                    <label for="oT2">Adicionar depois de:</label>
+                    <select name='ordem' id='subtarefasId' require>
+                        <option disable >subtarefas</option>
+                    </select><br>
+
+                    <label for='dtT2'>Prazo: </label>
+                    <input type="date" name='prazo' id='dtT2' ><br>
+
+                    <input type="hidden" name='grupoId' value="{{ $IdGrupo }}"><br>
+                    <input type="hidden" name='projetoId' value="{{$projeto->id}}"><br>
+				    <input type="submit" value='Adicionar'>
+                </form>
 			</div>
 		</div>
 
+        <!-- Popup Adicionar Pasta -->
         <div id="all3" class="popUpBack">
 			<div id="addPasta">
                 <img class='closebtn' src="{{ asset('images/cancel.png') }}">
@@ -81,6 +136,7 @@
 			</div>
         </div>
         
+        <!-- Popup Adicionar Ficheiro -->
         <div id="all4" class="popUpBack">
 			<div id="addPasta">
                 <img class='closebtn' src="{{ asset('images/cancel.png') }}">
@@ -104,6 +160,8 @@
 			</div>
 		</div>
 
+
+        <!-- Lado esquerdo - pastas e ficheiros -->
         <div id="esqcontainer">
         @foreach ($ficheiros as $ficheiro)
             @if ($ficheiro->is_folder)
@@ -156,7 +214,8 @@
                     
     </div>
     </div>
-        
+    
+    <!-- Lado direito - Tarefas -->
 	<div id="drt">
 		<h3>Tarefas</h3>
 		<div id="tarefas">
@@ -210,6 +269,10 @@
         $("#all4").show();
     }); 
 
+    $(".taskSubadd").click(function(){
+        $("#all5").show();
+    });
+
     $(".closebtn").click(function(){
         ($($(this).parent()).parent()).hide();
     });
@@ -234,6 +297,20 @@
             $('img:first',$(this).parent()).attr("src","{{ asset('images/folder.png') }}");
             $('div',$(this).parent()).hide();
         }
+    });
+
+    $('#slc').on('change', function() {
+        var id = this.value
+        $.ajax({
+            url: '/subTarefas',
+            type: 'GET',
+            dataType: 'json',
+            success: 'success',
+            data: {'tarefaId': id},
+            success: function(data){
+                
+                $('#subtarefasId').append(data)}
+        });
     });
 
     function editTarefa(id, val) {
@@ -269,6 +346,18 @@
             location.reload();
         });
     });
+
+    $("#formAddSubTarefa").submit(function(event){
+        event.preventDefault();
+        var form_data = $(this).serialize();
+        $.ajax({
+            url: '/addSubTarefa',
+            type: 'GET',
+            data : form_data
+        }).done(function(response){
+            location.reload();
+        });
+    });
     
      $("#formAddLink").submit(function(event){
         event.preventDefault(); 
@@ -280,7 +369,19 @@
         }).done(function(response){ //
             location.reload();
         });
-    }); 
+    });
+
+    $("#formAddTarefa").submit(function(event){
+        event.preventDefault(); 
+        var form_data = $(this).serialize(); 
+        $.ajax({
+            url: '/addTarefa',
+            type: 'GET',
+            data : form_data
+        }).done(function(response){ //
+            location.reload();
+        });
+    });
 
     $(".containerCheckbox input").click(function() {
         if ($(this).is(':checked')) {

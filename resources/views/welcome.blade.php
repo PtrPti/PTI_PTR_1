@@ -18,8 +18,6 @@
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
-               
-                
             }
 
             body {
@@ -27,10 +25,6 @@
                 background-color:#acc;
                 background-repeat:no-repeat;
                 background-position-y:bottom;
-                
-                
-                
-                
             }
 
             .full-height {
@@ -40,8 +34,7 @@
             .flex-center {
                 align-items: center;
                 display: flex;
-                justify-content: center;
-                
+                justify-content: center;                
             }
 
             .position-ref {
@@ -55,8 +48,7 @@
             }
 
             .content {
-                text-align: center;
-                
+                text-align: center;                
             }
 
             .title {
@@ -77,8 +69,6 @@
                 margin-bottom: 30px;
             }
 
-            
-
             h3{
                 margin-top: -37px
             }
@@ -87,18 +77,12 @@
                 font-size: 27px;
                 position:absolute;
                 left:670px;
-                top:350px;
-               
+                top:350px;               
             }
-
 
             mark{
-                background-color: #e6e16c;
-                
-            }
-
-  
-            
+                background-color: #e6e16c;                
+            } 
 
             .image_logo{
                 position:absolute;
@@ -111,7 +95,6 @@
                 position:absolute;
                 bottom:5px;
                 left:0px;
-
             }
 
             @media only screen and (max-width: 768px) {
@@ -130,52 +113,38 @@
                     bottom: auto;
                 }
             }
-
-
-
-       
         </style>
     </head>
-    <body>
-
-       
+    <body>       
         <div class="flex-center position-ref full-height ">
             @if (Route::has('login'))
-            
-                <div class="top-right links ">
-                    @if (Auth::check())
+                <div class="top-right links">
+                @if(Auth::user() != null)
+                    @if (Auth::user()->isAluno())
                         <a href="{{ route('homeAluno') }}">Home</a>
-                        <a href="{{ route('homeDocente') }}">docenteHome</a>
+                    @elseif (Auth::user()->isProfessor())
+                        <a href="{{ route('homeDocente') }}">Home</a>
                     @else
                         <a href="{{ url('/login') }}">Iniciar Sessão</a>
                         <a href="{{ url('/registar') }}">Registo</a>
-                    @endif
+                    @endif                  
+                @else
+                    <a href="{{ url('/login') }}">Iniciar Sessão</a>
+                    <a href="{{ url('/registar') }}">Registo</a>
+                @endif
                 </div>
             @endif
 
+            <div class="content">
+                <div class="title m-b-md">
+                    <img src="{{ asset('images/big_logo.png') }}" width=27% class="image_logo">
+                    <img src="{{ asset('images/group.svg') }}" width=57% class="image_back">                        
+                </div>                
 
-              
-                <div class="content">
-
-                    <div class="title m-b-md">
-                        <img src="{{ asset('images/big_logo.png') }}" width=27% class="image_logo">
-                        <img src="{{ asset('images/group.svg') }}" width=57% class="image_back">
-                        
-                    </div>
-
-                
-
-                    <div class="links">
-                        <p>We Group, We grow</p>
-
-                        
-
-                    </div>
+                <div class="links">
+                    <p>We Group, We grow</p>
                 </div>
-            
-        </div>
-
-
-        
+            </div>            
+        </div>        
     </body>
 </html>

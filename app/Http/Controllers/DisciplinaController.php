@@ -54,8 +54,11 @@ class DisciplinaController extends Controller
         $duvidas = ForumDuvidas::where('forum_duvidas.cadeira_id', $cadeira_id)->get();
         $mensagens = ForumMensagens::join('forum_duvidas', 'forum_duvida_id', '=', 'forum_duvidas.id')->get();
         //$totalMensagens = $mensagens->count();
+
+        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+                                  ->where('users_cadeiras.user_id', $user->id)->get();
                                 
-        return view('aluno.disciplinasAluno', compact('user','disciplinas','projetos','cadeira','cadeiraProjetos','docentes','duvidas','mensagens'));
+        return view('aluno.disciplinasAluno', compact('user','disciplinas','projetos','cadeira','cadeiraProjetos','docentes','duvidas','mensagens', 'cadeiras'));
     }
 
     public function addTopico(Request $request){
