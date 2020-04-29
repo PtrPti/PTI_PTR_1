@@ -313,6 +313,10 @@
             </div>
         </div>
     </div>
+
+    <div class="register_Image">
+            <img src="{{ asset('images/register_image.svg') }}" width=27% class="image_register"> 
+    </div>
 </div>
 
 <script type="text/javascript">

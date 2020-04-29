@@ -58,6 +58,8 @@
       </div>
   </div>
 
+  
+
 <script>
     var receiver_id = '';
     var my_id = "{{ Auth::id() }}";
