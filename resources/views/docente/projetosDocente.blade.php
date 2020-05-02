@@ -1,5 +1,3 @@
-
-
 <div id="projetos">
     <div class="split left">
             <div class="centered">  

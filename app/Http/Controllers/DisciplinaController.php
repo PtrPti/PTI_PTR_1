@@ -111,21 +111,11 @@ class DisciplinaController extends Controller
         $id = $_GET['id'];
         $grupos = Grupo::where('projeto_id', $id)->get();
         $projeto = Projeto::where('id', $id)->first();
-        // $users = UsersGrupos::where('grupo_id', '=', $grupo_id)->get();
-        // $numero_users = $users->count();
-        // $grupos_id = DB::table('grupos')->select('id')->get();
-        // $numero_users = DB::select('select count(user_id) as users, ug.grupo_id, g.numero 
-        //                             from users_grupos ug
-        //                             inner join grupos g
-        //                             on ug.grupo_id = g.id
-        //                             where grupo_id in (?))', $grupos_id);
+
         $data = array(
             'grupos'  => $grupos,
             'projeto' => $id,
             'max_elementos' => $projeto->n_max_elementos
-            // 'elementos_grupo' => $numero_users->users,
-            // 'grupos_id' => $numero_users->grupo_id,
-            // 'num_grupo' => $numero_users->numero
         );
 
         $returnHTML = view('aluno.grupos')->with($data)->render();

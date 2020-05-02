@@ -43,7 +43,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/alunosHome') }}">
+                    <a class="navbar-brand" href="{{ url('/alunoHome') }}">
                         <img src="{{ asset('images/big_logo.png') }}" width=88px >
                     </a>
                 </div>
