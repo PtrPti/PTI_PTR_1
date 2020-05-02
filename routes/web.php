@@ -29,19 +29,9 @@ Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId
 
 //---------------- DOCENTES ----------------//
 //Home
-Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente');
-Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost');
-Route::get('/docenteHome', 'HomeController@perfil')->name('perfil');
-
-//Docentes
 Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente')->middleware('checkUserRole:2');
 Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost')->middleware('checkUserRole:2');
 Route::get('/docenteHome', 'HomeController@perfil')->name('perfil')->middleware('checkUserRole:2');
-
-//Alunos
-Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno')->middleware('checkUserRole:1');
-Route::get('/disciplinasAluno/{cadeira_id}', 'HomeController@pagDisciplina')->name('pagDisciplina')->middleware('checkUserRole:1');
-Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto')->middleware('checkUserRole:1');
 
 //Disciplinas
 Route::get('/docenteHome/disciplina/{id}', 'DisciplinaController@indexDocente')->name('indexDisciplinaDocente');
@@ -57,18 +47,18 @@ Route::get('delete/{id}','ProjetoController@eraseProject');
 
 //---------------- ALUNOS ----------------//
 //Home
-Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
+Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno')->middleware('checkUserRole:1');
 Route::get('/alunoHome', 'HomeController@alunoHome')->name('alunoHome');
   
 //Disciplina
-Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina')->name('pagDisciplina');
+Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina')->name('pagDisciplina')->middleware('checkUserRole:1');
 Route::get('showGruposA', 'DisciplinaController@showGruposA');
 Route::get('verMensagens', 'DisciplinaController@verMensagens');
 Route::post('/addTopico', 'DisciplinaController@addTopico');
 Route::post('/addMensagem', 'DisciplinaController@addMensagem');
 
 //Projeto
-Route::get('/projetosAluno/{id}', 'ProjetoController@pagProjeto')->name('pagProjeto');
+Route::get('/projetosAluno/{id}', 'ProjetoController@pagProjeto')->name('pagProjeto')->middleware('checkUserRole:1');
 Route::get('editTarefa', 'ProjetoController@editTarefa');
 Route::get('editAllTarefa', 'ProjetoController@editAllTarefa');
 Route::get('addLink', 'ProjetoController@addLink');
@@ -79,6 +69,7 @@ Route::get('addSubTarefa', 'ProjetoController@addSubTarefa');
 Route::post('uploadFicheiro', 'ProjetoController@uploadFicheiro')->name('uploadFicheiro');
 
 //Messages
+Route::get('{route?}/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
 Route::get('/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
 Route::post('message', 'ChatController@sendMessage');
 

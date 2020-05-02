@@ -8340,6 +8340,10 @@ button.close {
   margin-top: 13px;
 }
 
+.chat_icon {
+  z-index: 999;
+}
+
 .chat_icon img{
   position: fixed;
   right: 40px;

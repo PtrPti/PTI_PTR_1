@@ -57,8 +57,13 @@ class DisciplinaController extends Controller
 
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
+
+        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+                                    from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+                                    where users.id != " . Auth::id() . " 
+                                    group by users.id, users.nome, users.email");
                                 
-        return view('aluno.disciplinasAluno', compact('user','disciplinas','projetos','cadeira','cadeiraProjetos','docentes','duvidas','mensagens', 'cadeiras'));
+        return view('aluno.disciplinasAluno', compact('user','disciplinas','projetos','cadeira','cadeiraProjetos','docentes','duvidas','mensagens', 'cadeiras', 'utilizadores'));
     }
 
     public function addTopico(Request $request){

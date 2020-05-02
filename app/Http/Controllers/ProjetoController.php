@@ -56,7 +56,12 @@ class ProjetoController extends Controller
 
         $IdGrupo = $grupo_id;
 
-        return view('aluno.projetosAluno', compact('cadeiras','projetos','nomesUsers','grupo','disciplina','projeto','tarefas','ficheiros','IdGrupo'));
+        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+                                    from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+                                    where users.id != " . Auth::id() . " 
+                                    group by users.id, users.nome, users.email");
+
+        return view('aluno.projetosAluno', compact('cadeiras','projetos','nomesUsers','grupo','disciplina','projeto','tarefas','ficheiros','IdGrupo', 'utilizadores'));
     }
 
     public function editTarefa(Request $request) {
