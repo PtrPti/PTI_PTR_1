@@ -20,7 +20,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/f12fb584ff.js" crossorigin="anonymous"></script>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app_aluno.js') }}"></script>
@@ -28,6 +28,18 @@
 
     <!-- Pusher -->
     <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+
+    <!-- Fullcalendar -->
+    <link rel="stylesheet" href="{{ asset('fullcalendar/core/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('fullcalendar/daygrid/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('fullcalendar/timegrid/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/calendar.css') }}">
+    <script src="{{ asset('fullcalendar/core/main.js') }}"></script>
+    <script src="{{ asset('fullcalendar/daygrid/main.js') }}"></script>
+    <script src="{{ asset('fullcalendar/timegrid/main.js') }}"></script>
+    <script src="{{ asset('fullcalendar/interaction/main.js') }}"></script>
+    <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+    <script src="{{ asset('js/calendar.js') }}"></script>
 </head>
 <body>
     <div id="app">

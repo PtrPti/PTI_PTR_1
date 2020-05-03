@@ -8342,12 +8342,25 @@ button.close {
 
 .chat_icon {
   z-index: 999;
+  cursor: pointer;
+}
+
+.calendarBtn {
+  color: black;
+  /* padding: 14px 14px; */
+  border: none;
+  cursor: pointer;
+  width: 60px;
+  position: fixed;
+  right: 80px;
+  bottom: 30px;
 }
 
 .chat_icon img{
   position: fixed;
   right: 40px;
   bottom: 30px;
+  cursor: pointer;
 }
 
 .chat{

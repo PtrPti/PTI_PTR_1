@@ -106,3 +106,9 @@ Route::get('downloadF/{filename}', function($filename){
         exit('Requested file does not exist on our server!');
     }
 })->where('filename', '[A-Za-z0-9\-\_\.]+');
+
+//---------------- CALENDÁRIO ----------------//
+Route::get('/projetosAluno/loadEvents/{grupo_id}', 'CalendarController@load')->name('loadEvents');
+Route::post('/projetosAluno/createEvent/{title}/{start}/{end}/{allDay}/{grupo_id}', 'CalendarController@create')->name('createEvent');
+Route::post('/projetosAluno/updateEvents/{id}/{title}/{start}/{end}/{allDay}', 'CalendarController@update')->name('updateEvents');
+Route::post('/projetosAluno/deleteEvents/{id}', 'CalendarController@delete')->name('deleteEvents');

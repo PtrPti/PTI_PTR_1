@@ -54,6 +54,7 @@
                 @endforeach
             </table>
         </div>
+        
         <div class="flex-right-footer">
             <button class="footer-icon" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-2x"></i></button>
         </div>

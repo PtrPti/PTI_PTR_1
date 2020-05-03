@@ -1,23 +1,14 @@
-/* #calendar {
+#calendarContainer {
     position: absolute;
     width: 1000px;
     border: 3px solid black;
     border-radius: 10px;
-    display: block;
+    /* visibility: hidden; */
     background-color: white;
     padding: 5px;
+    z-index: 3;
+    top: 80px;
     margin: auto;
-}
-   */
-
-   #calendarContainer {
-    position: absolute;
-    width: 1000px;
-    border: 3px solid black;
-    border-radius: 10px;
-    visibility: hidden;
-    background-color: white;
-    padding: 5px;
 }
     
 #external-events {
@@ -54,4 +45,8 @@
 #calendar {
     float: right;
     width: 88%;
+}
+
+.undraggable {
+    cursor: default !important;
 }

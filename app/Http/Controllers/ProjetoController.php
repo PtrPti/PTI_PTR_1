@@ -10,6 +10,7 @@ use App\Cadeira;
 use App\Grupo;
 use App\Tarefa;
 use App\GrupoFicheiros;
+use App\UsersGrupos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Auth;
@@ -61,7 +62,9 @@ class ProjetoController extends Controller
                                     where users.id != " . Auth::id() . " 
                                     group by users.id, users.nome, users.email");
 
-        return view('aluno.projetosAluno', compact('cadeiras','projetos','nomesUsers','grupo','disciplina','projeto','tarefas','ficheiros','IdGrupo', 'utilizadores'));
+        $users_grupo = UsersGrupos::join('users', 'users.id', '=', 'users_grupos.user_id')->where('grupo_id', $grupo_id)->get();
+
+        return view('aluno.projetosAluno', compact('cadeiras','projetos','nomesUsers','grupo','disciplina','projeto','tarefas','ficheiros','IdGrupo', 'utilizadores', 'users_grupo'));
     }
 
     public function editTarefa(Request $request) {

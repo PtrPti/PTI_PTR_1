@@ -243,6 +243,34 @@
                 @endif
             @endforeach  
         </div>
+        <button class="calendarBtn" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-3x"></i></button>
+
+        <div id='calendarContainer'>
+            <div id='external-events'>
+                <h4>Elementos do grupo</h4>
+                <div id='external-events-list'>
+                    @foreach ($users_grupo as $ug)
+                        <?php $r = rand(0,255); $g = rand(0,255); $b = rand(0,255) ?>
+                        <!-- @if (Auth::user()->getUserId() == $ug->user_id) 
+                            <div class='fc-event draggable' data-color="rgb({{$r}}, {{$g}}, {{$b}})" style="background-color: rgb({{$r}}, {{$g}}, {{$b}}); border-color: rgb({{$r}}, {{$g}}, {{$b}})">{{ $ug->nome }}</div>
+                        @else
+                            <div class='fc-event undraggable' data-color="rgb({{$r}}, {{$g}}, {{$b}})" style="background-color: rgb({{$r}}, {{$g}}, {{$b}}); border-color: rgb({{$r}}, {{$g}}, {{$b}})">{{ $ug->nome }}</div>
+                        @endif -->
+                        
+                        @if (Auth::user()->getUserId() == $ug->user_id) 
+                            <div class='fc-event draggable'>{{ $ug->nome }}</div>
+                        @else
+                            <div class='fc-event undraggable'>{{ $ug->nome }}</div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div id='calendar'></div>
+
+            <div style='clear:both'></div>
+
+        </div>
     </div>
 </div>
 </div>
