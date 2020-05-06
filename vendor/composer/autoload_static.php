@@ -336,12 +336,14 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
 
     public static $classMap = array (
         'AddColunasProjetoTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_22_162817_add_colunas_projeto_table.php',
+        'AddEstadoProjeto' => __DIR__ . '/../..' . '/database/migrations/2020_05_06_150500_add_estado_projeto.php',
         'AddNomeTarefa' => __DIR__ . '/../..' . '/database/migrations/2020_04_20_133018_add_nome_tarefa.php',
         'AddOrdemTarefas' => __DIR__ . '/../..' . '/database/migrations/2020_04_27_161028_add_ordem_tarefas.php',
         'AddRegisterInfoToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_18_010011_add_register_info_to_users_table.php',
         'AddTarefasProjetos' => __DIR__ . '/../..' . '/database/migrations/2020_03_24_174747_add_tarefas_projetos.php',
         'AlterGruposFicheirosTable' => __DIR__ . '/../..' . '/database/migrations/2020_04_22_115310_alter_grupos_ficheiros_table.php',
         'App\\Cadeira' => __DIR__ . '/../..' . '/app/Cadeira.php',
+        'App\\Calendar' => __DIR__ . '/../..' . '/app/Calendar.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Curso' => __DIR__ . '/../..' . '/app/Curso.php',
         'App\\CursoCadeira' => __DIR__ . '/../..' . '/app/CursoCadeira.php',
@@ -358,6 +360,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
+        'App\\Http\\Controllers\\CalendarController' => __DIR__ . '/../..' . '/app/Http/Controllers/CalendarController.php',
         'App\\Http\\Controllers\\ChatController' => __DIR__ . '/../..' . '/app/Http/Controllers/ChatController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DisciplinaController' => __DIR__ . '/../..' . '/app/Http/Controllers/DisciplinaController.php',

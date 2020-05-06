@@ -7,12 +7,14 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddColunasProjetoTable' => $baseDir . '/database/migrations/2020_03_22_162817_add_colunas_projeto_table.php',
+    'AddEstadoProjeto' => $baseDir . '/database/migrations/2020_05_06_150500_add_estado_projeto.php',
     'AddNomeTarefa' => $baseDir . '/database/migrations/2020_04_20_133018_add_nome_tarefa.php',
     'AddOrdemTarefas' => $baseDir . '/database/migrations/2020_04_27_161028_add_ordem_tarefas.php',
     'AddRegisterInfoToUsersTable' => $baseDir . '/database/migrations/2020_03_18_010011_add_register_info_to_users_table.php',
     'AddTarefasProjetos' => $baseDir . '/database/migrations/2020_03_24_174747_add_tarefas_projetos.php',
     'AlterGruposFicheirosTable' => $baseDir . '/database/migrations/2020_04_22_115310_alter_grupos_ficheiros_table.php',
     'App\\Cadeira' => $baseDir . '/app/Cadeira.php',
+    'App\\Calendar' => $baseDir . '/app/Calendar.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Curso' => $baseDir . '/app/Curso.php',
     'App\\CursoCadeira' => $baseDir . '/app/CursoCadeira.php',
@@ -29,6 +31,7 @@ return array(
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',
     'App\\Http\\Controllers\\Auth\\ResetPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ResetPasswordController.php',
+    'App\\Http\\Controllers\\CalendarController' => $baseDir . '/app/Http/Controllers/CalendarController.php',
     'App\\Http\\Controllers\\ChatController' => $baseDir . '/app/Http/Controllers/ChatController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DisciplinaController' => $baseDir . '/app/Http/Controllers/DisciplinaController.php',

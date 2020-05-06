@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
-                    // console.log('received_ajax')
                 }
             });
         },
@@ -63,18 +62,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
-                    // console.log('updated')
                 }
             });
         },
-        eventResize: function (ev) { //quando altera a data do evento -> update
+        eventResize: function (ev) { //quando altera a duracao do evento -> update
             var end = ev.event.end == null ? null : moment(ev.event.end).format("DD-MM-YYYY HH:mm:ss");
             $.ajax({
                 url: '/projetosAluno/updateEvents/' + ev.event.id + '/' + ev.event.title + '/' + moment(ev.event.start).format("DD-MM-YYYY HH:mm:ss") + '/' + end + '/' + ev.event.allDay,
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
-                    // console.log('updated')
                 }
             });
         },
