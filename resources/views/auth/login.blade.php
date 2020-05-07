@@ -70,6 +70,9 @@
                 </div>
             </div>
         </div>
+        <div class="login_Image">
+            <img src="{{ asset('images/login_image.svg') }}" width=30% class="image_login"> 
+        </div>
     </div>
 </div>
 @endsection
