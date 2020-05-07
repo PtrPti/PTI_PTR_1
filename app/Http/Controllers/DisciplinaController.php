@@ -141,12 +141,21 @@ class DisciplinaController extends Controller
 
     public function showGrupos(Request $request) {
         $id = $_GET['id'];
-        $grupos = Grupo::where('projeto_id', $id)->get();
+        // $grupos = Grupo::where('projeto_id', $id)->get();
         $projeto = Projeto::where('id', $id)->first();
+
+        $grupos = DB::select("select g.id, g.numero, count(ug.user_id) as 'total_membros', IFNULL(group_concat(u.nome), '-') as 'elementos' from grupos g
+                                left join users_grupos ug
+                                    on g.id = ug.grupo_id
+                                left join users u
+                                    on ug.user_id = u.id
+                                where g.projeto_id = (?)
+                                group by
+                                    g.id, g.numero, 'total_membros', 'elementos'", [$id]);
 
         $data = array(
             'grupos'  => $grupos,
-            'projeto' => $id,
+            'projeto_id' => $id,
             'max_elementos' => $projeto->n_max_elementos
         );
 
@@ -156,15 +165,25 @@ class DisciplinaController extends Controller
 
     public function addGrupo(Request $request) {
         $id = $_GET['id'];
-        $numero = Grupo::where('projeto_id', $id)->max('numero');
-        $projeto = Projeto::where('id', $id)->first();
-        
-        $grupo = new Grupo;
-        $grupo->projeto_id = $id;
-        $grupo->numero = ($numero == null ? 1 : $numero + 1);
-        $grupo->save();
+        $n_grupos = $_GET['grupos'];
 
-        return response()->json(['numero' => ($numero == null ? 1 : $numero + 1), 'max_elem' => $projeto->n_max_elementos]);
+        $numero = Grupo::where('projeto_id', $id)->max('numero');
+        $numero = $numero == null ? 1 : $numero;
+
+        $projeto = Projeto::where('id', $id)->first();
+
+        $data = array();
+        
+        for ($i = 1; $i <= $n_grupos; $i++, $numero++) {
+            $grupo = new Grupo;
+            $grupo->projeto_id = $id;
+            $grupo->numero = $numero + 1;
+            $grupo->save();
+
+            array_push($data, [$numero + 1, $projeto->n_max_elementos, $grupo->id]);
+        }
+
+        return response()->json($data);
     }
 
     function uploadFile(Request $request) {

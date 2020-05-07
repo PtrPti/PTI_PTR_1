@@ -41,45 +41,49 @@
     
 </div>
 
-<div class="bg-modal projetoModal">
-    <div class="model-content">
-        <div class="close" onclick="closeForm()" >x</div>
-        <h4>Novo Projeto</h4>
-        
-        <form id="add_project" action="{{ route('projetoPost', 'indexDocente') }}" enctype="multipart/form-data" method="post">
-            {{ csrf_field() }}
-            <input type="hidden" name="cadeira_id" value="{{ $cadeira->id }}" required>
-            <input type="text" placeholder="Nome do Projeto" name="nome">
-            <input type="number" placeholder="Número de elementos" name="n_elem">
-            <input type="text" class="date" placeholder="Data de entrega" name="datafim" required>
+<div id="projetoModal" class="model-content">
+    <div class="close" onclick="closeForm()" >x</div>
+    <h4>Novo Projeto</h4>
+    
+    <form id="add_project" action="{{ route('projetoPost', 'indexDocente') }}" enctype="multipart/form-data" method="post">
+        {{ csrf_field() }}
+        <input type="hidden" name="cadeira_id" value="{{ $cadeira->id }}" required>
+        <input type="text" placeholder="Nome do Projeto" name="nome">
+        <input type="number" placeholder="Número de elementos" name="n_elem">
+        <input type="text" class="date" placeholder="Data de Inicio" name="datainicio" required>
+        <input type="text" class="date" placeholder="Data de entrega" name="datafim">
 
-            <button type="submit">Criar</button>
-        </form>
-    </div>
+        <button type="submit">Criar</button>
+    </form>
 </div>
 
-<div class="bg-modal fileModal">
-    <div class="model-content">
-        <div class="close" onclick="closeForm()" >x</div>
-        <h4 id="titleModal"></h4>
-        
-        <form id="add_file" action="{{ route('uploadFile') }}" enctype="multipart/form-data" method="post">
-            {{ csrf_field() }}
-            <input type="hidden" name="cadeira_id" value="{{ $cadeira->id }}" required>
-            <input type="file" placeholder="Nome do Projeto" name="file">
+<div id="fileModal" class="model-content">
+    <div class="close" onclick="closeForm()" >x</div>
+    <h4 id="titleModal"></h4>
+    
+    <form id="add_file" action="{{ route('uploadFile') }}" enctype="multipart/form-data" method="post">
+        {{ csrf_field() }}
+        <input type="hidden" name="cadeira_id" value="{{ $cadeira->id }}" required>
+        <input type="file" placeholder="Nome do Projeto" name="file">
 
-            <select class="form-control" name="projeto_id" id="projeto_id" required>
-                <option value="">-- Selecionar --</option>
-                @foreach ($projetos as $projeto)
-                    <option value="{{$projeto->id}}">{{$projeto->nome}}</option>
-                @endForeach
-            </select>
+        <select class="form-control" name="projeto_id" id="projeto_id" required>
+            <option value="">-- Selecionar --</option>
+            @foreach ($projetos as $projeto)
+                <option value="{{$projeto->id}}">{{$projeto->nome}}</option>
+            @endForeach
+        </select>
 
-            <button type="submit">Criar</button>
-        </form>
-    </div>
+        <button type="submit">Criar</button>
+    </form>
 </div>
 
+
+<div id="grupoNModal" class="model-content">
+    <div class="close" onclick="closeForm()" >x</div>
+    <h4>Nº de grupos</h4>
+        <input type="number" placeholder="Número de elementos" name="n_grupos" min="1" max="100" value="1">
+        <button type="button" onclick="AddMultGrupo('{{$projeto->id}}')">Criar</button>
+</div>
 
 <script>
     function ShowGrupos(id) {
@@ -101,16 +105,16 @@
     });
 
     function CriarProjeto() {
-        $('.projetoModal').slideToggle('fast', function() { 
-            if ($(this).is(':visible')) $(this).css('display','flex');
-         });
+        $('#projetoModal').show();
     }
 
     function AddFile(title) {
-        $('.fileModal').slideToggle('fast', function() { 
-            if ($(this).is(':visible')) $(this).css('display','flex');
-         });
+        $('#fileModal').show();
         $('#titleModal').text(title);
+    }
+
+    function closeForm() {
+        $('.model-content').hide();
     }
 </script>
 

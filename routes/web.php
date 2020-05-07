@@ -44,6 +44,7 @@ Route::get('projetos', 'ProjetoController@nome_projetos')->name('projeto');
 Route::get('projetos/{id}', 'ProjetoController@id_projetos')->name('id_projeto');
 Route::get('delete-records','ProjetoController@index');
 Route::get('delete/{id}','ProjetoController@eraseProject');
+Route::post('/docenteHome/{route?}/deleteGrupo','ProjetoController@deleteGrupo');
 
 //---------------- ALUNOS ----------------//
 //Home
@@ -107,7 +108,7 @@ Route::get('downloadF/{filename}', function($filename){
     }
 })->where('filename', '[A-Za-z0-9\-\_\.]+');
 
-//---------------- CALENDÁRIO ----------------//
+//---------------- CALENDARIO ----------------//
 Route::get('/projetosAluno/loadEvents/{grupo_id}', 'CalendarController@load')->name('loadEvents');
 Route::post('/projetosAluno/createEvent/{title}/{start}/{end}/{allDay}/{grupo_id}', 'CalendarController@create')->name('createEvent');
 Route::post('/projetosAluno/updateEvents/{id}/{title}/{start}/{end}/{allDay}', 'CalendarController@update')->name('updateEvents');

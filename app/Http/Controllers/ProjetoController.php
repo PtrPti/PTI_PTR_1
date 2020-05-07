@@ -232,8 +232,6 @@ class ProjetoController extends Controller
         $grupos = Grupo::where('projeto_id', $id)->get();
         $gruposcount = $grupos->count(); 
 
-        error_log($cadeira->nome);
-
         return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos')); 
     }
 
@@ -242,4 +240,11 @@ class ProjetoController extends Controller
         echo "Record deleted successfully.<br/>";
         return redirect()->action('HomeController@indexDocente', ['tab' => 'tab2']);
     }    
+
+    public function deleteGrupo(Request $request) {
+        error_log($_POST['id']);
+        Grupo::destroy($_POST['id']);
+
+        return response()->json('Apagado com sucesso');
+    }
 }

@@ -13,6 +13,5 @@ function ShowHome() {
 }
 
 function closeForm() {
-    $(".bg-modal").css('display', 'none');
-    $(".create-modal").css('display', 'none');
+    $('.model-content').hide();
 }

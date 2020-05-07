@@ -8406,7 +8406,6 @@ p {
 .emptyDiv {
   flex: 1 0 21%; 
   margin: 5px;
-  height: 100px;
   text-align: center;
 }
 
@@ -8469,27 +8468,23 @@ li a:hover {
   text-align: center;
 }
 
-.bg-modal {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  justify-content: center;
-  align-items: center;
-  display: none;
-  margin: auto;
-}
-
 .model-content {
   width: 400px;
-  height: 350px;
+  height: auto;
   background-color: white;
-  opacity: 1;
   border: 2px solid #acc;
   border-radius: 4px;
   text-align: center;
   align-self: center;
+  margin: auto;
+  padding: 20px 0 20px 0;
+  display: none;
 }
+
+.model-content h4 {
+  display: inline;
+}
+
 
 input{
   width: 90%;
@@ -8499,8 +8494,9 @@ input{
 
 .close{
   position: relative;
-  top: 0;
+  display: inline;
   right: 14px;
+  top: -14px;
   font-size: 30px; 
   cursor: pointer;
 }
@@ -8726,6 +8722,11 @@ h4{
   margin-right: 10px;
 }
 
+.addBtn-row {
+  display: flex;
+  justify-content: space-around;
+}
+
 .addBtn {
   align-self: center;
   color: #222;
@@ -8753,6 +8754,16 @@ h4{
   padding: 5px 20px 5px 20px;
   text-align: center;
   background-color: white;  
+}
+
+.tableGrupos td:first-child {
+  border: none;
+  background-color: transparent;
+  padding: 5px 10px 5px 5px;
+}
+
+.tableGrupos td:first-child i {
+  cursor: pointer;
 }
 
 @viewport {
