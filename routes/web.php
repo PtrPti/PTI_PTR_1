@@ -17,8 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Login
-Route::get('/login', 'AuthController@getLogin')->name('login');
+Route::get('/home', 'HomeController@index')->name('home');
 
 //Registo
 Route::get('/registar', 'AuthController@getRegistar')->name('registar');
@@ -27,21 +26,15 @@ Route::get('/registar/getCursos', 'AuthController@changeDepartamentoId')->name('
 Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('changeCursoId');
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
 
-//---------------- DOCENTES ----------------//
-//Home
+//Docentes
 Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente');
 Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost');
 Route::get('/docenteHome', 'HomeController@perfil')->name('perfil');
 
-//Docentes
-Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente')->middleware('checkUserRole:2');
-Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPost')->middleware('checkUserRole:2');
-Route::get('/docenteHome', 'HomeController@perfil')->name('perfil')->middleware('checkUserRole:2');
-
 //Alunos
-Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno')->middleware('checkUserRole:1');
-Route::get('/disciplinasAluno/{cadeira_id}', 'HomeController@pagDisciplina')->name('pagDisciplina')->middleware('checkUserRole:1');
-Route::get('/projetosAluno', 'HomeController@pagProjeto')->name('pagProjeto')->middleware('checkUserRole:1');
+Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
+Route::get('/disciplinasAluno/{cadeira_id}', 'HomeController@pagDisciplina')->name('pagDisciplina');
+Route::get('/projetosAluno/{id}', 'ProjetoController@pagProjeto')->name('pagProjeto');
 
 //Disciplinas
 Route::get('/docenteHome/disciplina/{id}', 'DisciplinaController@indexDocente')->name('indexDisciplinaDocente');
@@ -52,23 +45,6 @@ Route::post('uploadFile', 'DisciplinaController@uploadFile')->name('uploadFile')
 //Projetos
 Route::get('projetos', 'ProjetoController@nome_projetos')->name('projeto');
 Route::get('projetos/{id}', 'ProjetoController@id_projetos')->name('id_projeto');
-Route::get('delete-records','ProjetoController@index');
-Route::get('delete/{id}','ProjetoController@eraseProject');
-
-//---------------- ALUNOS ----------------//
-//Home
-Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
-Route::get('/alunoHome', 'HomeController@alunoHome')->name('alunoHome');
-  
-//Disciplina
-Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina')->name('pagDisciplina');
-Route::get('showGruposA', 'DisciplinaController@showGruposA');
-Route::get('verMensagens', 'DisciplinaController@verMensagens');
-Route::post('/addTopico', 'DisciplinaController@addTopico');
-Route::post('/addMensagem', 'DisciplinaController@addMensagem');
-
-//Projeto
-Route::get('/projetosAluno/{id}', 'ProjetoController@pagProjeto')->name('pagProjeto');
 Route::get('editTarefa', 'ProjetoController@editTarefa');
 Route::get('editAllTarefa', 'ProjetoController@editAllTarefa');
 Route::get('addLink', 'ProjetoController@addLink');
@@ -76,13 +52,11 @@ Route::get('addPasta', 'ProjetoController@addPasta');
 Route::get('addTarefa', 'ProjetoController@addTarefa');
 Route::get('subTarefas', 'ProjetoController@subTarefas');
 Route::get('addSubTarefa', 'ProjetoController@addSubTarefa');
+Route::get('pesquisar', 'ProjetoController@pesquisar');
 Route::post('uploadFicheiro', 'ProjetoController@uploadFicheiro')->name('uploadFicheiro');
+Route::get('delete-records','ProjetoController@index');
+Route::get('delete/{id}','ProjetoController@eraseProject');
 
-//Messages
-Route::get('/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
-Route::post('message', 'ChatController@sendMessage');
-
-//---------------- DOWNLOAD ----------------//
 //Download
 Route::get('download/{filename}', function($filename)
 {

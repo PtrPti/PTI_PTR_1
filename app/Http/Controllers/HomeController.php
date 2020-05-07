@@ -28,35 +28,24 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        return view('welcome');
+    public function index()
+    {
+        return view('home');
     }
 
     //Aluno
-    public function alunoHome(){
-        return view('aluno.alunoHome');
-    }
-
     public function indexAluno(){
         $user = Auth::user()->getUser();
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
 
         $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
-                                  ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-                                  ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
-                                  ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
-                                      ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id')->get();
-
-        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-            ->where('users_grupos.grupo_id', $user->id)->get();
-    
-        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
-            from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
-            where users.id != " . Auth::id() . " 
-            group by users.id, users.nome, users.email");
-
-        return view('aluno.alunoHome', compact('cadeiras','projetos','grupos', 'utilizadores'));
+                        ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                        ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
+                        ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
+                            ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id')->get();
+        
+        return view('aluno.alunoHome', compact('cadeiras','projetos'));
     }
 
     public function pagDisciplina(int $cadeira_id){
@@ -64,19 +53,15 @@ class HomeController extends Controller
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
         $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-                                  ->where('users_grupos.grupo_id', $user->id)->get();
+                                  ->where('users_grupos.user_id', $user->id)->get();
         $cadeira = DB::table('cadeiras')->where('cadeiras.id', $cadeira_id)->get();
 
         return view('aluno.disciplinasAluno', compact('cadeiras','grupos','cadeira'));
     }
 
-    public function pagProjeto(){
-        return view('aluno.projetosAluno');
-    }
-
     //Docente
     public function indexDocente($tab = "tab1"){
-        $user = Auth::user()->getUser();
+        $user = Auth::user()->getUser();  
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
         $projetos = DB::select('select * from projetos p
                                 where p.cadeira_id in (select ca.id from users_cadeiras uc

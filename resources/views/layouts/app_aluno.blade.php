@@ -19,15 +19,9 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <!-- Scripts -->
     <script src="{{ asset('js/app_aluno.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-
-    <!-- Pusher -->
-    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -82,11 +76,9 @@
 
         <div id="apps">
             <div class="nav_icons">
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
-                    <a href="{{ route('alunoHome') }}"> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
+                    <a> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
                 </div>
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         <img src="{{ asset('images/disciplinas_icon.png') }}" width=23px> Disciplinas
@@ -97,35 +89,34 @@
                         @endforeach
                     </ul>
                 </div>
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         <img src="{{ asset('images/projetos_icon.png') }}" width=23px> Projetos
                     </button>
                     <ul class="dropdown-menu">
                         @foreach ($projetos as $proj)
-                            <li><a href="{{ route('pagProjeto', ['id' => $proj->id]) }}"> {{$proj->projeto}} | Grupo Nº{{$proj->numero}}</a></li>
+                        <li><a href="{{ route('pagProjeto', ['id' => $proj->id]) }}"> {{$proj->projeto}} | Grupo Nº{{$proj->numero}}</a></li>
                         @endforeach
                     </ul>
                 </div>
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <a class="nav_calendario"> <img src="{{ asset('images/calendario_icon.png') }}" width=23px> Calendário </a>                
                 </div>
-                
             </div>
 
             <div id="menuProjetos">
             </div>                
         </div>
 
-        <div class="chat_icon">
-            <img src="{{ asset('images/chat_icon.png') }}" width=40px>
-        </div>
+            <div class="chat_icon">
+                <img src="{{ asset('images/chat_icon.png') }}" width=40px>
+            </div>
 
-        <div class=chat>        
-        </div>
+            <div class=chat>        
+            </div>
         @yield('content')
     </div>
+
+
 </body>
 </html>
