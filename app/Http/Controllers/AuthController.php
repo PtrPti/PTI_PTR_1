@@ -16,7 +16,7 @@ use DateTime;
 class AuthController extends Controller
 {
     public function getLogin() {
-        return view('login');
+        return view('auth.login');
     }
 
     public function getRegistar() {
@@ -63,7 +63,7 @@ class AuthController extends Controller
                 $cadeira_insert->save();
             }
     
-            return redirect('home');
+            return redirect()->action('AuthController@getLogin');
         }
         else { //professor
             $this->validate($request, [
@@ -97,7 +97,7 @@ class AuthController extends Controller
                 $cadeira_insert->save();
             }
     
-            return redirect('home');
+            return redirect()->action('AuthController@getLogin');
         }   
     }
 

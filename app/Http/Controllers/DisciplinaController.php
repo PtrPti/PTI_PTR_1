@@ -7,7 +7,11 @@ use App\User;
 use App\Grupo;
 use App\Projeto;
 use App\Cadeira;
+use App\UserCadeira;
+use App\UsersGrupos;
 use App\ProjetoFicheiro;
+use App\ForumDuvidas;
+use App\ForumMensagens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -49,7 +53,7 @@ class DisciplinaController extends Controller
                           ->where('users_cadeiras.cadeira_id', $cadeira_id)->get();
         $duvidas = ForumDuvidas::where('forum_duvidas.cadeira_id', $cadeira_id)->get();
         $mensagens = ForumMensagens::join('forum_duvidas', 'forum_duvida_id', '=', 'forum_duvidas.id')->get();
-        //$totalMensagens = $mensagens->count();
+        // $totalMensagens = $mensagens->count();
 
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();

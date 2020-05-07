@@ -28,17 +28,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('home');
+    public function index() {
+        return view('welcome');
     }
 
     //Aluno
-    public function alunoHome(){
+    public function alunoHome() {
         return view('aluno.alunoHome');
     }
 
-    public function indexAluno(){
+    public function indexAluno() {
         $user = Auth::user()->getUser();
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();

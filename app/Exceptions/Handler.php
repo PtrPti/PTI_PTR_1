@@ -44,6 +44,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceOf TokenMistmatchException){
+            return redirect()->back()->with('serverError', 'Token Expired');
+        }
         return parent::render($request, $exception);
     }
 
