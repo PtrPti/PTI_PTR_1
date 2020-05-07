@@ -51,15 +51,15 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-link login-text" href="{{ route('password.request') }}">
                                     Esqueceste-te da tua password?
                                 </a>
                                 <p>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary login-text">
                                     Inicar Sessão
                                 </button>
                                
-                               <a class="btn btn-link" href="{{ route('register') }}">
+                               <a class="btn btn-link login-text" href="{{ route('register') }}">
                                     Criar conta
                                 </a>
 

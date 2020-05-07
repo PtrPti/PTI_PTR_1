@@ -35,3 +35,7 @@
     opacity: 100%;
     cursor: default;
 }
+
+.login-text {
+    color: #636b6f;
+}
