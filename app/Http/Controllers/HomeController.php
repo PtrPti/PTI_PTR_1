@@ -28,8 +28,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        return view('welcome');
+    public function index()
+    {
+        return view('home');
     }
 
     //Aluno
@@ -58,10 +59,21 @@ class HomeController extends Controller
 
         return view('aluno.alunoHome', compact('cadeiras','projetos','grupos', 'utilizadores'));
     }
-    
+
+    public function pagDisciplina(int $cadeira_id){
+        $user = Auth::user()->getUser();
+        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+                                  ->where('users_cadeiras.user_id', $user->id)->get();
+        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                                  ->where('users_grupos.user_id', $user->id)->get();
+        $cadeira = DB::table('cadeiras')->where('cadeiras.id', $cadeira_id)->get();
+
+        return view('aluno.disciplinasAluno', compact('cadeiras','grupos','cadeira'));
+    }
+
     //Docente
     public function indexDocente($tab = "tab1"){
-        $user = Auth::user()->getUser();
+        $user = Auth::user()->getUser();  
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
         $projetos = DB::select('select * from projetos p
                                 where p.cadeira_id in (select ca.id from users_cadeiras uc

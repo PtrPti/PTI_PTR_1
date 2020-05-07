@@ -16,7 +16,6 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
@@ -69,7 +68,6 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         ),
         'P' => 
         array (
-            'Pusher\\' => 7,
             'Psy\\' => 4,
             'Psr\\Log\\' => 8,
             'Prophecy\\' => 9,
@@ -220,10 +218,6 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
         ),
-        'Pusher\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/pusher/pusher-php-server/src',
-        ),
         'Psy\\' => 
         array (
             0 => __DIR__ . '/..' . '/psy/psysh/src',
@@ -342,6 +336,8 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'AddOrdemTarefas' => __DIR__ . '/../..' . '/database/migrations/2020_04_27_161028_add_ordem_tarefas.php',
         'AddRegisterInfoToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_18_010011_add_register_info_to_users_table.php',
         'AddTarefasProjetos' => __DIR__ . '/../..' . '/database/migrations/2020_03_24_174747_add_tarefas_projetos.php',
+        'AddUserId' => __DIR__ . '/../..' . '/database/migrations/2020_05_07_112110_add_user_id.php',
+        'AddUserTarefas' => __DIR__ . '/../..' . '/database/migrations/2020_05_02_132833_add_user_tarefas.php',
         'AlterGruposFicheirosTable' => __DIR__ . '/../..' . '/database/migrations/2020_04_22_115310_alter_grupos_ficheiros_table.php',
         'App\\Cadeira' => __DIR__ . '/../..' . '/app/Cadeira.php',
         'App\\Calendar' => __DIR__ . '/../..' . '/app/Calendar.php',
@@ -398,6 +394,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'Carbon\\Upgrade' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Upgrade.php',
         'CreateCalendarioTable' => __DIR__ . '/../..' . '/database/migrations/2020_05_03_022920_create_calendario_table.php',
+        'CeateTableTarefasFicheiros' => __DIR__ . '/../..' . '/database/migrations/2020_05_07_112555_ceate_table_tarefas_ficheiros.php',
         'CreateCursosCadeirasTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_21_002330_create_cursos_cadeiras_table.php',
         'CreateForumDuvidasTable' => __DIR__ . '/../..' . '/database/migrations/2020_04_26_155427_create_forum_duvidas_table.php',
         'CreateForumMensagensTable' => __DIR__ . '/../..' . '/database/migrations/2020_04_26_154456_create_forum_mensagens_table.php',
@@ -3029,11 +3026,6 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'Psy\\VersionUpdater\\GitHubChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/GitHubChecker.php',
         'Psy\\VersionUpdater\\IntervalChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/IntervalChecker.php',
         'Psy\\VersionUpdater\\NoopChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/NoopChecker.php',
-        'Pusher\\Pusher' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/Pusher.php',
-        'Pusher\\PusherCrypto' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/PusherCrypto.php',
-        'Pusher\\PusherException' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/PusherException.php',
-        'Pusher\\PusherInstance' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/PusherInstance.php',
-        'Pusher\\Webhook' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/Webhook.php',
         'Ramsey\\Uuid\\BinaryUtils' => __DIR__ . '/..' . '/ramsey/uuid/src/BinaryUtils.php',
         'Ramsey\\Uuid\\Builder\\DefaultUuidBuilder' => __DIR__ . '/..' . '/ramsey/uuid/src/Builder/DefaultUuidBuilder.php',
         'Ramsey\\Uuid\\Builder\\DegradedUuidBuilder' => __DIR__ . '/..' . '/ramsey/uuid/src/Builder/DegradedUuidBuilder.php',

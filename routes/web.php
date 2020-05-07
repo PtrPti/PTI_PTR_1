@@ -17,8 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Login
-Route::get('/login', 'AuthController@getLogin')->name('login');
+Route::get('/home', 'HomeController@index')->name('home');
 
 //Registo
 Route::get('/registar', 'AuthController@getRegistar')->name('registar');
@@ -67,7 +66,10 @@ Route::get('addPasta', 'ProjetoController@addPasta');
 Route::get('addTarefa', 'ProjetoController@addTarefa');
 Route::get('subTarefas', 'ProjetoController@subTarefas');
 Route::get('addSubTarefa', 'ProjetoController@addSubTarefa');
+Route::get('pesquisar', 'ProjetoController@pesquisar');
 Route::post('uploadFicheiro', 'ProjetoController@uploadFicheiro')->name('uploadFicheiro');
+Route::get('delete-records','ProjetoController@index');
+Route::get('delete/{id}','ProjetoController@eraseProject');
 
 //Messages
 Route::get('{route?}/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');

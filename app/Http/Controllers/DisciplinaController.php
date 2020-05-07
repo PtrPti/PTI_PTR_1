@@ -7,11 +7,7 @@ use App\User;
 use App\Grupo;
 use App\Projeto;
 use App\Cadeira;
-use App\UserCadeira;
-use App\UsersGrupos;
 use App\ProjetoFicheiro;
-use App\ForumDuvidas;
-use App\ForumMensagens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -135,6 +131,7 @@ class DisciplinaController extends Controller
                                 left join projetos_ficheiros pf
                                     on p.id = pf.projeto_id
                                 where p.cadeira_id = ?', [$id]);
+                                // error_log( print_r($projetos, TRUE) );
         $cadeira = Cadeira::where('id', $id)->first();
         return view('disciplina.indexDocente', compact('projetos', 'cadeira'));
     }

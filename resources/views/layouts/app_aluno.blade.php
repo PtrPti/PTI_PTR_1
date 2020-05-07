@@ -94,11 +94,9 @@
 
         <div id="apps">
             <div class="nav_icons">
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
-                    <a href="{{ route('alunoHome') }}"> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
+                    <a> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
                 </div>
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         <img src="{{ asset('images/disciplinas_icon.png') }}" width=23px> Disciplinas
@@ -109,22 +107,19 @@
                         @endforeach
                     </ul>
                 </div>
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         <img src="{{ asset('images/projetos_icon.png') }}" width=23px> Projetos
                     </button>
                     <ul class="dropdown-menu">
                         @foreach ($projetos as $proj)
-                            <li><a href="{{ route('pagProjeto', ['id' => $proj->id]) }}"> {{$proj->projeto}} | Grupo Nº{{$proj->numero}}</a></li>
+                        <li><a href="{{ route('pagProjeto', ['id' => $proj->id]) }}"> {{$proj->projeto}} | Grupo Nº{{$proj->numero}}</a></li>
                         @endforeach
                     </ul>
                 </div>
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <a class="nav_calendario"> <img src="{{ asset('images/calendario_icon.png') }}" width=23px> Calendário </a>                
                 </div>
-                
             </div>
 
             <div id="menuProjetos">
@@ -164,6 +159,8 @@
         <div class="message-wrapper" id="messages">
         </div>
     </div>
+
+
 </body>
 
 <script>
