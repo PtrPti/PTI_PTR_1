@@ -2,13 +2,12 @@
 
 @section('content')
 
-<div class="nav_icons">
-    <a class="back" href="{{ route ('homeDocente') }}">« Voltar</a>
-    <h1><?php echo $cadeira->nome ?></h1>
-</div>
-
 <div class="container-flex">
-    <div class="flex-left">        
+    <div class="left-pane-bg">        
+    </div> 
+
+    <div class="flex-left">
+        <a class="back" href="{{ route ('homeDocente') }}">« Voltar</a>
         <li class="open-dropdown has-dropdown">
           <a id="open-dropdown">Criar/Adicionar <i class="fa fa-caret-down"></i></a>
           <ul class="dropdown">
@@ -25,14 +24,18 @@
             <h4>{{ $projeto->nome }}</h4>
             <!-- <p><span class="projetosLabels">Data de entrega: </span><span>{{ $projeto->data_fim }}</span></p> --><!-- ->format('l jS F Y H:i')*@ -->
             <p><span class="projetosLabels">Data de entrega: </span><span>{{ $projeto->data_fim }}</span></p>
-            <p><span class="projetosLabels">Enunciado: </span><a href="{{ url('/download', $projeto->ficheiro) }}">{{ explode("_", $projeto->ficheiro, 2)[1] }}</a></p>
+            @if ($projeto->ficheiro != "")
+                <p><span class="projetosLabels">Enunciado: </span><a href="{{ url('/download', $projeto->ficheiro) }}">{{ explode("_", $projeto->ficheiro, 2)[1] }}</a></p>
+            @endif
             <button type="button" class="showGrupos" onclick="ShowGrupos({{$projeto->id}})">Ver grupos <i class="fa fa-users"></i></button>
         </div>
         @endforeach
     </div>
 
     <div class="flex-right">
-        
+        <h2><?php echo $cadeira->nome ?></h2>
+        <div class="flex-right-container">
+        </div>
     </div>
     
 </div>
@@ -90,8 +93,8 @@
             success: 'success',
             data: {'id': id},
             success: function(data){
-                $(".flex-right").empty();
-                $(".flex-right").append(data.html);
+                $(".flex-right-container").empty();
+                $(".flex-right-container").append(data.html);
             }
         });
     }

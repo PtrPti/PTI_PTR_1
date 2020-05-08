@@ -13,7 +13,7 @@
     <!-- Scripts -->
     <script src="<?php echo e(asset('js/app.js')); ?>"></script>
     <script src="<?php echo e(asset('js/app_docente.js')); ?>"></script>    
-    
+
     <!-- FontAwesome Icons -->
     <script src="https://kit.fontawesome.com/f12fb584ff.js" crossorigin="anonymous"></script>
 
@@ -23,11 +23,11 @@
     <!-- DatePicker -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="<?php echo e(asset('css/datetimepicker.css')); ?>" rel="stylesheet">
     <script src="<?php echo e(asset('js/datetimepicker.js')); ?>"></script>
 
-   <!-- Calendario Disponibilidades -->
+    <!-- Calendario Disponibilidades -->
     <link rel="stylesheet" href="<?php echo e(asset('fullcalendar/core/main.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('fullcalendar/daygrid/main.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('fullcalendar/timegrid/main.css')); ?>">
@@ -96,36 +96,33 @@
             <div class="chat-popup" id="chat">
                 <form action="/action_page.php" class="form-container">
                     <h2 class="chat_name">chat</h2>
-            
+
                     <div class="dropup">
                         <button type="button" class="btgrupos"> <i class="fa fa-users"></i> Escolha um grupo</button>
                         <div class="dropup-content">
                             <a href="#"> Grupo 1</a>
                         </div>
                     </div>
-    
+
                     <label for="msg"><b>Mensagens</b></label>
                     <textarea placeholder="Escreva a sua mensagem" name="msg" required></textarea>
-    
+
                     <button type="submit" class="btn">Enviar Feedback</button>
                     <button type="button" class="btn cancel" onclick="closeForm()">Fechar</button>
                 </form>
             </div>
         </div>
 
-    <script>
-        function openForm() {
-            document.getElementById("chat").style.display = "block";
-        }
-
-        function closeForm() {
-            document.getElementById("chat").style.display = "none";
-        }
-    </script>
+        <script>
+            function openForm() {
+                document.getElementById("chat").style.display = "block";
+            }
+            function closeForm() {
+                document.getElementById("chat").style.display = "none";
+            }
+        </script>
 
         <?php echo $__env->yieldContent('content'); ?>
     </div>
-
-
 </body>
 </html>

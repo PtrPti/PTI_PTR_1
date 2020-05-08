@@ -95,7 +95,7 @@
         <div id="apps">
             <div class="nav_icons">
                 <div style="border-bottom: 1.5px solid #e6e16c;">
-                    <a> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
+                <a href="{{ route('alunoHome') }}"> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
                 </div>
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
@@ -103,7 +103,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         @foreach ($cadeiras as $cadeira)
-                        <li><a href="{{ route('pagDisciplina', ['cadeira_id' => $cadeira->id]) }}"> {{$cadeira->nome}} </a></li>
+                            <li><a href="{{ route('pagDisciplina', ['cadeira_id' => $cadeira->id]) }}"> {{$cadeira->nome}} </a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -113,7 +113,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         @foreach ($projetos as $proj)
-                        <li><a href="{{ route('pagProjeto', ['id' => $proj->id]) }}"> {{$proj->projeto}} | Grupo Nº{{$proj->numero}}</a></li>
+                            <li><a href="{{ route('pagProjeto', ['id' => $proj->id]) }}"> {{$proj->projeto}} | Grupo Nº{{$proj->numero}}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -131,7 +131,6 @@
         <div class="chat_icon">
             <img src="{{ asset('images/chat_icon.png') }}" width=40px>
         </div>
-
 
         <!-- Chat -->
         {{ csrf_field() }}
@@ -159,8 +158,6 @@
         <div class="message-wrapper" id="messages">
         </div>
     </div>
-
-
 </body>
 
 <script>

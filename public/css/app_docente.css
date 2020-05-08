@@ -8506,25 +8506,91 @@ h4{
 
 .container-flex {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding-left: 10%;
-  padding-right: 10%;
-  padding-top: 2%;
-  flex-basis: 100%;
+  margin: 0;
+  margin-top: -22px;
+}
+
+.left-pane-bg {
+  position: absolute;
+  background-color: #acc;
+  width: 25%;
+  height: 100%;  
+  z-index: -1;
 }
 
 .flex-left {
+  flex: 25%;
+  background-color: #acc;
   display: flex;
   flex-direction: column;
-  flex: 30%;
-  border-right: 3px groove #acc;
+  padding-top: 20px;
+  align-items: center;
 }
 
 .flex-right {
   display: flex;
   flex-direction: column;
-  flex: 70%;
+  flex: 75%;
+  padding-top: 3rem;
+}
+
+.flex-left .back {
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+
+.flex-right-header {
+  display: flex;
+  flex: 100%;
+}
+
+.flex-right h2, .flex-right-header h2 {
+  align-self: flex-start;
+  padding-bottom: 10px;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 40px;
+  margin-left: 25px;
+  border-bottom: 3px solid #acc;
+}
+
+.flex-right-header h3 {
+  flex: 50%;
+  text-align: right;
+  margin: 0;
+  margin-right: 25px;
+  font-size: 18px;
+}
+
+.flex-right-header h3 * {
+  color: #acc;
+}
+
+.flex-right-header h3 a:hover {
+  color: #636b6f;
+  text-decoration: underline;
+}
+
+.flex-right-container {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  flex: 100%;
+}
+
+.flex-right-container h4 {
+  align-self: center;
+  padding-top: 0px;
+}
+
+.flex-right-footer {
+  display: flex;
+  align-content: flex-end;
+  margin-right: 50px;
+}
+
+.flex-right-footer .footer-icon{
+  margin-right: 70px;
 }
 
 .projeto {
@@ -8537,6 +8603,26 @@ h4{
   color: #222;
   padding: 0 10px 10px 10px;
   flex-direction: column;
+}
+
+.flex-right-footer {
+  display: flex;
+  align-content: flex-end;
+  margin-right: 50px;
+}
+
+.projeto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border: 3px ridge #9b9b9b;
+  margin: 10px 20px 10px 20px;
+  height: 120px;
+  max-height: 120px;
+  width: 80%;
+  text-align: left;
+  color: #222;
+  padding: 0 10px 10px 10px;
 }
 
 .projeto h4 {
@@ -8554,16 +8640,9 @@ h4{
   font-weight: bold;
 }
 
-.addBtn {
-  align-self: center;
-  color: #222;
-  border-color: #acc;
-  border-radius: 2px;
-  border-style: solid;
-  padding: 5px 20px 5px 20px;
-}
-.addBtn:hover {
-  background-color: #acc;
+.projetosLabels ~ a:hover{
+  color: black;
+  text-decoration: underline;
 }
 
 .open-dropdown {
@@ -8577,17 +8656,21 @@ h4{
   padding: 5px 20px 5px 20px;
 }
 
+.open-dropdown a {
+  border-radius: 4px;
+  padding: 5px 20px 5px 20px;
+  width: 200px;
+  background-color: white;
+}
+
 .open-dropdown a:hover {
   text-decoration: none;
   cursor: pointer;
 }
 
-.open-dropdown a:focus {
-  color: black;
-}
-
-.has-dropdown:hover  .dropdown{
+.has-dropdown:hover .dropdown{
   opacity: 1;
+  z-index: 2;
   pointer-events: auto;
 }
 
@@ -8595,7 +8678,7 @@ h4{
   position: absolute;
   width: 200px;
   opacity: 0;
-  z-index: 2;
+  z-index: -1;
   border-color: #acc;
   border-radius: 2px;
   border-style: solid;
@@ -8628,7 +8711,7 @@ h4{
   padding: 5px 20px 5px 20px;
 }
 .dropdown-item button:hover {
-  background-color: #acc;
+  background-color: #9b9b9b;
 }
 
 .showGrupos {
@@ -8677,28 +8760,17 @@ h4{
   border: 3px ridge #acc;
   margin: auto;
   margin-top: 20px;
-  padding: 5px;
   border-collapse: separate;
   border-spacing: 5px;
+  padding: 40px 70px;
+  background-color: #E9E0DF;
 }
 
 .tableGrupos td {
   border: 2px double #636b6f;
   padding: 5px 20px 5px 20px;
   text-align: center;
-}
-
-.nome_projeto{
-  position: absolute;
-  right: 45%;
-  border-bottom: 3px solid #acc;
-}
-
-.nome_cadeira{
-  position: absolute;
-  left: 570px;
-  top: 160px;
-  font-size: 30px;
+  background-color: white;  
 }
 
 .tableGrupos td:first-child {
@@ -8744,55 +8816,12 @@ h4{
     width: 15%;
     padding-left: 10%;
   }
-
-  [class="nome_projeto"]{
-    margin-right: -93px;
-  }
   
-  [class="img_projeto"]{
+  [class="flex-left-icon"]{
     margin-left:-40px;
     width: 20px;
   }
-
-  [class="tasks_proj"]{
-    margin-left:-70px ;
-    font-size: 12px;
-    margin-top: -6px;
-  }
-
-  [class="inline"]{
-    font-size: 10px;
-    margin-left: -435px;
-  }
-
-  [class="lado esquerdo"]{
-    width: 30px;
-    background-color: red;
-  }
 }
-
-.lado{  
-    height: 100%;
-    width: 23%;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-.esquerdo {
-  left: 0;
-  background-color: #acc;
-}
-
-.grupos{
-  position: absolute;
-  left: 570px;
-  top: 220px;
-  z-index: 1;
-}
-
 .botao_projetos{
   align-self: center;
   position: fixed;
@@ -8808,35 +8837,6 @@ h4{
 .botao_projetos:hover {
   background-color: white;
   color: #000;
-}
-
-/* textarea {
-  overflow: hidden;
-  line-height:1.5;
-  border:0;
-  border-radius:3px;
-  background: linear-gradient(#F9EFAF, #F7E98D);
-  box-shadow:0 4px 6px rgba(0,0,0,0.1);  
-  transition:box-shadow 0.5s ease;
-  font-smoothing:subpixel-antialiased;
-  max-width:520px;
-  max-height:250px;
-  position: fixed;
-  top: 400px;
-  right: 50px;
-  width: 290px;
-  height: 300px;
-}
-
-textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); } */
-
-.inline{
-  display: inline;
-}
-
-#nome_disciplina{
-  color: #acc;
-  margin-left: 10px;  
 }
 
 .popup{
@@ -8864,18 +8864,17 @@ textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); } */
   opacity: 0.6;
 }
 
-.open-button {
+.footer-icon {
   background-color: #555;
   color: white;
-  padding: 14px 10px;
+  padding: 14px 14px;
   border-radius: 40px;
   border: none;
   cursor: pointer;
-  opacity: 0.8;
   position: fixed;
-  bottom: 40px;
-  right: 40px;
-  width: 240px;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
 }
 
 .chat-popup {
@@ -8957,22 +8956,6 @@ textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); } */
   position: relative;
   top: -30px;
   text-align: center;
-}
-
-.tableGrupos_p{  
-  background-color: #E9E0DF;
-  margin: auto;
-  margin-left: 615px;
-  margin-top: 220px;
-  padding: 40px 70px;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
-.tableGrupos_p td {  
-  padding: 5px 20px 5px 20px;
-  text-align: center;
-  background-color: white;  
 }
 
 .dropup-content {

@@ -95,11 +95,9 @@
 
         <div id="apps">
             <div class="nav_icons">
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
-                    <a href="<?php echo e(route('alunoHome')); ?>"> <img src="<?php echo e(asset('images/home_icon.png')); ?>" width=23px> Home </a>
+                    <a> <img src="<?php echo e(asset('images/home_icon.png')); ?>" width=23px> Home </a>
                 </div>
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         <img src="<?php echo e(asset('images/disciplinas_icon.png')); ?>" width=23px> Disciplinas
@@ -110,22 +108,19 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         <img src="<?php echo e(asset('images/projetos_icon.png')); ?>" width=23px> Projetos
                     </button>
                     <ul class="dropdown-menu">
                         <?php $__currentLoopData = $projetos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proj): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <li><a href="<?php echo e(route('pagProjeto', ['id' => $proj->id])); ?>"> <?php echo e($proj->projeto); ?> | Grupo Nº<?php echo e($proj->numero); ?></a></li>
+                        <li><a href="<?php echo e(route('pagProjeto', ['id' => $proj->id])); ?>"> <?php echo e($proj->projeto); ?> | Grupo Nº<?php echo e($proj->numero); ?></a></li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
-
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                     <a class="nav_calendario"> <img src="<?php echo e(asset('images/calendario_icon.png')); ?>" width=23px> Calendário </a>                
                 </div>
-                
             </div>
 
             <div id="menuProjetos">
@@ -166,6 +161,8 @@
         <div class="message-wrapper" id="messages">
         </div>
     </div>
+
+
 </body>
 
 <script>

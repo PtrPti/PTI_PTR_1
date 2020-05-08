@@ -2,50 +2,39 @@
 
 @section('content')
 
-<head>
-    <meta content="width=device-width, initial-scale=1" name="viewport" />   
-</head>
+<div class="container-flex">
+    <div class="left-pane-bg">        
+    </div> 
 
-<div class="nome_projeto">  
-    <h2>{{ $projeto->nome }}</h2>
-</div>
+    <div class="flex-left">
+        <a class="back" href="{{ route ('homeDocente', 'tab2') }}">« Voltar</a>
 
-<div class="nome_cadeira">
-        <h3 class='inline'>Disciplina:</h3>
-        <h3 class ='inline' id="nome_disciplina"> {{ $cadeira->nome }} </h3>
-</div>
+        <li class="open-dropdown has-dropdown">
+            <a id="open-dropdown">Adicionar <i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown">
+                <li class="dropdown-item">
+                    <button type="button" onclick="#">Tarefa</button>
+                </li>
+                <li class="dropdown-item">
+                    <button type="button" onclick="#">Ficheiro</button>
+                </li>
+            </ul>
+        </li>
 
-<div>
-    <p class="grupos"> Grupos inscritos:  {{ $gruposcount }}</p>
-</div>
+        <div class="flex-left-links">
+            <img src="{{ asset('images/pdf.png') }}" class="flex-left-icon" />
+            <a href="#" class="tasks_proj" >Ver Enunciado</a>
+        </div>
 
-<table class="tableGrupos_p">
-@foreach ($grupos as $grupo)
-    <tr>
-        <td>Grupo {{$grupo->numero}}</td>
-        <td>0/{{$projeto->n_max_elementos}}</td>
-        <td>-</td>
-    <tr>
-    @endforeach
-</table>
+        <div class="flex-left-links">
+            <img src="{{ asset('images/excel.png') }}" class="flex-left-icon" /> 
+            <a href="#" class="tasks_proj">Abrir Excel </a>
+        </div>
 
-<div class="container">
-    <div class="lado esquerdo">
-        <button class="botao_projetos" >Adicionar</button>
-        <img src="{{ asset('images/pdf.png') }}" class="img_projeto" width=30px style='position: fixed;
-                top: 205px; left: 50px'></img> <a href="#" class="tasks_proj" style='position: fixed;
-                top: 210px; left: 110px;'>Ver Enunciado</a>
-                
-        <img src="{{ asset('images/excel.png') }}" class="img_projeto" width=30px style='position: fixed;
-                top: 265px; left: 50px'></img> <a href="#" class="tasks_proj" style='position: fixed;
-                top: 270px; left: 110px;'>Abrir Excel </a>
-
-        <img src="{{ asset('images/note.png') }}" class="img_projeto" width=30px style='position: fixed;
-                top: 325px; left: 50px'></img> <a href="#" class="tasks_proj" id="create" style='position: fixed;
-                top: 330px; left: 110px;'>Bloco de Notas </a>    
-    </div>
-
-    <div class="lado direito">
+        <div class="flex-left-links">
+            <img src="{{ asset('images/note.png') }}" class="flex-left-icon" /> 
+            <a href="#" class="tasks_proj" id="openNotepad">Bloco de Notas </a>
+        </div>
     </div>
 
     <div class="flex-right">
@@ -81,28 +70,17 @@
                 </div>
             </div>
 
-            <label for="msg"><b>Mensagens</b></label>
-            <textarea placeholder="Escreva a sua mensagem" name="msg" required></textarea>
+            <div id='calendar'></div>
 
-            <button type="submit" class="btn">Enviar Feedback</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Fechar</button>
-        </form>
+            <div style='clear:both'></div>
+
+        </div>
     </div>
 </div>
 
 
 <script>
-    $("#create").click(function() {
-        $(this).before("<textarea></textarea>");    
-    });
-
-    function openForm() {
-        document.getElementById("myForm").style.display = "block";
-    }
-
-    function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-    }
+    $("#openNotepad").click(function() {
 </script>
 
 @endsection

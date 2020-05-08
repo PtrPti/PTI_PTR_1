@@ -18,12 +18,12 @@
                 </li>
             </ul>
         </li>
-        
+
         <div class="flex-left-links">
             <img src="<?php echo e(asset('images/pdf.png')); ?>" class="flex-left-icon" />
             <a href="#" class="tasks_proj" >Ver Enunciado</a>
         </div>
-               
+
         <div class="flex-left-links">
             <img src="<?php echo e(asset('images/excel.png')); ?>" class="flex-left-icon" /> 
             <a href="#" class="tasks_proj">Abrir Excel </a>
@@ -52,6 +52,7 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </table>
         </div>
+        
         <div class="flex-right-footer">
             <button class="footer-icon" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-2x"></i></button>
         </div>
@@ -75,10 +76,9 @@
     </div>
 </div>
 
+
 <script>
     $("#openNotepad").click(function() {
-        $(this).before("<textarea></textarea>");    
-    });
 </script>
 
 <?php $__env->stopSection(); ?>
