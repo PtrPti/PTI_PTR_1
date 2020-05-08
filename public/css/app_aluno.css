@@ -4542,7 +4542,7 @@ tbody.collapse.in {
   font-size: 14px;
   text-align: left;
   list-style: none;
-  background-color: #f5f8fa;
+  background-color: #f5f8fa;;
   background-clip: padding-box;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -4602,6 +4602,13 @@ tbody.collapse.in {
   background-color: transparent;
   background-image: none;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+.dropdown-item{
+  height: 25px;
+  left: 5%;
+  position: relative;
+  top: -8px;
 }
 
 .open > .dropdown-menu {
@@ -8335,6 +8342,8 @@ button.close {
   }
 }
 
+/* LAYOUT ALUNO */
+
 .logout_style{
   display: block;
   margin-top: 13px;
@@ -8342,7 +8351,7 @@ button.close {
 
 .chat_icon img{
   position: fixed;
-  right: 40px;
+  right: 30px;
   bottom: 30px;
 }
 
@@ -8367,7 +8376,7 @@ button.close {
 .nav_icons {
   display: grid;
   grid-template-columns: 120px 120px 120px 120px;
-  margin-left: 30px;
+  margin-left: 8%;
 }
 
 .nav_icons div{
@@ -8384,6 +8393,7 @@ button.close {
   grid-template-columns: auto auto;
   grid-gap: 20px 20px;
   margin: 30px;
+  left: 5%;
 }
 
 .divDisciplinas{
@@ -8438,29 +8448,46 @@ button.close {
 
 .show {display: block;}
 
-.pagDisciplina{
+.filtro_projeto{
+  width: 13px;
   position: absolute;
-  margin-top:115px;
-  margin-left: 120px;
+  top: 1p;
+  top: 4px;
+  right: 11px;
+}
+
+.filtro_projeto:hover{
+  cursor: pointer;
+}
+/* PÁGINA DA DISCIPLINA */
+
+.disciplinaNome{
+  position: relative;
+  left: 8%;
+  width: 52%;
+}
+
+.pagDisciplina{
+  position: relative;
+  width: 87%;
+  height: 80%;
+  left: 8%;
+  display: grid;
+  grid-template-columns: 22% 100%;
 }
 
 .navDisciplina{
-  position: fixed;
+  /* position: relative; */
   display: grid;
   grid-template-columns: auto;
-  /* width:100px;
-  height:100px; */
-  left: 112px;
-  top: 132px;
+  top: 17px;
+  left: 33px;
 }
 
 .navDisciplina button{
   background-color: #f5f8fa;
   border: none;
-  width: 180px;
-  height: 85px;
-  margin: 4px 8px;
-  padding: 25px 20px;
+  height: 100px;
   text-align: center;
 }
 
@@ -8469,28 +8496,68 @@ button.close {
 }
 
 .disciplinasAluno{
-  position: fixed;
   background-color: #eee9e9;
-  width: 70%;
-  height: 66%;
-  left: 300px;
-  top: 136px;
-  display: grid;
-  grid-template-columns: auto auto;
+  width: 73%;
+  left: 213px;
+  bottom: 422px;
 }
 
-.projetosDisciplina{
+#outer{
+  margin: 4%;;
+}
+
+.div_button{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#add_button{
   width: auto;
+  height: 33px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #616161;
+  background-color: #f5f8fa;
+  border: none;
+  /* border-radius: 45px; */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+#add_button:hover {
+  background-color: #e6e16c;
+  box-shadow: 0px 15px 20px rgba(230, 225, 108, 0.36);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+/* .pagInicial{
+  position: relative;
+} 
+
+.avalDisciplina{
+  position: relative;
+} */
+
+.projetosDisciplina{
   position: relative;
   display: grid;
   grid-template-columns: auto auto;
-  grid-gap: 20px;
-  margin: 15px
+  grid-gap: 10px;
 }
 
+/* .pagTrabalhos{
+  position: relative;
+} */
+
 .projeto{
-  height: 130px;
-  width: 443px;
   padding: 10px;
   text-align: center;
   opacity: 0.8;
@@ -8501,20 +8568,20 @@ button.close {
 
 .infProjeto{
   position: relative;
-  margin-left: 216px;
+  margin-left: 25px;
 }
 
-.infDisciplina{
+/* .infDisciplina{
   position: relative;
   left: 40px;
   top: 15px;
-}
+} */
 
-.forumDuvidas{
+/* .forumDuvidas{
   position: relative;
   top: 30px;
   left: 30px;
-}
+} */
 
 .forumDuvidas_btn{
   top:5px;
@@ -8524,15 +8591,13 @@ button.close {
   cursor: pointer;
 }
 
-#add_topico{
-  margin-left: 50%;
-}
+
 
 .tableGrupos{
   position: relative;
   border-collapse: collapse;
-  width: 127%;
-  margin-top: 10px;
+  width: 100%;
+  margin-top: 41px;
 }
 
 .tableGrupos th, td {
@@ -8642,16 +8707,20 @@ label {
   }
 }
 
+/* PAGINA DA DISCIPLINA */
+
+
+
 #return_btn:hover{
   color:#d4cf5f;
   cursor: pointer;
 }
 
-.divMensagens{
+/* .divMensagens{
   position: relative;
   top: 30px;
   left: 30px;
-}
+} */
 
 .mensagem{
   position: relative;
@@ -9180,4 +9249,12 @@ li{
 
 .closebtn:hover{
   cursor: pointer;
+}
+
+.infMensagens{
+  position: relative;
+}
+
+.divMensagens{
+  position: relative;
 }

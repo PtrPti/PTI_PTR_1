@@ -92,8 +92,8 @@
                         <img src="{{ asset('images/disciplinas_icon.png') }}" width=23px> Disciplinas
                     </button>
                     <ul class="dropdown-menu">
-                        @foreach ($cadeiras as $cadeira)
-                        <li><a href="{{ route('pagDisciplina', ['cadeira_id' => $cadeira->id]) }}"> {{$cadeira->nome}} </a></li>
+                        @foreach ($disciplinas as $disciplina)
+                        <li><a href="{{ route('pagDisciplina', ['cadeira_id' => $disciplina->id]) }}"> {{$disciplina->nome}} </a></li>
                         @endforeach
                     </ul>
                 </div>
