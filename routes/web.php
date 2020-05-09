@@ -56,6 +56,11 @@ Route::get('showGruposA', 'DisciplinaController@showGruposA');
 Route::get('verMensagens', 'DisciplinaController@verMensagens');
 Route::post('/addTopico', 'DisciplinaController@addTopico');
 Route::post('/addMensagem', 'DisciplinaController@addMensagem');
+Route::post('/removeUser', 'DisciplinaController@removeUser');
+Route::post('/addUser', 'DisciplinaController@addUser');
+Route::post('/addGroup', 'DisciplinaController@addGroup');
+Route::post('/addUserGroup', 'DisciplinaController@addUserGroup');
+Route::get('showGrup', 'DisciplinaController@showGrup');
 
 //Projeto
 Route::get('/projetosAluno/{id}', 'ProjetoController@pagProjeto')->name('pagProjeto')->middleware('checkUserRole:1');

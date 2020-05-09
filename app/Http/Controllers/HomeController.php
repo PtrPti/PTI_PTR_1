@@ -39,7 +39,7 @@ class HomeController extends Controller
 
     public function indexAluno() {
         $user = Auth::user()->getUser();
-        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
 
         $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
@@ -56,7 +56,7 @@ class HomeController extends Controller
             where users.id != " . Auth::id() . " 
             group by users.id, users.nome, users.email");
 
-        return view('aluno.alunoHome', compact('cadeiras','projetos','grupos', 'utilizadores'));
+        return view('aluno.alunoHome', compact('disciplinas','projetos','grupos', 'utilizadores'));
     }
 
     public function pagDisciplina(int $cadeira_id){

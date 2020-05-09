@@ -113,18 +113,90 @@ class DisciplinaController extends Controller
         return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
     }
     public function showGruposA(Request $request) {
+        $user = Auth::user()->getUser()->id;
         $id = $_GET['id'];
         $grupos = Grupo::where('projeto_id', $id)->get();
+        $elementos = DB::table('users_grupos')->get();    
         $projeto = Projeto::where('id', $id)->first();
-
+        $users = DB::table('users')->get();
+        
         $data = array(
-            'grupos'  => $grupos,
-            'projeto' => $id,
-            'max_elementos' => $projeto->n_max_elementos
+            'grupos'    => $grupos,
+            'elementos' => $elementos,
+            'projeto'   => $projeto,
+            'user'      => $user,
+            'users'     => $users
         );
 
         $returnHTML = view('aluno.grupos')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function showGrup (Request $request) {
+        $user = Auth::user()->getUser()->id;
+        $id = 1;
+        $grupos = Grupo::where('projeto_id', $id)->get();
+        $elementos = DB::table('users_grupos')->get();    
+        $projeto = Projeto::where('id', $id)->first();
+        $users = DB::table('users')->get();
+        
+        $data = array(
+            'grupos'    => $grupos,
+            'elementos' => $elementos,
+            'projeto'   => $projeto,
+            'user'      => $user,
+            'users'     => $users
+        );
+
+        $returnHTML = view('aluno.grupos')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function removeUser(Request $request) {
+        $user = Auth::user()->getUser()->id;
+        $grupo_id = $_POST['grupo_id'];
+        UsersGrupos::where([
+            ['user_id', '=', $user],
+            ['grupo_id', '=', $grupo_id],
+        ])->delete();
+        return response()->json(array('html'=>'Removido com sucesso'));
+    }
+
+    public function addUser(Request $request) {
+        $user = Auth::user()->getUser()->id;
+        $grupo_id = $_POST['grupo_id'];
+        UsersGrupos::insert(["user_id" => $user, "grupo_id" => $grupo_id]);
+        return response()->json(array('html'=>'User adicionado com sucesso'));
+    }
+
+    public function addGroup(Request $request) {
+        $projeto_id = $_POST['projeto_id'];
+        $numero = Grupo::where('projeto_id', $projeto_id)->max('numero');
+
+        $novoGrupo = new Grupo;
+        $novoGrupo->numero = ($numero == null ? 1 : $numero + 1);
+        $novoGrupo->projeto_id = $projeto_id;
+        $novoGrupo->save();
+
+        return response()->json(array('html'=>'Grupo adicionado com sucesso'));
+    }
+
+    public function addUserGroup(Request $request) {
+        $user = Auth::user()->getUser()->id;
+        $projeto_id = $_POST['projeto_id'];
+        $numero = Grupo::where('projeto_id', $projeto_id)->max('numero');
+
+        $novoGrupo = new Grupo;
+        $novoGrupo->numero = ($numero == null ? 1 : $numero + 1);
+        $novoGrupo->projeto_id = $projeto_id;
+        $novoGrupo->save();
+
+        $novoUserGroupo = new UsersGrupos;
+        $novoUserGroupo->user_id = $user;
+        $novoUserGroupo->grupo_id = $novoGrupo->id;
+        $novoUserGroupo->save();
+
+        return response()->json(array('html'=>'Grupo e user adicionados com sucesso'));
     }
 
     //Docente
