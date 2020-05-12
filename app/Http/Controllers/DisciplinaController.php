@@ -112,6 +112,7 @@ class DisciplinaController extends Controller
     
         return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
     }
+
     public function showGruposA(Request $request) {
         $user = Auth::user()->getUser()->id;
         $id = $_GET['id'];
@@ -200,8 +201,7 @@ class DisciplinaController extends Controller
     }
 
     //Docente
-    public function indexDocente(int $id)
-    {
+    public function indexDocente(int $id, $tab = "tab1") {
         $projetos = DB::select('select p.id, p.nome, p.data_fim, pf.nome as ficheiro 
                                 from projetos p
                                 left join projetos_ficheiros pf
@@ -209,7 +209,12 @@ class DisciplinaController extends Controller
                                 where p.cadeira_id = ?', [$id]);
                                 // error_log( print_r($projetos, TRUE) );
         $cadeira = Cadeira::where('id', $id)->first();
-        return view('disciplina.indexDocente', compact('projetos', 'cadeira'));
+        $docentes = User::join('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')
+                          ->where('users.perfil_id', 2)
+                          ->where('users_cadeiras.cadeira_id', $cadeira->id)->get();
+
+        $active_tab = $tab;
+        return view('disciplina.indexDocente', compact('projetos', 'cadeira', 'docentes', 'active_tab'));
     }
 
     public function showGrupos(Request $request) {
@@ -271,5 +276,76 @@ class DisciplinaController extends Controller
         }
 
         return redirect()->action('DisciplinaController@indexDocente', ['id' => $request->cadeira_id]);
+    }
+
+    public function getPagInicial() {
+
+    }
+
+    public function getForum(Request $request) {
+        $cadeira_id = $_GET['id'];
+        $duvidas = DB::select('select fd.*, u1.nome as "primeiro", u2.nome as "ultimo"
+                                from forum_duvidas fd
+                                inner join users u1
+                                on fd.primeiro_user = u1.id
+                                inner join users u2
+                                on fd.ultimo_user = u2.id
+                                where fd.cadeira_id = (?)', [$cadeira_id]);
+        // $mensagens = ForumMensagens::join('forum_duvidas', 'forum_duvida_id', '=', 'forum_duvidas.id')->get();
+
+        $data = array(
+            'cadeira_id'  => $cadeira_id,
+            'duvidas' => $duvidas
+        );
+
+        $returnHTML = view('disciplina.forum')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function addTopicoDocent(Request $request){
+        $user = Auth::user()->getUser()->id;
+
+        $novoTopico = new ForumDuvidas;
+        $novoTopico->assunto = $request->assunto;
+        $novoTopico->primeiro_user = $user;
+        $novoTopico->ultimo_user = $user;
+        $novoTopico->cadeira_id = $request->cadeira_id;
+        $novoTopico->save();
+
+        $novaMensagem = new ForumMensagens;
+        $novaMensagem->forum_duvida_id = $novoTopico->id;
+        $novaMensagem->user_id = $user;
+        $novaMensagem->mensagem = $request->mensagem;
+        $novaMensagem->save();
+    
+        return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
+    }
+
+    public function verMensagensDocente(Request $request) {
+        $id = $_GET['id'];
+        $mensagens = ForumMensagens::where('forum_duvida_id', $id)->get();
+        $duvida = ForumDuvidas::where('id', $id)->get();
+
+        $data = array(
+            'mensagens'  => $mensagens,
+            'duvida' => $duvida,
+        );
+
+        $returnHTML = view('aluno.mensagens')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function addMensagemDocente(Request $request){
+        $user = Auth::user()->getUser()->id;
+
+        ForumDuvidas::update(['ultimo_user'=>$user]);
+
+        $novaMensagem = new ForumMensagens;
+        $novaMensagem->forum_duvida_id = $request->duvida_id;
+        $novaMensagem->user_id = $user;
+        $novaMensagem->mensagem = $request->mensagem;
+        $novaMensagem->save();
+    
+        return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
     }
 }

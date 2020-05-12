@@ -1,19 +1,32 @@
-<div id="projetos">
-    <div class="split left">
-        <div class="centered">  
-            <button id='button' class="btn" onclick="OpenModal()"> Criar Novo Projeto</button>
-        </div>
+<!-- <div id="projetos" class="flex-projetos">
+    <button id='button' class="btn" onclick="OpenModal()"> Criar Novo Projeto</button>
+    <div class="centered">
+        <p>Projetos</p>
+        <ul>
+        <?php $__currentLoopData = $projetos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $projeto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <li> <a href="<?php echo e(route('id_projeto', ['id' => $projeto->id])); ?>"><?php echo e($projeto->nome); ?> </a> <a href='#'><img src="<?php echo e(asset('images/edit.png')); ?>" width=10px style="position: relative; left: 30px;"></a><a href='#'><img src="<?php echo e(asset('images/lixo.png')); ?>" width=10px style="position: relative; left: 50px;"></a></li>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </ul>
     </div>
 
-    <div class="split right">
-        <div class="centered">
-            <p>Projetos</p>
-            <ul>
-            <?php $__currentLoopData = $projetos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $projeto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <li> <a href="<?php echo e(route('id_projeto', ['id' => $projeto->id])); ?>"><?php echo e($projeto->nome); ?> </a> <a href='#'><img src="<?php echo e(asset('images/edit.png')); ?>" width=10px style="position: relative; left: 30px;"></a><a href='#'><img src="<?php echo e(asset('images/lixo.png')); ?>" width=10px style="position: relative; left: 50px;"></a></li>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </ul>
-        </div>
+    
+</div> -->
+
+<div class="divGrupos">
+    <h4 style="margin:15px;margin-right: 30px;"> Projetos </h4>
+    <div class="grupo">
+        <?php if(count($projetos) == 0): ?>
+            <p>Não está inscrito em nenhum projeto/grupo</p>                                   
+        <?php else: ?>
+            <?php $__currentLoopData = $projetos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proj): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <a href="<?php echo e(route('id_projeto', ['id' => $proj->id])); ?>">
+                <div>
+                    <?php echo e($proj->nome); ?><br>
+                    <small><?php echo e($proj->cadeira); ?></small>
+                </div>
+            </a>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+        <?php endif; ?>
     </div>
 
     <div class="model-content">

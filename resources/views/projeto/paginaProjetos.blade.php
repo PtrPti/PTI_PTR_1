@@ -46,10 +46,15 @@
             <h4>Grupos inscritos:  {{ $gruposcount }}</h4>
             <table class="tableGrupos">
                 @foreach ($grupos as $grupo)
-                <tr>
+                <tr id="grupo_{{$grupo->id}}">
+                    <td>
+                        @if ($grupo->total_membros == 0)
+                            <i class="fas fa-trash-alt" onclick="DeleteGroup(<?php echo $grupo->id ?>)"></i>
+                        @endif
+                    </td>
                     <td>Grupo {{$grupo->numero}}</td>
-                    <td>0/{{$projeto->n_max_elementos}}</td>
-                    <td>-</td>
+                    <td>{{$grupo->total_membros}}/<?php echo $max_elementos ?></td>
+                    <td>{{$grupo->elementos}}</td>
                 <tr>
                 @endforeach
             </table>

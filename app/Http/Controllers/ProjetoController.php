@@ -45,7 +45,7 @@ class ProjetoController extends Controller
         $nomesUsers = User::join('users_grupos','users_grupos.user_id', '=','users.id')
                         ->where('users_grupos.grupo_id','=',$grupo_id)->select('users.nome','users.id')->get();     
         $grupo = Grupo::where('id', $grupo_id)->first();
-        $projeto = Projeto::where('id', $grupo_id)->first();
+        $projeto = Projeto::where('id', $grupo->projeto_id)->first();
         $id_disciplina = $projeto->cadeira_id;
         $disciplina = Cadeira::where('id', $id_disciplina)->first();
 
@@ -255,7 +255,6 @@ class ProjetoController extends Controller
         } else{
             
         }
-        
 
         return response()->json();
     }
@@ -264,11 +263,22 @@ class ProjetoController extends Controller
         $projeto = Projeto::where('id', $id)->first();
         $user = Auth::user()->getUser();
         $id_disciplina = $projeto->cadeira_id;
-        $cadeira = Cadeira::where('id', $id_disciplina)->first();
-        $grupos = Grupo::where('projeto_id', $id)->get();
-        $gruposcount = $grupos->count(); 
+        $cadeira = Cadeira::where('id', $id_disciplina)->first();        
 
-        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos')); 
+        $grupos = DB::select("select g.id, g.numero, count(ug.user_id) as 'total_membros', IFNULL(group_concat(u.nome), '-') as 'elementos' from grupos g
+                                left join users_grupos ug
+                                    on g.id = ug.grupo_id
+                                left join users u
+                                    on ug.user_id = u.id
+                                where g.projeto_id = (?)
+                                group by
+                                    g.id, g.numero, 'total_membros', 'elementos'", [$id]);
+        
+        $gruposcount = count($grupos);
+
+        $max_elementos = $projeto->n_max_elementos;
+
+        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos')); 
     }
 
     public function eraseProject($id){

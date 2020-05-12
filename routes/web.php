@@ -36,6 +36,7 @@ Route::get('/docenteHome', 'HomeController@perfil')->name('perfil')->middleware(
 Route::get('/docenteHome/disciplina/{id}', 'DisciplinaController@indexDocente')->name('indexDisciplinaDocente');
 Route::get('addGrupo', 'DisciplinaController@addGrupo');
 Route::get('showGrupos', 'DisciplinaController@showGrupos');
+Route::get('getForum', 'DisciplinaController@getForum');
 Route::post('uploadFile', 'DisciplinaController@uploadFile')->name('uploadFile');
 
 //Projetos

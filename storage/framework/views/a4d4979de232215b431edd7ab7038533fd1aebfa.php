@@ -44,10 +44,15 @@
             <h4>Grupos inscritos:  <?php echo e($gruposcount); ?></h4>
             <table class="tableGrupos">
                 <?php $__currentLoopData = $grupos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $grupo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <tr>
+                <tr id="grupo_<?php echo e($grupo->id); ?>">
+                    <td>
+                        <?php if($grupo->total_membros == 0): ?>
+                            <i class="fas fa-trash-alt" onclick="DeleteGroup(<?php echo $grupo->id ?>)"></i>
+                        <?php endif; ?>
+                    </td>
                     <td>Grupo <?php echo e($grupo->numero); ?></td>
-                    <td>0/<?php echo e($projeto->n_max_elementos); ?></td>
-                    <td>-</td>
+                    <td><?php echo e($grupo->total_membros); ?>/<?php echo $max_elementos ?></td>
+                    <td><?php echo e($grupo->elementos); ?></td>
                 <tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </table>

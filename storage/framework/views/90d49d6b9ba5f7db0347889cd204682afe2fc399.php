@@ -40,7 +40,7 @@
 
         <!-- Popup Adicionar site/link -->
         <div id="all1" class="popUpBack">
-			<div id="addSite">
+			<div id="addSite" class='popupDiv'>
                 <img class='closebtn' src="<?php echo e(asset('images/cancel.png')); ?>">
                 <h4>Adicione um Link</h4>
                 <form id="formAddLink">
@@ -52,9 +52,9 @@
                                 <option value="<?php echo e($ficheiro->id); ?>"><?php echo e($ficheiro->nome); ?></option>
                             <?php endif; ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
-                    </select>
-                    <input type="text" name='nome' placeholder="nome...">
-                    <input type="url" name='url' placeholder="URL...">
+                    </select><br>
+                    <input type="text" name='nome' placeholder="nome..."><br>
+                    <input type="url" name='url' placeholder="URL..."><br>
                     <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>"><br>
 				    <input type="submit" value='Adicionar'>
                 </form>
@@ -63,25 +63,25 @@
 
         <!-- Popup Adicionar Tarefa -->
 		<div id="all2" class="popUpBack">
-			<div id="addTarefa">
+			<div id="addTarefa" class='popupDiv'>
             <img class='closebtn' src="<?php echo e(asset('images/cancel.png')); ?>">
             <h4>Adicione uma Tarefa</h4>
                 <form id='formAddTarefa'>
                     <label for='nT'>Nome: </label>
                     <input type="text" name='nome' id='nT' placeholder="tarefa..."><br>
-                    <label for="tarefaPrincipal">Adicionar depois de:</label>
+                    <label for="tarefaPrincipal">Adicionar:</label>
                     <select name='ordem' id='tarefaPrincipal' require>
-                        <option disable >tarefas..</option>
+                        <option value="0" >Inicio</option>
                         <?php $__currentLoopData = $tarefas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tarefa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if(is_null($tarefa->tarefa_id)): ?>
-                                <option value="<?php echo e($tarefa->ordem); ?>"><?php echo e($tarefa->nome); ?></option>
+                                <option value="<?php echo e($tarefa->ordem); ?>">Depois de: <?php echo e($tarefa->nome); ?></option>
                             <?php endif; ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
-                    </select>
+                    </select><br>
                     <label for='dtT'>Prazo: </label>
                     <input type="date" name='prazo' id='dtT' ><br>
-                    <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>"><br>
-                    <input type="hidden" name='projetoId' value="<?php echo e($projeto->id); ?>"><br>
+                    <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>">
+                    <input type="hidden" name='projetoId' value="<?php echo e($projeto->id); ?>">
 				    <input type="submit" value='Adicionar'>
                 </form>
 			</div>
@@ -89,7 +89,7 @@
 
         <!-- Popup Adicionar Subtarefa -->
         <div id="all5" class="popUpBack">
-			<div id="addSubTarefa">
+			<div id="addSubTarefa" class='popupDiv'>
             <img class='closebtn' src="<?php echo e(asset('images/cancel.png')); ?>">
             <h4>Adicione uma Subtarefa</h4>
                 <form id='formAddSubTarefa'>
@@ -98,7 +98,6 @@
         
                     <label for="slc">Tarefa principal:</label>
                     <select name='tarefaId' id='slc' require>
-                        <option disable >tarefas</option>
                         <?php $__currentLoopData = $tarefas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tarefa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if(is_null($tarefa->tarefa_id)): ?>
                                 <option value="<?php echo e($tarefa->id); ?>"><?php echo e($tarefa->nome); ?></option>
@@ -106,29 +105,29 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select><br>
 
-                    <label for="oT2">Adicionar depois de:</label>
+                    <label for="oT2">Adicionar: </label>
                     <select name='ordem' id='subtarefasId' require>
-                        <option disable >subtarefas</option>
+                        <option value="0" >Inicio</option>
                     </select><br>
 
                     <label for='dtT2'>Prazo: </label>
                     <input type="date" name='prazo' id='dtT2' ><br>
 
-                    <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>"><br>
-                    <input type="hidden" name='projetoId' value="<?php echo e($projeto->id); ?>"><br>
+                    <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>">
+                    <input type="hidden" name='projetoId' value="<?php echo e($projeto->id); ?>">
 				    <input type="submit" value='Adicionar'>
                 </form>
 			</div>
 		</div>
 
         <!-- Popup Adicionar Pasta -->
-        <div id="all3" class="popUpBack">
-			<div id="addPasta">
+        <div id="all3" class="popUpBack" >
+			<div id="addPasta" class='popupDiv'>
                 <img class='closebtn' src="<?php echo e(asset('images/cancel.png')); ?>">
-                <p>Adicione uma Pasta</p>
+                <h4>Adicione uma Pasta</h4>
                 <form id="formAddPasta">
-                    <input type="text" name='nome' placeholder="nome...">
-                    <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>"><br>
+                    <input type="text" name='nome' placeholder="nome..."><br>
+                    <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>">
 				    <input type="submit" value='Adicionar'>
                 </form>
 			</div>
@@ -136,9 +135,9 @@
         
         <!-- Popup Adicionar Ficheiro -->
         <div id="all4" class="popUpBack">
-			<div id="addPasta">
+			<div id="addPasta" class='popupDiv'>
                 <img class='closebtn' src="<?php echo e(asset('images/cancel.png')); ?>">
-                <p>Adicione um Ficheiro</p>
+                <h4>Adicione um Ficheiro</h4>
                 
                 <form id="formUploadFicheiro" action="<?php echo e(route ('uploadFicheiro')); ?>" method="POST" enctype="multipart/form-data">
                     <?php echo e(csrf_field()); ?>
@@ -151,9 +150,9 @@
                                 <option value="<?php echo e($ficheiro->id); ?>"><?php echo e($ficheiro->nome); ?></option>
                             <?php endif; ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
-                    </select>
+                    </select><br>
                     <input type="file" name='ficheiro' placeholder="ficheiro...">
-                    <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>"><br>
+                    <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>">
 				    <input type="submit" value='Adicionar'>
                 </form>
 			</div>
@@ -216,33 +215,11 @@
     
     <!-- Lado direito - Tarefas -->
 	<div id="drt">
-		<h3>Tarefas</h3>
 		<div id="tarefas">
-            <?php $__currentLoopData = $tarefas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tarefa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($tarefa->tarefa_id === NULL): ?>
-                    <div class="divTarefa">
-                        <label class="containerCheckbox"><?php echo e($tarefa->nome); ?>
 
-                            <input type="checkbox" <?php if(($tarefa->estado)): ?> checked <?php else: ?> '' <?php endif; ?> >
-                            <input type="hidden" value="<?php echo e($tarefa->id); ?>">
-                            <span class="checkmark"></span>
-                        </label>
-                    <?php $__currentLoopData = $tarefas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subtarefa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php if($subtarefa->tarefa_id === $tarefa->id): ?>
-                        <div class="divSubTarefa">
-                            <label class="containerCheckbox2"><?php echo e($subtarefa->nome); ?>
-
-                                
-                                <input type="checkbox" <?php if(($subtarefa->estado)): ?> checked <?php else: ?> '' <?php endif; ?> >
-                                <input type="hidden" value="<?php echo e($subtarefa->id); ?>">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <?php endif; ?>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
-                    </div>
-                <?php endif; ?>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
+            <!-- view tarefasAluno -->
+            <?php echo $__env->make('aluno.tarefasAluno', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            
         </div>
         <button class="calendarBtn" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-3x"></i></button>
 
@@ -277,6 +254,7 @@
 </div>
 
 <script>
+    
 
     $("#dropAdd").hide();
     $('div',".folder1").hide();
@@ -320,49 +298,28 @@
     $('.folder1 .item1').click(function() {
         if ($('a img', $(this).parent()).attr("src") == "<?php echo e(asset('images/folder.png')); ?>") {
             $('img:first',$(this).parent()).attr("src","<?php echo e(asset('images/openfolder.png')); ?>");
-            $('div',$(this).parent()).show();
-            
+            $('div',$(this).parent()).show();  
         } else  {
             $('img:first',$(this).parent()).attr("src","<?php echo e(asset('images/folder.png')); ?>");
             $('div',$(this).parent()).hide();
         }
     });
 
-    $('#slc').on('change', function() {
-        var id = this.value
-        $.ajax({
-            url: '/subTarefas',
-            type: 'GET',
-            dataType: 'json',
-            success: 'success',
-            data: {'tarefaId': id},
-            success: function(data){
-                
-                $('#subtarefasId').append(data)}
-        });
+    jQuery(function($) {
+        $('#slc').on('change', function() {
+            var id = this.value
+            $.ajax({
+                url: '/subTarefas',
+                type: 'GET',
+                dataType: 'json',
+                success: 'success',
+                data: {'tarefaId': id},
+                success: function(data){
+                    $('#subtarefasId').html(data)
+                }
+            });
+        }).change(); 
     });
-
-    function editTarefa(id, val) {
-        $.ajax({
-            url: '/editTarefa',
-            type: 'GET',
-            dataType: 'json',
-            success: 'success',
-            data: {'val': val, 'id': id},
-            success: function(data){alert(data)}
-        });
-    }
-
-    function editAllTarefa(id, val) {
-        $.ajax({
-            url: '/editAllTarefa',
-            type: 'GET',
-            dataType: 'json',
-            success: 'success',
-            data: {'val': val, 'id': id},
-            success: function(data){alert(data)}
-        });
-    }
 
     $("#formAddPasta").submit(function(event){
         event.preventDefault();
@@ -371,7 +328,7 @@
             url: '/addPasta',
             type: 'GET',
             data : form_data
-        }).done(function(response){ //
+        }).done(function(response){ 
             location.reload();
         });
     });
@@ -411,33 +368,6 @@
             location.reload();
         });
     });
-
-    $(".containerCheckbox input").click(function() {
-        if ($(this).is(':checked')) {
-            editAllTarefa( $(this).next().val(), true)
-            $('.divSubTarefa input',($(this).parent()).parent()).prop('checked', true)
-        } else{
-            editAllTarefa( $(this).next().val(), false)
-            $('.divSubTarefa input',($(this).parent()).parent()).prop('checked', false)
-        }
-    });
-
-    $(".divSubTarefa input").click(function() {
-        if ($(this).is(':checked')) {
-            editTarefa( $(this).next().val(), true)
-        } else{
-            editTarefa( $(this).next().val(), false)
-        }
-        var numSubTarefas = $('input',($(this).parent()).parent()).length
-        var numSubTChecked = $('input:checked',($(this).parent()).parent()).length
-        if ( numSubTarefas == numSubTChecked ){
-            editTarefa( $('.containerCheckbox input',(($(this).parent()).parent()).parent()).next().val() , true)
-            $('.containerCheckbox input',(($(this).parent()).parent()).parent()).prop('checked', true);
-        } else {
-            editTarefa( $('.containerCheckbox input',(($(this).parent()).parent()).parent()).next().val() , false)
-            $('.containerCheckbox input',(($(this).parent()).parent()).parent()).prop('checked', false)
-        }  
-    }); 
 
 </script>
 

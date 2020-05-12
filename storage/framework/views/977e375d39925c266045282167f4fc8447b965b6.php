@@ -20,8 +20,7 @@
                 margin: 0;
             }
 
-            body {
-                
+            body {                
                 background-color:#acc;
                 background-repeat:no-repeat;
                 background-position-y:bottom;

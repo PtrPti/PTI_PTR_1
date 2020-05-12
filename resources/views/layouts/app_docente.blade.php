@@ -12,12 +12,13 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/app_docente.js') }}"></script>    
+    <script src="{{ asset('js/app_docente.js') }}"></script>
 
     <!-- FontAwesome Icons -->
     <script src="https://kit.fontawesome.com/f12fb584ff.js" crossorigin="anonymous"></script>
 
     <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app_docente.css') }}" rel="stylesheet">
 
     <!-- DatePicker -->
@@ -94,7 +95,7 @@
             <button class="footer-icon" onclick="openForm()"><i class="fas fa-comment fa-2x"></i></button>
             <div class="chat-popup" id="chat">
                 <form action="/action_page.php" class="form-container">
-                    <h2 class="chat_name">chat</h2>
+                    <h2 class="chat_name">Chat</h2>
 
                     <div class="dropup">
                         <button type="button" class="btgrupos"> <i class="fa fa-users"></i> Escolha um grupo</button>

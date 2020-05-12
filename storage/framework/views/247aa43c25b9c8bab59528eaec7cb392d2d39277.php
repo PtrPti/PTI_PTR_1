@@ -8,3 +8,5 @@
     <p><?php echo e($mensagem->mensagem); ?></p>
 </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+<button type="button" id="add_mensagem">Responder</button>

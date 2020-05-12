@@ -6,7 +6,7 @@
     <div class="searchcontainer">
         <form id="formpesquisa">
             <input type="text" placeholder="Aluno.." name="aluno">
-            <input type="hidden" name='grupoId' value="{{$tarefas[0]->grupo_id}}">
+            <input type="hidden" name='grupoId' value="{{$grupo->id}}">
             <button type="submit"><img class='psq' src="{{ asset('images/pesquisa.png') }}" width="20"></button>
         </form>
     </div>

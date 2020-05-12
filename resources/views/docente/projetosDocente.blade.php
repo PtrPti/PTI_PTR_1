@@ -1,19 +1,32 @@
-<div id="projetos">
-    <div class="split left">
-        <div class="centered">  
-            <button id='button' class="btn" onclick="OpenModal()"> Criar Novo Projeto</button>
-        </div>
+<!-- <div id="projetos" class="flex-projetos">
+    <button id='button' class="btn" onclick="OpenModal()"> Criar Novo Projeto</button>
+    <div class="centered">
+        <p>Projetos</p>
+        <ul>
+        @foreach($projetos as $projeto)
+        <li> <a href="{{ route('id_projeto', ['id' => $projeto->id]) }}">{{$projeto->nome}} </a> <a href='#'><img src="{{ asset('images/edit.png') }}" width=10px style="position: relative; left: 30px;"></a><a href='#'><img src="{{ asset('images/lixo.png') }}" width=10px style="position: relative; left: 50px;"></a></li>
+        @endForeach
+        </ul>
     </div>
 
-    <div class="split right">
-        <div class="centered">
-            <p>Projetos</p>
-            <ul>
-            @foreach($projetos as $projeto)
-            <li> <a href="{{ route('id_projeto', ['id' => $projeto->id]) }}">{{$projeto->nome}} </a> <a href='#'><img src="{{ asset('images/edit.png') }}" width=10px style="position: relative; left: 30px;"></a><a href='#'><img src="{{ asset('images/lixo.png') }}" width=10px style="position: relative; left: 50px;"></a></li>
-            @endForeach
-            </ul>
-        </div>
+    
+</div> -->
+
+<div class="divGrupos">
+    <h4 style="margin:15px;margin-right: 30px;"> Projetos </h4>
+    <div class="grupo">
+        @if (count($projetos) == 0)
+            <p>Não está inscrito em nenhum projeto/grupo</p>                                   
+        @else
+            @foreach ($projetos as $proj)
+            <a href="{{ route('id_projeto', ['id' => $proj->id]) }}">
+                <div>
+                    {{$proj->nome}}<br>
+                    <small>{{$proj->cadeira}}</small>
+                </div>
+            </a>
+            @endforeach 
+        @endif
     </div>
 
     <div class="model-content">

@@ -39,7 +39,7 @@ class HomeController extends Controller
 
     public function indexAluno() {
         $user = Auth::user()->getUser();
-        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
 
         $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
@@ -56,7 +56,7 @@ class HomeController extends Controller
             where users.id != " . Auth::id() . " 
             group by users.id, users.nome, users.email");
 
-        return view('aluno.alunoHome', compact('disciplinas','projetos','grupos', 'utilizadores'));
+        return view('aluno.alunoHome', compact('cadeiras','projetos','grupos', 'utilizadores'));
     }
 
     public function pagDisciplina(int $cadeira_id){
@@ -71,17 +71,18 @@ class HomeController extends Controller
     }
 
     //Docente
-    public function indexDocente($tab = "tab1"){
+    public function indexDocente(){
         $user = Auth::user()->getUser();  
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
-        $projetos = DB::select('select * from projetos p
+        $projetos = DB::select('select p.*, c.nome as "cadeira" from projetos p
+                                inner join cadeiras c
+                                on p.cadeira_id = c.id
                                 where p.cadeira_id in (select ca.id from users_cadeiras uc
                                 inner join cadeiras ca
                                  on uc.cadeira_id = ca.id
-                                 where uc.user_id = ?)', [$user->id]);        
-        $active_tab = $tab;
+                                 where uc.user_id = ?)', [$user->id]);
 
-        return view('docente.docenteHome', compact('disciplinas', 'projetos', 'active_tab'));
+        return view('docente.docenteHome', compact('disciplinas', 'projetos'));
     }
 
     public function store(Request $request, string $redirect = ""){
@@ -105,10 +106,6 @@ class HomeController extends Controller
 
         $projetos->save();
 
-        if ($redirect != "") {
-            return redirect()->action('DisciplinaController@indexDocente', ['id' => $request->cadeira_id]);
-        }
-
-        return redirect()->action('HomeController@indexDocente', ['tab' => 'tab2']);
+        return redirect()->action('HomeController@indexDocente');
     }    
 }

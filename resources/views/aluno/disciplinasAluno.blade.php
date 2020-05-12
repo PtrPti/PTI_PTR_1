@@ -26,7 +26,7 @@
             </div>
 
             <div class="forumDuvidas">
-                <p><a class="return_pagIni" id="return_btn"><b>Página Inicia</b></a> > <u>Forum de Dúvidas</u></p>
+                <p><a class="return_pagIni" id="return_btn"><b>Página Inicial</b></a> > <u>Forum de Dúvidas</u></p>
                 <div class="div_button">
                     <button id="add_button">Adicionar tópico à discussão</button>
                 </div>
