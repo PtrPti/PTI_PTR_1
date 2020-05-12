@@ -10,6 +10,7 @@ use App\Cadeira;
 use App\Grupo;
 use App\Tarefa;
 use App\GrupoFicheiros;
+use App\UsersGrupos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Auth;
@@ -17,7 +18,7 @@ use DateTime;
 
 class ProjetoController extends Controller
 {
-    public function index($tab = "tab1"){
+    /* public function index($tab = "tab1"){
         $user = Auth::user()->getUser();  
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
         $projetos = DB::select('select * from projetos p
@@ -28,7 +29,7 @@ class ProjetoController extends Controller
         $active_tab = $tab;
 
         return view('docente.docenteHome', compact('disciplinas', 'projetos', 'active_tab'));
-    }
+    } */
 
     public function pagProjeto(int $grupo_id){
         $user = Auth::user()->getUser();
@@ -42,21 +43,28 @@ class ProjetoController extends Controller
         
         /* Cabecalho da pagina Projetos */
         $nomesUsers = User::join('users_grupos','users_grupos.user_id', '=','users.id')
-                        ->where('users_grupos.grupo_id','=',$grupo_id)->select('users.nome')->get();     
+                        ->where('users_grupos.grupo_id','=',$grupo_id)->select('users.nome','users.id')->get();     
         $grupo = Grupo::where('id', $grupo_id)->first();
-        $projeto = Projeto::where('id', $grupo_id)->first();
+        $projeto = Projeto::where('id', $grupo->projeto_id)->first();
         $id_disciplina = $projeto->cadeira_id;
         $disciplina = Cadeira::where('id', $id_disciplina)->first();
 
         /* Tarefas Grupo */
-        $tarefas = Tarefa::where('grupo_id',$grupo_id)->orderBy('ordem','ASC')->get();
-        
+        $tarefas = Tarefa::where('grupo_id', $grupo_id)->orderBy('ordem','ASC')->get();
+
         /* Ficheiros Grupo */
         $ficheiros = GrupoFicheiros::where('grupo_id',$grupo_id)->get();
-
+        
         $IdGrupo = $grupo_id;
 
-        return view('aluno.projetosAluno', compact('cadeiras','projetos','nomesUsers','grupo','disciplina','projeto','tarefas','ficheiros','IdGrupo'));
+        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+                                    from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+                                    where users.id != " . Auth::id() . " 
+                                    group by users.id, users.nome, users.email");
+
+        $users_grupo = UsersGrupos::join('users', 'users.id', '=', 'users_grupos.user_id')->where('grupo_id', $grupo_id)->get();
+
+        return view('aluno.projetosAluno', compact('cadeiras','projetos','nomesUsers','grupo','disciplina','projeto','tarefas','ficheiros','IdGrupo', 'utilizadores', 'users_grupo'));
     }
 
     public function editTarefa(Request $request) {
@@ -67,7 +75,17 @@ class ProjetoController extends Controller
         $tarefa->estado = $val == "false"?FALSE:TRUE;
         $tarefa->save();
 
-        return response()->json('Guardado com sucesso');
+        /* Tarefas Grupo */
+        $grupo = Tarefa::select('grupo_id')->where('id',$id)->get();
+        $tarefas = Tarefa::where('grupo_id', $grupo[0]->grupo_id )->orderBy('ordem','ASC')->get();
+
+        $nomesUsers = User::join('users_grupos','users_grupos.user_id', '=','users.id')
+                        ->where('users_grupos.grupo_id','=',$grupo[0]->grupo_id)->select('users.nome','users.id')->get();
+
+        $data = array('tarefas' => $tarefas, 'nomesUsers' => $nomesUsers);
+
+        $returnHTML = view('aluno.tarefasAluno')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
     }
 
     public function editAllTarefa(Request $request) {
@@ -80,8 +98,19 @@ class ProjetoController extends Controller
         $tarefa = Tarefa::find($id);
         $tarefa->estado = $val;
         $tarefa->save();
+    
+        /* Tarefas Grupo */
+        $grupo = Tarefa::select('grupo_id')->where('id',$id)->get();
+        $tarefas = Tarefa::where('grupo_id', $grupo[0]->grupo_id )->orderBy('ordem','ASC')->get();
 
-        return response()->json('Guardado com sucesso');
+        $nomesUsers = User::join('users_grupos','users_grupos.user_id', '=','users.id')
+                        ->where('users_grupos.grupo_id','=',$grupo[0]->grupo_id)->select('users.nome','users.id')->get();
+
+        $data = array('tarefas' => $tarefas, 'nomesUsers' => $nomesUsers);
+
+        $returnHTML = view('aluno.tarefasAluno')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+        
     }
 
     public function addPasta(Request $request) {
@@ -159,12 +188,11 @@ class ProjetoController extends Controller
 
     public function subTarefas(Request $request) {
         $id = $_GET['tarefaId'];
-        $str = '';
+        $str = '<option value="0" >Inicio</option>';
         $subtarefas = Tarefa::where('tarefa_id',$id)->get();
 
         foreach ($subtarefas as $sub) {
-
-            $str .= "<option value='".$sub->ordem."'>".$sub->nome."</option>";
+            $str .= "<option value='".$sub->ordem."'>Depois de: ".$sub->nome."</option>";
         }
 
         return response()->json($str);
@@ -216,17 +244,41 @@ class ProjetoController extends Controller
         return response()->json('Adicionado com sucesso');
     }
 
+    public function pesquisar(Request $request){
+        $aluno = $_GET['aluno'];
+        $grupoId = $_GET['grupoId'];
+
+        $alunoId = User::select('id')->whereIn('nome',$aluno)->get();
+
+        if ($alunoId->isEmpty()){
+            $tarefas = Tarefa::where('grupo_id', $grupoId )->orderBy('ordem','ASC')->get();
+        } else{
+            
+        }
+
+        return response()->json();
+    }
+
     public function id_projetos(int $id){
         $projeto = Projeto::where('id', $id)->first();
         $user = Auth::user()->getUser();
         $id_disciplina = $projeto->cadeira_id;
-        $cadeira = Cadeira::where('id', $id_disciplina)->first();
-        $grupos = Grupo::where('projeto_id', $id)->get();
-        $gruposcount = $grupos->count(); 
+        $cadeira = Cadeira::where('id', $id_disciplina)->first();        
 
-        error_log($cadeira->nome);
+        $grupos = DB::select("select g.id, g.numero, count(ug.user_id) as 'total_membros', IFNULL(group_concat(u.nome), '-') as 'elementos' from grupos g
+                                left join users_grupos ug
+                                    on g.id = ug.grupo_id
+                                left join users u
+                                    on ug.user_id = u.id
+                                where g.projeto_id = (?)
+                                group by
+                                    g.id, g.numero, 'total_membros', 'elementos'", [$id]);
+        
+        $gruposcount = count($grupos);
 
-        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos')); 
+        $max_elementos = $projeto->n_max_elementos;
+
+        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos')); 
     }
 
     public function eraseProject($id){
@@ -234,4 +286,11 @@ class ProjetoController extends Controller
         echo "Record deleted successfully.<br/>";
         return redirect()->action('HomeController@indexDocente', ['tab' => 'tab2']);
     }    
+
+    public function deleteGrupo(Request $request) {
+        error_log($_POST['id']);
+        Grupo::destroy($_POST['id']);
+
+        return response()->json('Apagado com sucesso');
+    }
 }

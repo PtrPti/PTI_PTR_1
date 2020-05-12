@@ -8,3 +8,5 @@
     <p>{{$mensagem->mensagem}}</p>
 </div>
 @endforeach
+
+<button type="button" id="add_mensagem">Responder</button>

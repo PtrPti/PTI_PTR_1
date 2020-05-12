@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container">
-  
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -52,15 +51,15 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-link login-text" href="{{ route('password.request') }}">
                                     Esqueceste-te da tua password?
                                 </a>
                                 <p>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary login-text">
                                     Inicar Sessão
                                 </button>
                                
-                               <a class="btn btn-link" href="{{ route('register') }}">
+                               <a class="btn btn-link login-text" href="{{ route('register') }}">
                                     Criar conta
                                 </a>
 
@@ -69,6 +68,9 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="login_Image">
+            <img src="{{ asset('images/login_image.svg') }}" width=30% class="image_login"> 
         </div>
     </div>
 </div>

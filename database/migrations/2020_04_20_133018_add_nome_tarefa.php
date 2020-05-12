@@ -13,7 +13,10 @@ class AddNomeTarefa extends Migration
      */
     public function up()
     {
-       
+        Schema::table('tarefas', function (Blueprint $table) {
+            $table->dropColumn('estado');
+        });
+
         Schema::table('tarefas', function (Blueprint $table) {
             $table->integer('tarefa_id')->unsigned()->nullable();
             $table->boolean('estado');
@@ -36,6 +39,8 @@ class AddNomeTarefa extends Migration
         Schema::table('tarefas', function (Blueprint $table) {
             $table->dropForeign(['tarefa_id']);
             $table->dropColumn('tarefa_id');
+            $table->dropColumn('nome');
+            $table->dropColumn('estado');
         });
     }
 }

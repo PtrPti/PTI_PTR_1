@@ -198,7 +198,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('numero') ? ' has-error' : '' }}">
-                            <label for="numero" class="col-md-4 control-label">Nº Aluno</label>
+                            <label for="numero" class="col-md-4 control-label">Nº Docente</label>
 
                             <div class="col-md-6">
                                 <input id="numero2" type="text" class="form-control" name="numero" value="{{ old('numero') }}" required autofocus>
@@ -312,6 +312,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="register_Image">
+            <img src="{{ asset('images/register_image.svg') }}" width=27% class="image_register"> 
     </div>
 </div>
 

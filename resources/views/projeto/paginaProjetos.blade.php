@@ -20,12 +20,12 @@
                 </li>
             </ul>
         </li>
-        
+
         <div class="flex-left-links">
             <img src="{{ asset('images/pdf.png') }}" class="flex-left-icon" />
             <a href="#" class="tasks_proj" >Ver Enunciado</a>
         </div>
-               
+
         <div class="flex-left-links">
             <img src="{{ asset('images/excel.png') }}" class="flex-left-icon" /> 
             <a href="#" class="tasks_proj">Abrir Excel </a>
@@ -46,14 +46,20 @@
             <h4>Grupos inscritos:  {{ $gruposcount }}</h4>
             <table class="tableGrupos">
                 @foreach ($grupos as $grupo)
-                <tr>
+                <tr id="grupo_{{$grupo->id}}">
+                    <td>
+                        @if ($grupo->total_membros == 0)
+                            <i class="fas fa-trash-alt" onclick="DeleteGroup(<?php echo $grupo->id ?>)"></i>
+                        @endif
+                    </td>
                     <td>Grupo {{$grupo->numero}}</td>
-                    <td>0/{{$projeto->n_max_elementos}}</td>
-                    <td>-</td>
+                    <td>{{$grupo->total_membros}}/<?php echo $max_elementos ?></td>
+                    <td>{{$grupo->elementos}}</td>
                 <tr>
                 @endforeach
             </table>
         </div>
+        
         <div class="flex-right-footer">
             <button class="footer-icon" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-2x"></i></button>
         </div>
@@ -77,10 +83,9 @@
     </div>
 </div>
 
+
 <script>
     $("#openNotepad").click(function() {
-        $(this).before("<textarea></textarea>");    
-    });
 </script>
 
 @endsection

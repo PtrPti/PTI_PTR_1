@@ -133,6 +133,7 @@ class AuthController extends Controller
                     join('departamentos', 'cursos.departamento_id', '=', 'departamentos.id')->
                     join('cadeiras', 'cursos_cadeiras.cadeira_id', '=', 'cadeiras.id')->
                     where('departamento_id', $request->departamento_id)->orderBy('cadeiras.nome')->get();
+            error_log($cadeiras);
             foreach ($cadeiras as $cadeira) {
                 $html .= '<option value="'.$cadeira->cadeira_id.'">'.$cadeira->nome.'</option>';
             }

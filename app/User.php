@@ -21,13 +21,13 @@ class User extends Authenticatable
         'password',
         'numero',
         'data_nascimento',
-        
         'avatar',
+        'nome', 
+        'email', 
+        'password'
     ];
 
-
-    protected $guarded = ['id', 'perfil_id',
-    'departamento_id'];
+    protected $guarded = ['id', 'perfil_id', 'departamento_id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -55,5 +55,9 @@ class User extends Authenticatable
 
     public function getUser() {
         return $this;
+    }
+
+    public function getUserId() {
+        return $this->id;
     }
 }
