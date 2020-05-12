@@ -500,6 +500,78 @@ input{
   z-index: 9;
 }
 
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: #acc;
+  border-radius: 10px;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 9px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  min-height: 200px;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/send button */
+.form-container .btn {
+  background-color: #133d55;
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+  margin-left: 30px;
+  margin-bottom:10px;
+  opacity: 0.8;
+  border-radius: 80px;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: #133d55;
+}
+
+.btgrupos{
+  background-color: #133d55;
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+  margin-left: 30px;
+  margin-bottom:10px;
+  opacity: 0.8;
+  border-radius: 80px;
+}
+
+.btgrupos:hover{
+  opacity:1;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+.chat_name{
+  position: relative;
+  top: -30px;
+  text-align: center;
+}
+
 .forumDuvidas_btn{
   top:5px;
 }

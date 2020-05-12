@@ -88,7 +88,7 @@
             <div class="close" onclick="closeForm()" >x</div>
             <h4>Nº de grupos</h4>
                 <input type="number" placeholder="Número de elementos" name="n_grupos" min="1" max="100" value="1">
-                <button type="button" onclick="AddMultGrupo('<?php echo e($projeto->id); ?>')">Criar</button>
+                <button type="button" onclick="AddMultGrupo(<?php if (isset($projeto)) echo $projeto->id ?>)">Criar</button>
         </div>
     </div>
 </div>
