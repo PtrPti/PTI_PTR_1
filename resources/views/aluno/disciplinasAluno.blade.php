@@ -6,10 +6,10 @@
 
 <div class="pagDisciplina">
     <div class="navDisciplina">
-        <button class="pagInicia_btn"> Página inicial </button>
-        <button class="avaliacao_btn"> Avaliação </button>
-        <button class="horarios_btn"> Horários </button>
-        <button class="trabalho_btn"> Trabalhos </buttons>
+        <button onclick="show_pagInicial()" class="pagInicial_btn"> Página inicial </button>
+        <button onclick="show_avaliacao()" class="avaliacao_btn"> Avaliação </button>
+        <button onclick="show_horarios()" class="horarios_btn"> Horários </button>
+        <button onclick="show_trabalho()" class="trabalho_btn"> Trabalhos </buttons>
     </div>
 
     <div class="disciplinasAluno">
@@ -22,63 +22,10 @@
                         <p>{{$docente->email}}</p>
                     @endforeach
                 </div>
-                <a class="forumDuvidas_btn" ><img src="{{ asset('images/forum_icon.png') }}" width=15px style="margin-top: -4px;"> Fórum de dúvidas </a>
+                <a onclick="showForum({{$cadeira[0]->id}})" class="forumDuvidas_btn" ><img src="{{ asset('images/forum_icon.png') }}" width=15px style="margin-top: -4px;"> Fórum de dúvidas </a>
             </div>
 
             <div class="forumDuvidas">
-                <p><a class="return_pagIni" id="return_btn"><b>Página Inicia</b></a> > <u>Forum de Dúvidas</u></p>
-                <div class="div_button">
-                    <button id="add_button">Adicionar tópico à discussão</button>
-                </div>
-                @if(Session::has("serverError"))
-                    <p class="alert alert-danger">{{Session::get('serverError')}}</p>
-                @endif
-                <div id="myModal" class="modal">
-                    <form action="/addTopico" method="post"> 
-                        {{csrf_field()}}
-                        <input type="hidden" name="cadeira_id" value="<?php echo $cadeira[0]->id ?>">
-                        <div class="novo_topico">
-                            <span class="close">&times;</span>
-                            <h4> Novo tópico </h5><br>
-                            <div class="row">
-                                <div class="col-25">
-                                    <label for="assunto">Assunto</label>
-                                </div>
-                                <div class="col-75">
-                                    <input type="text" class="inputTopico" name="assunto" id="assunto" placeholder="Título do Assunto">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-25">
-                                    <label for="mensagem">Mensagem</label>
-                                </div>
-                                <div class="col-75">
-                                    <textarea class="inputTopico" name="mensagem"  id="mensagem" placeholder="Escreva algo.." style="height:200px"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <input class="sub_novoTopico" type="submit" value="Adicionar">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <table class="tableGrupos">
-                    <tr>
-                        <th>Assunto</th>
-                        <th>Começado por</th>
-                        <th>Respostas</th>
-                        <th>Ultima resposta</th>
-                    </tr>
-                    @foreach($duvidas as $duvida)
-                    <tr>
-                        <td><a onclick="verMensagens({{$duvida->id}})">{{$duvida->assunto}}</a></td>
-                        <td>{{$duvida->primeiro_user}}</td>
-                        <td><?php echo 'totalMensagens'?></td>
-                        <td>{{$duvida->ultimo_user}}</td>
-                    </tr>
-                    @endforeach
-                </table>
             </div>
             
             <div class="divMensagens"> 

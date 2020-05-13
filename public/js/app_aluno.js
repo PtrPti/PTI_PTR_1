@@ -1,11 +1,9 @@
 $(document).ready(function () {
-  $(".pagInicia_btn").css("background-color", "#eee9e9")
+  $(".pagInicial_btn").css("background-color", "#eee9e9")
   $(".pagInicial").show()
   $(".avalDisciplina").hide()
   $(".horariosDisciplinas").hide()
   $(".pagTrabalhos").hide()
-
-  $(".forumDuvidas").hide();
 
   $(".avaliacao_btn").hover(function () {
     $(this).css("background-color", "#e6e16c");
@@ -24,239 +22,93 @@ $(document).ready(function () {
   }, function () {
     $(this).css("background-color", "#f5f8fa");
   });
-
-
-  // ------------------------------------ PAGINA INICIAL ------------------------------------ //
-  $(".pagInicia_btn").click(function () {
-    //Botoes 
-    $(".pagInicia_btn").hover(function () {
-      $(this).css("background-color", "#eee9e9");
-    }, function () {
-      $(this).css("background-color", "#eee9e9");
-    });
-
-    $(".avaliacao_btn").hover(function () {
-      $(this).css("background-color", "e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".horarios_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".trabalho_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-    
-    $(".pagInicia_btn").css("background-color", "#eee9e9")
-    $(".avaliacao_btn").css("background-color", "#f5f8fa")
-    $(".horarios_btn").css("background-color", "#f5f8fa")
-    $(".trabalho_btn").css("background-color", "#f5f8fa")
-
-    //Informação respetiva
-    $(".pagInicial").show()
-    $(".avalDisciplina").hide()
-    $(".horariosDisciplinas").hide()
-    $(".pagTrabalhos").hide()
-  });
-
-  // ------------------------------------ AVALIACAO ------------------------------------ //
-  $(".avaliacao_btn").click(function () {
-    //Botoes
-    $(".pagInicia_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".avaliacao_btn").hover(function () {
-      $(this).css("background-color", "#eee9e9");
-    }, function () {
-      $(this).css("background-color", "#eee9e9");
-    });
-
-    $(".horarios_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".trabalho_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".pagInicia_btn").css("background-color", "#f5f8fa")
-    $(".avaliacao_btn").css("background-color", "#eee9e9")
-    $(".horarios_btn").css("background-color", "#f5f8fa")
-    $(".trabalho_btn").css("background-color", "#f5f8fa")
-
-    //Informação respetiva
-    $(".pagInicial").hide()
-    $(".avalDisciplina").show()
-    $(".horariosDisciplinas").hide()
-    $(".pagTrabalhos").hide()
-  });
-
-  // ------------------------------------ HORARIOS ------------------------------------ //
-  $(".horarios_btn").click(function () {
-    //Botoes
-    $(".pagInicia_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".avaliacao_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".horarios_btn").hover(function () {
-      $(this).css("background-color", "#eee9e9");
-    }, function () {
-      $(this).css("background-color", "#eee9e9");
-    });
-
-    $(".trabalho_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".pagInicia_btn").css("background-color", "#f5f8fa")
-    $(".avaliacao_btn").css("background-color", "#f5f8fa")
-    $(".horarios_btn").css("background-color", "#eee9e9")
-    $(".trabalho_btn").css("background-color", "#f5f8fa")
-
-    //Informação respetiva
-    $(".pagInicial").hide()
-    $(".avalDisciplina").hide()
-    $(".horariosDisciplinas").show()
-    $(".pagTrabalhos").hide()
-  });
-
-  // ------------------------------------ TRABALHOS ------------------------------------ //
-  $(".trabalho_btn").click(function () {
-    //Botoes
-    $(".pagInicia_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".avaliacao_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".horarios_btn").hover(function () {
-      $(this).css("background-color", "#e6e16c");
-    }, function () {
-      $(this).css("background-color", "#f5f8fa");
-    });
-
-    $(".trabalho_btn").hover(function () {
-      $(this).css("background-color", "#eee9e9");
-    }, function () {
-      $(this).css("background-color", "#eee9e9");
-    });
-
-    $(".pagInicia_btn").css("background-color", "#f5f8fa")
-    $(".avaliacao_btn").css("background-color", "#f5f8fa")
-    $(".horarios_btn").css("background-color", "#f5f8fa")
-    $(".trabalho_btn").css("background-color", "#eee9e9")
-
-    //Informação respetiva
-    $(".pagInicial").hide()
-    $(".avalDisciplina").hide()
-    $(".horariosDisciplinas").hide()
-    $(".pagTrabalhos").show()
-  });
   
   $("#add_topico").click(function () {
     $("#myModal").css("display", "block");
   });
-
+  
   $(".close").click(function () {
     $("#myModal").css("display", "none");
-  });
+  })
 
-  $(".forumDuvidas_btn").click(function() {
-    $(".forumDuvidas").show();
-    $(".infDisciplina").hide();
+  $(".add_mensagem").click(function () {
+    $(".addMensagem").show()
   });
 
   $(".return_pagIni").click(function() {
     $(".forumDuvidas").hide();
     $(".infDisciplina").show();
   });
-
 });
 
-//---------------------------------------------------------------//
+// ------------------------------------ PAGINA INICIAL ------------------------------------ //
+function show_pagInicial(){
+  //Botoes 
+  $(".pagInicial_btn").hover(function () {
+    $(this).css("background-color", "#eee9e9");
+    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
+  }, function () {
+    $(this).css("background-color", "#eee9e9");
+    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
+  });
 
-// Get the modal
-// var modal = document.getElementById("myModal");
+  $(".avaliacao_btn").hover(function () {
+    $(this).css("background-color", "e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
 
-// Get the button that opens the modal
-// var btn = document.getElementById("add_topico");
+  $(".horarios_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
 
-// Get the <span> element that closes the modal
-// var span = document.getElementsByClassName("close")[0];
+  $(".trabalho_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+  
+  $(".pagInicial_btn").css("background-color", "#eee9e9")
+  $(".avaliacao_btn").css("background-color", "#f5f8fa")
+  $(".horarios_btn").css("background-color", "#f5f8fa")
+  $(".trabalho_btn").css("background-color", "#f5f8fa")
 
-// When the user clicks the button, open the modal 
-// btn.onclick = function () {
-//   modal.style.display = "block";
-// }
-
-$("#add_topico").click(function () {
-  $("#myModal").css("display", "block");
-});
-
-$(".close").click(function () {
-  $("#myModal").css("display", "none");
-})
-
-// When the user clicks on <span> (x), close the modal
-// span.onclick = function () {
-//   modal.style.display = "none";
-// }
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-  if (event.target == $("#myModal")) {
-    $("#myModal").css("display", "none");
-  }
+  //Informação respetiva
+  $(".pagInicial").show()
+  $(".avalDisciplina").hide()
+  $(".horariosDisciplinas").hide()
+  $(".pagTrabalhos").hide()
 }
 
-function ShowGruposA(id) {
-  $(".projetosDisciplina").hide()
-  $(".infProjeto").show()
+function return_pagInicial(){
+  $(".infDisciplina").show()
+  $(".forumDuvidas").hide()
+  $(".divMensagens").hide()
+}
+
+function showForum(cadeira_id) {
+  $(".forumDuvidas").show();
+  $(".infDisciplina").hide();
 
   $.ajax({
-    url: '/showGruposA',
+    url: '/showForum',
     type: 'GET',
     dataType: 'json',
     success: 'success',
-    data: { 'id': id },
+    data: { 'cadeira_id': cadeira_id },
     success: function (data) {
-      $(".inforcao_projeto").empty();
-      $(".inforcao_projeto").append(data.html);
+      $(".forumDuvidas").empty();
+      $(".forumDuvidas").append(data.html);
     }
   });
+}
 
-  $(".add_mensagem").click(function () {
-    $(".addMensagem").show()
-  });
+function return_forum(){
+  $(".infDisciplina").hide()
+  $(".forumDuvidas").show()
+  $(".divMensagens").hide()
 }
 
 function verMensagens(id) {
@@ -275,6 +127,193 @@ function verMensagens(id) {
   });
 }
 
+function Responder(){
+  var div = document.getElementById("yourDivElement");
+  var input = document.createElement("textarea");
+  var button = document.createElement("button");
+  input.name = "post";
+  input.maxLength = "5000";
+  input.cols = "80";
+  input.rows = "40";
+  div.appendChild(input); //appendChild
+  div.appendChild(button);
+}
+
+// ------------------------------------ AVALIACAO ------------------------------------ //
+function show_avaliacao () {
+  //Botoes
+  $(".pagInicial_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+
+  $(".avaliacao_btn").hover(function () {
+    $(this).css("background-color", "#eee9e9");
+    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
+  }, function () {
+    $(this).css("background-color", "#eee9e9");
+    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
+  });
+
+  $(".horarios_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+
+  $(".trabalho_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+
+  $(".pagInicial_btn").css("background-color", "#f5f8fa")
+  $(".avaliacao_btn").css("background-color", "#eee9e9")
+  $(".horarios_btn").css("background-color", "#f5f8fa")
+  $(".trabalho_btn").css("background-color", "#f5f8fa")
+
+  //Informação respetiva
+  $(".pagInicial").hide()
+  $(".avalDisciplina").show()
+  $(".horariosDisciplinas").hide()
+  $(".pagTrabalhos").hide()
+}
+
+// ------------------------------------ HORARIOS ------------------------------------ //
+function show_horarios () {
+  //Botoes
+  $(".pagInicial_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+
+  $(".avaliacao_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+
+  $(".horarios_btn").hover(function () {
+    $(this).css("background-color", "#eee9e9");
+    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
+  }, function () {
+    $(this).css("background-color", "#eee9e9");
+    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
+  });
+
+  $(".trabalho_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+
+  $(".pagInicial_btn").css("background-color", "#f5f8fa")
+  $(".avaliacao_btn").css("background-color", "#f5f8fa")
+  $(".horarios_btn").css("background-color", "#eee9e9")
+  $(".trabalho_btn").css("background-color", "#f5f8fa")
+
+  //Informação respetiva
+  $(".pagInicial").hide()
+  $(".avalDisciplina").hide()
+  $(".horariosDisciplinas").show()
+  $(".pagTrabalhos").hide()
+}
+
+// ------------------------------------ TRABALHOS ------------------------------------ //
+function show_trabalho() {
+  //Botoes
+  $(".pagInicial_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+
+  $(".avaliacao_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+
+  $(".horarios_btn").hover(function () {
+    $(this).css("background-color", "#e6e16c");
+  }, function () {
+    $(this).css("background-color", "#f5f8fa");
+  });
+
+  $(".trabalho_btn").hover(function () {
+    $(this).css("background-color", "#eee9e9");
+    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
+  }, function () {
+    $(this).css("background-color", "#eee9e9");
+    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
+  });
+
+  $(".pagInicial_btn").css("background-color", "#f5f8fa")
+  $(".avaliacao_btn").css("background-color", "#f5f8fa")
+  $(".horarios_btn").css("background-color", "#f5f8fa")
+  $(".trabalho_btn").css("background-color", "#eee9e9")
+
+  //Informação respetiva
+  $(".pagInicial").hide()
+  $(".avalDisciplina").hide()
+  $(".horariosDisciplinas").hide()
+  $(".pagTrabalhos").show()
+}
+
+function ShowGruposA(id) {
+  $(".projetosDisciplina").hide()
+  $(".infProjeto").show()
+
+  $.ajax({
+    url: '/showGruposA',
+    type: 'GET',
+    dataType: 'json',
+    success: 'success',
+    data: { 'id': id },
+    success: function (data) {
+      $(".inforcao_projeto").empty();
+      $(".inforcao_projeto").append(data.html);
+    }
+  });
+}
+
+function return_trabalho(){
+  $(".projetosDisciplina").show()
+  $(".infProjeto").hide()
+}
+//---------------------------------------------------------------//
+
+//Forum
+
+// Get the modal
+// var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+// var btn = document.getElementById("add_topico");
+
+// Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+// btn.onclick = function () {
+//   modal.style.display = "block";
+// }
+
+
+
+// When the user clicks on <span> (x), close the modal
+// span.onclick = function () {
+//   modal.style.display = "none";
+// }
+
+// When the user clicks anywhere outside of the modal, close it
+// window.onclick = function (event) {
+//   if (event.target == $("#myModal")) {
+//     $("#myModal").css("display", "none");
+//   }
+// }
 // // Get the modal
 // var modal = document.getElementById("novaMensagem");
 
@@ -294,21 +333,21 @@ function verMensagens(id) {
 //   modal.style.display = "none";
 // }
 
-$("#add_mensagem").click(function () {
-  alert("oi");
-  $("#novaMensagem").css("display", "block");
-});
+// $("#add_mensagem").click(function () {
+//   alert("oi");
+//   $("#novaMensagem").css("display", "block");
+// });
 
-$(".close").click(function () {
-  $("#novaMensagem").css("display", "none");
-})
+// $(".close").click(function () {
+//   $("#novaMensagem").css("display", "none");
+// })
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-  if (event.target == $("#novaMensagem")) {
-      $("#novaMensagem").css("display", "none");
-  }
-}
+// // When the user clicks anywhere outside of the modal, close it
+// window.onclick = function (event) {
+//   if (event.target == $("#novaMensagem")) {
+//       $("#novaMensagem").css("display", "none");
+//   }
+// }
 
 window.onscroll = function() {scrollFunction()};
 

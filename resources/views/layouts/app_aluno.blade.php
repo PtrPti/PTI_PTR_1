@@ -80,7 +80,7 @@
             </div>
         </nav>
 
-        <div id="apps">
+        <div id="apps" class="sticky">
             <div class="nav_icons">
 
                 <div style="border-bottom: 1.5px solid #e6e16c;">

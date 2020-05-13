@@ -1,10 +1,10 @@
-<a class="trabalho_btn" id="return_btn"><b>Trabalhos</b></a> > <u>{{$projeto->nome}}</u>
+<a onclick="return_trabalho()" id="return_btn"><b>Trabalhos</b></a> > <u>{{$projeto->nome}}</u>
 
-<div class="button">
+<!-- <div class="button">
 
-</div>
+</div> -->
 <!-- <h4><b>{{$projeto->nome}}</b></h4> -->
-<table class="tableGrupos">
+<table class="tableGrupos" style="margin-top:9%">
     <tr>
         <th>Número do grupo</th>
         <th>Total de membros</th>
@@ -30,6 +30,7 @@
                 foreach ($users as $actual_user){
                     if (($actual_user->id) == ($membro->user_id)){
                         echo "<a>",$actual_user->nome,"</a>";
+                        echo "<br>";
                         if ($actual_user->id == $user){
                             $inGroup = True;
                             $hasGroup = True;
@@ -45,9 +46,9 @@
             }elseif($inGroup){
                 $hasGroup = True;
                 //$novoGrupo = False;
-                echo "<button type='button' onclick='removeUser($grupo->id, $projeto->id)'>Sair no Grupo</button>", csrf_field();
+                echo "<button type='button' class='buttun_group' onclick='removeUser($grupo->id, $projeto->id)'>Sair no Grupo</button>", csrf_field();
             }else{
-                echo "<button type='button' onclick='addUser($grupo->id, $projeto->id)'>Entrar no Grupo</button>", csrf_field();
+                echo "<button type='button' class='buttun_group' onclick='addUser($grupo->id, $projeto->id)'>Entrar no Grupo</button>", csrf_field();
             }
 
             // if ($hasGroup){
@@ -70,9 +71,9 @@
 
 <?php
 if($inGroup){
-    echo "<button type='button' style='position:absolute;top:2%;left:35%;' id='add_button' onclick='addGroup($grupo->id, $projeto->id)'>Adicionar Grupo</button>", csrf_field();
+    echo "<button type='button' style='position:absolute;bottom:86%;;left:52%;' id='button_style' onclick='addGroup($grupo->id, $projeto->id)'>Adicionar Grupo</button>", csrf_field();
 } else{
-    echo "<button type='button' style='position:absolute;top:2%;left:35%;' id='add_button' onclick='addUserGroup($grupo->id, $projeto->id)'>Adicionar Grupo</button>", csrf_field();
+    echo "<button type='button' style='position:absolute;bottom:86%;;left:52%;' id='button_style' onclick='addUserGroup($grupo->id, $projeto->id)'>Adicionar Grupo</button>", csrf_field();
 }
 ?> 
 

@@ -59,18 +59,22 @@ Route::get('delete/{id}','ProjetoController@eraseProject');
 //Home
 Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
 Route::get('/alunoHome', 'HomeController@alunoHome')->name('alunoHome');
+Route::post('/filterProj', 'HomeController@filterProj');
   
 //Disciplina
 Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina')->name('pagDisciplina');
 Route::get('showGruposA', 'DisciplinaController@showGruposA');
 Route::get('verMensagens', 'DisciplinaController@verMensagens');
+Route::get('showForum', 'DisciplinaController@showForum');
 Route::post('/addTopico', 'DisciplinaController@addTopico');
 Route::post('/addMensagem', 'DisciplinaController@addMensagem');
 Route::post('/removeUser', 'DisciplinaController@removeUser');
 Route::post('/addUser', 'DisciplinaController@addUser');
 Route::post('/addGroup', 'DisciplinaController@addGroup');
 Route::post('/addUserGroup', 'DisciplinaController@addUserGroup');
-Route::get('showGrup', 'DisciplinaController@showGrup');
+Route::get('forum', 'DisciplinaController@Forum');
+
+// Route::get('showGrup', 'DisciplinaController@showGrup');
 
 //Projeto
 Route::get('/projetosAluno/{id}', 'ProjetoController@pagProjeto')->name('pagProjeto');

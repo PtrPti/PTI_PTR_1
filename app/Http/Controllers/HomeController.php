@@ -73,7 +73,13 @@ class HomeController extends Controller
     public function pagProjeto(){
         return view('aluno.projetosAluno');
     }
+    
+    public function filterProj(Request $request){
+        $user = Auth::user()->getUser();       
+        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                                  ->where('users_grupos.grupo_id', $user->id)->get();
 
+    }
     //Docente
     public function indexDocente($tab = "tab1"){
         $user = Auth::user()->getUser();

@@ -51,33 +51,63 @@ class DisciplinaController extends Controller
         $docentes = User::join('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')
                           ->where('users.perfil_id', 2)
                           ->where('users_cadeiras.cadeira_id', $cadeira_id)->get();
-        $duvidas = ForumDuvidas::where('forum_duvidas.cadeira_id', $cadeira_id)->get();
+        //$duvidas = ForumDuvidas::where('forum_duvidas.cadeira_id', $cadeira_id)->get();
         //$mensagens = ForumMensagens::join('forum_duvidas', 'forum_duvida_id', '=', 'forum_duvidas.id')->get();
         //$totalMensagens = $mensagens->count();
 
         //$userCadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
         //                          ->where('users_cadeiras.user_id', $user->id)->get();
                                 
-        return view('aluno.disciplinasAluno', compact('user','disciplinas','projetos','cadeira','cadeiraProjetos','docentes','duvidas'));
+        return view('aluno.disciplinasAluno', compact('user','disciplinas','projetos','cadeira','cadeiraProjetos','docentes'));
+    }
+
+    public function showForum(Request $request){
+        $cadeira_id = $_GET['cadeira_id'];
+        $cadeira = Cadeira::where('cadeiras.id', $cadeira_id)->get();
+        $duvidas = DB::select('select fd.*, u1.nome as "primeiro", u2.nome as "ultimo"
+                                from forum_duvidas fd
+                                inner join users u1
+                                on fd.primeiro_user = u1.id
+                                inner join users u2
+                                on fd.ultimo_user = u2.id
+                                where fd.cadeira_id = (?)', [$cadeira_id]);
+
+        $data = array(
+            'cadeira'  => $cadeira,
+            'duvidas' => $duvidas,
+        );
+
+        $returnHTML = view('aluno.forum')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function Forum (Request $request){
+        $cadeira_id = $request->cadeira_id;
+        $cadeira = Cadeira::where('cadeiras.id', $cadeira_id)->get();
+        $duvidas = ForumDuvidas::where('forum_duvidas.cadeira_id', $cadeira_id)->get();
+        return view('aluno.forum', compact('cadeira','duvidas'));
     }
 
     public function addTopico(Request $request){
         $user = Auth::user()->getUser()->id;
+        $assunto = $_POST['assunto'];
+        $mensagem = $_POST['mensagem'];
+        $cadeira_id = $_POST['cadeira_id'];
 
         $novoTopico = new ForumDuvidas;
-        $novoTopico->assunto = $request->assunto;
+        $novoTopico->assunto = $assunto;
         $novoTopico->primeiro_user = $user;
         $novoTopico->ultimo_user = $user;
-        $novoTopico->cadeira_id = $request->cadeira_id;
+        $novoTopico->cadeira_id = $cadeira_id;
         $novoTopico->save();
 
         $novaMensagem = new ForumMensagens;
         $novaMensagem->forum_duvida_id = $novoTopico->id;
         $novaMensagem->user_id = $user;
-        $novaMensagem->mensagem = $request->mensagem;
+        $novaMensagem->mensagem = $mensagem;
         $novaMensagem->save();
     
-        return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
+        // return redirect()->action('DisciplinaController@Forum', ['cadeira_id' => $request->cadeira_id]);
     }
 
     public function verMensagens(Request $request) {
@@ -127,25 +157,25 @@ class DisciplinaController extends Controller
         return response()->json(array('html'=>$returnHTML));
     }
 
-    public function showGrup (Request $request) {
-        $user = Auth::user()->getUser()->id;
-        $id = 1;
-        $grupos = Grupo::where('projeto_id', $id)->get();
-        $elementos = DB::table('users_grupos')->get();    
-        $projeto = Projeto::where('id', $id)->first();
-        $users = DB::table('users')->get();
+    // public function showGrup (Request $request) {
+    //     $user = Auth::user()->getUser()->id;
+    //     $id = 1;
+    //     $grupos = Grupo::where('projeto_id', $id)->get();
+    //     $elementos = DB::table('users_grupos')->get();    
+    //     $projeto = Projeto::where('id', $id)->first();
+    //     $users = DB::table('users')->get();
         
-        $data = array(
-            'grupos'    => $grupos,
-            'elementos' => $elementos,
-            'projeto'   => $projeto,
-            'user'      => $user,
-            'users'     => $users
-        );
+    //     $data = array(
+    //         'grupos'    => $grupos,
+    //         'elementos' => $elementos,
+    //         'projeto'   => $projeto,
+    //         'user'      => $user,
+    //         'users'     => $users
+    //     );
 
-        $returnHTML = view('aluno.grupos')->with($data)->render();
-        return response()->json(array('html'=>$returnHTML));
-    }
+    //     $returnHTML = view('aluno.grupos')->with($data)->render();
+    //     return response()->json(array('html'=>$returnHTML));
+    // }
 
     public function removeUser(Request $request) {
         $user = Auth::user()->getUser()->id;

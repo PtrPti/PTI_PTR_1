@@ -23,18 +23,22 @@
           <img src="{{ asset('images/filter.png') }}" class="filtro_projeto">
         </a>
         <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="top: 24px;left: -56px;">
-          <li class="dropdown-item">
-            <input type="checkbox" id="favoritos" />
-            <label for="favoritos">Favoritos</label>
-          </li>
-          <li class="dropdown-item">
-            <input type="checkbox" id="em_curso" />
-            <label for="em_curso">Em curso</label>
-          </li>
-          <li class="dropdown-item">
-            <input type="checkbox" id="terminados" />
-            <label for="terminados">Terminados</label>
-          </li>
+          <form action="/filterProj" method="post">
+            <li class="dropdown-item">
+              <input type="checkbox" id="favoritos" name="filtro" value="favoritos"/>
+              <label for="favoritos">Favoritos</label>
+            </li>
+            <li class="dropdown-item">
+              <input type="checkbox" id="em_curso" name="filtro" value="em_curso"/>
+              <label for="em_curso">Em curso</label>
+            </li>
+            <li class="dropdown-item">
+              <input type="checkbox" id="terminados" name="filtro" value="terminados"/>
+              <label for="terminados">Terminados</label>
+            </li>
+            <input type="submit" value="Aplicar" class="filtro_btn">
+          </form>
+          <!-- <button type='button' onclick='filtrarProjetos($grupo->id, $projeto->id)'>Entrar no Grupo</button>", csrf_field(); -->
         </ul>
       </div>
 
