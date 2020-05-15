@@ -72,7 +72,7 @@ class HomeController extends Controller
 
     //Docente
     public function indexDocente(){
-        $user = Auth::user()->getUser();  
+        $user = Auth::user()->getUser();
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
         $projetos = DB::select('select p.*, c.nome as "cadeira" from projetos p
                                 inner join cadeiras c
@@ -81,6 +81,12 @@ class HomeController extends Controller
                                 inner join cadeiras ca
                                  on uc.cadeira_id = ca.id
                                  where uc.user_id = ?)', [$user->id]);
+
+    //    $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
+    //                              ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+    //                              ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
+    //                              ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
+    //                                  ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id')->get();
 
         return view('docente.docenteHome', compact('disciplinas', 'projetos'));
     }

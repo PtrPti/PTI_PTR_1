@@ -4,8 +4,24 @@
 
 <div class="nav_icons">
     <div class="" id="tab1" onclick="ShowHome()"><img src="{{ asset('images/home_icon.png') }}"> Home </div>
-    <div class="" id="tab2" onclick="ShowProjetos()"><img src="{{ asset('images/disciplinas_icon.png') }}"> Disciplinas </div>
-    <div class="" id="tab2" onclick="ShowProjetos()"><img src="{{ asset('images/projetos_icon.png') }}"> Projetos </div>
+    <div class="has-dropdown" id="tab2" onclick="ShowDisciplinas()"><img src="{{ asset('images/disciplinas_icon.png') }}"> Disciplinas 
+        <ul class="dropdown">
+            @foreach($disciplinas as $d)
+            <li class="dropdown-item">
+                <a href="{{ route('indexDisciplinaDocente', ['id' => $d->id]) }}" class="item-link">{{$d->nome}}</a>
+            </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="has-dropdown" id="tab3" onclick="ShowProjetos()"><img src="{{ asset('images/projetos_icon.png') }}"> Projetos 
+        <ul class="dropdown">
+            @foreach($projetos as $p)
+            <li class="dropdown-item">
+                <a href="{{ route('id_projeto', ['id' => $p->id]) }}" class="item-link">{{$p->nome}}</a>
+            </li>
+            @endforeach
+        </ul>
+    </div>
 </div>
 
 <div class="homeDocente">
@@ -14,4 +30,3 @@
 <div>
 
 @endsection
-

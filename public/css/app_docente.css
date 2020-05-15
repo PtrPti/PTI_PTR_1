@@ -22,12 +22,14 @@ body {
 .nav_icons{
   display: block;
   margin-left: 10%;
+  display: flex;
 }
 
 .nav_icons div{
   padding: 0.5% 1.5% 0.5% 1.5%;
   border-bottom: 1.5px solid #acc;
-  display: inline-block;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .nav_icons div img, .nav_icons_back div img{
@@ -666,4 +668,116 @@ input{
   position: absolute;
   margin: auto;
   align-self: center;
+}
+
+#topicoModal textarea {
+  width: 90%;
+}
+.label-topico {
+  margin-top: 10px;
+}
+
+.inputTopico {
+  margin-top: 0;
+}
+
+.addTopico {
+  width: auto;
+  color: initial;
+  background: #acc;
+  border: none;
+  padding: 5px 20px;
+  margin-bottom: 0;
+}
+
+.addTopico:hover {
+  border: 2px inset grey;
+}
+
+#forumMensagens {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+#forumMensagens p {
+  width: 100%;
+}
+
+#forumMensagens .mensagem{
+  display: flex;
+  flex-wrap: wrap;
+  width: 98%; 
+  padding: 10px;
+  text-align: left;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #acc;
+  margin: 2px 0;
+}
+
+#forumMensagens .mensagem .rowBtns {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.reply {
+  width: 100%;
+  border: 1px solid grey;
+  margin-top: 5px;
+  padding: 15px;
+  display: none;
+}
+
+.reply textarea {
+  width: 100%;
+  border: 1px solid grey;
+}
+
+.reply input {
+  width: auto;
+  display: inline-block;
+  margin: 0;
+}
+
+.dropdown {
+  position: absolute;
+  list-style: none;
+  display: none;
+  z-index: 2;
+  width: auto;
+  background: white;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+
+  transition: opacity .15s ease-out;
+}
+
+.dropdown {
+  margin-top: 32px;
+  margin-left: -1.4%;
+}
+
+.has-dropdown:hover .dropdown {
+  pointer-events: auto;
+  display: flex;
+}
+
+.dropdown-item {    
+  width: 100%;
+  position: relative;
+  border: none;
+  border-bottom: 1.5px solid #acc;
+}
+
+.dropdown-item:hover, .dropdown a:hover {
+  background: #acc;
+  text-decoration: none;
+}
+
+.item-link {
+  padding: 0.75rem 5px 0.75rem 5px;
 }

@@ -36,10 +36,12 @@ Route::post('/docenteHome/{redirect?}', 'HomeController@store')->name('projetoPo
 Route::get('/docenteHome', 'HomeController@perfil')->name('perfil')->middleware('checkUserRole:2');
 
 //Disciplinas
-Route::get('/docenteHome/disciplina/{id}', 'DisciplinaController@indexDocente')->name('indexDisciplinaDocente');
+Route::get('/docenteHome/disciplina/{id}/{tab?}', 'DisciplinaController@indexDocente')->name('indexDisciplinaDocente');
 Route::get('addGrupo', 'DisciplinaController@addGrupo');
+Route::get('verMensagensDocente', 'DisciplinaController@verMensagensDocente');
 Route::get('showGrupos', 'DisciplinaController@showGrupos');
 Route::get('getForum', 'DisciplinaController@getForum');
+Route::get('getPagInicial', 'DisciplinaController@getPagInicial');
 Route::post('uploadFile', 'DisciplinaController@uploadFile')->name('uploadFile');
 
 //Projetos
@@ -48,6 +50,10 @@ Route::get('projetos/{id}', 'ProjetoController@id_projetos')->name('id_projeto')
 Route::get('delete-records','ProjetoController@index');
 Route::get('delete/{id}','ProjetoController@eraseProject');
 Route::post('/docenteHome/{route?}/deleteGrupo','ProjetoController@deleteGrupo');
+
+//Forum
+Route::post('addTopicoDocente', 'DisciplinaController@addTopicoDocente')->name('addTopicoDocente');
+Route::post('replyForum', 'DisciplinaController@replyForum')->name('replyForum');
 
 //---------------- ALUNOS ----------------//
 //Home

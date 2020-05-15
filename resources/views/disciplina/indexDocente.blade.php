@@ -96,6 +96,10 @@
 <script>
     $(document).ready(function() {
         TabActive('<?php echo $active_tab ?>');
+
+        @if(!empty($funcParams))
+            ShowPage(<?php echo $funcParams[0] ?>, '<?php echo $funcParams[1] ?>', '<?php echo $funcParams[2] ?>', '<?php if(!empty($openForm)) {echo $openForm;} ?>');
+        @endif
     })
 
     function ShowGrupos(id) {

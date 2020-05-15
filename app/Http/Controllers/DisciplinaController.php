@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 use DateTime;
+use Session;
+use Validator;
 
 class DisciplinaController extends Controller
 {
@@ -25,8 +27,7 @@ class DisciplinaController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
 
@@ -201,7 +202,7 @@ class DisciplinaController extends Controller
     }
 
     //Docente
-    public function indexDocente(int $id, $tab = "tab1") {
+    public function indexDocente(Request $request, int $id, $tab = "tab1") {
         $projetos = DB::select('select p.id, p.nome, p.data_fim, pf.nome as ficheiro 
                                 from projetos p
                                 left join projetos_ficheiros pf
@@ -214,7 +215,28 @@ class DisciplinaController extends Controller
                           ->where('users_cadeiras.cadeira_id', $cadeira->id)->get();
 
         $active_tab = $tab;
-        return view('disciplina.indexDocente', compact('projetos', 'cadeira', 'docentes', 'active_tab'));
+        
+        $funcParams = [];
+        $openForm = "";
+        $errors = Session::get('errors');
+
+        if(Session::has('func')){
+            $funcParams = Session::get('func');
+
+            if($errors != null) {
+                if($errors->any()) {
+                    $request->session()->keep(['errors']);
+                    if ($funcParams[2] == "forum") {
+                        $openForm = "#add_button";
+                    }
+                    elseif ($funcParams[2] == "forumMensagens") {
+                        $openForm = "#add_mensagem_" . $funcParams[3];
+                    }
+                }
+            }
+        }
+
+        return view('disciplina.indexDocente', compact('projetos', 'cadeira', 'docentes', 'active_tab', 'funcParams', 'openForm'));
     }
 
     public function showGrupos(Request $request) {
@@ -278,74 +300,129 @@ class DisciplinaController extends Controller
         return redirect()->action('DisciplinaController@indexDocente', ['id' => $request->cadeira_id]);
     }
 
-    public function getPagInicial() {
+    public function getPagInicial(Request $request) {
+        $cadeira_id = $_GET["id"];
 
+        $cadeira = Cadeira::where('id', $cadeira_id)->first();
+        $docentes = User::join('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')
+                          ->where('users.perfil_id', 2)
+                          ->where('users_cadeiras.cadeira_id', $cadeira_id)->get();
+
+        $data = array(
+            'cadeira' => $cadeira,
+            'docentes' => $docentes
+        );                
+
+        $returnHTML = view('disciplina.pagInicial')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
     }
 
     public function getForum(Request $request) {
         $cadeira_id = $_GET['id'];
-        $duvidas = DB::select('select fd.*, u1.nome as "primeiro", u2.nome as "ultimo"
-                                from forum_duvidas fd
-                                inner join users u1
+        $duvidas = DB::select('select fd.*, u1.nome as "primeiro", u2.nome as "ultimo", count(fm.id) as "totalMensagens"
+                            from forum_duvidas fd
+                            inner join users u1
                                 on fd.primeiro_user = u1.id
-                                inner join users u2
+                            inner join users u2
                                 on fd.ultimo_user = u2.id
-                                where fd.cadeira_id = (?)', [$cadeira_id]);
-        // $mensagens = ForumMensagens::join('forum_duvidas', 'forum_duvida_id', '=', 'forum_duvidas.id')->get();
+                            inner join forum_mensagens fm
+                                on fd.id = fm.forum_duvida_id
+                            where fd.cadeira_id = (?)
+                            group by fd.id', [$cadeira_id]);
 
         $data = array(
             'cadeira_id'  => $cadeira_id,
-            'duvidas' => $duvidas
+            'duvidas' => $duvidas,
+
         );
 
         $returnHTML = view('disciplina.forum')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
-    }
-
-    public function addTopicoDocent(Request $request){
-        $user = Auth::user()->getUser()->id;
-
-        $novoTopico = new ForumDuvidas;
-        $novoTopico->assunto = $request->assunto;
-        $novoTopico->primeiro_user = $user;
-        $novoTopico->ultimo_user = $user;
-        $novoTopico->cadeira_id = $request->cadeira_id;
-        $novoTopico->save();
-
-        $novaMensagem = new ForumMensagens;
-        $novaMensagem->forum_duvida_id = $novoTopico->id;
-        $novaMensagem->user_id = $user;
-        $novaMensagem->mensagem = $request->mensagem;
-        $novaMensagem->save();
-    
-        return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
-    }
+    }    
 
     public function verMensagensDocente(Request $request) {
         $id = $_GET['id'];
-        $mensagens = ForumMensagens::where('forum_duvida_id', $id)->get();
-        $duvida = ForumDuvidas::where('id', $id)->get();
+
+        $mensagens = DB::select('select fm.*, u.nome from forum_mensagens fm
+                                inner join users u
+                                on fm.user_id = u.id
+                                where forum_duvida_id = (?) 
+                                order by bloco asc, created_at asc', [$id]);
+
+        $duvida = ForumDuvidas::where('id', $id)->first();
 
         $data = array(
             'mensagens'  => $mensagens,
             'duvida' => $duvida,
         );
 
-        $returnHTML = view('aluno.mensagens')->with($data)->render();
+        $returnHTML = view('disciplina.forumMensagens')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
     }
 
-    public function addMensagemDocente(Request $request){
-        $user = Auth::user()->getUser()->id;
+    public function addTopicoDocente(Request $request){
+        Session::flash('func', [$request->cadeira_id, '/getForum', 'forum']);
 
-        ForumDuvidas::update(['ultimo_user'=>$user]);
+        $this->validate($request, [
+            'assunto' => 'bail|required|string',
+            'mensagem' => 'bail|required|string',
+        ]);
+
+        $user = Auth::user()->getUser();
+
+        $novoTopico = new ForumDuvidas;
+        $novoTopico->assunto = $request->assunto;
+        $novoTopico->primeiro_user = $user->id;
+        $novoTopico->ultimo_user = $user->id;
+        $novoTopico->cadeira_id = $request->cadeira_id;
+        $novoTopico->save();
 
         $novaMensagem = new ForumMensagens;
-        $novaMensagem->forum_duvida_id = $request->duvida_id;
-        $novaMensagem->user_id = $user;
+        $novaMensagem->forum_duvida_id = $novoTopico->id;
+        $novaMensagem->user_id = $user->id;
         $novaMensagem->mensagem = $request->mensagem;
+        $novaMensagem->bloco = 0;
         $novaMensagem->save();
     
-        return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
+        return redirect()->action('DisciplinaController@indexDocente', ['id' => $request->cadeira_id]);
+    }
+
+    public function replyForum(Request $request) {
+        Session::flash('func', [$request->duvida_id, '/verMensagensDocente', 'forumMensagens', $request->mensagem_id]);
+
+        $this->validate($request, [
+            'mensagem' => 'bail|required|string|max:4000',
+        ]);
+
+        $user = Auth::user()->getUser();
+
+        $bloco = DB::select('select max(bloco) as "bloco" from forum_mensagens where forum_duvida_id = (?) and resposta_a = (?)', [$request->duvida_id, $request->mensagem_id]);
+
+        $resposta = new ForumMensagens();
+        $resposta->mensagem = $request->mensagem;
+        $resposta->resposta_a = $request->mensagem_id;
+        $resposta->forum_duvida_id = $request->duvida_id;
+        $resposta->user_id = $user->id;
+        
+        if ($bloco[0]->bloco == null) { //criar um novo nivel -> neste caso é a primeira resposta de todas ou uma respota a outra resposta
+            $bloco_pai = DB::select('select bloco from forum_mensagens where forum_duvida_id = (?) and id = (?)', [$request->duvida_id, $request->mensagem_id]); //vai buscar o bloco do pai/nivel superior
+            if ($bloco_pai[0]->bloco == 0) { //resposta ao mensagem de cricao do topico (1a mensagem de todas)
+                $resposta->bloco = $bloco_pai[0]->bloco + 1;
+            }
+            else { //resposta a outra resposta já existente (sem ser a principal/pai)
+                $resposta->bloco = $bloco_pai[0]->bloco;
+            }
+        }
+        else { //neste caso repsonde-se à mensagem inicial, mas não é a primeira reposta à msg inicial
+            $resposta->bloco = $bloco[0]->bloco + 1;
+        }
+
+        $resposta->save();
+
+        $forum = ForumDuvidas::find($request->duvida_id);
+        $forum->ultimo_user = $user->id;
+        $forum->save();
+
+        return redirect()->action('DisciplinaController@indexDocente', ['id' => $request->cadeira_id]);
     }
 }
