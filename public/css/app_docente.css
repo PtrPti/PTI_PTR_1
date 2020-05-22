@@ -619,7 +619,6 @@ input{
 }
 
 .div_button{
-  /*! height: 100%; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -780,4 +779,23 @@ input{
 
 .item-link {
   padding: 0.75rem 5px 0.75rem 5px;
+}
+
+.nav_icons_back .dropdown{
+  margin: 0;
+  margin-top: 6px;
+  margin-left: -7px;
+}
+
+.nav_icons_back .dropdown .dropdown-item { 
+  padding: 5px;
+}
+
+.nav_icons_back .dropdown .item-link { 
+  padding: 0;
+}
+
+.nav_icons_back .dropdown-item:hover, .dropdown a:hover {
+  background: lightgray;
+  text-decoration: none;
 }

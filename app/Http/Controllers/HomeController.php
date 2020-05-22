@@ -82,12 +82,6 @@ class HomeController extends Controller
                                  on uc.cadeira_id = ca.id
                                  where uc.user_id = ?)', [$user->id]);
 
-    //    $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
-    //                              ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-    //                              ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
-    //                              ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
-    //                                  ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id')->get();
-
         return view('docente.docenteHome', compact('disciplinas', 'projetos'));
     }
 

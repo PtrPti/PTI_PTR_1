@@ -26,6 +26,10 @@ function ShowHorario() {
     $("#tab3").addClass('active');
 }
 
+function IndexDocente() {
+    window.location.href = '/docenteHome'
+}
+
 function TabActive(tab) {
     $("#" + tab).addClass('active');
     $("#" + tab).trigger('click');
@@ -72,7 +76,6 @@ function ShowPage(id, url, targetDiv, openForm) {
             $(".discpContainer").css('display', 'none');
             $("#" + targetDiv).replaceWith(data.html);
             $("#" + targetDiv).css('display', 'flex');
-            // $('"' + openForm + '"').trigger('click');
             $(openForm).trigger('click');
         }
     });

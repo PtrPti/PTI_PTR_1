@@ -60,7 +60,7 @@
             </table>
         </div>
         
-        <div class="flex-right-footer">
+        <!-- <div class="flex-right-footer">
             <button class="footer-icon" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-2x"></i></button>
         </div>
 
@@ -79,7 +79,7 @@
 
             <div style='clear:both'></div>
 
-        </div>
+        </div> -->
     </div>
 </div>
 

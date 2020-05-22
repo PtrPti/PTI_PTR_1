@@ -6,9 +6,29 @@
 
     <div class="flex-left">
         <div class="nav_icons_back">
-            <a href="<?php echo e(route('homeDocente')); ?>"><div><img src="<?php echo e(asset('images/home_icon.png')); ?>"> Home </div></a>
+            <!-- <a href="<?php echo e(route('homeDocente')); ?>"><div><img src="<?php echo e(asset('images/home_icon.png')); ?>"> Home </div></a>
             <a><div><img src="<?php echo e(asset('images/disciplinas_icon.png')); ?>"> Disciplinas </div></a>
-            <a><div><img src="<?php echo e(asset('images/projetos_icon.png')); ?>"> Projetos </div></a>
+            <a><div><img src="<?php echo e(asset('images/projetos_icon.png')); ?>"> Projetos </div></a> -->
+
+            <div class="" onclick="IndexDocente()"><img src="<?php echo e(asset('images/home_icon.png')); ?>"> Home </div>
+            <div class="has-dropdown"><img src="<?php echo e(asset('images/disciplinas_icon.png')); ?>"> Disciplinas 
+                <ul class="dropdown">
+                    <?php $__currentLoopData = $disciplinas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li class="dropdown-item">
+                        <a href="<?php echo e(route('indexDisciplinaDocente', ['id' => $d->id])); ?>" class="item-link"><?php echo e($d->nome); ?></a>
+                    </li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            </div>
+            <div class="has-dropdown"><img src="<?php echo e(asset('images/projetos_icon.png')); ?>"> Projetos 
+                <ul class="dropdown">
+                    <?php $__currentLoopData = $projetos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li class="dropdown-item">
+                        <a href="<?php echo e(route('id_projeto', ['id' => $p->id])); ?>" class="item-link"><?php echo e($p->nome); ?></a>
+                    </li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            </div>
         </div>
 
         <button id="btnAdd" ><img src="<?php echo e(asset('images/plus_docente.png')); ?>" width="23"><span>Criar/Adicionar</span></button>

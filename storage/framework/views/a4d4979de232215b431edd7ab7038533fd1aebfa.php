@@ -58,26 +58,7 @@
             </table>
         </div>
         
-        <div class="flex-right-footer">
-            <button class="footer-icon" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-2x"></i></button>
-        </div>
-
-        <div id='calendarContainer'>
-            <div id='external-events'>
-                <h4>Elementos do grupo</h4>
-                <div id='external-events-list'>
-                    <?php for($i = 1; $i <= 6; $i++): ?>
-                        <?php $r = rand(0,255); $g = rand(0,255); $b = rand(0,255) ?>
-                        <div class='fc-event' data-color="rgb(<?php echo e($r); ?>, <?php echo e($g); ?>, <?php echo e($b); ?>)" style="background-color: rgb(<?php echo e($r); ?>, <?php echo e($g); ?>, <?php echo e($b); ?>); border-color: rgb(<?php echo e($r); ?>, <?php echo e($g); ?>, <?php echo e($b); ?>)">My Event <?php echo e($i); ?></div>
-                    <?php endfor; ?>
-                </div>
-            </div>
-
-            <div id='calendar'></div>
-
-            <div style='clear:both'></div>
-
-        </div>
+       
     </div>
 </div>
 

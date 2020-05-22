@@ -202,18 +202,24 @@ class DisciplinaController extends Controller
     }
 
     //Docente
-    public function indexDocente(Request $request, int $id, $tab = "tab1") {
-        $projetos = DB::select('select p.id, p.nome, p.data_fim, pf.nome as ficheiro 
+    public function indexDocente(Request $request, int $id, $tab = "tab1") {            
+        $user = Auth::user()->getUser();                    
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
+        $projetos = DB::select('select p.*, c.nome as cadeira, pf.nome as ficheiro 
                                 from projetos p
                                 left join projetos_ficheiros pf
                                     on p.id = pf.projeto_id
-                                where p.cadeira_id = ?', [$id]);
-                                // error_log( print_r($projetos, TRUE) );
+                                inner join cadeiras c
+                                    on p.cadeira_id = c.id
+                                where p.cadeira_id in (select ca.id from users_cadeiras uc
+                                        inner join cadeiras ca
+                                            on uc.cadeira_id = ca.id
+                                        where uc.user_id = ?)', [$user->id]);
+
         $cadeira = Cadeira::where('id', $id)->first();
         $docentes = User::join('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')
                           ->where('users.perfil_id', 2)
                           ->where('users_cadeiras.cadeira_id', $cadeira->id)->get();
-
         $active_tab = $tab;
         
         $funcParams = [];
@@ -236,7 +242,7 @@ class DisciplinaController extends Controller
             }
         }
 
-        return view('disciplina.indexDocente', compact('projetos', 'cadeira', 'docentes', 'active_tab', 'funcParams', 'openForm'));
+        return view('disciplina.indexDocente', compact('projetos', 'disciplinas', 'cadeira', 'docentes', 'active_tab', 'funcParams', 'openForm'));
     }
 
     public function showGrupos(Request $request) {
