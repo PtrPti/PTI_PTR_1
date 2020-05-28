@@ -135,6 +135,8 @@
         <!-- Chat -->
         {{ csrf_field() }}
         <div class="user-wrapper">
+
+
             <ul class="users">
             @foreach ($utilizadores as $utilizador)
                 <li class="user" id="{{$utilizador->id}}">
@@ -292,6 +294,9 @@ function scrollToBottomFunc() {
         scrollTop: $('.message-wrapper').get(0).scrollHeight
     }, 50);
 }
+
+
+
 </script>
 
 </html>

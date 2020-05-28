@@ -13,6 +13,7 @@ use Auth;
 use DateTime;
 use Pusher\Pusher;
 
+
 class ChatController extends Controller
 {
 
@@ -70,4 +71,8 @@ class ChatController extends Controller
 
         // return response()->json(['message' => $message] );
     }
+
+
+
+
 }

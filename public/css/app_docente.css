@@ -145,6 +145,9 @@ li a:hover {
   padding: 20px 0 20px 0;
   display: none;
   position: absolute;
+  top: 275px;
+  left: 10px;
+
 }
 
 .model-content h4 {
@@ -190,6 +193,10 @@ input{
   align-items: center;
 }
 
+#esq{
+
+}
+
 .flex-right {
   display: flex;
   flex-direction: column;
@@ -215,16 +222,22 @@ input{
   padding: 0;
   margin: 0;
   margin-bottom: 40px;
-  margin-left: 25px;
+  margin-left: 580px;
   border-bottom: 3px solid #acc;
+  
 }
 
 .flex-right-header h3 {
   flex: 50%;
   text-align: right;
   margin: 0;
-  margin-right: 25px;
   font-size: 18px;
+  margin-right: 200px;
+  margin-top: 56px;
+  position: absolute;
+  right: 260px;
+  font-size: 18px;
+
 }
 
 .flex-right-header h3 * {
@@ -254,6 +267,18 @@ input{
   display: flex;
   align-content: flex-end;
   margin-right: 50px;
+}
+
+.feedback-footer{
+  display: flex;
+  align-content: flex-end;
+  margin-right: 80px;
+
+}
+
+.feedback-footer .feedback-icon {
+ 
+  margin-right: 60px;
 }
 
 .flex-right-footer .footer-icon{
@@ -321,6 +346,21 @@ input{
 	margin-top: 90px;
 }
 
+#dropAdd a{
+  display: block;
+  padding-right: 40px;
+  padding-left: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle;
+}
+
+#dropAdd i{
+  padding-right: 20px;
+  
+}
+
+
 #btnAdd {
 	padding-left: 15px ;
 	padding-right: 15px ;
@@ -345,8 +385,8 @@ input{
 
 #dropAdd span{
 	display: block;
-	padding-right: 40px;
-	padding-left: 30px;
+	padding-right: 60px;
+	padding-left: 60px;
 	padding-top: 5px;
 	padding-bottom: 5px;
   color: initial;
@@ -487,9 +527,25 @@ input{
   cursor: pointer;
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 40px;
   width: 60px;
 }
+
+.feedback-icon {
+  background-color: #555;
+  color: white;
+  padding: 14px 14px;
+  border-radius: 60px;
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  bottom: 20px;
+  left: 450px;
+  width: 60px;
+}
+
+
+
 
 .chat-popup {
   display: none;
@@ -544,20 +600,44 @@ input{
   background-color: #133d55;
 }
 
-.btgrupos{
+#btgrupos{
   background-color: #133d55;
   color: white;
   padding: 6px 20px;
   border: none;
   cursor: pointer;
   width: 80%;
+  position: relative;
+  bottom:50px;
   margin-left: 30px;
-  margin-bottom:10px;
+
   opacity: 0.8;
   border-radius: 80px;
 }
 
-.btgrupos:hover{
+#btgrupos:hover{
+  opacity:1;
+}
+
+#btgrupoDocente{
+
+  background-color: #133d55;
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+  position: relative;
+  top:500px;
+  margin-left: 30px;
+
+  opacity: 0.8;
+  border-radius: 80px;
+
+}
+
+
+#btgrupoDocente:hover{
   opacity:1;
 }
 
@@ -666,4 +746,363 @@ input{
   position: absolute;
   margin: auto;
   align-self: center;
+}
+
+
+/* CHAT */
+
+.user-wrapper, .message-wrapper{
+  border: 1px solid #dddddd;
+  overflow-y: auto;
+}
+.user-wrapper{
+  display: none;
+  position: fixed;
+  height: 400px;
+  width: 350px;
+  z-index:99999;
+  background-color: #eee9e9;
+  right: 100px;
+  bottom: 10px;
+}
+.user{
+  cursor: pointer;
+  padding: 5px 0 ;
+  position: relative;
+}
+.user:hover{
+  background: #eeeeee;
+}
+.user:last-child{
+  margin-bottom: 0;
+}
+.pending{
+  position: absolute;
+  left: 5px;
+  top:17px;
+  background: #acc;
+  margin: 0;
+  border-radius: 50%;
+  width:18px;
+  height: 16px;
+  line-height: 18px;
+  padding-left: 5px;
+  color: #ffffff
+}
+.media-left{
+  margin:0 10px;
+}
+.media-left img{
+  width: 64px;
+  border-radius: 64px;
+}
+.media-body{
+  margin: 6px 0;
+}
+.message-wrapper{  
+  padding: 10px;
+  height: 400px;
+  width: 350px;
+  position: fixed;
+  right: 460px;
+  bottom: 10px;
+  background: #eeeeee;
+  z-index: 999999;
+  display: none;
+}
+.messages, .message{
+  margin-bottom: 15px;
+}
+.messages .message:last-child{
+  margin-bottom: 0;
+}
+.recieved, .sent{
+  width: 45%;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.recieved{
+  background:#acc;
+  float: left;
+  text-align: left;
+  width: auto;
+}
+.sent{
+  background:white;
+  float:right;
+  text-align: right;
+  width: auto;
+}
+.message p {
+  margin: 5px 0;
+}
+.date{
+  color: #777777;
+  font-size: 12px;
+}
+.active{
+  background: #eeeeee;
+}
+
+.input-text {
+  position: fixed;
+  bottom: 0%;
+  margin-bottom: 15px;
+}
+
+.writeMessage {  
+  width: 280px;
+  padding: 5px 5px;
+  margin: 0px 12px -19px 0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #cccccc;
+}
+
+.writeMessage:focus{
+  border: 1px solid #aaaaaa;
+}
+
+.sendMessageIcon {
+  margin: -8px 0px 9px 295px;}
+
+.sendMessageIcon:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+ul{
+  margin: 0;
+  padding: 12px;
+}
+li{
+  list-style: none;
+}
+
+
+.nav_chat{
+  position: fixed;
+    width: 340px;
+    height: 45px;
+    background: #acc;
+    z-index: 999;
+}
+
+.nav_chat p{
+  text-align: center;
+  font-size: 15px;
+}
+
+/* popup Projetos Docente */
+
+.popupDiv input{
+	padding:8px;
+  margin-bottom: 15px;
+  width: 195px;
+}
+
+.popupDiv select{
+	padding:8px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  width: 195px;
+}
+.popupDiv button{
+	padding:8px;
+	margin-bottom: 10px;
+}
+
+.popupDiv{
+  background-color: white;
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  top: 30%;
+  margin: auto;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 60px;
+  padding-right: 60px;
+  z-index: 9999;
+}
+
+.popupDiv h4{
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.closebtn{
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  width: 12px;
+}
+
+.closebtn:hover{
+  cursor: pointer;
+}
+
+
+/* Feedback Docente */
+
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+/* The Close Button */
+.closef {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: -20px;
+}
+
+.closef:hover,
+.closef:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* checkbox style */
+
+
+.containerCheckbox {
+  margin-left: 10px;
+  margin-bottom: 0px;
+	display: block;
+	position: relative;
+	padding-left: 37px;
+	cursor: pointer;
+	font-size: 18px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+  user-select: none;
+  
+}
+  
+.containerCheckbox input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+  
+.containerCheckbox .checkmark {
+	position: absolute;
+	top: 5px;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background: none;
+  border: 1px solid grey;
+  border-radius: 50%;
+}
+  
+.containerCheckbox:hover input ~ .checkmark {
+	background-color: rgba(158, 158, 158, 0.514);
+}
+
+.containerCheckbox input:checked ~ .checkmark {
+	background: none;
+}
+  
+.containerCheckbox .checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+  
+.containerCheckbox input:checked ~ .checkmark:after {
+	display: block;
+}
+  
+.containerCheckbox .checkmark:after {
+  left: 5px;
+  top: 0px;
+  width: 8px;
+  height: 15px;
+	border: solid #acc;
+	border-width: 0 4px 4px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+#btn_escolha{
+  margin-left: 355px;
+}
+
+
+/* Página Informação Grupos Para Docente */
+
+.grupos_info h1{
+  text-align: center;
+  
+
+}
+
+.grupos_info p{
+  text-align: center;
+  font-size: 19px;
+
+}
+
+.elementos_grupo p{
+  text-align: center;
+  
+}
+
+.elementos_grupo h4{
+  text-align: center;
+
+}
+
+
+.elementos_grupo{
+  background-color: #eee9e9;
+  width: 300px;
+  padding: 5px;
+  
+}
+
+
+.chat-popup_grupos {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;  
+  z-index: 9;
+}
+
+.dropup p{
+  text-align: center;
+  position: relative;
+  bottom: 60px;
 }

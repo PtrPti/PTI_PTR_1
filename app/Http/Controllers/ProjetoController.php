@@ -11,6 +11,8 @@ use App\Grupo;
 use App\Tarefa;
 use App\GrupoFicheiros;
 use App\UsersGrupos;
+use App\Feedback;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Auth;
@@ -278,7 +280,15 @@ class ProjetoController extends Controller
 
         $max_elementos = $projeto->n_max_elementos;
 
-        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos')); 
+        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+                                    from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+                                    where users.id != " . Auth::id() . " 
+                                    group by users.id, users.nome, users.email");
+
+        
+
+
+        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos', 'utilizadores')); 
     }
 
     public function eraseProject($id){
@@ -293,4 +303,42 @@ class ProjetoController extends Controller
 
         return response()->json('Apagado com sucesso');
     }
+
+
+
+
+
+    public function addTodo(Request $request){
+        $data = array();
+        $check = $request->input('check');
+        
+        return response()->json(array('status'=>$check));
+    }
+
+
+
+    // Grupo Docente
+
+    public function GrupoDocente(int $id_grupo){
+        
+        $grupo = Grupo::where('id', $id_grupo )->first(); 
+
+        $elementos = DB::select("select u.nome, u.numero from 
+                                 users_grupos ug
+                        
+                                left join users u
+                                    on ug.user_id = u.id
+                                where ug.grupo_id = (?)
+                                ", [$id_grupo]);
+
+        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+                                    from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+                                    where users.id != " . Auth::id() . " 
+                                    group by users.id, users.nome, users.email");
+
+
+
+        return view ('docente.grupoDocente', compact('elementos', 'utilizadores', 'grupo')); 
+    }
+
 }

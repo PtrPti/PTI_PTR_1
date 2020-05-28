@@ -6,36 +6,53 @@
     <div class="left-pane-bg">        
     </div> 
 
+
+
+
     <div class="flex-left">
-        <a class="back" href="{{ route ('homeDocente', 'tab2') }}">« Voltar</a>
 
-        <li class="open-dropdown has-dropdown">
-            <a id="open-dropdown">Adicionar <i class="fa fa-caret-down"></i></a>
-            <ul class="dropdown">
-                <li class="dropdown-item">
-                    <button type="button" onclick="#">Tarefa</button>
-                </li>
-                <li class="dropdown-item">
-                    <button type="button" onclick="#">Ficheiro</button>
-                </li>
-            </ul>
-        </li>
-
-        <div class="flex-left-links">
-            <img src="{{ asset('images/pdf.png') }}" class="flex-left-icon" />
-            <a href="#" class="tasks_proj" >Ver Enunciado</a>
+        <div class="nav_icons_back">
+            <a href="{{ route('homeDocente') }}"><div><img src="{{ asset('images/home_icon.png') }}"> Home </div></a>
+            <a><div><img src="{{ asset('images/disciplinas_icon.png') }}"> Disciplinas </div></a>
+            <a><div><img src="{{ asset('images/projetos_icon.png') }}"> Projetos </div></a>
         </div>
 
-        <div class="flex-left-links">
-            <img src="{{ asset('images/excel.png') }}" class="flex-left-icon" /> 
-            <a href="#" class="tasks_proj">Abrir Excel </a>
+    
+
+        <button id="btnAdd" ><img src="{{ asset('images/plus_docente.png') }}" width="23"><span>Criar/Adicionar</span></button>
+        <div id="dropAdd">
+            <span onclick="AddFile('Enunciado')"><i class="fas fa-file-import"></i>Enunciado </span>
+
+            <hr>
+            <span class="siteadd"><i class="fas fa-globe "></i>Site</span>
+            <a href="https://www.google.com/drive/"><span ><i class="fab fa-google-drive"></i>Google Drive</span></a>
+            <a href="https://github.com/"><span><i class="fab fa-github"></i>Github</span></a>
+            <hr>
+
+            <span ><i class="far fa-sticky-note"></i>Notas</span>
+           
+  
         </div>
 
-        <div class="flex-left-links">
-            <img src="{{ asset('images/note.png') }}" class="flex-left-icon" /> 
-            <a href="#" class="tasks_proj" id="openNotepad">Bloco de Notas </a>
-        </div>
+
+
+
     </div>
+    <div id="all1" class="popUpBack">
+			<div id="addSite" class='popupDiv'>
+                <img class='closebtn' src="{{ asset('images/cancel.png') }}">
+                <h4>Adicione um Link</h4>
+                <form id="formAddLink">
+                    </select>
+                    <input type="text" name='nome' placeholder="nome..."><br>
+                    <input type="url" name='url' placeholder="URL..."><br>
+				    <input type="submit" value='Adicionar'>
+                </form>
+			</div>
+		</div>
+
+
+
 
     <div class="flex-right">
         <div class="flex-right-header">
@@ -52,17 +69,26 @@
                             <i class="fas fa-trash-alt" onclick="DeleteGroup(<?php echo $grupo->id ?>)"></i>
                         @endif
                     </td>
-                    <td>Grupo {{$grupo->numero}}</td>
+                    <td><a href="{{ route('GrupoDocente', $grupo->id) }}" >Grupo {{$grupo->numero}}</a></td>
                     <td>{{$grupo->total_membros}}/<?php echo $max_elementos ?></td>
                     <td>{{$grupo->elementos}}</td>
                 <tr>
                 @endforeach
             </table>
         </div>
+
+
+
+
+        
         
         <div class="flex-right-footer">
             <button class="footer-icon" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-2x"></i></button>
         </div>
+
+  
+
+
 
         <div id='calendarContainer'>
             <div id='external-events'>
@@ -85,7 +111,119 @@
 
 
 <script>
-    $("#openNotepad").click(function() {
+    $("#openNotepad").click(function() {});
+
+    function CriarProjeto() {
+        $('.model-content').hide();
+        $('#projetoModal').show();
+    }
+
+    function AddFile(title) {
+        $('.model-content').hide();
+        $('#fileModal').show();
+        $('#titleModal').text(title);
+    }
+
+    function closeForm() {
+        $('.model-content').hide();
+    }
+
+    $(document).mouseup(function(e) {
+        var container = $("#dropAdd");
+        if ((!container.is(e.target) && container.has(e.target).length === 0)){
+            container.hide();
+        }
+        else {
+            container.show();
+        }
+    });
+
+    $("#dropAdd").hide();
+
+    $("#btnAdd").click(function(){
+        $("#dropAdd").show();
+    }); 
+
+    $(".closebtn").click(function(){
+        ($($(this).parent()).parent()).hide();
+    });
+
+
+    function Showfeedback() {
+                document.getElementById("chat").style.display = "block";
+            }
+            function closeForm() {
+               
+               
+             document.getElementById("chat").style.display = "none";
+            }
+
+
+    
+    function AddFile(title) {
+        $('.model-content').hide();
+        $('#fileModal').show();
+        $('#titleModal').text(title);
+    }
+
+    $(".popUpBack").hide();
+
+    $(".siteadd").click(function(){
+        $("#all1").show();
+    }); 
+
+
+
+
+    // Feedback
+
+        // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("btgrupos");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("closef")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+// more feedback content
+
+
+
+ $("#btn_escolha").click(function() {
+
+     var a = $('input[name="check"]:checked');
+     for(i=0; i<a.length; i++){
+        $('#print').append("<a> Grupo " + a[i].value + "</a>");
+        
+     }
+     $("#myModal").css('display', 'none');
+ });
+
+
+
+
+
+
+    
+
 </script>
 
 @endsection

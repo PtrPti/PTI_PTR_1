@@ -7101,8 +7101,8 @@ button.list-group-item-danger.active:focus {
 
 .panel-default > .panel-heading {
   color: #333333;
-  background-color: #e6e16c;
-  border-color: #e6e16c;
+  background-color: white;
+  border-color: white;
   text-align: center;
   font-size:18px;
 }
