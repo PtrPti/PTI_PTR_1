@@ -773,7 +773,7 @@ input{
 }
 
 .dropdown-item:hover, .dropdown a:hover {
-  background: #acc;
+  background: lightgray;
   text-decoration: none;
 }
 

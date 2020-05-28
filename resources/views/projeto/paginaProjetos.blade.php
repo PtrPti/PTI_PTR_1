@@ -59,27 +59,6 @@
                 @endforeach
             </table>
         </div>
-        
-        <!-- <div class="flex-right-footer">
-            <button class="footer-icon" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-2x"></i></button>
-        </div>
-
-        <div id='calendarContainer'>
-            <div id='external-events'>
-                <h4>Elementos do grupo</h4>
-                <div id='external-events-list'>
-                    @for ($i = 1; $i <= 6; $i++)
-                        <?php $r = rand(0,255); $g = rand(0,255); $b = rand(0,255) ?>
-                        <div class='fc-event' data-color="rgb({{$r}}, {{$g}}, {{$b}})" style="background-color: rgb({{$r}}, {{$g}}, {{$b}}); border-color: rgb({{$r}}, {{$g}}, {{$b}})">My Event {{$i}}</div>
-                    @endfor
-                </div>
-            </div>
-
-            <div id='calendar'></div>
-
-            <div style='clear:both'></div>
-
-        </div> -->
     </div>
 </div>
 
