@@ -42,8 +42,11 @@ class DisciplinaController extends Controller
         $user = Auth::user()->getUser();
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                           ->where('users_cadeiras.user_id', $user->id)->get();
-        $projetos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-                          ->where('users_grupos.grupo_id', $user->id)->get();
+        $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
+                          ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                          ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
+                          ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
+                             ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id','users_grupos.favorito as favorito','users_grupos.id as usersGrupos_id')->get();
 
         //Inf da cadeira
         $cadeira = Cadeira::where('cadeiras.id', $cadeira_id)->get();
@@ -137,20 +140,28 @@ class DisciplinaController extends Controller
     
         return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
     }
+    
     public function showGruposA(Request $request) {
-        $user = Auth::user()->getUser()->id;
         $id = $_GET['id'];
-        $grupos = Grupo::where('projeto_id', $id)->get();
-        $elementos = DB::table('users_grupos')->get();    
+        $user = Auth::user()->getUser()->id;
         $projeto = Projeto::where('id', $id)->first();
-        $users = DB::table('users')->get();
+        $grupos = DB::select("select g.id, g.numero, count(ug.user_id) as 'total_membros', IFNULL(group_concat(u.nome), '-') as 'elementos' from grupos g
+                                left join users_grupos ug
+                                    on g.id = ug.grupo_id
+                                left join users u
+                                    on ug.user_id = u.id
+                                where g.projeto_id = (?)
+                                group by
+                                    g.id, g.numero, 'total_membros', 'elementos'", [$id]);
+        $pertenceGrupo = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                                    ->where('grupos.projeto_id', $id)
+                                    ->where('users_grupos.user_id', $user)->first();
         
         $data = array(
-            'grupos'    => $grupos,
-            'elementos' => $elementos,
-            'projeto'   => $projeto,
-            'user'      => $user,
-            'users'     => $users
+            'user'          => $user,
+            'projeto'       => $projeto,
+            'grupos'        => $grupos,           
+            'pertenceGrupo' => $pertenceGrupo
         );
 
         $returnHTML = view('aluno.grupos')->with($data)->render();

@@ -22,18 +22,18 @@
         <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="#" style="background-color: #eee9e9;">
           <img src="{{ asset('images/filter.png') }}" class="filtro_projeto">
         </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="top: 24px;left: -56px;">
+        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="position: absolute;top: 24px;right: 10px;">
           <form action="/filterProj" method="post">
             <li class="dropdown-item">
-              <input type="checkbox" id="favoritos" name="filtro" value="favoritos"/>
+              <input type="checkbox" id="favoritos" name="favoritos">
               <label for="favoritos">Favoritos</label>
             </li>
             <li class="dropdown-item">
-              <input type="checkbox" id="em_curso" name="filtro" value="em_curso"/>
+              <input type="checkbox" id="em_curso" name="em_curso">
               <label for="em_curso">Em curso</label>
             </li>
             <li class="dropdown-item">
-              <input type="checkbox" id="terminados" name="filtro" value="terminados"/>
+              <input type="checkbox" id="terminados" name="terminados">
               <label for="terminados">Terminados</label>
             </li>
             <input type="submit" value="Aplicar" class="filtro_btn">
@@ -42,13 +42,18 @@
         </ul>
       </div>
 
-      <div class="grupo">
+      <div class="grupos">
           @foreach ($projetos as $proj)
+            @if($proj->favorito == 0)
+              <img onclick="changeVal(1, <?php echo $proj->usersGrupos_id ?>)" src="{{ asset('images/favorito1.png') }}" class="grupo_favorito" id="imagem_favorita">
+            @else
+              <img onclick="changeVal(0, <?php echo $proj->usersGrupos_id ?>)" src="{{ asset('images/favorito2.png') }}" class="grupo_favorito" id="imagem_favorita">
+            @endif
           <a href="{{ route('pagProjeto', ['id' => $proj->id]) }}">
-              <div>
-                  {{$proj->projeto}} | Grupo Nº{{$proj->numero}}<br>
-                  <small>{{$proj->cadeiras}}</small>
-              </div>
+            <div class="grupo">
+                {{$proj->projeto}} | Grupo Nº{{$proj->numero}}<br>
+                <small>{{$proj->cadeiras}}</small>
+            </div>
           </a>
           @endforeach
       </div>
@@ -214,6 +219,19 @@
             scrollTop: $('.message-wrapper').get(0).scrollHeight
         }, 50);
     }
-  </script>
 
-@endsection
+    function changeVal(val, usersGrupos_id){
+      $.ajax({
+        url: '/changeFavorito',
+        type: 'POST',
+        dataType: 'json',
+        success: 'success',
+        data: {'usersGrupos_id': usersGrupos_id, 'val': val, '_token':'{{csrf_token()}}'},
+        success: function(data){
+          window.location.href = '/alunoHome';
+        }
+      });
+    }
+</script>
+
+@endsection 

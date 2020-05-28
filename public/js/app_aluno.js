@@ -1,4 +1,8 @@
 $(document).ready(function () {
+  $(".grupo_favorito").hover(function(){
+    document.getElementsByClassName('grupo_favorito').src="{{ asset('images/favoritoo2.png') }}"
+  });
+
   $(".pagInicial_btn").css("background-color", "#eee9e9")
   $(".pagInicial").show()
   $(".avalDisciplina").hide()

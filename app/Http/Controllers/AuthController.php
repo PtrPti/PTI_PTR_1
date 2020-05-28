@@ -59,6 +59,7 @@ class AuthController extends Controller
 
                 $cadeira_insert->user_id = $user->id;
                 $cadeira_insert->cadeira_id = $cadeira;
+                $cadeira_insert->favorito = 0;
 
                 $cadeira_insert->save();
             }

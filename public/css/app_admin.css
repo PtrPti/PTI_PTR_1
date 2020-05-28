@@ -12,6 +12,7 @@ html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  height: 100%;
 }
 
 body {
@@ -3973,6 +3974,7 @@ select[multiple].input-lg,
 
 .btn {
   display: inline-block;
+  margin-bottom: 0;
   font-weight: normal;
   text-align: center;
   white-space: nowrap;
@@ -3982,6 +3984,7 @@ select[multiple].input-lg,
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
+  padding: 6px 12px;
   font-size: 14px;
   line-height: 1.6;
   border-radius: 4px;
@@ -3989,13 +3992,9 @@ select[multiple].input-lg,
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background: #f5f8fa;
-  color:black;
-  margin-top: -2px;
-  margin-left: -4px;
 }
 
-/*.btn:focus,
+.btn:focus,
 .btn.focus,
 .btn:active:focus,
 .btn:active.focus,
@@ -4088,12 +4087,12 @@ fieldset[disabled] .btn-default:focus,
 fieldset[disabled] .btn-default.focus {
   background-color: #fff;
   border-color: #ccc;
-} 
+}
 
 .btn-default .badge {
   color: #fff;
   background-color: #636b6f;
-} 
+}
 
 .btn-primary {
   color: #fff;
@@ -4153,7 +4152,7 @@ fieldset[disabled] .btn-primary.focus {
 .btn-primary .badge {
   color: #3097D1;
   background-color: #fff;
-} */
+}
 
 .btn-success {
   color: #fff;
@@ -4533,6 +4532,8 @@ tbody.collapse.in {
 
 .dropdown-menu {
   position: absolute;
+  top: 100%;
+  left: 0;
   z-index: 1000;
   display: none;
   float: left;
@@ -4542,7 +4543,7 @@ tbody.collapse.in {
   font-size: 14px;
   text-align: left;
   list-style: none;
-  background-color: #f5f8fa;;
+  background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -4602,13 +4603,6 @@ tbody.collapse.in {
   background-color: transparent;
   background-image: none;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-}
-
-.dropdown-item{
-  height: 25px;
-  left: 5%;
-  position: relative;
-  top: -8px;
 }
 
 .open > .dropdown-menu {
@@ -5678,7 +5672,7 @@ tbody.collapse.in {
 }
 
 .navbar-default {
-  background-color: #e6e16c;
+  background-color: #1d313c;
  
 }
 
@@ -8342,966 +8336,40 @@ button.close {
   }
 }
 
-/* LAYOUT ALUNO */
-
-.sticky{
-  position: -webkit-sticky;
-  /* position: sticky; */
-  width: 100%;
-  position: sticky;
-  top: 0;
-  background-color: #f5f8fa;
-  padding: 10px;
-  z-index: 1
-}
-
 .logout_style{
+
   display: block;
   margin-top: 13px;
 }
 
+.nav_icons{
+    display: grid;
+    grid-template-columns: 150px 150px 150px;
+    margin-left: 8%;
+}
+
+.nav_icons a{
+  padding-left: 1.5%;
+  display: inline-block;
+  padding-right: 1.5%;
+  padding-bottom: 0.5%;
+}
+
+.nav_icons div{
+    padding-left: 1.5%;
+    display: inline-block;
+    padding-bottom: 5px;
+    margin: 3px;
+}
+
 .chat_icon img{
-  position: fixed;
-  right: 30px;
+  position: absolute;
+  right: 40px;
   bottom: 30px;
+
 }
 
 .chat{
   background-color: grey;
-}
-
-#menuDisciplinas{
-  background-color: #EEE9E9;
-  color: #525557;
-  text-align: center;
-  z-index: 1;
-  width: 225px;
-}
-
-#menuProjetos{
-  background-color: #EEE9E9;
-  color: #525557;
-  text-align: center;
-}
-
-.nav_icons {
-  display: grid;
-  grid-template-columns: 120px 120px 120px 120px;
-  margin-left: 8%;
-}
-
-.nav_icons div{
-  padding-left: 1.5%;
-  /* border-bottom: 1.5px solid #e6e16c; */
-  display: inline-block;
-  padding-bottom: 5px;
-  margin:3px;
-}
-
-.homeAluno{
-  position: absolute;
-  display:grid;
-  grid-template-columns: auto auto;
-  grid-gap: 20px 20px;
-  margin: 30px;
-  left: 5%;
-}
-
-.divDisciplinas{
-  width: auto;
-  background: #eee9e9;
-  height: auto;
-  position: relative;
-  padding: 5px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-.disciplina{
-  width: auto;
-  position: relative;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 20px 20px;
-  margin: 15px;
-  text-align: center;
-}
-
-.disciplina div{
-  height: 100%;
-  background: #e6e16c;
-  padding: 20px;
-  text-align: center;
-  opacity: 0.8;
-}
-
-.divGrupos{
-  width: auto;
-  background: #eee9e9;
-  height: auto;
-  position: relative;
-  padding: 5px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-.grupos{
-  width: auto;
-  position: relative;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 20px 20px;
-  margin: 15px
-}
-
-.grupo{
-  height: auto;
-  background: #e6e16c;
-  padding: 15px;
-  text-align: center;
-  opacity: 0.8;
-}
-
-.show {display: block;}
-
-.filtro_projeto{
-  width: 13px;
-  position: absolute;
-  top: 1p;
-  top: 4px;
-  right: 11px;
-}
-
-.filtro_projeto:hover{
-  cursor: pointer;
-}
-
-.filtro_btn{
-  position: relative;
-  left: 89px;
-  background-color: #f5f8fa;
-  border: none;
-  text-align: center; 
-}
-/* PÁGINA DA DISCIPLINA */
-
-.disciplinaNome{
-  position: relative;
-  left: 8%;
-  width: 56%;
-}
-
-.pagDisciplina{
-  position: relative;
-  width: 87%;
-  height: 80%;
-  left: 8%;
-  display: grid;
-  grid-template-columns: 22% 100%;
-}
-
-.navDisciplina{
-  /* position: relative; */
-  display: grid;
-  grid-template-columns: auto;
-  top: 17px;
-}
-
-.navDisciplina button{
-  background-color: #f5f8fa;
-  border: none;
-  min-height: 100px;
-  text-align: center;
-}
-
-.navDisciplina button:hover{
-  background-color: #e6e16c;
-}
-
-.disciplinasAluno{
-  background-color: #eee9e9;
-  width: 73%;
-  left: 213px;
-  bottom: 422px;
-  /* box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1); */
-}
-
-#outer{
-  margin: 4%;;
-}
-
-.div_button{
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-
-.pagInicial{
-  position: relative;
-} 
-
-.avalDisciplina{
-  position: relative;
-} */
-
-.projetosDisciplina{
-  position: relative;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 10px;
-}
-
-/* .pagTrabalhos{
-  position: relative;
-} */
-
-.projeto{
-  padding: 10px;
-  text-align: center;
-  opacity: 0.8;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #e6e16c;
-  margin: 10px;
-}
-
-/* .infProjeto{
-  position: relative;
-  margin-left: 25px;
-} */
-
-/* .infDisciplina{
-  position: relative;
-  left: 40px;
-  top: 15px;
-} */
-
-/* .forumDuvidas{
-  position: relative;
-  top: 30px;
-  left: 30px;
-} */
-
-.forumDuvidas_btn{
-  top:5px;
-}
-
-.forumDuvidas_btn:hover{
-  cursor: pointer;
-}
-
-
-.addBtn{
-  position:relative;
-}
-
-
-
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
-    width: 100%; 
-    margin-top: 0;
-  }
-}
-
-/* PAGINA DA DISCIPLINA */
-
-
-
-/* .divMensagens{
-  position: relative;
-  top: 30px;
-  left: 30px;
-} */
-
-.mensagem{
-  position: relative;
-  height: auto;
-  width: 100%;
-  padding: 10px;
-  text-align: left;
-  opacity: 0.8;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #e6e16c;
-  margin: 10px;
-}
-
-ul{
-  margin: 0;
-  padding: 12px;
-}
-li{
-  list-style: none;
-}
-.user-wrapper, .message-wrapper{
-  border: 1px solid #dddddd;
-  overflow-y: auto;
-}
-.user-wrapper{
-  display: none;
-  position: fixed;
-  height: 400px;
-  width: 350px;
-  z-index:99999;
-  background-color: #eee9e9;
-  right: 100px;
-  bottom: 10px;
-}
-.user{
-  cursor: pointer;
-  padding: 5px 0 ;
-  position: relative;
-}
-.user:hover{
-  background: #eeeeee;
-}
-.user:last-child{
-  margin-bottom: 0;
-}
-.pending{
-  position: absolute;
-  left: 5px;
-  top:17px;
-  background: #e6e16c;
-  margin: 0;
-  border-radius: 50%;
-  width:18px;
-  height: 16px;
-  line-height: 18px;
-  padding-left: 5px;
-  color: #ffffff
-}
-.media-left{
-  margin:0 10px;
-}
-.media-left img{
-  width: 64px;
-  border-radius: 64px;
-}
-.media-body{
-  margin: 6px 0;
-}
-.message-wrapper{  
-  padding: 10px;
-  height: 400px;
-  width: 350px;
-  position: fixed;
-  right: 460px;
-  bottom: 10px;
-  background: #eeeeee;
-  display: none;
-}
-.messages, .message{
-  margin-bottom: 15px;
-}
-.messages .message:last-child{
-  margin-bottom: 0;
-}
-.recieved, .sent{
-  width: 45%;
-  padding: 3px 10px;
-  border-radius: 20px;
-}
-.recieved{
-  background:#e6e16c;
-  float: left;
-  text-align: left;
-  width: auto;
-}
-.sent{
-  background:white;
-  float:right;
-  text-align: right;
-  width: auto;
-}
-.message p {
-  margin: 5px 0;
-}
-.date{
-  color: #777777;
-  font-size: 12px;
-}
-.active{
-  background: #eeeeee;
-}
-
-.input-text {
-  position: fixed;
-  bottom: 0%;
-  margin-bottom: 15px;
-}
-
-.writeMessage {  
-  width: 280px;
-  padding: 5px 5px;
-  margin: 15px 0 0 0;
-  border-radius: 4px;
-  box-sizing: border-box;
-  outline: none;
-  border: 1px solid #cccccc;
-}
-
-.writeMessage:focus{
-  border: 1px solid #aaaaaa;
-}
-
-.sendMessageIcon {
-  margin: 5px 0 0 8px;
-}
-
-.sendMessageIcon:hover {
-  opacity: 0.8;
-  cursor: pointer;
-}
-
-/* PAGINA PROJETO/GRUPO */
-
-.pagProjeto h1{
-  font-size: large;
-}
-.pagProjeto h2{
-  font-size: medium;
-  display: inline;
-}
-
-.pagProjeto h3{
-  font-size: medium;
-}
-
-#esqdrt{
-	display: block;
-}
-
-#esq{
-	margin-left: 20px;
-	margin-top: 20px;
-	display: inline-block;
-	width: 23%;
-	vertical-align: top;
-	margin-right: 30px;
-}
-
-/* Pastas/Ficheiros/Links */
-
-
-#esqcontainer{
-	margin-top: 20px;
-	position: relative;
-	min-width: 30px;
-}
-
-.item1 {
-	cursor: pointer;
-	display: block;
-	position: relative;
-	padding-right: 15px;
-	padding-left: 20px;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	vertical-align: middle;
-}
-
-#esqcontainer span{
-	vertical-align: middle;
-	padding-left: 10px;
-	position: absolute;
-}
-
-.item1:hover{
-	background-color: rgba(230, 226, 108, 0.377);
-}
-
-
-#esqcontainer a:visited{
-	font-weight: 700;
-}
-
-.item2{
-	padding-left: 44px;
-	display: block;
-	position: relative;
-	padding-right: 15px;	
-	padding-top: 8px;
-	padding-bottom: 8px;
-	vertical-align: middle;
-	cursor: pointer;
-}
-.item2:hover{
-	background-color: rgba(230, 226, 108, 0.377);
-}
-
-/* tarefas */
-
-#drt{
-	display: inline-block;
-}
-
-.containerCheckbox {
-	display: block;
-	position: relative;
-	padding-left: 37px;
-	margin-bottom: 12px;
-	cursor: pointer;
-	font-size: 18px;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
   
-.containerCheckbox input {
-	position: absolute;
-	opacity: 0;
-	cursor: pointer;
-	height: 0;
-	width: 0;
 }
-  
-.containerCheckbox .checkmark {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 20px;
-	width: 20px;
-	background: none;
-  border: 1px solid grey;
-}
-  
-.containerCheckbox:hover input ~ .checkmark {
-	background-color: rgba(158, 158, 158, 0.514);
-}
-
-.containerCheckbox input:checked ~ .checkmark {
-	background: none;
-}
-  
-.containerCheckbox .checkmark:after {
-	content: "";
-	position: absolute;
-	display: none;
-}
-  
-.containerCheckbox input:checked ~ .checkmark:after {
-	display: block;
-}
-  
-.containerCheckbox .checkmark:after {
-  left: 5px;
-  top: 0px;
-  width: 8px;
-  height: 15px;
-	border: solid rgb(230, 226, 108);
-	border-width: 0 4px 4px 0;
-	-webkit-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	transform: rotate(45deg);
-}
-
-/* SUB TAREFA */
-
-.divSubTarefa{
-	  padding-left: 46px;
-}
-
-.containerCheckbox2 {
-	display: block;
-	position: relative;
-	padding-left: 30px;
-	margin-bottom: 12px;
-	cursor: pointer;
-	font-size: 16px;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-  
-.containerCheckbox2 input {
-	position: absolute;
-	opacity: 0;
-	cursor: pointer;
-	height: 0;
-	width: 0;
-}
-  
-.containerCheckbox2 .checkmark {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 15px;
-	width: 15px;
-	background: none;
-  border: 1px solid rgb(167, 167, 167);
-}
-  
-.containerCheckbox2:hover input ~ .checkmark {
-	background-color: rgba(158, 158, 158, 0.514);
-}
-  
-.containerCheckbox2 input:checked ~ .checkmark {
-	background: none;
-}
-  
-.checkmark:after {
-	content: "";
-	position: absolute;
-	display: none;
-}
-  
-.containerCheckbox2 input:checked ~ .checkmark:after {
-	display: block;
-}
-
-.containerCheckbox2 .checkmark:after {
-	left: 6px;
-    top: -4px;
-    width: 5px;
-    height: 12px;
-	border: solid #e7e26c;
-	border-width: 0 3px 3px 0;
-	-webkit-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	transform: rotate(45deg);
-}
-
-/***** BOTAO ADICIONAR ******/
-
-#dropAdd {
-	display: block;
-	position: absolute;
-	background-color: white;
-	box-shadow: 0px 0px 4px 1px #00000052;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	margin-top: -37px;
-	z-index: 2;
-}
-
-#btnAdd {
-	padding-left: 15px ;
-	padding-right: 15px ;
-	padding-top: 8px ;
-	padding-bottom:8px ;
-	border-radius: 30px;
-	border: none;
-	background-color: white;
-	box-shadow: 0px 0px 6px 0px #8080809c;
-}
-
-#btnAdd span{
-	padding-left: 15px;
-	display: inline-block;
-	vertical-align: middle;
-	font-size: 15px;
-}
-
-.addLabel img{
-	vertical-align: middle;
-}
-
-.addLabel{
-	display: block;
-	padding-right: 0px;
-	padding-left: 25px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	vertical-align: middle;
-	width: 250px;
-}
-
-#dropAdd a{
-	display: block;
-	padding-right: 40px;
-	padding-left: 30px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	vertical-align: middle;
-}
-
-#dropAdd img{
-	padding-right: 15px;
-	padding-left: 5px;
-}
-
-.addLabel:hover{
-	cursor: pointer;
-	background-color: #e5e5e5;
-}
-
-#dropAdd a:hover{
-	cursor: pointer;
-	background-color: #e5e5e5;
-}
-
-#dropAdd hr{
-	border-top: 1px solid #8080809c;
-	border-bottom: 0px solid #8080809c;
-	margin-top: 8px;
-	margin-bottom: 8px;
-}
-
-.addLabel input{
-	visibility: hidden;
-	position: absolute;
-}
-
-.popUpBack{
-	position:fixed;
-    padding:0;
-    margin:0;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100%;
-	z-index: 10;background-color: rgba(44, 42, 42, 0.384);
-}
-
-#addSite{
-	display: block;
-	position: absolute;
-	margin: auto;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 400px;
-  	height: 270px;
-	background-color: white;
-	text-align: center;
-	padding-top: 20px;
-}
-
-#addSite input{
-	padding:8px;
-	width: 300px;
-	margin-bottom: 10px;
-}
-#addSite button{
-	padding:8px;
-	margin-bottom: 10px;
-}
-
-#addTarefa{
-	display: block;
-	position: absolute;
-	margin: auto;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 350px;
-  	height: 100px;
-	background-color: white;
-	text-align: center;
-	padding-top: 20px;
-}
-
-#addPasta{
-	display: block;
-	position: absolute;
-	margin: auto;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 350px;
-  height: 150px;
-	background-color: white;
-	text-align: center;
-	padding-top: 20px;
-}
-
-#addSubTarefa{
-	display: block;
-	position: absolute;
-	margin: auto;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 350px;
-  height: 150px;
-	background-color: white;
-	text-align: center;
-	padding-top: 20px;
-}
-
-.closebtn{
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  width: 20px;
-}
-
-.closebtn:hover{
-  cursor: pointer;
-}
-
-.infMensagens{
-  position: relative;
-}
-
-.divMensagens{
-  position: relative;
-}
-
-.buttun_group{
-  border-color: #dedcdc;
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 6px;
-  padding: 5px 14px;
-  background-color: #dedcdc;
-  color: #000000;
-  opacity: 0.8;
-}
-
-.buttun_group:hover{
-  opacity: 1;
-}
-
-/* -------------------------------------------------- HOME ALUNO ---------------------------------------------------*/
-/* DISCIPLINAS */
-
-/* PROJETOS */
-.grupo_favorito{
-  position: absolute;
-  right: 12px;
-  z-index: 1;
-  top: -4px;
-  width: 20px;
-}
-
-/* -------------------------------------------------- DISCIPLINAS ---------------------------------------------------*/
-
-/* CÓDIGO COMUM */
-
-#button_style{
-  /* position: absolute; */
-  bottom: -31%;
-  right: 0%;
-  border-color: #e6e16c;
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 6px;
-  padding: 5px 14px;
-  background-color: #e6e16c;
-  color: #f5f8fa; 
-}
-
-#button_style:hover{
-  background-color: #dcd868d6;
-  border-color: #dcd868d6;
-  border-style: solid;
-}
-
-#return_btn:hover{
-  color:#d4cf5f;
-  cursor: pointer;
-}
-
-.tableGrupos{
-  position: relative;
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 18px;
-}
-
-.tableGrupos th, td {
-  text-align: center;
-  padding: 8px;
-}
-
-.tableGrupos tr:nth-child(even){background-color: #f2f2f2}
-
-.tableGrupos th {
-  background-color: #e6e16c;
-  color: white;
-  text-align: center;
-}
-
-
-/* '-> PAGINA INICIAL */
-
-/* '-> FORUM */
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.novo_topico {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.inputTopico {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
-
-label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
-}
-
-.col-25 {
-  float: left;
-  width: 18%;
-  margin-top: 6px;
-  padding-left: 17px;
-}
-
-.col-75 {
-  float: left;
-  width: 79%;
-  margin-top: 6px;
-}
-/* '-> AVALIAÇÃO */
-
-/* '-> HORÁRIOS */
-
-/* '-> TRABALHOS */
