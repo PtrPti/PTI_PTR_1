@@ -74,7 +74,7 @@ Route::get('delete/{id}','ProjetoController@eraseProject');
 //Home
 Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
 Route::get('/alunoHome', 'HomeController@alunoHome')->name('alunoHome');
-Route::post('/filterProj', 'HomeController@filterProj');
+Route::get('/filterProj', 'HomeController@filterProj');
 Route::post('/changeFavorito', 'HomeController@changeFavorito');
 
 //Disciplina

@@ -23,7 +23,8 @@
           <img src="{{ asset('images/filter.png') }}" class="filtro_projeto">
         </a>
         <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="position: absolute;top: 24px;right: 10px;">
-          <form action="/filterProj" method="post">
+          <!-- <form action="/filterProj" method="post"> -->
+          <div id="filtroProjeto">
             <li class="dropdown-item">
               <input type="checkbox" id="favoritos" name="favoritos">
               <label for="favoritos">Favoritos</label>
@@ -36,27 +37,16 @@
               <input type="checkbox" id="terminados" name="terminados">
               <label for="terminados">Terminados</label>
             </li>
-            <input type="submit" value="Aplicar" class="filtro_btn">
-          </form>
-          <!-- <button type='button' onclick='filtrarProjetos($grupo->id, $projeto->id)'>Entrar no Grupo</button>", csrf_field(); -->
+            <!-- <input type="submit" value="Aplicar" class="filtro_btn"> -->
+            <button type='button' onclick="filterProj()">Aplicar</button>
+          </div>
+          <!-- </form> -->
         </ul>
       </div>
 
-      <div class="grupos">
-          @foreach ($projetos as $proj)
-            @if($proj->favorito == 0)
-              <img onclick="changeVal(1, <?php echo $proj->usersGrupos_id ?>)" src="{{ asset('images/favorito1.png') }}" class="grupo_favorito" id="imagem_favorita">
-            @else
-              <img onclick="changeVal(0, <?php echo $proj->usersGrupos_id ?>)" src="{{ asset('images/favorito2.png') }}" class="grupo_favorito" id="imagem_favorita">
-            @endif
-          <a href="{{ route('pagProjeto', ['id' => $proj->id]) }}">
-            <div class="grupo">
-                {{$proj->projeto}} | Grupo Nº{{$proj->numero}}<br>
-                <small>{{$proj->cadeiras}}</small>
-            </div>
-          </a>
-          @endforeach
-      </div>
+      @include('aluno.filtroProjeto')
+
+     
     </div>
     
           <!-- Chat -->
@@ -229,6 +219,22 @@
         data: {'usersGrupos_id': usersGrupos_id, 'val': val, '_token':'{{csrf_token()}}'},
         success: function(data){
           window.location.href = '/alunoHome';
+        }
+      });
+    }
+
+    function filterProj(){
+      $.ajax({
+        url: '/filterProj',
+        type: 'GET',
+        dataType: 'json',
+        success: 'success',
+        data: {'favoritos': $('#favoritos').is(":checked"),
+           'em_curso': $('#em_curso').is(":checked"), 
+           'terminados': $('#terminados').is(":checked")
+          },
+        success: function(data){
+          $(".grupos").replaceWith(data.html);
         }
       });
     }

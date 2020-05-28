@@ -114,15 +114,42 @@ class HomeController extends Controller
         $terminados = $request->terminados;
         $user = Auth::user()->getUser();
 
-        $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
-                          ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-                          ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
-                          ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
-                             ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id','users_grupos.favorito as favorito','users_grupos.id as usersGrupos_id')->get();
-       
+        $query = "select c.nome as cadeiras, p.nome as projeto, g.numero, g.id, ug.favorito as favorito, ug.id as usersGrupos_id
+        from users u
+        inner join users_grupos ug
+            on u.id = ug.user_id
+        inner join grupos g
+            on ug.grupo_id = g.id
+        inner join projetos p
+            on g.projeto_id = p.id
+        inner join cadeiras c
+            on p.cadeira_id = c.id
+        where
+            u.id = " .  $user->id;
+
+        if($favoritos == 'true') {
+            $query = $query . " and ug.favorito = 1";
+        }
+        if($em_curso == 'true') {
+            $query = $query . " and NOW() between p.data_inicio and p.data_fim";
+        }
+        if($terminados == 'true') {
+            $query = $query . " and p.data_fim < NOW()";
+        }
+
+        $projetos = DB::select($query);
+
+        if($projetos == null) { 
+            $data = array();
+        }
+        else {
+            $data = array(
+                'projetos'  => $projetos,
+            );
+        }
         
-            
-        $grupos = UsersGrupos::where('users_grupos.user_id', $user->id)->get();
+        $returnHTML = view('aluno.filtroProjeto')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
     }
 
     public function changeFavorito (Request $request){
