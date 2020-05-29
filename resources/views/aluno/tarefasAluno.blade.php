@@ -5,8 +5,8 @@
     <!-- Procura -->
     <div class="searchcontainer">
         <form id="formpesquisa">
-            <input type="text" placeholder="Aluno.." name="aluno">
-            <input type="hidden" name='grupoId' value="{{$tarefas[0]->grupo_id}}">
+            <input type="text" placeholder="Pesquisar.." title="Pesquise por Aluno ou Tarefa" name="palavra">
+            <input type="hidden" name='grupoId' value="{{$IdGrupo}}">
             <button type="submit"><img class='psq' src="{{ asset('images/pesquisa.png') }}" width="20"></button>
         </form>
     </div>
@@ -20,14 +20,34 @@
                         <input type="hidden" value="{{$tarefa->id}}">
                         <span class="checkmark"></span>
                     </label>
-                    <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
-                    @if ( $tarefa->user_id)
-                        @foreach ($nomesUsers as $user)
-                            @if ($tarefa->user_id === $user->id)
-                                <div class='nameUser'><span>{{$user->nome}}</span></div>
+                    <img src="{{asset('images/edit.png') }}" class='editTarefa' width="15">
+
+                    <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
+                    <div class="ficheirosTarefa">
+                        @if ( $tarefa->notas !== NULL)
+                            <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
+                        @endif  
+                        @foreach ($ficheirosTarefas as $ficheiro)
+                            @if ($tarefa->id === $ficheiro->tarefa_id)
+                                @if ( empty($ficheiro->link) )
+                                    <div class='ficheiroTarefa'><img src="{{asset('images/fileq.png') }}" title="{{$ficheiro->nome}}" width="20"></div>
+                                @else 
+                                    <div class='linkTarefa'>
+                                        <a class='linkTarefa'  href="{{$ficheiro->link}}" target="_blank">
+                                        <img src="{{asset('images/link.png') }}" title="{{$ficheiro->nome}}" width="20"></a>
+                                    </div>
+                                @endif 
                             @endif  
                         @endforeach 
-                    @endif
+                        @if (!empty($tarefa->user_id))
+                            @foreach ($nomesUsers as $user)
+                                @if ($tarefa->user_id === $user->id)
+                                    <div class='nameUser'><span>{{$user->nome}}</span></div>
+                                @endif  
+                            @endforeach 
+                        @endif
+                    </div>
+                    
                 </div>
                 <div class="divSubTarefa">
                 @foreach ($tarefas as $subtarefa)
@@ -38,6 +58,34 @@
                                 <input type="hidden" value="{{$subtarefa->id}}">
                                 <span class="checkmark"></span>
                             </label>
+                            <img src="{{asset('images/edit.png') }}" class='editTarefa' width="15">
+
+                            <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
+                            <div class="ficheirosTarefa">
+                                @if ($subtarefa->notas !== NULL)
+                                    <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
+                                @endif  
+                                @foreach ($ficheirosTarefas as $ficheiro)
+                                    @if ($subtarefa->id === $ficheiro->tarefa_id)
+                                        @if ( empty($ficheiro->link) )
+                                            <div class='ficheiroTarefa'><img src="{{asset('images/fileq.png') }}" title="{{$ficheiro->nome}}" width="20"></div>
+                                        @else 
+                                            <div class='linkTarefa'>
+                                                <a class='linkTarefa'  href="{{$ficheiro->link}}" target="_blank">
+                                                <img src="{{asset('images/link.png') }}" title="{{$ficheiro->nome}}" width="20"></a>
+                                            </div>
+                                        @endif 
+                                    @endif  
+                                @endforeach 
+                                @if (!empty($subtarefa->user_id))
+                                    @foreach ($nomesUsers as $user)
+                                        @if ($subtarefa->user_id === $user->id)
+                                            <div class='nameUser'><span>{{$user->nome}}</span></div>
+                                        @endif  
+                                    @endforeach 
+                                @endif
+                            </div>
+
                         </div>
                     @endif
                 @endforeach  
@@ -60,6 +108,33 @@
                         <input type="hidden" value="{{$tarefa->id}}">
                         <span class="checkmark"></span>
                     </label>
+
+                    <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
+                    <div class="ficheirosTarefa">
+                        @if ($tarefa->notas !== NULL)
+                            <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
+                        @endif  
+                        @foreach ($ficheirosTarefas as $ficheiro)
+                            @if ($tarefa->id === $ficheiro->tarefa_id)
+                                @if ( empty($ficheiro->link) )
+                                    <div class='ficheiroTarefa'><img src="{{asset('images/fileq.png') }}" width="20"></div>
+                                @else 
+                                    <div class='linkTarefa'>
+                                        <a class='linkTarefa'  href="{{$ficheiro->link}}" target="_blank">
+                                        <img src="{{asset('images/link.png') }}" title="{{$ficheiro->nome}}" width="20"></a>
+                                    </div>
+                                @endif 
+                            @endif  
+                        @endforeach 
+                        @if (!empty($tarefa->user_id))
+                            @foreach ($nomesUsers as $user)
+                                @if ($tarefa->user_id === $user->id)
+                                    <div class='nameUser'><span>{{$user->nome}}</span></div>
+                                @endif  
+                            @endforeach 
+                        @endif
+                    </div>
+
                 </div>
                 <div class="divSubTarefa">
                 @foreach ($tarefas as $subtarefa)
@@ -70,6 +145,32 @@
                                 <input type="hidden" value="{{$subtarefa->id}}">
                                 <span class="checkmark"></span>
                             </label>
+
+                            <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
+                            <div class="ficheirosTarefa">
+                                @if ( $subtarefa->notas !== NULL )
+                                    <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
+                                @endif  
+                                @foreach ($ficheirosTarefas as $ficheiro)
+                                    @if ($subtarefa->id === $ficheiro->tarefa_id)
+                                        @if ( empty($ficheiro->link) )
+                                            <div class='ficheiroTarefa'><img src="{{asset('images/fileq.png') }}" width="20"></div>
+                                        @else 
+                                            <div class='linkTarefa'>
+                                                <a class='linkTarefa'  href="{{$ficheiro->link}}" target="_blank">
+                                                <img src="{{asset('images/link.png') }}" title="{{$ficheiro->nome}}" width="20"></a>
+                                            </div>
+                                        @endif 
+                                    @endif  
+                                @endforeach 
+                                @if (!empty($subtarefa->user_id))
+                                    @foreach ($nomesUsers as $user)
+                                        @if ($subtarefa->user_id === $user->id)
+                                            <div class='nameUser'><span>{{$user->nome}}</span></div>
+                                        @endif  
+                                    @endforeach 
+                                @endif
+                            </div>
                         </div>
                     @endif
                 @endforeach  
@@ -79,8 +180,18 @@
     @endforeach  
 </div>
 
+<!-- Popup Editar Tarefa -->
+<div id="allEditT" class="popUpBack">
+
+    <!-- view editarTarefa -->
+    @include('aluno.editarTarefa')
+
+</div>
+
 
 <script>
+
+     $('#allEditT').hide();
 
     $('.divTarefa').each(function( index, element ) {
         if ($(".divSubTarefa .tarefa .containerCheckbox2", this).length > 0){ 
@@ -90,12 +201,23 @@
             $( '.tarefaSeta' , element ).css( 'cursor', 'default');
         }
     });
+
+    $(".tarefa").hover(function(){
+        $('.editTarefa' , this ).css("display", "inline-block");
+        }, function(){
+        $('.editTarefa' , this ).css("display", "none");
+    }); 
     
     $('.divSubTarefa').addClass('visSub');
 
     $('.tarefaSeta').click(function() {
         $(this).toggleClass('flip');
         $('.divSubTarefa', $(this).parent()).toggleClass('visSub');
+    });
+
+    $('.editTarefa').click(function() {
+        infoTarefa($('input[type=hidden]',$(this).parent()).val());
+        $('#allEditT').show();
     });
 
     $("#formpesquisa").submit(function(event){
@@ -106,11 +228,26 @@
             type: 'GET',
             data : form_data,
             success: function(data){
-                alert(data) 
+                $('#tarefas').html(data.html)
             }
         });
     });
 
+    // Informacao para editar a tarefa
+    function infoTarefa(id) {
+        $.ajax({
+            url: '/infoTarefa',
+            type: 'GET',
+            dataType: 'json',
+            success: 'success',
+            data: {'id': id },
+            success: function(data){
+                $('#allEditT').html(data.html)  
+            }
+        });
+    }
+
+    // Adiconar tarefa
     function editTarefa(id, val) {
         $.ajax({
             url: '/editTarefa',
@@ -124,6 +261,7 @@
         });
     }
 
+    // Adiconar tarefa
     function editAllTarefa(id, val) {
         $.ajax({
             url: '/editAllTarefa',

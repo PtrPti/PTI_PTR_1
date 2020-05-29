@@ -8525,7 +8525,7 @@ button.close {
 .containerCheckbox {
   margin-left: 10px;
   margin-bottom: 0px;
-	display: block;
+	display: inline-block;
 	position: relative;
 	padding-left: 37px;
 	cursor: pointer;
@@ -8599,7 +8599,7 @@ button.close {
 .containerCheckbox2 {
   margin-bottom: 0px;
   margin-left: 10px;
-	display: block;
+	display: inline-block;
 	position: relative;
 	padding-left: 30px;
 	cursor: pointer;
@@ -8628,6 +8628,7 @@ button.close {
 	background: none;
   border: 1px solid rgb(167, 167, 167);
   border-radius: 50%;
+  margin-top: 3px;
 }
   
 .containerCheckbox2:hover input ~ .checkmark {
@@ -8755,7 +8756,6 @@ button.close {
   align-items: center;
 }
 
-
 .popupDiv input{
 	padding:8px;
   margin-bottom: 15px;
@@ -8805,23 +8805,15 @@ button.close {
 .tarefaSeta{
   display: inline-block;
   vertical-align: -webkit-baseline-middle;
-  
 }
 
 .flip { transform: rotate(-180deg);}
 
 .tarefaSeta:hover{
   cursor: pointer;
-
-}
-
-.containerCheckbox{
-  font-size: 20px;
-  display: inline;
 }
 
 .visSub{ display: none;}
-
 
 .tarefa{
 	padding-top: 10px;
@@ -8830,16 +8822,37 @@ button.close {
   display: inline-block;
   width: 92%;
 }
+.ficheirosTarefa div{
+	margin-left: 2px;
+	margin-right: 2px;
+	display:inline-block ;
+	padding: 3px;
+}
+
+.ficheirosTarefa div:hover:not(.nameUser){
+	cursor: pointer;
+	background-color: rgba(182, 182, 182, 0.699);
+  border-radius: 50%;
+}
 
 .nameUser{
 	padding: 5px;
 	background-color: rgb(212, 212, 212);
 	display: inline-block;
-	float: right;
+  float: right;
 }
 
-.notaTarefa{
-	padding: 5px;
+.nameUser:hover{
+	cursor: default;
+}
+
+.ficheirosTarefa img{
+	height: 100% ;
+	vertical-align: middle;
+	align-items: center;
+}
+
+.ficheirosTarefa {
 	display: inline-block;
 	float: right;
 }
@@ -8866,7 +8879,6 @@ button.close {
   display: inline-block;
   float: right;
   margin-right: 70px;
-  
 }
 
 .searchcontainer input{
@@ -8887,4 +8899,72 @@ button.close {
   margin: 3px;
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+.editTarefa{
+  margin-left: 10px;
+  margin-top: 5px;
+  display: none; 
+}
+
+.editTarefa:hover{
+  cursor: pointer;
+}
+
+#btnsAddEdit div{
+  display: inline-block;
+  position: relative;
+  padding-top: 7px;
+  padding-bottom:7px ;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 40px;
+  width: 115px;
+  border: 1px solid gray;
+}
+
+#btnsAddEdit div:hover{
+  cursor: pointer;
+  z-index: 7;
+}
+
+#btnEdit{
+  background-color: #e6e16c;
+  margin-left: 25px;
+  z-index: 7;
+}
+#btnAdici{
+  margin-left: -25px;
+  z-index: 4;
+  background-color: white;
+}
+
+/* NOTA */
+
+#mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #d8c0cf;
+  text-align: center;
+  border: 1px solid #d3d3d3;
+}
+
+#mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  color: #fff;
+}
+
+#notaText{
+	resize: none;
+  width: 190px;
+	height: 114px;
+	overflow-y: scroll;
+	background: none;
+	border: none;
+}
+
+#notaText::placeholder{
+	color: grey;
 }
