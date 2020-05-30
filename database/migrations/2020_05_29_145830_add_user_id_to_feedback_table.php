@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCheckToFeedbackTable extends Migration
+class AddUserIdToFeedbackTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,17 @@ class AddCheckToFeedbackTable extends Migration
      */
     public function up()
     {
+        
+
         Schema::table('feedback', function (Blueprint $table) {
-            $table->boolean('check')->default(1);
+            $table->integer('user_id')->unsigned()->nullable();
+           
+        });
+
+        Schema::table('feedback', function (Blueprint $table) {
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 
@@ -26,7 +35,7 @@ class AddCheckToFeedbackTable extends Migration
     public function down()
     {
         Schema::table('feedback', function (Blueprint $table) {
-            Schema::dropIfExists('check');
+            $table->dropForeign(['user_id']);
         });
     }
 }

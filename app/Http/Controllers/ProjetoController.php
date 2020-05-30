@@ -336,9 +336,39 @@ class ProjetoController extends Controller
                                     where users.id != " . Auth::id() . " 
                                     group by users.id, users.nome, users.email");
 
+        
+        $feedbacks = Feedback::where('grupo_id', $id_grupo)->get();
 
 
-        return view ('docente.grupoDocente', compact('elementos', 'utilizadores', 'grupo')); 
+
+        return view ('docente.grupoDocente', compact('elementos', 'utilizadores', 'grupo', 'feedbacks')); 
     }
+
+//feedback
+
+
+public function addmensagem(Request $request){
+    $id = $request->grupo_id;
+    $mensagem_feedback=$request->input('msg');
+
+    $feedback = new Feedback;
+    $feedback->mensagem = $request->msg;
+    $feedback->grupo_id = $id;
+    $feedback->user_id =$request->user_id;
+
+    $feedback->save();
+
+   
+    //$insertmessage= DB::insert('insert into feedback(mensagem) values(?)',[$mensagem_feedback]);
+    //$insertid_grupo = DB::insert('insert into feedback(grupo_id) values(?)',[$id]);
+    //$grupo_id = $_POST['grupo_id'];
+    //Feedback::insert(["grupo_id" => $grupo_id]);
+    //$message= DB::select('select mensagem from feedback');
+
+
+    //$data = array('add_mensagem' => $mensagem_feedback);
+   
+    return redirect()->action('ProjetoController@GrupoDocente', ['id_grupo' => $id] );
+}
 
 }

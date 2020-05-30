@@ -80,6 +80,8 @@ Route::get('pesquisar', 'ProjetoController@pesquisar');
 Route::post('uploadFicheiro', 'ProjetoController@uploadFicheiro')->name('uploadFicheiro');
 Route::get('delete-records','ProjetoController@index');
 Route::get('delete/{id}','ProjetoController@eraseProject');
+Route::post('/addmessages', 'ProjetoController@addmensagem')->name('AddMensagem');
+
 
 Route::post('add', 'ProjetoController@takeGrupos');
 

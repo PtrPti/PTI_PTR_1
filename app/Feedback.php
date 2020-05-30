@@ -4,20 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Feedback extends Eloquent{
-
-
-
+class Feedback extends Model
+{
     protected $table = 'feedback';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'mensagem', 
-        'check' 
-       
+        'grupo_id',
+        'user_id' 
+        
     ];
 }

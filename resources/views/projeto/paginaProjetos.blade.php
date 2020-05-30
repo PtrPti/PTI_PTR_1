@@ -54,8 +54,8 @@
 
 
 
-    <div class="flex-right">
-        <div class="flex-right-header">
+    <div class="flex-right1">
+        <div class="flex-right-header1">
             <h2>{{ $projeto->nome }}</h2>
             <h3>Disciplina: <a href="{{ route('indexDisciplinaDocente', $cadeira->id) }}">{{ $cadeira->nome }}</a></h3>
         </div>
@@ -72,6 +72,11 @@
                     <td><a href="{{ route('GrupoDocente', $grupo->id) }}" >Grupo {{$grupo->numero}}</a></td>
                     <td>{{$grupo->total_membros}}/<?php echo $max_elementos ?></td>
                     <td>{{$grupo->elementos}}</td>
+                    <td>  
+                        <div class="led-box">
+                            <div class="led-green"></div>
+                        </div>
+                    </td>
                 <tr>
                 @endforeach
             </table>

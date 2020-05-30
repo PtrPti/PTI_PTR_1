@@ -35,6 +35,13 @@
 
                 <h1 >Grupo {{$grupo->numero}}</h1>
                 <p>Feedbacks</p>
+                <table class="tableGrupos">
+                    @foreach ($feedbacks as $feedback)
+                    <tr>
+                    <td id="feed_messages">{{$feedback->mensagem}}</td>
+                    @endforeach
+                </table>
+                
             
             </div>
         </div>
@@ -42,7 +49,9 @@
 
     <div class="feedback-footer">
             <div class="chat-popup" id="chat">
-                <form action="/action_page.php" class="form-container">
+                <form action="{{ route('AddMensagem'), $grupo->id }}" enctype="multipart/form-data" method="post" class="form-container">
+                    <input type="hidden" name="grupo_id" value='{{$grupo->id}}'>
+                    {{ csrf_field() }}  
                     <h2 class="chat_name">Chat</h2>
 
                     <div class="dropup">
@@ -56,9 +65,9 @@
 
                         
                         <label for="msg"><b>Mensagens</b></label>
-                        <textarea placeholder="Escreva a sua mensagem" name="msg" ></textarea>
+                        <textarea name="msg" id="message_content" ></textarea>
 
-                        <button type="submit" class="btn">Enviar Feedback</button>
+                        <button  type="submit" class="btn">Enviar Feedback</button>
                         <button type="button" class="btn cancel" onclick="closeForm()">Fechar</button>
 
 
@@ -85,13 +94,28 @@
 
 
     function Showfeedback() {
-                document.getElementById("chat").style.display = "block";
-            }
-            function closeForm() {
-               
-               
-             document.getElementById("chat").style.display = "none";
-            }
+        document.getElementById("chat").style.display = "block";}
+    
+    function closeForm() {
+        document.getElementById("chat").style.display = "none";
+        }
+
+
+
+function sendfeed(){
+    var lista_feeds = [];
+    var x = document.getElementById("message_content").value;
+    lista_feeds.push(x);
+    console.log(lista_feeds);
+    for(i=0; i<lista_feeds.length; i++){
+        $('#print_feed').append("<p>" + lista_feeds[i] + "</p>");
+    }
+    
+    $(".chat-popup").css('display', 'none');
+
+}
+    
+
 
 
 

@@ -18,6 +18,17 @@ class CreateFeedbackTable extends Migration
             $table->string('mensagem');
             $table->timestamps();
         });
+
+        Schema::table('feedback', function (Blueprint $table) {
+            $table->integer('grupo_id')->unsigned()->nullable();
+           
+        });
+
+        Schema::table('feedback', function (Blueprint $table) {
+
+            $table->foreign('grupo_id')->references('id')->on('grupos')->onDelete('cascade');
+
+        });
     }
 
     /**
@@ -28,5 +39,10 @@ class CreateFeedbackTable extends Migration
     public function down()
     {
         Schema::dropIfExists('feedback');
+
+        Schema::table('feedback', function (Blueprint $table) {
+            $table->dropForeign(['grupo_id']);
+            
+        });
     }
 }
