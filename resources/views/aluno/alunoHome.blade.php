@@ -74,14 +74,23 @@
               <label for="terminados">Terminados</label>
             </li>
             <!-- <input type="submit" value="Aplicar" class="filtro_btn"> -->
+<<<<<<< HEAD
             <button type='button' class="filtro_btn" onclick="filterProj()">Aplicar</button>
+=======
+            <button type='button' onclick="filterProj()">Aplicar</button>
+>>>>>>> befa9d46e47e9407ef9c5168cb4eb863395f32bb
           </div>
           <!-- </form> -->
         </ul>
       </div>
 
       @include('aluno.filtroProjeto')
+<<<<<<< HEAD
       
+=======
+
+     
+>>>>>>> befa9d46e47e9407ef9c5168cb4eb863395f32bb
     </div>
     
           <!-- Chat -->
