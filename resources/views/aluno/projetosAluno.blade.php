@@ -18,15 +18,10 @@
 			<div id="dropAdd">
 
                 <a class="pastaadd" ><img src="{{ asset('images/addpasta.png') }}" width="40"><span>Pasta</span></a>
-				
                 <hr>
                 <a class="uploadFile" ><img src="{{ asset('images/uploadficheiro.png') }}" width="40"><span>Carregar Ficheiro</span></a>
-				
-				<label class="addLabel"><img src="{{ asset('images/uploadpasta.png') }}" width="40">Carregar Pasta
-					<input type="file">
-				</label>
+				<label class="addLabel"><img src="{{ asset('images/uploadpasta.png') }}" width="40">Carregar Pasta<input type="file"></label>
 				<hr>
-
 				<a class="siteadd"><img src="{{ asset('images/link.png') }}" width="37"><span>Site</span></a>
 				<a class="siteadd"><img src="{{ asset('images/drive.png') }}" width="37"><span>Google Drive</span></a>
 				<a class="siteadd"><img src="{{ asset('images/github.png') }}" width="37"><span>Github</span></a>
@@ -35,7 +30,6 @@
                 <a class="taskSubadd"><img src="{{ asset('images/addtarefa.png') }}"width="40"><span>Subtarefa</span></a>
 				<hr>
 				<a class="notaAdd"><img src="{{ asset('images/nota.png') }}" width="40"><span>Nota</span></a>
-				<a><span>Evento</span></a>
 			</div>
 		</div>
 
@@ -142,8 +136,8 @@
                 
                 <form id="formUploadFicheiro" action="{{route ('uploadFicheiro')}}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <label for="pasta">Pasta</label>
-                    <select name='Pasta' id="pasta">
+                    <label for="pastaaa">Pasta</label>
+                    <select name='Pasta' id="pastaaa">
                         <option value=''>Nenhuma</option>
                         @foreach ($ficheiros as $ficheiro)
                             @if ($ficheiro->is_folder)
@@ -175,7 +169,80 @@
                     </select><br>
                     <input type="text" name='nome' placeholder="nome..."><br>
                     <input type="hidden" name='grupoId' value="{{ $IdGrupo }}"><br>
+                    <input type="hidden" name='tipo' value="grupo"><br>
 				    <input type="submit" value='Adicionar'>
+                </form>
+            </div>
+        </div>
+
+        <!-- Popup Adicionar Submissao -->
+        <div id="all7" class="popUpBack">
+            <div id="addSubmissao" class='popupDiv'>
+                <img class='closebtn' src="{{ asset('images/cancel.png') }}">
+                <h4>Selecione</h4>
+                <form id="formAddSubmissao">
+                    @foreach ($ficheiros as $ficheiro)
+                        @if ($ficheiro->is_folder)
+                            <label class='inpt1'>
+                                <input type="checkbox" name="{{$ficheiro->id}}" @if ($ficheiro->submetido) checked @endif>
+                                <img src="{{ asset('images/folder.png') }}" width="20">{{$ficheiro->nome}}
+                            </label>
+                            @foreach ($ficheiros as $subficheiro)
+                                @if ($subficheiro->pasta_id === $ficheiro->id)
+                                    @if ( $subficheiro->link != "" and is_null($subficheiro->notas))
+                                        <label class='inpt2'>
+                                            <input type="checkbox" name="{{$subficheiro->id}}" @if ($subficheiro->submetido) checked @endif>
+                                            @if (str_contains($subficheiro->link, 'drive.google.com'))
+                                                <img src="{{ asset('images/drive.png') }}" width="20">
+                                            @elseif (str_contains($subficheiro->link, 'github.com'))
+                                                <img src="{{ asset('images/github.png') }}" width="23">
+                                            @else 
+                                                <img src="{{ asset('images/link.png') }}" width="21">
+                                            @endif
+                                            {{$subficheiro->nome}}
+                                        </label>
+                                    @elseif ( ! is_null($subficheiro->notas) )
+                                        <label class='inpt2'>
+                                            <input type="checkbox" name="{{$subficheiro->id}}" @if ($subficheiro->submetido) checked @endif>
+                                            <img src="{{ asset('images/nota.png') }}" width="20">{{$subficheiro->nome}}
+                                        </label>
+                                    @else
+                                        <label class='inpt2'>
+                                            <input type="checkbox" name="{{$subficheiro->id}}" @if ($subficheiro->submetido) checked @endif>
+                                            <img src="{{ asset('images/file.png') }}" width="20">{{$subficheiro->nome}}
+                                        </label>
+                                    @endif
+                                @endif
+                            @endforeach      
+                        @elseif ( $ficheiro->is_folder == false and is_null($ficheiro->pasta_id))
+                            @if ( ! is_null($ficheiro->link) and is_null($ficheiro->notas))
+                                <label class='inpt1'>
+                                    <input type="checkbox" name="{{$ficheiro->id}}" @if ($ficheiro->submetido) checked @endif>
+                                    @if (str_contains($ficheiro->link, 'drive.google.com'))
+                                        <img src="{{ asset('images/drive.png') }}" width="20">
+                                    @elseif (str_contains($ficheiro->link, 'github.com'))
+                                        <img src="{{ asset('images/github.png') }}" width="23">
+                                    @else 
+                                        <img src="{{ asset('images/link.png') }}" width="21">
+                                    @endif
+                                    {{$ficheiro->nome}}
+                                </label>
+                            @elseif ( ! is_null($ficheiro->notas) )
+                                <label class='inpt1'>
+                                    <input type="checkbox" name="{{$ficheiro->id}}" @if ($ficheiro->submetido) checked @endif>
+                                    <img src="{{ asset('images/nota.png') }}" width="20">{{$ficheiro->nome}}
+                                </label>
+                            @else
+                                <label class='inpt1'>
+                                    <input type="checkbox" name="{{$ficheiro->id}}" @if ($ficheiro->submetido) checked @endif>
+                                    <img src="{{ asset('images/file.png') }}" width="20">{{$ficheiro->nome}}
+                                </label>
+                            @endif
+                        @endif
+                    @endforeach  	
+        
+                    <input type="hidden" name='grupoId' value="{{ $IdGrupo }}"><br>
+				    <input type="submit" value='Submeter'>
                 </form>
             </div>
         </div>
@@ -185,28 +252,43 @@
         @foreach ($ficheiros as $ficheiro)
             @if ($ficheiro->is_folder)
                 <div class="folder1">
-                    <a class="item1"><img src="{{ asset('images/folder.png') }}" width="25"><span>{{$ficheiro->nome}}</span></a>
+                    <a class="item1">
+                        @if ($ficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                        @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
+                        <img src="{{ asset('images/folder.png') }}" width="25">
+                        <span>{{$ficheiro->nome}}</span>
+                    </a>
                     @foreach ($ficheiros as $subficheiro)
                         @if ($subficheiro->pasta_id === $ficheiro->id)
                             <div class="folder2">
                                 @if ( $subficheiro->link != "" and is_null($subficheiro->notas))
                                     <a class="item2" href="{{$subficheiro->link}}">
                                         @if (str_contains($subficheiro->link, 'drive.google.com'))
+                                            @if ($subficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                                            @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
                                             <img src="{{ asset('images/drive.png') }}" width="23">
                                         @elseif (str_contains($subficheiro->link, 'github.com'))
+                                            @if ($subficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                                            @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
                                             <img src="{{ asset('images/github.png') }}" width="23">
                                         @else 
+                                            @if ($subficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                                            @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
                                             <img src="{{ asset('images/link.png') }}" width="21">
                                         @endif
                                         <span>{{$subficheiro->nome}}</span> 
                                     </a>
                                 @elseif ( ! is_null($subficheiro->notas) )
                                     <a class="item2" href="#" onclick="infoNota('grupo',{{$subficheiro->id}})">
+                                        @if ($subficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                                        @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
                                         <img src="{{ asset('images/nota.png') }}" width="23">
                                         <span>{{$subficheiro->nome}}</span>
                                     </a> 
                                 @else
                                     <a class="item2" href="{{ url('/downloadF', $subficheiro->id.'.'.explode('.', $subficheiro->nome, 2)[1]) }}">
+                                        @if ($subficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                                        @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
                                         <img src="{{ asset('images/file.png') }}" width="25">
                                         <span>{{$subficheiro->nome}}</span>
                                     </a> 
@@ -219,22 +301,32 @@
                 @if ( ! is_null($ficheiro->link) and is_null($ficheiro->notas))
                     <a class="item1" href="{{$subficheiro->link}}">
                         @if (str_contains($ficheiro->link, 'drive.google.com'))
+                            @if ($ficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                            @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
                             <img src="{{ asset('images/drive.png') }}" width="23">
                         @elseif (str_contains($ficheiro->link, 'github.com'))
+                            @if ($ficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                            @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
                             <img src="{{ asset('images/github.png') }}"  width="23">
                         @else 
+                            @if ($ficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                            @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
                             <img src="{{ asset('images/link.png') }}"  width="21">
                         @endif
                         <span>{{$ficheiro->nome}}</span>
                     </a>
                 @elseif ( ! is_null($ficheiro->notas) )
                     <a class="item1" href="#"  onclick="infoNota('grupo',{{$ficheiro->id}})">
+                        @if ($ficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                        @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
                         <img src="{{ asset('images/nota.png') }}" width="23">
                         <span>{{$ficheiro->nome}}</span>
                     </a> 
                 @else
                     <a class="item1">
-                        <img src="{{ asset('images/file.png') }}" width="25">>
+                        @if ($ficheiro->submetido)<img class='submited' src="{{ asset('images/eye.png') }}" width="20">
+                        @else <img class='Notsubmited' src="{{ asset('images/eye.png') }}" width="20"> @endif
+                        <img src="{{ asset('images/file.png') }}" width="25">
                         <span>{{$ficheiro->nome}}</span>
                     </a>
                 @endif
@@ -242,10 +334,14 @@
         @endforeach  	
                     
     </div>
+    <button type="button" id="btgrupoDocente" onclick="Showfeedback()">  
+    <img src="{{ asset('images/feedback.png') }}" width="27" style="margin-right:10px">Pedir Feedback ao Professor</button>
     </div>
+    
     
     <!-- Lado direito - Tarefas -->
 	<div id="drt">
+
 		<div id="tarefas">
 
             <!-- view tarefasAluno -->
@@ -303,6 +399,10 @@
         $("#all5").show();
     });
 
+    $(".submissaoAdd").click(function(){
+        $("#all7").show();
+    });
+
     $(".closebtn").click(function(){
         ($($(this).parent()).parent()).hide();
     });
@@ -319,11 +419,11 @@
     }); 
 
     $('.folder1 .item1').click(function() {
-        if ($('a img', $(this).parent()).attr("src") == "{{ asset('images/folder.png') }}") {
-            $('img:first',$(this).parent()).attr("src","{{ asset('images/openfolder.png') }}");
+        if ($('a img:nth-child(2)', $(this).parent()).attr("src") == "{{ asset('images/folder.png') }}") {
+            $('img',$(this).parent()).eq(1).attr("src","{{ asset('images/openfolder.png') }}");
             $('div',$(this).parent()).show();  
         } else  {
-            $('img:first',$(this).parent()).attr("src","{{ asset('images/folder.png') }}");
+            $('img',$(this).parent()).eq(1).attr("src","{{ asset('images/folder.png') }}");
             $('div',$(this).parent()).hide();
         }
     });
@@ -343,6 +443,7 @@
             });
         }).change();
     });
+    
 
     $("#formAddPasta").submit(function(event){
         event.preventDefault();
@@ -356,11 +457,23 @@
         });
     });
 
+    $("#formAddSubmissao").submit(function(event){
+        event.preventDefault();
+        var form_data = $(this).serialize();
+        $.ajax({
+            url: '/addSubmissao',
+            type: 'GET',
+            data : form_data
+        }).done(function(response){ 
+            location.reload();
+        });
+    });
+
     $("#formAddNotaGrupo").submit(function(event){
         event.preventDefault();
         var form_data = $(this).serialize();
         $.ajax({
-            url: '/addNotaGrupo',
+            url: '/addNota',
             type: 'GET',
             data : form_data
         }).done(function(response){ 

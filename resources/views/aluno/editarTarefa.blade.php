@@ -11,7 +11,7 @@
     <div id='editarFicheiro'>
         <form id='formEditTarefa'>
             <label for='nomeTarefa'>Nome tarefa: </label>
-            <input type="text" name='nome' id='nomeTarefa' placeholder="tarefa.." value="{{$tarefaEdit[0]->nome}}"><br>
+            <input type="text" name='nome' id='nomeTarefa' value="{{$tarefaEdit[0]->nome}}"><br>
 
             <label for='prazo'>Prazo: </label>
             <input type="date" name='prazo' id='prazo' value="{{ date('l jS F Y H:i', strtotime($tarefaEdit[0]->prazo)) }}" ><br>
@@ -27,6 +27,8 @@
                     @endif
                 @endforeach
             </select><br>
+            <input type="hidden" name='tarefaId' value="{{ $tarefaEdit[0]->id }}">
+            <input type="submit" value='Guardar'>
         </form>
         
             @if( $tarefaEdit[0]->notas !== NULL )
@@ -67,6 +69,14 @@
         </select><br>
 
         <div>
+            <form id='formAddNotaTarefa'>
+                <input type="text" name='nome' placeholder="nome.."><br>
+                <input type="hidden" name='tarefaId' value="{{ $tarefaEdit[0]->id }}">
+                <input type="hidden" name='tipo' value="tarefa">
+            </form>
+        </div>
+
+        <div>
             <form id="formAddFicheiro" action="{{route ('uploadFicheiroTarefa')}}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="file" name='ficheiro' placeholder="ficheiro...">
@@ -87,7 +97,7 @@
     </div>
   
 </div>
-@endisset
+
 
 <script>
 
@@ -135,4 +145,34 @@
         });
     })
 
+    $("#formEditTarefa").submit(function(event){
+        event.preventDefault(); 
+        var form_data = $(this).serialize(); 
+        $.ajax({
+            url: '/alterarTarefa',
+            type: 'GET',
+            data : form_data,
+            success: function(data){
+                $('#tarefas').html(data.html)
+                $('#allEditT').hide();
+            }
+        });
+    })
+
+    /* $("#formAddNotaTarefa").submit(function(event){
+        event.preventDefault(); 
+        var form_data = $(this).serialize(); 
+        $.ajax({
+            url: '/addNota',
+            type: 'GET',
+            data : form_data,
+            success: function(data){
+                $('#tarefas').html(data.html)
+                $('#allEditT').show();
+            }
+        });
+    }) */
+
 </script>
+
+@endisset

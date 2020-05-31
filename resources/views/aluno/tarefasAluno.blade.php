@@ -1,4 +1,10 @@
 <!-- Tarefas por fazer -->
+<div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="{{$percentagem}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$percentagem}}%">
+    {{$percentagem}}
+    </div>
+</div>
+
 <div id="tarefasNaoFeitas">
     <h3>Tarefas</h3>
 
@@ -23,14 +29,13 @@
                     <img src="{{asset('images/edit.png') }}" class='editTarefa' width="15">
 
                     <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
-                    <div class="ficheirosTarefa">
-                        @if ( $tarefa->notas !== NULL)
-                            <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
-                        @endif  
+                    <div class="ficheirosTarefa"> 
                         @foreach ($ficheirosTarefas as $ficheiro)
                             @if ($tarefa->id === $ficheiro->tarefa_id)
-                                @if ( empty($ficheiro->link) )
+                                @if ( empty($ficheiro->link) and $tarefa->notas == NULL)
                                     <div class='ficheiroTarefa'><img src="{{asset('images/fileq.png') }}" title="{{$ficheiro->nome}}" width="20"></div>
+                                @elseif ( $tarefa->notas !== NULL)
+                                    <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
                                 @else 
                                     <div class='linkTarefa'>
                                         <a class='linkTarefa'  href="{{$ficheiro->link}}" target="_blank">
@@ -67,8 +72,10 @@
                                 @endif  
                                 @foreach ($ficheirosTarefas as $ficheiro)
                                     @if ($subtarefa->id === $ficheiro->tarefa_id)
-                                        @if ( empty($ficheiro->link) )
+                                        @if ( empty($ficheiro->link) and $ficheiro->notas == NULL)
                                             <div class='ficheiroTarefa'><img src="{{asset('images/fileq.png') }}" title="{{$ficheiro->nome}}" width="20"></div>
+                                        @elseif ( $ficheiro->notas !== NULL)
+                                            <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
                                         @else 
                                             <div class='linkTarefa'>
                                                 <a class='linkTarefa'  href="{{$ficheiro->link}}" target="_blank">
@@ -219,6 +226,7 @@
         infoTarefa($('input[type=hidden]',$(this).parent()).val());
         $('#allEditT').show();
     });
+
 
     $("#formpesquisa").submit(function(event){
         event.preventDefault();

@@ -33,6 +33,8 @@ class ProjetoController extends Controller
 
     public function viewTarefasAluno(int $grupoId){
         $tarefas = Tarefa::where('grupo_id', $grupoId)->orderBy('ordem','ASC')->get();
+        $percentagem = $this->barraProgresso($grupoId);
+        
         $ids = [];
         foreach ($tarefas as $tarefa) {
             array_push($ids, $tarefa->id);
@@ -40,15 +42,14 @@ class ProjetoController extends Controller
         $ficheirosTarefas = TarefasFicheiros::whereIn('tarefa_id', $ids )->get();
         $nomesUsers = User::join('users_grupos','users_grupos.user_id', '=','users.id')
                         ->where('users_grupos.grupo_id','=', $grupoId)->select('users.nome','users.id')->get();       
-        $data = array('tarefas' => $tarefas, 'nomesUsers' => $nomesUsers,'ficheirosTarefas' => $ficheirosTarefas, 'IdGrupo' => $grupoId);
+        $data = array('tarefas' => $tarefas, 'nomesUsers' => $nomesUsers,'ficheirosTarefas' => $ficheirosTarefas, 'IdGrupo' => $grupoId, 'percentagem' => $percentagem);
         return $data;
-        
     }
 
     public function pagProjeto(int $grupo_id, int $tarefa_id=0){
 
         $data = $this->viewTarefasAluno($grupo_id);
-
+        
         $user = Auth::user()->getUser();
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
@@ -67,11 +68,39 @@ class ProjetoController extends Controller
         $nomesUsers = $data['nomesUsers'];
         $ficheirosTarefas = $data['ficheirosTarefas'];
         $IdGrupo = $data['IdGrupo'];
+        $percentagem = $data['percentagem'];
 
         $tarefaId = $tarefa_id;
 
-        return view('aluno.projetosAluno', compact('tarefaId','cadeiras','projetos','grupo','disciplina','projeto','ficheiros','tarefas','nomesUsers','IdGrupo','ficheirosTarefas'));
+        return view('aluno.projetosAluno', compact('tarefaId','cadeiras','projetos','grupo','disciplina','projeto','ficheiros','tarefas','nomesUsers','IdGrupo','ficheirosTarefas','percentagem'));
     }
+
+    public function barraProgresso(Int $id){
+        $tarefas = Tarefa::where('grupo_id', $id)->get();
+        $ids = [];
+        $tarefasDone = 0;
+        foreach ($tarefas as $tarefa){
+            foreach ($tarefas as $subtarefa){
+                if ($tarefa->tarefa_id === NULL and $tarefa->id == $subtarefa->tarefa_id){
+                    if ( !in_array($tarefa->id , $ids)){
+                        array_push($ids, $tarefa->id);
+                    }
+                    if($subtarefa->estado){
+                        $tarefasDone ++;
+                    }
+                }
+            }
+            if ( !in_array($tarefa->id, $ids) and $tarefa->tarefa_id === NULL){
+                if($tarefa->estado){
+                    $tarefasDone ++;
+                }
+            }
+        }
+        $totalTarefas = count($tarefas) -count($ids);
+        $percentagem = round($tarefasDone*100/$totalTarefas);
+        return $percentagem;
+    }
+
 
     public function editTarefa(Request $request) {
         $id = $_GET['id'];
@@ -128,12 +157,33 @@ class ProjetoController extends Controller
         return response()->json(array('html'=>$returnHTML));
     }
 
+    public function alterarTarefa(Request $request) {
+        $id = $_GET['tarefaId'];  
+        $nome = $_GET['nome'];  
+        $prazo  = date('Y-m-d H:i:s', strtotime($_GET['prazo']));  
+        $alunoId = $_GET['alunoId'];  
+        if ($alunoId==0){ $alunoId = NULL;}
+
+        $tarefa = Tarefa::find($id);
+        $tarefa->nome = $nome;
+        $tarefa->prazo = $prazo;
+        $tarefa->user_id = $alunoId;
+        $tarefa->save();
+
+        // Id do grupo
+        $grupo = Tarefa::select('grupo_id')->where('id',$id)->get();
+        $IdGrupo = $grupo[0]->grupo_id;
+
+        $data = $this->viewTarefasAluno($IdGrupo);
+        
+        $returnHTML = view('aluno.tarefasAluno')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));       
+    }
+
     public function infoNota(Request $request) {
         $tipo = $_GET['tipo']; 
         $id = $_GET['id'];  
 
-        // tabela GrupoFicheiros ou TarefasFicheiros
-        
         if($tipo == 'grupo'){
             $nota = GrupoFicheiros::where('id',$id)->get();
         } else {
@@ -143,6 +193,20 @@ class ProjetoController extends Controller
         $data = array('nota' => $nota);
         $returnHTML = view('aluno.notaAluno')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function saveNota(Request $request) {
+        $tipo = $_GET['tipo']; 
+        $id = $_GET['id']; 
+        $nota =  $_GET['nota']; 
+
+        if($tipo == 'grupo'){
+            $notaSave = GrupoFicheiros::find($id);
+        } else {
+            $notaSave = TarefasFicheiros::find($id);
+        }
+        $notaSave->notas = $nota;
+        $notaSave->save(); 
     }
 
     public function eliminarFicheiro(Request $request) {
@@ -169,9 +233,10 @@ class ProjetoController extends Controller
         $nomesUsers = $dataV['nomesUsers'];
         $ficheirosTarefas = $dataV['ficheirosTarefas'];
         $IdGrupo = $dataV['IdGrupo'];
+        $percentagem = $dataV['percentagem'];
 
         $data = array('tarefaEdit' => $tarefa, 'fichTarefa' => $fichTarefa, 'tarefas' => $tarefas,
-                    'nomesUsers' => $nomesUsers,'ficheirosTarefas' => $ficheirosTarefas,'IdGrupo' => $IdGrupo);
+                    'nomesUsers' => $nomesUsers,'ficheirosTarefas' => $ficheirosTarefas,'IdGrupo' => $IdGrupo , 'percentagem'=>$percentagem);
         $returnHTML = view('aluno.tarefasAluno')->with($data)->render();
         return response()->json(array('html'=>$returnHTML,'abrir'=>1));
     }
@@ -190,25 +255,48 @@ class ProjetoController extends Controller
         return response()->json('Adicionado com sucesso');
     }
 
-    public function addNotaGrupo(Request $request) {
-        $pastaId = $_GET['Pasta'];
-        $nome = $_GET['nome'];
+    public function addSubmissao(Request $request) {
+        $array = $request->all();
         $grupoId = $_GET['grupoId'];
 
-        $nota = new GrupoFicheiros;
-        
-        if ($pastaId === ''){
-            $nota->pasta_id = NULL;
-        } else {
-            $nota->pasta_id = $pastaId;
-        }
+        $ficheiros = GrupoFicheiros::where('grupo_id',$grupoId)->get();
 
+        foreach($ficheiros as $ficheiro)
+            if (array_key_exists($ficheiro->id , $array) ){
+                $ficheiro->submetido = TRUE;
+                $ficheiro->save();
+            } else {
+                $ficheiro->submetido = FALSE;
+                $ficheiro->save();
+            }
+    }
+
+    public function addNota(Request $request) {
+
+        // adicionar nota grupo
+        if ($_GET['tipo'] == 'grupo'){
+            $pastaId = $_GET['Pasta'];
+            $nome = $_GET['nome'];
+            $grupoId = $_GET['grupoId'];
+            $nota = new GrupoFicheiros;
+            if ($pastaId === ''){
+                $nota->pasta_id = NULL;
+            } else {
+                $nota->pasta_id = $pastaId;
+            }
+            $nota->is_folder = FALSE;
+            $nota->grupo_id = $grupoId;
+
+        // adicionar nota a uma tarefa
+        } else {
+            $tarefaId = $_GET['tarefaId'];
+            $nome = $_GET['nome'];
+            $nota = new TarefasFicheiros;
+            $nota->tarefa_id = $tarefaId;
+        }
         $nota->nome = $nome;
-        $nota->is_folder = FALSE;
-        $nota->grupo_id = $grupoId;
         $nota->notas = '';
         $nota->save();
-
         return response()->json('Adicionado com sucesso');
     }
 
@@ -220,7 +308,6 @@ class ProjetoController extends Controller
         $prazo = $_GET['prazo'];
 
         $tarefas = Tarefa::whereNull('tarefa_id')->get();
-
         foreach ($tarefas as $tarefa) {
             if ($tarefa->ordem > $ordemT ){
                 $ord = $tarefa->ordem + 1;
@@ -228,7 +315,6 @@ class ProjetoController extends Controller
                 $tarefa->save();
             }
         }
-
         $novaTarefa = new Tarefa;
         $novaTarefa->nome = $nome;
         $novaTarefa->ordem = $ordemT+1;
@@ -250,7 +336,6 @@ class ProjetoController extends Controller
         $prazo = $_GET['prazo'];
 
         $subtarefas = Tarefa::where('tarefa_id',$tarefaId)->get();
-
         foreach ($subtarefas as $sub) {
             if ($sub->ordem > $ordemT ){
                 $ord = $sub->ordem + 1;
@@ -258,7 +343,6 @@ class ProjetoController extends Controller
                 $sub->save();
             }
         }
-
         $novaSubTarefa = new Tarefa;
         $novaSubTarefa->nome = $nome;
         $novaSubTarefa->ordem = $ordemT+1;
@@ -329,9 +413,10 @@ class ProjetoController extends Controller
         $nomesUsers = $dataV['nomesUsers'];
         $ficheirosTarefas = $dataV['ficheirosTarefas'];
         $IdGrupo = $dataV['IdGrupo'];
+        $percentagem = $dataV['percentagem'];
 
         $data = array('tarefaEdit' => $tarefa, 'fichTarefa' => $fichTarefa, 'tarefas' => $tarefas,
-                    'nomesUsers' => $nomesUsers,'ficheirosTarefas' => $ficheirosTarefas,'IdGrupo' => $IdGrupo);
+                    'nomesUsers' => $nomesUsers,'ficheirosTarefas' => $ficheirosTarefas,'IdGrupo' => $IdGrupo, 'percentagem'=>$percentagem);
         $returnHTML = view('aluno.tarefasAluno')->with($data)->render();
         return response()->json(array('html'=>$returnHTML,'abrir'=>1));
     }

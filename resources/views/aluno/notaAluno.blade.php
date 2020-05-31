@@ -7,7 +7,7 @@
 	</div>
 
 	<div id="downNota">
-		<textarea id="notaText" placeholder="Nota..">{{$nota[0]->notas}}</textarea>
+		<textarea id="notaText" placeholder="Aa.." onchange="saveNota('grupo',{{$nota[0]->id }} )">{{$nota[0]->notas}}</textarea>
 	</div>
 
 </div>
@@ -17,7 +17,17 @@
 	$(".closebtn").click(function(){
         ($($(this).parent()).parent()).hide();
     });
- 
+
+	function saveNota(tipo,id){
+		var nota = $('#notaText').val()
+		$.ajax({
+            url: '/saveNota',
+            type: 'GET',
+            dataType: 'json',
+            data : {'tipo': tipo, 'id':id, 'nota':nota }
+        })
+	}
+
     dragElement(document.getElementById("mydiv"));
 
     function dragElement(elmnt) {
