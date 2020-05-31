@@ -137,7 +137,7 @@
         <?php echo e(csrf_field()); ?>
 
         <div class="user-wrapper">
-            <ul class="users">
+             <ul class="users">
             <?php $__currentLoopData = $utilizadores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utilizador): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <li class="user" id="<?php echo e($utilizador->id); ?>">
                 <?php if($utilizador->unread): ?>
@@ -157,6 +157,7 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </ul>
         </div>
+
         <div class="message-wrapper" id="messages">
         </div>
     </div>

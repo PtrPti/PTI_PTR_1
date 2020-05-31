@@ -135,7 +135,7 @@
         <!-- Chat -->
         {{ csrf_field() }}
         <div class="user-wrapper">
-            <ul class="users">
+             <ul class="users">
             @foreach ($utilizadores as $utilizador)
                 <li class="user" id="{{$utilizador->id}}">
                 @if($utilizador->unread)
@@ -155,6 +155,7 @@
             @endforeach
             </ul>
         </div>
+
         <div class="message-wrapper" id="messages">
         </div>
     </div>

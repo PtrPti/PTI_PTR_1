@@ -50,11 +50,37 @@ class HomeController extends Controller
 
         $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
             ->where('users_grupos.grupo_id', $user->id)->get();
-    
-        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
-            from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
-            where users.id != " . Auth::id() . " 
-            group by users.id, users.nome, users.email");
+
+        $grupos_ids = [];
+
+        foreach($grupos as $g) {
+            array_push($grupos_ids, $g->id);
+        }
+
+        // for($i = 0; $i < sizeof($grupos); $i++) {
+        //     $grupos_ids[$i] = $grupos[$i]->id;
+        // }
+
+        $utilizadores = DB::select("select 
+                                    u.id,
+                                    u.nome,
+                                    u.email,
+                                    count(id_read) as unread 
+                                from users u
+                                inner join users_grupos ug
+                                    on u.id = ug.user_id
+                                    and ug.grupo_id in (?)
+                                left join  messages m
+                                    on u.id = m.from 
+                                    and id_read = 0 
+                                    and m.to = ?
+                                where u.id != ?
+                                group by u.id, u.nome, u.email", [implode("','", $grupos_ids), $user->id, $user->id]);
+                                
+        // $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+        //     from users LEFT JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+        //     where users.id != " . Auth::id() . " 
+        //     group by users.id, users.nome, users.email");
 
         return view('aluno.alunoHome', compact('cadeiras','projetos','grupos', 'utilizadores'));
     }

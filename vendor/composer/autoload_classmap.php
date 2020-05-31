@@ -131,6 +131,7 @@ return array(
     'DeepCopy\\TypeFilter\\Spl\\SplDoublyLinkedListFilter' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/TypeFilter/Spl/SplDoublyLinkedListFilter.php',
     'DeepCopy\\TypeFilter\\TypeFilter' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/TypeFilter/TypeFilter.php',
     'DeepCopy\\TypeMatcher\\TypeMatcher' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/TypeMatcher/TypeMatcher.php',
+    'DefaultFavoritoUsersCadeira' => $baseDir . '/database/migrations/2020_05_31_102317_default_favorito_users_cadeira.php',
     'DepartamentosTableSeeder' => $baseDir . '/database/seeds/DepartamentosTableSeeder.php',
     'DivisionByZeroError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
     'Doctrine\\Common\\Cache\\ApcCache' => $vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache/ApcCache.php',

@@ -3994,166 +3994,6 @@ select[multiple].input-lg,
   user-select: none;
 }
 
-.btn:focus,
-.btn.focus,
-.btn:active:focus,
-.btn:active.focus,
-.btn.active:focus,
-.btn.active.focus {
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-
-.btn:hover,
-.btn:focus,
-.btn.focus {
-  color: #636b6f;
-  text-decoration: none;
-}
-
-.btn:active,
-.btn.active {
-  background-image: none;
-  outline: 0;
-  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
-
-.btn.disabled,
-.btn[disabled],
-fieldset[disabled] .btn {
-  cursor: not-allowed;
-  filter: alpha(opacity=65);
-  opacity: 0.65;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-a.btn.disabled,
-fieldset[disabled] a.btn {
-  pointer-events: none;
-}
-
-.btn-default {
-  color: #636b6f;
-  background-color: #fff;
-  border-color: #ccc;
-}
-
-.btn-default:focus,
-.btn-default.focus {
-  color: #636b6f;
-  background-color: #e6e5e5;
-  border-color: #8c8c8c;
-}
-
-.btn-default:hover {
-  color: #636b6f;
-  background-color: #e6e5e5;
-  border-color: #adadad;
-}
-
-.btn-default:active,
-.btn-default.active,
-.open > .btn-default.dropdown-toggle {
-  color: #636b6f;
-  background-color: #e6e5e5;
-  background-image: none;
-  border-color: #adadad;
-}
-
-.btn-default:active:hover,
-.btn-default:active:focus,
-.btn-default:active.focus,
-.btn-default.active:hover,
-.btn-default.active:focus,
-.btn-default.active.focus,
-.open > .btn-default.dropdown-toggle:hover,
-.open > .btn-default.dropdown-toggle:focus,
-.open > .btn-default.dropdown-toggle.focus {
-  color: #636b6f;
-  background-color: #d4d4d4;
-  border-color: #8c8c8c;
-}
-
-.btn-default.disabled:hover,
-.btn-default.disabled:focus,
-.btn-default.disabled.focus,
-.btn-default[disabled]:hover,
-.btn-default[disabled]:focus,
-.btn-default[disabled].focus,
-fieldset[disabled] .btn-default:hover,
-fieldset[disabled] .btn-default:focus,
-fieldset[disabled] .btn-default.focus {
-  background-color: #fff;
-  border-color: #ccc;
-}
-
-.btn-default .badge {
-  color: #fff;
-  background-color: #636b6f;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #e6e16c;
-  border-color: #e6e16c;
-}
-
-.btn-primary:focus,
-.btn-primary.focus {
-  color: #fff;
-  background-color: #e6e16c;
-  border-color: #e6e16c;
-}
-
-.btn-primary:hover {
-  color: #fff;
-  background-color: #e6e16c;
-  border-color: #e6e16c;
-}
-
-.btn-primary:active,
-.btn-primary.active,
-.open > .btn-primary.dropdown-toggle {
-  color: #fff;
-  background-color: #e6e16c;
-  background-image: none;
-  border-color: #e6e16c;
-}
-
-.btn-primary:active:hover,
-.btn-primary:active:focus,
-.btn-primary:active.focus,
-.btn-primary.active:hover,
-.btn-primary.active:focus,
-.btn-primary.active.focus,
-.open > .btn-primary.dropdown-toggle:hover,
-.open > .btn-primary.dropdown-toggle:focus,
-.open > .btn-primary.dropdown-toggle.focus {
-  color: #fff;
-  background-color: #e6e16c;
-  border-color: #e6e16c;
-}
-
-.btn-primary.disabled:hover,
-.btn-primary.disabled:focus,
-.btn-primary.disabled.focus,
-.btn-primary[disabled]:hover,
-.btn-primary[disabled]:focus,
-.btn-primary[disabled].focus,
-fieldset[disabled] .btn-primary:hover,
-fieldset[disabled] .btn-primary:focus,
-fieldset[disabled] .btn-primary.focus {
-  background-color: #e6e16c;
-  border-color: #e6e16c;
-}
-
-.btn-primary .badge {
-  color: #e6e16c;
-  background-color: #fff;
-}
-
 .btn-success {
   color: #fff;
   background-color: #2ab27b;
@@ -8338,44 +8178,15 @@ button.close {
   }
 }
 
-.logout_style{
-
+.logout_style {
   display: block;
   margin-top: 13px;
-}
-
-
-.nav_icons{
-  display: block;
-  margin-left: 10%;
-
-}
-
-.nav_icons a{
-  padding-left: 1.5%;
-  border-bottom: 1.5px solid #e6e16c;
-  display: inline-block;
-  padding-right: 1.5%;
-  padding-bottom: 0.5%;
-}
-
-.chat_icon img{
-  position: absolute;
-  right: 40px;
-  bottom: 30px;
-
-}
-
-.chat{
-  background-color: grey;
-  
 }
 
 .image_login{
   position: fixed;
   right: 50px;
   bottom: 0px;
-
 }
 
 
@@ -8383,7 +8194,5 @@ button.close {
   position: fixed;
   right: 50px;
   bottom: 30px;
-
-
 }
 
