@@ -43,6 +43,44 @@ $(document).ready(function () {
     $(".forumDuvidas").hide();
     $(".infDisciplina").show();
   });
+
+  /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - 
+  This allows the user to have multiple dropdowns without any conflict */
+  //Disciplinas
+  var dropdown = document.getElementsByClassName("dropdown-btn disc");
+  var x;
+
+  for (x = 0; x < dropdown.length; x++) {
+      dropdown[x].addEventListener("click", function() {
+          this.classList.toggle("icon_active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+              $("#i-disciplina").toggleClass('fa-caret-up fa-caret-down');
+          } else {
+              dropdownContent.style.display = "block";
+              $("#i-disciplina").toggleClass('fa-caret-up fa-caret-down');
+          }
+      });
+  }
+
+  //Projeto
+  var dropdown = document.getElementsByClassName("dropdown-btn proj");
+  var x;
+
+  for (x = 0; x < dropdown.length; x++) {
+      dropdown[x].addEventListener("click", function() {
+          this.classList.toggle("icon_active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+              $("#i-projeto").toggleClass('fa-caret-up fa-caret-down');
+          } else {
+              dropdownContent.style.display = "block";
+              $("#i-projeto").toggleClass('fa-caret-up fa-caret-down');
+          }
+      });
+  }
 });
 
 // ------------------------------------ PAGINA INICIAL ------------------------------------ //
@@ -50,10 +88,8 @@ function show_pagInicial(){
   //Botoes 
   $(".pagInicial_btn").hover(function () {
     $(this).css("background-color", "#eee9e9");
-    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
   }, function () {
     $(this).css("background-color", "#eee9e9");
-    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
   });
 
   $(".avaliacao_btn").hover(function () {
@@ -154,10 +190,8 @@ function show_avaliacao () {
 
   $(".avaliacao_btn").hover(function () {
     $(this).css("background-color", "#eee9e9");
-    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
   }, function () {
     $(this).css("background-color", "#eee9e9");
-    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
   });
 
   $(".horarios_btn").hover(function () {
@@ -201,10 +235,8 @@ function show_horarios () {
 
   $(".horarios_btn").hover(function () {
     $(this).css("background-color", "#eee9e9");
-    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
   }, function () {
     $(this).css("background-color", "#eee9e9");
-    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
   });
 
   $(".trabalho_btn").hover(function () {
@@ -248,10 +280,8 @@ function show_trabalho() {
 
   $(".trabalho_btn").hover(function () {
     $(this).css("background-color", "#eee9e9");
-    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
   }, function () {
     $(this).css("background-color", "#eee9e9");
-    // $(this).css("box-shadow","0 0px 0px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)")
   });
 
   $(".pagInicial_btn").css("background-color", "#f5f8fa")
@@ -309,7 +339,7 @@ function return_trabalho(){
 
 // When the user clicks on <span> (x), close the modal
 // span.onclick = function () {
-//   modal.style.display = "none";
+//   
 // }
 
 // When the user clicks anywhere outside of the modal, close it

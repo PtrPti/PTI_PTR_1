@@ -27,21 +27,6 @@ Route::get('/registar/getCursos', 'AuthController@changeDepartamentoId')->name('
 Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('changeCursoId');
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
 
-//---------------- ADMINISTRAÇÃO ----------------//
-Route::get('/admin', function () {
-    return view('administrador');
-});
-
-// Route::get('/adminHome', function() {
-//     return view('administrador.adminHome');
-// });
-
-//Login
-//Route::get('/loginAdmin', 'AdminController@getLogin')->name('login');
-
-//Home
-Route::get('/adminHome', 'HomeController@indexAdmin')->name('homeAluno');
-Route::get('/showDB', 'HomeController@showBD');
 //---------------- DOCENTES ----------------//
 //Home
 Route::get('/docenteHome/{tab?}', 'HomeController@indexDocente')->name('homeDocente');
@@ -74,8 +59,12 @@ Route::get('delete/{id}','ProjetoController@eraseProject');
 //Home
 Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno');
 Route::get('/alunoHome', 'HomeController@alunoHome')->name('alunoHome');
-Route::post('/filterProj', 'HomeController@filterProj');
+Route::get('/filterProj', 'HomeController@filterProj');
 Route::post('/changeFavorito', 'HomeController@changeFavorito');
+Route::get('/perfilAluno', 'HomeController@perfilAluno')->name('perfilAluno');
+Route::post('/changeNome', 'HomeController@changeNome')->name('changeNome');
+Route::post('/changeEmail', 'HomeController@changeEmail')->name('changeEmail');
+Route::post('/changePass', 'HomeController@changePass')->name('changePass');
 
 //Disciplina
 Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina')->name('pagDisciplina');

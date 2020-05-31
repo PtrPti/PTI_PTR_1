@@ -55,12 +55,12 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Esqueceste-te da tua password?
                                 </a>
-                                <p>
+                                
                                 <button type="submit" class="btn btn-primary">
                                     Inicar Sessão
                                 </button>
                                
-                               <a class="btn btn-link" href="{{ route('register') }}">
+                                <a class="btn btn-link" href="{{ route('register') }}">
                                     Criar conta
                                 </a>
 

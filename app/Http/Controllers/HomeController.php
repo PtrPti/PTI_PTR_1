@@ -31,41 +31,7 @@ class HomeController extends Controller
     public function index(){
         return view('welcome');
     }
-
-    //Administrador
-    public function adminHome(){
-        return view('administrador.adminHome');
-    }
-
-    public function indexAdmin(){
-        return view('administrador.adminHome');
-    }
-
-    public function showBD(){
-        $cadeiras = BD::table('cadeiras')->get();
-        $cursos = BD::table('cursos')->get();
-        $cursos_cadeiras = BD::table('cursos_cadeiras')->get();
-        $departamentos = BD::table('departamentos')->get();
-        $faculdades = BD::table('faculdades')->get();
-        $forum_duvidas = BD::table('forum_duvidas')->get();
-        $forum_mensagens = BD::table('forum_mensagens')->get();
-        $graus_academicos = BD::table('graus_academicos')->get();
-        $grupos = BD::table('grupos')->get();
-        $grupos_ficheiros = BD::table('grupos_ficheiros')->get();
-        $perfis = BD::table('perfis')->get();
-        $projetos = BD::table('projetos')->get();
-        $projetos_ficheiros = BD::table('projetos_ficheiros')->get();
-        $tarefas = BD::table('tarefas')->get();
-        $universidades = BD::table('universidades')->get();
-        $users = BD::table('users')->get();
-        $users_cadeiras = BD::table('users_cadeiras')->get();
-        $users_grupos = BD::table('users_grupos')->get();
-
-        return view('aluno.alunoHome', compact('cadeiras','cursos','cursos_cadeiras','departamentos','faculdades',
-        'forum_duvidas','forum_mensagens','graus_academicos','grupos','grupos_ficheiros','perfis','projetos',
-        'projetos','projetos_ficheiros','tarefas','universidades','users','users_cadeiras','users_grupos'));
-    }
-
+    
     //Aluno
     public function alunoHome(){
         return view('aluno.alunoHome');
@@ -82,15 +48,56 @@ class HomeController extends Controller
                           ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
                              ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id','users_grupos.favorito as favorito','users_grupos.id as usersGrupos_id')->get();
 
-        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-            ->where('users_grupos.grupo_id', $user->id)->get();
+        // $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+        //     ->where('users_grupos.grupo_id', $user->id)->get();
     
         $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
             from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
             where users.id != " . Auth::id() . " 
             group by users.id, users.nome, users.email");
 
-        return view('aluno.alunoHome', compact('disciplinas','projetos','grupos', 'utilizadores'));
+        return view('aluno.alunoHome', compact('disciplinas','projetos','utilizadores'));
+    }
+
+    public function perfilAluno (){
+        $user = Auth::user()->getUser();
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+                                  ->where('users_cadeiras.user_id', $user->id)->get();
+
+        $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
+                          ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
+                          ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
+                          ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
+                             ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id','users_grupos.favorito as favorito','users_grupos.id as usersGrupos_id')->get();
+
+        return view ('aluno.perfil', compact('user','disciplinas','projetos'));
+    }
+
+    public function changeNome(Request $request){
+        $user = Auth::user()->getUser();
+        $novoNome = $_POST['nome'];
+        User::where('id',$user->id)->update(['nome'=>$novoNome]);
+        return redirect()->action('HomeController@perfilAluno');
+    }
+
+    public function changeEmail(Request $request){
+        $user = Auth::user()->getUser();
+        $novoEmail = $_POST['email'];
+        User::where('id',$user->id)->update(['email'=>$novoEmail]);
+        return redirect()->action('HomeController@perfilAluno');
+    }
+
+    public function changePass(Request $request){
+        $user = Auth::user()->getUser();
+        $novaPass = bcrypt($_POST['novaPass']);
+
+        if($user->password == $atualPass){
+            if($novaPass == $repNovaPass){
+                User::where('id',$user->id)->update(['password'=>$novaPass]);
+            }
+        }
+
+        return redirect()->action('HomeController@perfilAluno');
     }
 
     public function pagDisciplina(int $cadeira_id){
@@ -114,15 +121,42 @@ class HomeController extends Controller
         $terminados = $request->terminados;
         $user = Auth::user()->getUser();
 
-        $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
-                          ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-                          ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
-                          ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
-                             ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id','users_grupos.favorito as favorito','users_grupos.id as usersGrupos_id')->get();
-       
+        $query = "select c.nome as cadeiras, p.nome as projeto, g.numero, g.id, ug.favorito as favorito, ug.id as usersGrupos_id
+        from users u
+        inner join users_grupos ug
+            on u.id = ug.user_id
+        inner join grupos g
+            on ug.grupo_id = g.id
+        inner join projetos p
+            on g.projeto_id = p.id
+        inner join cadeiras c
+            on p.cadeira_id = c.id
+        where
+            u.id = " .  $user->id;
+
+        if($favoritos == 'true') {
+            $query = $query . " and ug.favorito = 1";
+        }
+        if($em_curso == 'true') {
+            $query = $query . " and NOW() between p.data_inicio and p.data_fim";
+        }
+        if($terminados == 'true') {
+            $query = $query . " and p.data_fim < NOW()";
+        }
+
+        $projetos = DB::select($query);
+
+        if($projetos == null) { 
+            $data = array();
+        }
+        else {
+            $data = array(
+                'projetos'  => $projetos,
+            );
+        }
         
-            
-        $grupos = UsersGrupos::where('users_grupos.user_id', $user->id)->get();
+        $returnHTML = view('aluno.filtroProjeto')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
     }
 
     public function changeFavorito (Request $request){
