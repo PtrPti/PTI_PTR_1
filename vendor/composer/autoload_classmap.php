@@ -18,6 +18,7 @@ return array(
     'AddUserId' => $baseDir . '/database/migrations/2020_05_07_112110_add_user_id.php',
     'AddUserTarefas' => $baseDir . '/database/migrations/2020_05_02_132833_add_user_tarefas.php',
     'AlterGruposFicheirosTable' => $baseDir . '/database/migrations/2020_04_22_115310_alter_grupos_ficheiros_table.php',
+    'AlterMensagensFeedback' => $baseDir . '/database/migrations/2020_05_31_152614_alter_mensagens_feedback.php',
     'App\\Cadeira' => $baseDir . '/app/Cadeira.php',
     'App\\Calendar' => $baseDir . '/app/Calendar.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',

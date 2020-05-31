@@ -7,6 +7,7 @@ use App\User;
 use App\Projeto;
 use App\UserCadeira;
 use App\UsersGrupos;
+use App\Grupo;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use DateTime;
@@ -47,42 +48,40 @@ class HomeController extends Controller
                                   ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
                                   ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
                                       ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id')->get();
-
-        $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
-            ->where('users_grupos.grupo_id', $user->id)->get();
-
+            
         $grupos_ids = [];
 
-        foreach($grupos as $g) {
+        foreach($projetos as $g) {
             array_push($grupos_ids, $g->id);
         }
 
-        // for($i = 0; $i < sizeof($grupos); $i++) {
-        //     $grupos_ids[$i] = $grupos[$i]->id;
-        // }
+        DB::statement(DB::raw('set @row_number=0'));
+        $utilizadores = DB::select(DB::raw(
+            "select 
+                (@row_number:=@row_number + 1) AS row,
+                u.id,
+                u.nome,
+                u.email,
+                count(m.id_read) as unread,
+                m2.message as last_message,
+                m2.created_at as lm_date
+            from users u
+            inner join users_grupos ug
+                on u.id = ug.user_id
+                and ug.grupo_id in (:grupos)
+            left join  messages m
+                on u.id = m.from 
+                and id_read = 0 
+                and m.to = :u1
+            inner join (select * from messages order by created_at desc) as m2
+                on (m2.from = :u2 and m2.to = u.id)
+                or (m2.to = :u3 and m2.from = u.id)
+            where u.id != :u4
+            group by u.id, u.nome, u.email")
+                    , ['grupos' => implode("','", $grupos_ids), 'u1' => $user->id, 'u2' => $user->id, 'u3' => $user->id, 'u4' => $user->id]
+        );
 
-        $utilizadores = DB::select("select 
-                                    u.id,
-                                    u.nome,
-                                    u.email,
-                                    count(id_read) as unread 
-                                from users u
-                                inner join users_grupos ug
-                                    on u.id = ug.user_id
-                                    and ug.grupo_id in (?)
-                                left join  messages m
-                                    on u.id = m.from 
-                                    and id_read = 0 
-                                    and m.to = ?
-                                where u.id != ?
-                                group by u.id, u.nome, u.email", [implode("','", $grupos_ids), $user->id, $user->id]);
-                                
-        // $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
-        //     from users LEFT JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
-        //     where users.id != " . Auth::id() . " 
-        //     group by users.id, users.nome, users.email");
-
-        return view('aluno.alunoHome', compact('cadeiras','projetos','grupos', 'utilizadores'));
+        return view('aluno.alunoHome', compact('cadeiras','projetos', 'utilizadores'));
     }
 
     public function pagDisciplina(int $cadeira_id){

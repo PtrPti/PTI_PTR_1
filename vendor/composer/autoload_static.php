@@ -347,6 +347,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'AddUserId' => __DIR__ . '/../..' . '/database/migrations/2020_05_07_112110_add_user_id.php',
         'AddUserTarefas' => __DIR__ . '/../..' . '/database/migrations/2020_05_02_132833_add_user_tarefas.php',
         'AlterGruposFicheirosTable' => __DIR__ . '/../..' . '/database/migrations/2020_04_22_115310_alter_grupos_ficheiros_table.php',
+        'AlterMensagensFeedback' => __DIR__ . '/../..' . '/database/migrations/2020_05_31_152614_alter_mensagens_feedback.php',
         'App\\Cadeira' => __DIR__ . '/../..' . '/app/Cadeira.php',
         'App\\Calendar' => __DIR__ . '/../..' . '/app/Calendar.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
