@@ -602,17 +602,18 @@ input{
   display: none;
   position: fixed;
   bottom: 0;
-  right: 15px;
-  border: 3px solid #f1f1f1;  
+  left: 500px;
+ 
   z-index: 9;
 }
 
 /* Add styles to the form container */
 .form-container {
   max-width: 300px;
-  padding: 10px;
+  padding: 15px;
   background-color: #acc;
   border-radius: 10px;
+  height: 430px;
 }
 
 /* Full-width textarea */
@@ -624,6 +625,8 @@ input{
   background: #f1f1f1;
   resize: none;
   min-height: 200px;
+  position: relative;
+    top: 62px;
 }
 
 /* When the textarea gets focus, do something */
@@ -636,14 +639,17 @@ input{
 .form-container .btn {
   background-color: #133d55;
   color: white;
-  padding: 6px 20px;
+  padding: 7px 20px;
   border: none;
   cursor: pointer;
   width: 80%;
   margin-left: 30px;
-  margin-bottom:10px;
+  margin-bottom: 5px;
   opacity: 0.8;
   border-radius: 80px;
+  position: absolute;
+  top: 252px;
+  left: 4px;
 }
 
 /* Add a red background color to the cancel button */
@@ -671,19 +677,18 @@ input{
 }
 
 #btgrupoDocente{
-
   background-color: #133d55;
   color: white;
-  padding: 6px 20px;
   border: none;
   cursor: pointer;
-  width: 80%;
+  border-radius: 50%;
   position: relative;
-  top:500px;
-  margin-left: 30px;
+  padding: 7px 5px;
+  
+ 
 
   opacity: 0.8;
-  border-radius: 80px;
+ 
 
 }
 
@@ -1016,7 +1021,7 @@ li{
 .modal-content {
   background-color: #fefefe;
   margin: auto;
-  padding: 30px;
+  padding: 80px;
   border: 1px solid #888;
   width: 30%;
 }
@@ -1105,9 +1110,7 @@ li{
 	transform: rotate(45deg);
 }
 
-#btn_escolha{
-  margin-left: 355px;
-}
+
 
 
 /* Página Informação Grupos Para Docente */
@@ -1129,8 +1132,9 @@ li{
   
 }
 
-.elementos_grupo h4{
+.elementos_grupo h5{
   text-align: center;
+  font-weight: bold;
 
 }
 
@@ -1154,11 +1158,11 @@ li{
 
 .dropup p{
   text-align: center;
-  position: relative;
-  bottom: 60px;
+  position: absolute;
+
 }
 
-#feed_messages{
+.feed_messages{
   text-align: center;
 }
 
@@ -1217,4 +1221,177 @@ li{
     from { background-color: #FF0; }
     50% { background-color: #AA0; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0; }
     to { background-color: #FF0; }
+}
+
+
+.submissoes_alunos h5{
+  text-align: center;
+  font-weight: bold;
+  position: relative;
+  top:30px;
+
+}
+
+.submissoes_alunos p{
+  text-align: center;
+  position: relative;
+  top: 30px;
+  cursor: pointer;
+}
+
+.modal-content button{
+  position: absolute;
+  top: 200px;
+}
+
+#btn_fechar{
+  margin-left: 340px;
+}
+
+#btn_escolha{
+  margin-left: 250px;
+
+}
+
+#print{
+  text-align: center;
+  font-weight: bold;
+  margin: 0 auto; 
+  display:block; 
+
+}
+
+
+
+
+.box{
+  display: none;
+  width: 143px;
+  height: 75px;
+  background-color:  #636b6f26;
+  position: absolute;
+  left: 80px;
+ 
+  z-index: 999;
+ 
+  
+ 
+ 
+ }
+
+
+  .box.arrow-left:after {
+    content: " ";
+    position: absolute;
+    left: -15px;
+    top: 15px;
+    border-top: 15px solid transparent;
+    border-right: 15px solid #636b6f26;
+    border-left: none;
+    border-bottom: 15px solid transparent;
+  }
+
+
+.drop a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.drop a:hover {background-color: #ddd;}
+
+.dropdown-item1 {
+  width: 100%;
+  position: relative;
+  border: none;
+ 
+}
+
+.dropdown-item1:hover, .dropdown a:hover {
+  background: lightgray;
+  text-decoration: none;
+}
+
+.item-link {
+  padding: 0.75rem 5px 0.75rem 5px;
+}
+
+
+.tableGrupos1{
+  position: relative;
+  border-collapse: collapse;
+  width: 100%;
+  margin: auto;  
+  text-align: center;
+}
+
+.tableGrupos1 tr:nth-child(even){background-color: #f2f2f2}
+
+.tableGrupos1 td {
+  padding: 8px;
+  border-bottom: 1px solid grey;
+}
+
+.tableGrupos1 a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tableGrupos1 th {
+  background-color: #acc;
+  color: initial;
+  padding: 8px;
+  text-align: center;
+  z-index: -999;
+}
+
+
+.modal_msg {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 80px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+/* The Close Button */
+.closef {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: -20px;
+}
+
+.closef:hover,
+.closef:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.modal-content a{
+  position: relative;
+  left: 360px;
+  top: -40px;
+  cursor: pointer;
+
 }

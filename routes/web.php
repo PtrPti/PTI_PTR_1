@@ -49,6 +49,8 @@ Route::get('delete-records','ProjetoController@index');
 Route::get('delete/{id}','ProjetoController@eraseProject');
 Route::post('/docenteHome/{route?}/deleteGrupo','ProjetoController@deleteGrupo');
 Route::get('/projetos/grupo/{id}', 'ProjetoController@GrupoDocente')->name('GrupoDocente');
+Route::post('/addmessages', 'ProjetoController@addmensagem')->name('AddMensagem');
+Route::get('/showFeedback', 'ProjetoController@showFeedback')->name('ShowFeedback');
 
 //---------------- ALUNOS ----------------//
 //Home
@@ -80,7 +82,7 @@ Route::get('pesquisar', 'ProjetoController@pesquisar');
 Route::post('uploadFicheiro', 'ProjetoController@uploadFicheiro')->name('uploadFicheiro');
 Route::get('delete-records','ProjetoController@index');
 Route::get('delete/{id}','ProjetoController@eraseProject');
-Route::post('/addmessages', 'ProjetoController@addmensagem')->name('AddMensagem');
+
 
 
 Route::post('add', 'ProjetoController@takeGrupos');

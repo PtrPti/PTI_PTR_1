@@ -23,12 +23,8 @@
         <div id="dropAdd">
             <span onclick="AddFile('Enunciado')"><i class="fas fa-file-import"></i>Enunciado </span>
 
-            <hr>
-            <span class="siteadd"><i class="fas fa-globe "></i>Site</span>
             <a href="https://www.google.com/drive/"><span ><i class="fab fa-google-drive"></i>Google Drive</span></a>
             <a href="https://github.com/"><span><i class="fab fa-github"></i>Github</span></a>
-            <hr>
-
             <span ><i class="far fa-sticky-note"></i>Notas</span>
            
   
@@ -211,16 +207,6 @@ window.onclick = function(event) {
 // more feedback content
 
 
-
- $("#btn_escolha").click(function() {
-
-     var a = $('input[name="check"]:checked');
-     for(i=0; i<a.length; i++){
-        $('#print').append("<a> Grupo " + a[i].value + "</a>");
-        
-     }
-     $("#myModal").css('display', 'none');
- });
 
 
 

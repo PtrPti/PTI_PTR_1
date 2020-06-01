@@ -308,12 +308,6 @@ class ProjetoController extends Controller
 
 
 
-    public function addTodo(Request $request){
-        $data = array();
-        $check = $request->input('check');
-        
-        return response()->json(array('status'=>$check));
-    }
 
 
 
@@ -339,36 +333,50 @@ class ProjetoController extends Controller
         
         $feedbacks = Feedback::where('grupo_id', $id_grupo)->get();
 
-
-
-        return view ('docente.grupoDocente', compact('elementos', 'utilizadores', 'grupo', 'feedbacks')); 
+        $ficheiros = GrupoFicheiros::where('grupo_id', $id_grupo)->get();
+        
+        return view ('docente.grupoDocente', compact('elementos', 'utilizadores', 'grupo', 'feedbacks', 'ficheiros')); 
     }
+
+
 
 //feedback
 
 
-public function addmensagem(Request $request){
-    $id = $request->grupo_id;
-    $mensagem_feedback=$request->input('msg');
+public function addTodo(Request $request){
+    $data = array();
+    $check = $request->input('check');
+    
+    return response()->json(array('status'=>$check));
+}
 
-    $feedback = new Feedback;
-    $feedback->mensagem = $request->msg;
-    $feedback->grupo_id = $id;
-    $feedback->user_id =$request->user_id;
+
+
+public function addmensagem(Request $request){
+    $this->validate($request, [
+        'mensagem_docente' => 'bail|required|string|max:4000',]); 
+
+    $id = $request->grupo_id;
+    $feedback = Feedback::find($request->feedback_id);
+    $feedback->mensagem_docente = $request->mensagem_docente;
+    $feedback->docente_id =$request->docente_id;
 
     $feedback->save();
-
-   
-    //$insertmessage= DB::insert('insert into feedback(mensagem) values(?)',[$mensagem_feedback]);
-    //$insertid_grupo = DB::insert('insert into feedback(grupo_id) values(?)',[$id]);
-    //$grupo_id = $_POST['grupo_id'];
-    //Feedback::insert(["grupo_id" => $grupo_id]);
-    //$message= DB::select('select mensagem from feedback');
-
-
-    //$data = array('add_mensagem' => $mensagem_feedback);
    
     return redirect()->action('ProjetoController@GrupoDocente', ['id_grupo' => $id] );
 }
+
+public function showFeedback(Request $request){
+    $id = $_GET['id'];
+    $feedback = Feedback::where('id', $id)->first();
+
+    return response()->json(array('message' => $feedback->mensagem_docente));
+
+
+
+}
+
+
+
 
 }
