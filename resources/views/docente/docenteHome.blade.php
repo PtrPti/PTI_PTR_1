@@ -26,10 +26,7 @@
 
 <div class="homeDocente">
     @include('docente.disciplinasDocente')
-    @include('docente.projetosDocente')
-
-    
-    
+    @include('docente.projetosDocente')    
 <div>
 
 @endsection

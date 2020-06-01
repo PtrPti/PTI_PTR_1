@@ -6,10 +6,6 @@
 
     <div class="flex-left">
         <div class="nav_icons_back">
-            <!-- <a href="<?php echo e(route('homeDocente')); ?>"><div><img src="<?php echo e(asset('images/home_icon.png')); ?>"> Home </div></a>
-            <a><div><img src="<?php echo e(asset('images/disciplinas_icon.png')); ?>"> Disciplinas </div></a>
-            <a><div><img src="<?php echo e(asset('images/projetos_icon.png')); ?>"> Projetos </div></a> -->
-
             <div class="" onclick="IndexDocente()"><img src="<?php echo e(asset('images/home_icon.png')); ?>"> Home </div>
             <div class="has-dropdown"><img src="<?php echo e(asset('images/disciplinas_icon.png')); ?>"> Disciplinas 
                 <ul class="dropdown">

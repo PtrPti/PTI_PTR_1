@@ -8,15 +8,30 @@
 
     <div class="flex-left">
         <div class="nav_icons_back">
-            <a href="{{ route('homeDocente') }}"><div><img src="{{ asset('images/home_icon.png') }}"> Home </div></a>
-            <a><div><img src="{{ asset('images/disciplinas_icon.png') }}"> Disciplinas </div></a>
-            <a><div><img src="{{ asset('images/projetos_icon.png') }}"> Projetos </div></a>
+            <div class="" onclick="IndexDocente()"><img src="{{ asset('images/home_icon.png') }}"> Home </div>
+            <div class="has-dropdown"><img src="{{ asset('images/disciplinas_icon.png') }}"> Disciplinas 
+                <ul class="dropdown">
+                    @foreach($disciplinas as $d)
+                        <li class="dropdown-item">
+                            <a href="{{ route('indexDisciplinaDocente', ['id' => $d->id]) }}" class="item-link">{{$d->nome}}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="has-dropdown"><img src="{{ asset('images/projetos_icon.png') }}"> Projetos 
+                <ul class="dropdown">
+                    @foreach($projetos as $p)
+                    <li class="dropdown-item">
+                        <a href="{{ route('id_projeto', ['id' => $p->id]) }}" class="item-link">{{$p->nome}}</a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
 
-        <button id="btnAdd" ><img src="{{ asset('images/plus_docente.png') }}" width="23"><span>Criar/Adicionar</span></button>
+        <button id="btnAdd"><img src="{{ asset('images/plus_docente.png') }}" width="23"><span>Criar/Adicionar</span></button>
         <div id="dropAdd">
             <span onclick="AddFile('Enunciado')"><i class="fas fa-file-import"></i>Enunciado </span>
-
             <a href="https://www.google.com/drive/"><span ><i class="fab fa-google-drive"></i>Google Drive</span></a>
             <a href="https://github.com/"><span><i class="fab fa-github"></i>Github</span></a>
             <span ><i class="far fa-sticky-note"></i>Notas</span>
@@ -54,8 +69,7 @@
                     <td><a href="{{ route('GrupoDocente', $grupo->id) }}" >Grupo {{$grupo->numero}}</a></td>
                     <td>{{$grupo->total_membros}}/<?php echo $max_elementos ?></td>
                     <td>{{$grupo->elementos}}</td>
-                    <td> 
-
+                    <td>
                     @foreach ($feedbacks as $feedback)
                         @if ($feedback->grupo_id == $grupo->id )
                             @if($feedback->vista_docente == 0)
@@ -156,7 +170,6 @@
             modal.style.display = "none";
         }
     }
-
 // more feedback content
 </script>
 

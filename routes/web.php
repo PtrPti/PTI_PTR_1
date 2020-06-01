@@ -62,7 +62,7 @@ Route::post('replyForum', 'DisciplinaController@replyForum')->name('replyForum')
 //Home
 Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno')->middleware('checkUserRole:1');
 Route::get('/alunoHome', 'HomeController@alunoHome')->name('alunoHome');
-  
+
 //Disciplina
 Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina')->name('pagDisciplina')->middleware('checkUserRole:1');
 Route::get('showGruposA', 'DisciplinaController@showGruposA');
@@ -94,6 +94,7 @@ Route::post('add', 'ProjetoController@takeGrupos');
 Route::get('{route?}/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
 Route::get('/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
 Route::get('/getUsers', 'ChatController@getUsersView')->name('getusers');
+Route::get('/getUsersDocente', 'ChatController@getUsersViewDocente')->name('getUsersDocente');
 Route::post('message', 'ChatController@sendMessage');
 
 //---------------- DOWNLOAD ----------------//
@@ -117,8 +118,7 @@ Route::get('download/{filename}', function($filename)
         // Error
         exit('Requested file does not exist on our server!');
     }
-})
-->where('filename', '[A-Za-z0-9\-\_\.]+');
+})->where('filename', '[A-Za-z0-9\-\_\.]+');
 
 Route::get('downloadF/{filename}', function($filename){
     $file_path = storage_path().'/app/public/ficheiros_grupos/'. $filename;

@@ -317,9 +317,5 @@ function scrollToBottomFunc() {
         scrollTop: $('.message-wrapper').get(0).scrollHeight
     }, 50);
 }
-
-
-
 </script>
-
 </html>

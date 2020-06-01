@@ -94,11 +94,8 @@
             </div>
         </nav>
 
-        <div>
+        <!-- <div>
             <button class="footer-icon" ><i class="fas fa-comment fa-2x"></i></button>
-
-        
-             <!-- Chat -->
                 {{ csrf_field() }}
                 <div class="user-wrapper">
                     <div class="nav_chat">
@@ -139,21 +136,59 @@
             function closeForm() {
                 document.getElementById("chat").style.display = "none";
             }
-        </script>
+        </script> -->
 
         @yield('content')
+
+        <div class="chat_icon">
+            <img src="{{ asset('images/chat_icon.png') }}" width=40px>
+        </div>
+
+        <!-- Chat -->
+        {{ csrf_field() }}
+        <div class="chat_msgs">
+            <div class="user-wrapper">
+                <div class="headind_srch">
+                    <div class="recent_heading">
+                        <h4>Conversas</h4>
+                    </div>
+                    <div class="srch_bar">
+                        <div class="stylish-input-group">
+                            <input type="text" class="search-bar" placeholder="Search" id="chat_search">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inbox_chat">
+                    @foreach ($utilizadores as $utilizador)
+                        <div class="chat_list" id="{{$utilizador->id}}"> 
+                            @if($utilizador->unread)
+                                <span class="pending">{{ $utilizador->unread }}</span>
+                            @endif
+                            <div class="chat_people"> <!--quando clica tem de acrescentar a class active-->
+                                <div class="chat_img"> <img src="{{ asset('images/user.png') }}" width=30px class="media-object"> </div>
+                                <div class="chat_ib">
+                                    <h5>{{$utilizador->nome}}<span class="chat_date">{{ date('d M', strtotime($utilizador->lm_date)) }}</span></h5>
+                                    <p>{{ str_limit($utilizador->last_message, $limit = 35, $end = '...') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="message-wrapper" id="messages"> <!-- <div class="mesgs"> -->
+            </div>
+        </div>
     </div>
 </body>
-
-
-
 
 <script>
     var receiver_id = '';
     var my_id = "{{ Auth::id() }}";
 
     $(document).ready(function () {
-        $(".footer-icon").click(function(){
+        $(".chat_icon").click(function(){
             if ($(".user-wrapper").hasClass('show')) {
                 $(".user-wrapper").removeClass('show');
                 $(".message-wrapper").removeClass('show');
@@ -199,79 +234,93 @@
             }
         });           
 
-        $('.user').click(function (event, clickedByUser = true) {
-        // alert(clickedByUser);
-        $(this).find('.pending').remove();
-        receiver_id = $(this).attr('id');
-        if (clickedByUser) {
-            if ($(".message-wrapper").hasClass('show') && $(".message-wrapper").hasClass(receiver_id)) {
-                $('.message-wrapper').attr('class', 'message-wrapper');
-                $('.message-wrapper').attr('id', '');
-            }
-            else if ($(".message-wrapper").hasClass('show') && !$(".message-wrapper").hasClass(receiver_id)){
-                $('.message-wrapper').attr('class', 'message-wrapper show ' + receiver_id);
-                $('.message-wrapper').attr('id', receiver_id);
-            }
-            else {
-                $('.message-wrapper').addClass('show ' + receiver_id);
-                $('.message-wrapper').attr('id', receiver_id);
-            }
-        }
-        $.ajax({
-                type: "get",
-                url: "alunomessage/" + receiver_id, // need to create this route
-                data: "",
-                cache: false,
-                success: function (data) {
-                    $('.message-wrapper').html(data.html);
-                    scrollToBottomFunc();
+        $('.chat_list').click(function (event, clickedByUser = true) {
+            $(this).find('.pending').remove();
+            receiver_id = $(this).attr('id');
+            if (clickedByUser) {
+                if ($(".message-wrapper").hasClass('show') && $(".message-wrapper").hasClass(receiver_id)) {
+                    $('.message-wrapper').attr('class', 'message-wrapper');
+                    $('.message-wrapper').attr('id', '');
                 }
-            });
+                else if ($(".message-wrapper").hasClass('show') && !$(".message-wrapper").hasClass(receiver_id)){
+                    $('.message-wrapper').attr('class', 'message-wrapper show ' + receiver_id);
+                    $('.message-wrapper').attr('id', receiver_id);
+                }
+                else {
+                    $('.message-wrapper').addClass('show ' + receiver_id);
+                    $('.message-wrapper').attr('id', receiver_id);
+                }
+            }
+            $.ajax({    
+                    type: "get",
+                    url: "/alunomessage/" + receiver_id, // need to create this route
+                    data: "",
+                    cache: false,
+                    success: function (data) {
+                        $('.message-wrapper').html(data.html);
+                        scrollToBottomFunc();
+                    }
+                });
         });      
 
-        $(document).on('keyup', '.input-text input', function (e) {
-        var message = $(this).val();
+        $(document).on('keyup', '.write_msg', function (e) {
+            var message = $(this).val();
             // check if enter key is pressed and message is not null also receiver is selected
             if (e.keyCode == 13 && message != '' && receiver_id != '') {
-            $(this).val(''); // while pressed enter text box will be empty
-            var datastr = "receiver_id=" + receiver_id + "&message=" + message;
-            $.ajax({
-                type: "post",
-                url: "message", // need to create this post route
-                data: datastr,
-                cache: false,
-                success: function (data) {                     
-                },
-                error: function (jqXHR, status, err) {
-                },
-                complete: function () {
-                    scrollToBottomFunc();
-                }
-            })
+                $(this).val(''); // while pressed enter text box will be empty
+                var datastr = "receiver_id=" + receiver_id + "&message=" + message;
+                $.ajax({
+                    type: "post",
+                    url: "message", // need to create this post route
+                    data: datastr,
+                    cache: false,
+                    success: function (data) {                     
+                    },
+                    error: function (jqXHR, status, err) {
+                    },
+                    complete: function () {
+                        scrollToBottomFunc();
+                    }
+                })
             }
         });
 
-        $(document).on('click', '.sendMessageIcon', function (e) {
-        var message = $('.writeMessage').val();
-        // check if enter key is pressed and message is not null also receiver is selected
-        if (message != '' && receiver_id != '') {
-            $('.writeMessage').val(''); // while pressed enter text box will be empty
-            var datastr = "receiver_id=" + receiver_id + "&message=" + message;
+        $(document).on('click', '.msg_send_btn', function (e) {
+            var message = $('.write_msg').val();
+            // check if enter key is pressed and message is not null also receiver is selected
+            if (message != '' && receiver_id != '') {
+                $('.write_msg').val(''); // while pressed enter text box will be empty
+                var datastr = "receiver_id=" + receiver_id + "&message=" + message;
+                $.ajax({
+                    type: "post",
+                    url: "message", // need to create this post route
+                    data: datastr,
+                    cache: false,
+                    success: function (data) {                     
+                    },
+                    error: function (jqXHR, status, err) {
+                    },
+                    complete: function () {
+                        scrollToBottomFunc();
+                    }
+                })
+            }
+        });
+        
+        $(document).on('keyup', '#chat_search', function (e) {
+            var search = $('#chat_search').val();
             $.ajax({
-                type: "post",
-                url: "message", // need to create this post route
-                data: datastr,
+                type: "get",
+                url: "/getUsersDocente",
+                data: {'search': search},
                 cache: false,
-                success: function (data) {                     
+                success: function (data) {
+                    console.log(data.html)
+                    $(".inbox_chat").empty();
+                    $(".inbox_chat").html(data.html);
                 },
-                error: function (jqXHR, status, err) {
-                },
-                complete: function () {
-                    scrollToBottomFunc();
-                }
             })
-        }
-        });   
+        });  
     });      
 
 // make a function to scroll down auto
@@ -280,8 +329,5 @@ function scrollToBottomFunc() {
         scrollTop: $('.message-wrapper').get(0).scrollHeight
     }, 50);
 }
-
-
-
 </script>
 </html>

@@ -12,6 +12,7 @@ use App\UsersGrupos;
 use App\ProjetoFicheiro;
 use App\ForumDuvidas;
 use App\ForumMensagens;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -215,6 +216,14 @@ class DisciplinaController extends Controller
                                         inner join cadeiras ca
                                             on uc.cadeira_id = ca.id
                                         where uc.user_id = ?)', [$user->id]);
+        
+        $projetos_cadeira = DB::select('select p.*, c.nome as cadeira, pf.nome as ficheiro 
+                                        from projetos p
+                                        left join projetos_ficheiros pf
+                                            on p.id = pf.projeto_id
+                                        inner join cadeiras c
+                                            on p.cadeira_id = c.id
+                                        where p.cadeira_id = ?', [$id]);
 
         $cadeira = Cadeira::where('id', $id)->first();
         $docentes = User::join('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')
@@ -242,15 +251,15 @@ class DisciplinaController extends Controller
             }
         }
 
-        return view('disciplina.indexDocente', compact('projetos', 'disciplinas', 'cadeira', 'docentes', 'active_tab', 'funcParams', 'openForm'));
+        $cadeiras_id = [];
 
-        // $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
-        //                   from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
-        //                   where users.id != " . Auth::id() . " 
-        //                   group by users.id, users.nome, users.email");
+        foreach($disciplinas as $c) {
+            array_push($cadeiras_id, $c->cadeira_id);
+        }
 
-        // $active_tab = $tab;
-        // return view('disciplina.indexDocente', compact('projetos', 'cadeira', 'docentes', 'utilizadores', 'active_tab'));
+        $utilizadores = ChatController::getUsersDocente($cadeiras_id, $user->id, $user->departamento_id);     
+
+        return view('disciplina.indexDocente', compact('projetos', 'projetos_cadeira', 'disciplinas', 'cadeira', 'docentes', 'utilizadores', 'active_tab', 'funcParams', 'openForm'));
     }
 
     public function showGrupos(Request $request) {

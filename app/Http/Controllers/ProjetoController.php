@@ -12,7 +12,7 @@ use App\Tarefa;
 use App\GrupoFicheiros;
 use App\UsersGrupos;
 use App\Feedback;
-
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Auth;
@@ -251,8 +251,19 @@ class ProjetoController extends Controller
     public function id_projetos(int $id){
         $projeto = Projeto::where('id', $id)->first();
         $user = Auth::user()->getUser();
-        $id_disciplina = $projeto->cadeira_id;
-        $cadeira = Cadeira::where('id', $id_disciplina)->first();        
+        $cadeira = Cadeira::where('id', $projeto->cadeira_id)->first();        
+
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
+        $projetos = DB::select('select p.*, c.nome as cadeira, pf.nome as ficheiro 
+                                from projetos p
+                                left join projetos_ficheiros pf
+                                    on p.id = pf.projeto_id
+                                inner join cadeiras c
+                                    on p.cadeira_id = c.id
+                                where p.cadeira_id in (select ca.id from users_cadeiras uc
+                                        inner join cadeiras ca
+                                            on uc.cadeira_id = ca.id
+                                        where uc.user_id = ?)', [$user->id]);
 
         $grupos = DB::select("select g.id, g.numero, count(ug.user_id) as 'total_membros', IFNULL(group_concat(u.nome), '-') as 'elementos' from grupos g
                                 left join users_grupos ug
@@ -267,18 +278,72 @@ class ProjetoController extends Controller
 
         $max_elementos = $projeto->n_max_elementos;
 
-        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
-                                    from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
-                                    where users.id != " . Auth::id() . " 
-                                    group by users.id, users.nome, users.email");
+        $cadeiras_id = [];
+
+        foreach($disciplinas as $c) {
+            array_push($cadeiras_id, $c->cadeira_id);
+        }
+
+        $utilizadores = ChatController::getUsersDocente($cadeiras_id, $user->id, $user->departamento_id);    
 
         $docente = Auth::user()->getUserId();
 
         $feedbacks = Feedback::where('docente_id', $docente)->get();
         
-        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos', 'utilizadores', 'feedbacks')); 
+        return view ('projeto.paginaProjetos', compact('disciplinas', 'projetos', 'projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos', 'utilizadores', 'feedbacks')); 
     }
 
+    public function eraseProject($id){
+        DB::delete('delete from projetos where id=?', [$id]);
+        echo "Record deleted successfully.<br/>";
+        return redirect()->action('HomeController@indexDocente', ['tab' => 'tab2']);
+    }    
+
+    public function deleteGrupo(Request $request) {
+        error_log($_POST['id']);
+        Grupo::destroy($_POST['id']);
+
+        return response()->json('Apagado com sucesso');
+    }
+
+    public function GrupoDocente(int $id_grupo){
+        $user = Auth::user()->getUser();
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
+        $projetos = DB::select('select p.*, c.nome as cadeira, pf.nome as ficheiro 
+                                from projetos p
+                                left join projetos_ficheiros pf
+                                    on p.id = pf.projeto_id
+                                inner join cadeiras c
+                                    on p.cadeira_id = c.id
+                                where p.cadeira_id in (select ca.id from users_cadeiras uc
+                                        inner join cadeiras ca
+                                            on uc.cadeira_id = ca.id
+                                        where uc.user_id = ?)', [$user->id]);
+        
+        $grupo = Grupo::where('id', $id_grupo )->first(); 
+
+        $elementos = DB::select("select u.nome, u.numero from 
+                                 users_grupos ug
+                        
+                                left join users u
+                                    on ug.user_id = u.id
+                                where ug.grupo_id = (?)
+                                ", [$id_grupo]);
+
+        $cadeiras_id = [];
+
+        foreach($disciplinas as $c) {
+            array_push($cadeiras_id, $c->cadeira_id);
+        }
+
+        $utilizadores = ChatController::getUsersDocente($cadeiras_id, $user->id, $user->departamento_id);  
+        
+        $feedbacks = Feedback::where('grupo_id', $id_grupo)->get();
+
+        $ficheiros = GrupoFicheiros::where('grupo_id', $id_grupo)->get();
+        
+        return view ('projeto.grupoDocente', compact('disciplinas', 'projetos', 'elementos', 'utilizadores', 'grupo', 'feedbacks', 'ficheiros')); 
+    }
 
     public function addTodo(Request $request){
         $data = array();

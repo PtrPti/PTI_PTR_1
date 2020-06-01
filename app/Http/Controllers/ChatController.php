@@ -33,14 +33,44 @@ class ChatController extends Controller
                 on u.id = ug.user_id
                 and ug.grupo_id in (:grupos)
             left join  messages m
-                on u.id = m.from 
+                on u.id = m.from
                 and id_read = 0 
                 and m.to = :u1
-            inner join (select * from messages order by created_at desc) as m2
+            left join (select * from messages order by created_at desc) as m2
                 on (m2.from = :u2 and m2.to = u.id)
                 or (m2.to = :u3 and m2.from = u.id)
             where u.id != :u4 ". $search .
             " group by u.id, u.nome, u.email"), ['grupos' => implode("','", $grupos_ids), 'u1' => $user_id, 'u2' => $user_id, 'u3' => $user_id, 'u4' => $user_id]
+        );
+        
+        return $utilizadores;
+    }
+
+    public static function getUsersDocente($cadeiras_id, $user_id, $departamento_id, $search = "") {
+        DB::statement(DB::raw('set @row_number=0'));
+
+        $utilizadores = DB::select(DB::raw(
+            "select 
+                (@row_number:=@row_number + 1) AS row,
+                u.id,
+                u.nome,
+                u.email,
+                count(m.id_read) as unread,
+                m2.message as last_message,
+                m2.created_at as lm_date
+            from users u
+            inner join users_cadeiras uc
+                on u.id = uc.user_id
+                and uc.cadeira_id in (:cadeiras)
+            left join messages m
+                on u.id = m.from
+                and id_read = 0 
+                and m.to = :u1
+            left join (select * from messages order by created_at desc) as m2
+                on (m2.from = :u2 and m2.to = u.id)
+                or (m2.to = :u3 and m2.from = u.id)
+            where u.id != :u4 and u.departamento_id = :d " . $search .
+            " group by u.id, u.nome, u.email"), ['cadeiras' => implode("','", $cadeiras_id), 'u1' => $user_id, 'u2' => $user_id, 'u3' => $user_id, 'u4' => $user_id, 'd' => $departamento_id]
         );
         
         return $utilizadores;
@@ -59,6 +89,28 @@ class ChatController extends Controller
         }
 
         $utilizadores = $this->getUsers($grupos_ids, $user->id, $search);
+
+        $data = array(
+            'utilizadores' => $utilizadores
+        );
+
+        $returnHTML = view('layouts.chat.users')->with($data)->render();
+        return response()->json(['html' => $returnHTML]);
+    }
+
+    public function getUsersViewDocente() {
+        $user = Auth::user()->getUser();
+        $search = "and u.nome like '%" . $_GET["search"] . "%'";
+
+        $cadeiras = UserCadeira::where('user_id', $user->id)->select('cadeira_id')->get();
+
+        $cadeira_ids = [];
+
+        foreach($cadeiras as $g) {
+            array_push($cadeira_ids, $g->cadeira_id);
+        }
+
+        $utilizadores = $this->getUsersDocente($cadeira_ids, $user->id, $user->departamento_id, $search);
 
         $data = array(
             'utilizadores' => $utilizadores
@@ -117,8 +169,4 @@ class ChatController extends Controller
         $data = ['from' => $from, 'to' => $to]; // sending from and to user id when pressed enter
         $pusher->trigger('my-channel', 'my-event', $data);
     }
-
-
-
-
 }

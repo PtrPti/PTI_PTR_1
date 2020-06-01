@@ -55,8 +55,7 @@ class HomeController extends Controller
         foreach($projetos as $g) {
             array_push($grupos_ids, $g->id);
         }
-
-        $utilizadores = ChatController::getUsers($grupos_ids, $user->id);
+            $utilizadores = ChatController::getUsers($grupos_ids, $user->id);
 
         return view('aluno.alunoHome', compact('cadeiras','projetos', 'utilizadores'));
     }
@@ -76,19 +75,21 @@ class HomeController extends Controller
     public function indexDocente(){
         $user = Auth::user()->getUser();
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
-        $projetos = DB::select('select p.*, c.nome as "cadeira" from projetos p
+        $projetos = DB::select('select p.*, c.nome as cadeira, c.id as cadeira_id from projetos p
                                 inner join cadeiras c
                                 on p.cadeira_id = c.id
                                 where p.cadeira_id in (select ca.id from users_cadeiras uc
                                 inner join cadeiras ca
                                  on uc.cadeira_id = ca.id
-                                 where uc.user_id = ?)', [$user->id]);
+                                 where uc.user_id = ?)', [$user->id]);        
 
-        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
-                                 from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
-                                 where users.id != " . Auth::id() . " 
-                                 group by users.id, users.nome, users.email");
-                     
+        $cadeiras_id = [];
+
+        foreach($disciplinas as $c) {
+            array_push($cadeiras_id, $c->cadeira_id);
+        }
+
+        $utilizadores = ChatController::getUsersDocente($cadeiras_id, $user->id, $user->departamento_id);                     
 
         return view('docente.docenteHome', compact('disciplinas', 'projetos', 'utilizadores'));
     }

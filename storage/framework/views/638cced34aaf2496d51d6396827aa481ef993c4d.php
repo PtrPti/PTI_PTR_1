@@ -24,7 +24,7 @@
 
 <div class="homeDocente">
     <?php echo $__env->make('docente.disciplinasDocente', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <?php echo $__env->make('docente.projetosDocente', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('docente.projetosDocente', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>    
 <div>
 
 <?php $__env->stopSection(); ?>
