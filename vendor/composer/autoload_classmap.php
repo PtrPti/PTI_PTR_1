@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddColunasFeedback' => $baseDir . '/database/migrations/2020_05_31_094608_add_colunas_feedback.php',
     'AddColunasProjetoTable' => $baseDir . '/database/migrations/2020_03_22_162817_add_colunas_projeto_table.php',
     'AddNomeTarefa' => $baseDir . '/database/migrations/2020_04_20_133018_add_nome_tarefa.php',
     'AddOrdemTarefas' => $baseDir . '/database/migrations/2020_04_27_161028_add_ordem_tarefas.php',
@@ -21,6 +22,8 @@ return array(
     'App\\Departamento' => $baseDir . '/app/Departamento.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Faculdade' => $baseDir . '/app/Faculdade.php',
+    'App\\Feedback' => $baseDir . '/app/Feedback.php',
+    'App\\FeedbackFicheiros' => $baseDir . '/app/FeedbackFicheiros.php',
     'App\\ForumDuvidas' => $baseDir . '/app/ForumDuvidas.php',
     'App\\ForumMensagens' => $baseDir . '/app/ForumMensagens.php',
     'App\\GrauAcademico' => $baseDir . '/app/GrauAcademico.php',
@@ -69,6 +72,7 @@ return array(
     'Carbon\\Upgrade' => $vendorDir . '/nesbot/carbon/src/Carbon/Upgrade.php',
     'CeateTableTarefasFicheiros' => $baseDir . '/database/migrations/2020_05_07_112555_ceate_table_tarefas_ficheiros.php',
     'CreateCollSubmetido' => $baseDir . '/database/migrations/2020_05_29_190804_create_coll_submetido.php',
+    'CreateColumVistaDocenteEAluno' => $baseDir . '/database/migrations/2020_06_01_111328_create_colum_vista_docente_e_aluno.php',
     'CreateColunaNotas' => $baseDir . '/database/migrations/2020_05_28_153926_createColunaNotas.php',
     'CreateCursosCadeirasTable' => $baseDir . '/database/migrations/2020_03_21_002330_create_cursos_cadeiras_table.php',
     'CreateForumDuvidasTable' => $baseDir . '/database/migrations/2020_04_26_155427_create_forum_duvidas_table.php',

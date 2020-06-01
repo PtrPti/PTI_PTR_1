@@ -329,6 +329,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
     );
 
     public static $classMap = array (
+        'AddColunasFeedback' => __DIR__ . '/../..' . '/database/migrations/2020_05_31_094608_add_colunas_feedback.php',
         'AddColunasProjetoTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_22_162817_add_colunas_projeto_table.php',
         'AddNomeTarefa' => __DIR__ . '/../..' . '/database/migrations/2020_04_20_133018_add_nome_tarefa.php',
         'AddOrdemTarefas' => __DIR__ . '/../..' . '/database/migrations/2020_04_27_161028_add_ordem_tarefas.php',
@@ -344,6 +345,8 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'App\\Departamento' => __DIR__ . '/../..' . '/app/Departamento.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Faculdade' => __DIR__ . '/../..' . '/app/Faculdade.php',
+        'App\\Feedback' => __DIR__ . '/../..' . '/app/Feedback.php',
+        'App\\FeedbackFicheiros' => __DIR__ . '/../..' . '/app/FeedbackFicheiros.php',
         'App\\ForumDuvidas' => __DIR__ . '/../..' . '/app/ForumDuvidas.php',
         'App\\ForumMensagens' => __DIR__ . '/../..' . '/app/ForumMensagens.php',
         'App\\GrauAcademico' => __DIR__ . '/../..' . '/app/GrauAcademico.php',
@@ -392,6 +395,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'Carbon\\Upgrade' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Upgrade.php',
         'CeateTableTarefasFicheiros' => __DIR__ . '/../..' . '/database/migrations/2020_05_07_112555_ceate_table_tarefas_ficheiros.php',
         'CreateCollSubmetido' => __DIR__ . '/../..' . '/database/migrations/2020_05_29_190804_create_coll_submetido.php',
+        'CreateColumVistaDocenteEAluno' => __DIR__ . '/../..' . '/database/migrations/2020_06_01_111328_create_colum_vista_docente_e_aluno.php',
         'CreateColunaNotas' => __DIR__ . '/../..' . '/database/migrations/2020_05_28_153926_createColunaNotas.php',
         'CreateCursosCadeirasTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_21_002330_create_cursos_cadeiras_table.php',
         'CreateForumDuvidasTable' => __DIR__ . '/../..' . '/database/migrations/2020_04_26_155427_create_forum_duvidas_table.php',

@@ -28,7 +28,7 @@
                 @endforeach
             </select><br>
             <input type="hidden" name='tarefaId' value="{{ $tarefaEdit[0]->id }}">
-            <input type="submit" value='Guardar'>
+            
         </form>
         
             @if( $tarefaEdit[0]->notas !== NULL )
@@ -54,6 +54,8 @@
                     </div>
                 @endif
             @endforeach
+
+            <input type="submit" value='Guardar' form="formEditTarefa">
         
     </div>
 
@@ -61,22 +63,21 @@
 
         <label for="addF">Adicionar: </label>
         <select name='adicionar' id='addF'>
-            @if( $tarefaEdit[0]->notas === NULL)
-            <option value="" >Nota</option>
-            @endif
-            <option value="">Link</option>
-            <option value="" >Ficheiro</option>
+            <option value="nota" >Nota</option>
+            <option value="link">Link</option>
+            <option value="ficheiro" >Ficheiro</option>
         </select><br>
 
-        <div>
+        <div id='notadiv'>
             <form id='formAddNotaTarefa'>
                 <input type="text" name='nome' placeholder="nome.."><br>
                 <input type="hidden" name='tarefaId' value="{{ $tarefaEdit[0]->id }}">
                 <input type="hidden" name='tipo' value="tarefa">
+                <input type="submit" value='Adicionar'>
             </form>
         </div>
 
-        <div>
+        <div id='ficheirodiv'>
             <form id="formAddFicheiro" action="{{route ('uploadFicheiroTarefa')}}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="file" name='ficheiro' placeholder="ficheiro...">
@@ -85,7 +86,7 @@
             </form>
         </div>
         
-        <div>
+        <div id='linkdiv'>
             <form id="formAddLinkTarefa">
                 <input type="text" name='nome' placeholder="nome..."><br>
                 <input type="url" name='url' placeholder="URL..."><br>
@@ -100,6 +101,9 @@
 
 
 <script>
+    $('.adicionarFicheiro').hide();
+    $('#linkdiv').hide();
+    $('#ficheirodiv').hide();
 
     $('#btnEdit').click(function(){
         $('.adicionarFicheiro').hide();
@@ -109,11 +113,26 @@
     $('#btnAdici').click(function(){
         $('.adicionarFicheiro').show();
         $('#editarFicheiro').hide();
-        $('#btnEdit').css();
     });
 
     $(".closebtn").click(function(){
         ($($(this).parent()).parent()).hide();
+    });
+
+    $('#addF').on('change', function() {
+        if ( this.value == 'link'){
+            $('#ficheirodiv').hide();
+            $('#notadiv').hide();
+            $('#linkdiv').show();
+        } else if (this.value == 'ficheiro'){
+            $('#notadiv').hide();
+            $('#linkdiv').hide();
+            $('#ficheirodiv').show();
+        } else {
+            $('#linkdiv').hide();
+            $('#ficheirodiv').hide();
+            $('#notadiv').show();
+        }
     });
 
     // Informacao para editar a tarefa
@@ -159,7 +178,7 @@
         });
     })
 
-    /* $("#formAddNotaTarefa").submit(function(event){
+    $("#formAddNotaTarefa").submit(function(event){
         event.preventDefault(); 
         var form_data = $(this).serialize(); 
         $.ajax({
@@ -171,7 +190,7 @@
                 $('#allEditT').show();
             }
         });
-    }) */
+    })
 
 </script>
 

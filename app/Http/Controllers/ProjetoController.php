@@ -9,7 +9,9 @@ use App\UserCadeira;
 use App\Cadeira;
 use App\Grupo;
 use App\Tarefa;
+use App\Feedback;
 use App\GrupoFicheiros;
+use App\FeedbackFicheiros;
 use App\TarefasFicheiros;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -46,9 +48,37 @@ class ProjetoController extends Controller
         return $data;
     }
 
+    public function viewFeedbackAluno(int $grupoId){
+        $feedbacks = Feedback::where('grupo_id', $grupoId)->orderBy('created_at', 'asc')->get();;
+                
+        $idsfeed = [];
+        foreach ($feedbacks as $feedback) {
+            array_push($idsfeed, $feedback->id);
+        }
+        $feedbackFicheiros = FeedbackFicheiros::whereIn('feedback_id', $idsfeed )->get();
+
+        $idsfeedF = [];
+        foreach ($feedbackFicheiros as $feedbackFich) {
+            array_push($idsfeedF, $feedbackFich->grupo_ficheiro_id);
+        }
+        $grupoFicheiros = GrupoFicheiros::whereIn('id', $idsfeedF )->get();
+
+        $data = array(  'feedbacks' => $feedbacks, 'feedbackFicheiros' => $feedbackFicheiros,
+                        'grupoFicheiros' => $grupoFicheiros);
+        return $data;
+    }
+
+    public function feedbackVista(Request $request){
+        $feedbackId = $_GET['id'];
+        $feedback = Feedback::find($feedbackId);
+        $feedback->vista_grupo = True;
+        $feedback->save();
+    }
+
     public function pagProjeto(int $grupo_id, int $tarefa_id=0){
 
         $data = $this->viewTarefasAluno($grupo_id);
+        $dataFeedback = $this->viewFeedbackAluno($grupo_id);
         
         $user = Auth::user()->getUser();
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
@@ -72,7 +102,13 @@ class ProjetoController extends Controller
 
         $tarefaId = $tarefa_id;
 
-        return view('aluno.projetosAluno', compact('tarefaId','cadeiras','projetos','grupo','disciplina','projeto','ficheiros','tarefas','nomesUsers','IdGrupo','ficheirosTarefas','percentagem'));
+        $feedbacks = $dataFeedback['feedbacks'];
+        $feedbackFicheiros = $dataFeedback['feedbackFicheiros'];
+        $grupoFicheiros = $dataFeedback['grupoFicheiros'];
+        return view('aluno.projetosAluno', compact('tarefaId','cadeiras','projetos','grupo',
+                                                    'disciplina','projeto','ficheiros','tarefas',
+                                                    'nomesUsers','IdGrupo','ficheirosTarefas',
+                                                    'percentagem', 'feedbacks', 'feedbackFicheiros','grupoFicheiros'));
     }
 
     public function barraProgresso(Int $id){
@@ -255,20 +291,30 @@ class ProjetoController extends Controller
         return response()->json('Adicionado com sucesso');
     }
 
-    public function addSubmissao(Request $request) {
-        $array = $request->all();
+    public function addFeedback(Request $request) {
+        
+        $mensagem = $_GET['mensagem'];
         $grupoId = $_GET['grupoId'];
+        $tipo = $_GET['tipo'];          // se ficheiro das tarefas ou grupo
+        $ids = explode(',' , $_GET['ids'] );
 
-        $ficheiros = GrupoFicheiros::where('grupo_id',$grupoId)->get();
+        $feedback = new Feedback;
+        $feedback->mensagem_grupo = $mensagem;
+        $feedback->mensagem_docente ='';
+        $feedback->grupo_id = $grupoId;
+        $feedback->created_at = date('Y-m-d H:i:s');
+        $feedback->save();
+        $feedbackId = $feedback->id;
 
-        foreach($ficheiros as $ficheiro)
-            if (array_key_exists($ficheiro->id , $array) ){
-                $ficheiro->submetido = TRUE;
-                $ficheiro->save();
-            } else {
-                $ficheiro->submetido = FALSE;
-                $ficheiro->save();
+        if ($tipo == 'grupo'){
+            foreach($ids as $id){
+                $feedbackFicheiro = new FeedbackFicheiros;
+                $feedbackFicheiro->grupo_ficheiro_id = $id;
+                $feedbackFicheiro->feedback_id = $feedbackId;
+                $feedbackFicheiro->save();
             }
+        }
+        return response()->json('<p>Enviado pedido de feedback</p>');
     }
 
     public function addNota(Request $request) {
@@ -278,6 +324,7 @@ class ProjetoController extends Controller
             $pastaId = $_GET['Pasta'];
             $nome = $_GET['nome'];
             $grupoId = $_GET['grupoId'];
+
             $nota = new GrupoFicheiros;
             if ($pastaId === ''){
                 $nota->pasta_id = NULL;
@@ -286,6 +333,10 @@ class ProjetoController extends Controller
             }
             $nota->is_folder = FALSE;
             $nota->grupo_id = $grupoId;
+            $nota->nome = $nome;
+            $nota->notas = '';
+            $nota->save();
+            return response()->json('Adicionado com sucesso');
 
         // adicionar nota a uma tarefa
         } else {
@@ -293,11 +344,30 @@ class ProjetoController extends Controller
             $nome = $_GET['nome'];
             $nota = new TarefasFicheiros;
             $nota->tarefa_id = $tarefaId;
-        }
-        $nota->nome = $nome;
-        $nota->notas = '';
-        $nota->save();
-        return response()->json('Adicionado com sucesso');
+
+            $nota->nome = $nome;
+            $nota->notas = '';
+            $nota->save();
+
+            $tarefa = Tarefa::where('id', $tarefaId )->get();
+            $fichTarefa = TarefasFicheiros::where('tarefa_id', $tarefaId )->get();
+
+            // Id do grupo
+            $grupo = Tarefa::select('grupo_id')->where('id',$tarefaId)->get();
+            $IdGrupo = $grupo[0]->grupo_id;
+
+            $dataV = $this->viewTarefasAluno($IdGrupo);
+            $tarefas = $dataV['tarefas'];
+            $nomesUsers = $dataV['nomesUsers'];
+            $ficheirosTarefas = $dataV['ficheirosTarefas'];
+            $IdGrupo = $dataV['IdGrupo'];
+            $percentagem = $dataV['percentagem'];
+
+            $data = array('tarefaEdit' => $tarefa, 'fichTarefa' => $fichTarefa, 'tarefas' => $tarefas,
+                        'nomesUsers' => $nomesUsers,'ficheirosTarefas' => $ficheirosTarefas,'IdGrupo' => $IdGrupo, 'percentagem'=>$percentagem);
+            $returnHTML = view('aluno.tarefasAluno')->with($data)->render();
+            return response()->json(array('html'=>$returnHTML,'abrir'=>1));
+        }        
     }
 
     public function addTarefa(Request $request) {
@@ -393,7 +463,7 @@ class ProjetoController extends Controller
         $nome = $_GET['nome'];
         $link = $_GET['url'];
         $tarefaId = $_GET['tarefaId'];
-        error_log($nome);
+        
 
         $site = new TarefasFicheiros;
         $site->nome = $nome;

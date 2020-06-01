@@ -1,21 +1,21 @@
 <!-- Tarefas por fazer -->
-<div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="{{$percentagem}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$percentagem}}%">
-    {{$percentagem}}
-    </div>
-</div>
+
 
 <div id="tarefasNaoFeitas">
-    <h3>Tarefas</h3>
-
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{$percentagem}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$percentagem}}%">
+        {{$percentagem}} %
+        </div>
+    </div>
     <!-- Procura -->
     <div class="searchcontainer">
+        
         <form id="formpesquisa">
             <input type="text" placeholder="Pesquisar.." title="Pesquise por Aluno ou Tarefa" name="palavra">
             <input type="hidden" name='grupoId' value="{{$IdGrupo}}">
             <button type="submit"><img class='psq' src="{{ asset('images/pesquisa.png') }}" width="20"></button>
         </form>
-    </div>
+    </div><br><br>
     @foreach ($tarefas as $tarefa)
         @if ($tarefa->tarefa_id === NULL and $tarefa->estado == false) 
             <div class="divTarefa">
@@ -32,10 +32,10 @@
                     <div class="ficheirosTarefa"> 
                         @foreach ($ficheirosTarefas as $ficheiro)
                             @if ($tarefa->id === $ficheiro->tarefa_id)
-                                @if ( empty($ficheiro->link) and $tarefa->notas == NULL)
+                                @if ( empty($ficheiro->link) and is_null($ficheiro->notas))
                                     <div class='ficheiroTarefa'><img src="{{asset('images/fileq.png') }}" title="{{$ficheiro->nome}}" width="20"></div>
-                                @elseif ( $tarefa->notas !== NULL)
-                                    <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
+                                @elseif ( !is_null($ficheiro->notas ))
+                                    <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" title="{{$ficheiro->nome}}" width="20"></div>
                                 @else 
                                     <div class='linkTarefa'>
                                         <a class='linkTarefa'  href="{{$ficheiro->link}}" target="_blank">
@@ -72,10 +72,10 @@
                                 @endif  
                                 @foreach ($ficheirosTarefas as $ficheiro)
                                     @if ($subtarefa->id === $ficheiro->tarefa_id)
-                                        @if ( empty($ficheiro->link) and $ficheiro->notas == NULL)
+                                        @if ( empty($ficheiro->link) and is_null($ficheiro->notas) )
                                             <div class='ficheiroTarefa'><img src="{{asset('images/fileq.png') }}" title="{{$ficheiro->nome}}" width="20"></div>
-                                        @elseif ( $ficheiro->notas !== NULL)
-                                            <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" width="20"></div>
+                                        @elseif ( !is_null($ficheiro->notas ))
+                                            <div class='notaTarefa'><img src="{{asset('images/nota.png') }}" title="{{$ficheiro->nome}}" width="20"></div>
                                         @else 
                                             <div class='linkTarefa'>
                                                 <a class='linkTarefa'  href="{{$ficheiro->link}}" target="_blank">
