@@ -68,11 +68,23 @@
                     <td><a href="{{ route('GrupoDocente', $grupo->id) }}" >Grupo {{$grupo->numero}}</a></td>
                     <td>{{$grupo->total_membros}}/<?php echo $max_elementos ?></td>
                     <td>{{$grupo->elementos}}</td>
-                    <td>  
-                        <div class="led-box">
-                            <div class="led-green"></div>
-                        </div>
+                    <td> 
+
+                    @foreach ($feedbacks as $feedback)
+                        @if ($feedback->grupo_id == $grupo->id )
+                            @if($feedback->vista_docente == 0)
+                            <div class="led-box">
+                                <div class="led-green"></div>
+                            </div>
+                            @endif
+                        @endif
+
+                        @endforeach
+                    
+                    
                     </td>
+                   
+                    
                 <tr>
                 @endforeach
             </table>

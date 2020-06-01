@@ -285,10 +285,22 @@ class ProjetoController extends Controller
                                     where users.id != " . Auth::id() . " 
                                     group by users.id, users.nome, users.email");
 
+        $docente = Auth::user()->getUserId();
+
+        $feedbacks = Feedback::where('docente_id', $docente)->get();
+       
+   /*      $vista = FALSE;
+
+        foreach($feedbacks as $feedback){
+            if($feedback->vista_docente == 1){
+                $vista = FALSE;
+            }
+        }
+ */
         
 
 
-        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos', 'utilizadores')); 
+        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos', 'utilizadores', 'feedbacks')); 
     }
 
     public function eraseProject($id){
@@ -333,6 +345,8 @@ class ProjetoController extends Controller
         
         $feedbacks = Feedback::where('grupo_id', $id_grupo)->get();
 
+      
+
         $ficheiros = GrupoFicheiros::where('grupo_id', $id_grupo)->get();
         
         return view ('docente.grupoDocente', compact('elementos', 'utilizadores', 'grupo', 'feedbacks', 'ficheiros')); 
@@ -360,6 +374,7 @@ public function addmensagem(Request $request){
     $feedback = Feedback::find($request->feedback_id);
     $feedback->mensagem_docente = $request->mensagem_docente;
     $feedback->docente_id =$request->docente_id;
+    $feedback->vista_docente = TRUE;
 
     $feedback->save();
    
