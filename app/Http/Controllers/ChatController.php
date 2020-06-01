@@ -13,6 +13,7 @@ use Auth;
 use DateTime;
 use Pusher\Pusher;
 
+
 class ChatController extends Controller
 {
     public static function getUsers($grupos_ids, $user_id, $search = "") {
@@ -116,4 +117,8 @@ class ChatController extends Controller
         $data = ['from' => $from, 'to' => $to]; // sending from and to user id when pressed enter
         $pusher->trigger('my-channel', 'my-event', $data);
     }
+
+
+
+
 }

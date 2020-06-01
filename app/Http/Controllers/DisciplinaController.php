@@ -243,6 +243,14 @@ class DisciplinaController extends Controller
         }
 
         return view('disciplina.indexDocente', compact('projetos', 'disciplinas', 'cadeira', 'docentes', 'active_tab', 'funcParams', 'openForm'));
+
+        // $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+        //                   from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+        //                   where users.id != " . Auth::id() . " 
+        //                   group by users.id, users.nome, users.email");
+
+        // $active_tab = $tab;
+        // return view('disciplina.indexDocente', compact('projetos', 'cadeira', 'docentes', 'utilizadores', 'active_tab'));
     }
 
     public function showGrupos(Request $request) {

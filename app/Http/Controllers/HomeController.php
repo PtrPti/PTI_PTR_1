@@ -84,7 +84,13 @@ class HomeController extends Controller
                                  on uc.cadeira_id = ca.id
                                  where uc.user_id = ?)', [$user->id]);
 
-        return view('docente.docenteHome', compact('disciplinas', 'projetos'));
+        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+                                 from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+                                 where users.id != " . Auth::id() . " 
+                                 group by users.id, users.nome, users.email");
+                     
+
+        return view('docente.docenteHome', compact('disciplinas', 'projetos', 'utilizadores'));
     }
 
     public function store(Request $request, string $redirect = ""){

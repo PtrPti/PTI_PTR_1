@@ -11,6 +11,8 @@ use App\Grupo;
 use App\Tarefa;
 use App\GrupoFicheiros;
 use App\UsersGrupos;
+use App\Feedback;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Auth;
@@ -18,19 +20,6 @@ use DateTime;
 
 class ProjetoController extends Controller
 {
-    /* public function index($tab = "tab1"){
-        $user = Auth::user()->getUser();  
-        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
-        $projetos = DB::select('select * from projetos p
-                                where p.cadeira_id in (select ca.id from users_cadeiras uc
-                                inner join cadeiras ca
-                                 on uc.cadeira_id = ca.id
-                                 where uc.user_id = ?)', [$user->id]);        
-        $active_tab = $tab;
-
-        return view('docente.docenteHome', compact('disciplinas', 'projetos', 'active_tab'));
-    } */
-
     public function pagProjeto(int $grupo_id){
         $user = Auth::user()->getUser();
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
@@ -278,18 +267,45 @@ class ProjetoController extends Controller
 
         $max_elementos = $projeto->n_max_elementos;
 
-        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos')); 
+        $utilizadores = DB::select("select users.id, users.nome, users.email, count(id_read) as unread 
+                                    from users LEFT  JOIN  messages ON users.id = messages.from and id_read = 0 and messages.to = " . Auth::id() . "
+                                    where users.id != " . Auth::id() . " 
+                                    group by users.id, users.nome, users.email");
+
+        $docente = Auth::user()->getUserId();
+
+        $feedbacks = Feedback::where('docente_id', $docente)->get();
+        
+        return view ('projeto.paginaProjetos', compact('projeto', 'cadeira', 'gruposcount', 'grupos', 'max_elementos', 'utilizadores', 'feedbacks')); 
     }
 
-    public function eraseProject($id){
-        DB::delete('delete from projetos where id=?', [$id]);
-        // echo "Record deleted successfully.<br/>";
-        return redirect()->action('HomeController@indexDocente', ['tab' => 'tab2']);
-    }    
 
-    public function deleteGrupo(Request $request) {
-        Grupo::destroy($_POST['id']);
-
-        return response()->json('Apagado com sucesso');
+    public function addTodo(Request $request){
+        $data = array();
+        $check = $request->input('check');
+        
+        return response()->json(array('status'=>$check));
     }
+
+    public function addmensagem(Request $request){
+        $this->validate($request, [
+            'mensagem_docente' => 'bail|required|string|max:4000',]); 
+
+        $id = $request->grupo_id;
+        $feedback = Feedback::find($request->feedback_id);
+        $feedback->mensagem_docente = $request->mensagem_docente;
+        $feedback->docente_id =$request->docente_id;
+        $feedback->vista_docente = TRUE;
+
+        $feedback->save();
+    
+        return redirect()->action('ProjetoController@GrupoDocente', ['id_grupo' => $id] );
+    }
+
+    public function showFeedback(Request $request){
+        $id = $_GET['id'];
+        $feedback = Feedback::where('id', $id)->first();
+
+        return response()->json(array('message' => $feedback->mensagem_docente));
+        }
 }

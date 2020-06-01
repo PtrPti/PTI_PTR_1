@@ -50,6 +50,9 @@ Route::get('projetos/{id}', 'ProjetoController@id_projetos')->name('id_projeto')
 Route::get('delete-records','ProjetoController@index');
 Route::get('delete/{id}','ProjetoController@eraseProject');
 Route::post('/docenteHome/{route?}/deleteGrupo','ProjetoController@deleteGrupo');
+Route::get('/projetos/grupo/{id}', 'ProjetoController@GrupoDocente')->name('GrupoDocente');
+Route::post('/addmessages', 'ProjetoController@addmensagem')->name('AddMensagem');
+Route::get('/showFeedback', 'ProjetoController@showFeedback')->name('ShowFeedback');
 
 //Forum
 Route::post('addTopicoDocente', 'DisciplinaController@addTopicoDocente')->name('addTopicoDocente');
@@ -85,6 +88,7 @@ Route::get('pesquisar', 'ProjetoController@pesquisar');
 Route::post('uploadFicheiro', 'ProjetoController@uploadFicheiro')->name('uploadFicheiro');
 Route::get('delete-records','ProjetoController@index');
 Route::get('delete/{id}','ProjetoController@eraseProject');
+Route::post('add', 'ProjetoController@takeGrupos');
 
 //---------------- CHAT ----------------//
 Route::get('{route?}/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
