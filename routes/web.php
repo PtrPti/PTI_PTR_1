@@ -86,9 +86,10 @@ Route::post('uploadFicheiro', 'ProjetoController@uploadFicheiro')->name('uploadF
 Route::get('delete-records','ProjetoController@index');
 Route::get('delete/{id}','ProjetoController@eraseProject');
 
-//Messages
+//---------------- CHAT ----------------//
 Route::get('{route?}/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
 Route::get('/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
+Route::get('/getUsers', 'ChatController@getUsersView')->name('getusers');
 Route::post('message', 'ChatController@sendMessage');
 
 //---------------- DOWNLOAD ----------------//

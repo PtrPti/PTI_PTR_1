@@ -8,6 +8,7 @@ use App\Projeto;
 use App\UserCadeira;
 use App\UsersGrupos;
 use App\Grupo;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use DateTime;
@@ -55,31 +56,7 @@ class HomeController extends Controller
             array_push($grupos_ids, $g->id);
         }
 
-        DB::statement(DB::raw('set @row_number=0'));
-        $utilizadores = DB::select(DB::raw(
-            "select 
-                (@row_number:=@row_number + 1) AS row,
-                u.id,
-                u.nome,
-                u.email,
-                count(m.id_read) as unread,
-                m2.message as last_message,
-                m2.created_at as lm_date
-            from users u
-            inner join users_grupos ug
-                on u.id = ug.user_id
-                and ug.grupo_id in (:grupos)
-            left join  messages m
-                on u.id = m.from 
-                and id_read = 0 
-                and m.to = :u1
-            inner join (select * from messages order by created_at desc) as m2
-                on (m2.from = :u2 and m2.to = u.id)
-                or (m2.to = :u3 and m2.from = u.id)
-            where u.id != :u4
-            group by u.id, u.nome, u.email")
-                    , ['grupos' => implode("','", $grupos_ids), 'u1' => $user->id, 'u2' => $user->id, 'u3' => $user->id, 'u4' => $user->id]
-        );
+        $utilizadores = ChatController::getUsers($grupos_ids, $user->id);
 
         return view('aluno.alunoHome', compact('cadeiras','projetos', 'utilizadores'));
     }

@@ -156,7 +156,7 @@
                             <div class="chat_people"> <!--quando clica tem de acrescentar a class active-->
                                 <div class="chat_img"> <img src="{{ asset('images/user.png') }}" width=30px class="media-object"> </div>
                                 <div class="chat_ib">
-                                    <h5>{{$utilizador->nome}}<span class="chat_date">{{ date('d ', strtotime($utilizador->lm_date)) }}</span></h5>
+                                    <h5>{{$utilizador->nome}}<span class="chat_date">{{ date('d M', strtotime($utilizador->lm_date)) }}</span></h5>
                                     <p>{{ str_limit($utilizador->last_message, $limit = 35, $end = '...') }}</p>
                                 </div>
                             </div>
@@ -251,9 +251,8 @@
             });
         });      
 
-        // $(document).on('keyup', '.input-text input', function (e) {
         $(document).on('keyup', '.write_msg', function (e) {
-        var message = $(this).val();
+            var message = $(this).val();
             // check if enter key is pressed and message is not null also receiver is selected
             if (e.keyCode == 13 && message != '' && receiver_id != '') {
                 $(this).val(''); // while pressed enter text box will be empty
@@ -295,6 +294,21 @@
                 })
             }
         });
+        
+        $(document).on('keyup', '#chat_search', function (e) {
+            var search = $('#chat_search').val();
+            $.ajax({
+                type: "get",
+                url: "/getUsers",
+                data: {'search': search},
+                cache: false,
+                success: function (data) {
+                    console.log(data.html)
+                    $(".inbox_chat").empty();
+                    $(".inbox_chat").html(data.html);
+                },
+            })
+        });  
     });      
 
 // make a function to scroll down auto

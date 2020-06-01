@@ -42,7 +42,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'aa1d34a1nkaojiy.cm4mroluwrz2.eu-west-3.rds.amazonaws.com'),
+            'host' => env('DB_HOST', 'aaxsruy3r39gvl.chzkuu378ovc.eu-west-3.rds.amazonaws.com'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'projeto'),
             'username' => env('DB_USERNAME', 'admin'),

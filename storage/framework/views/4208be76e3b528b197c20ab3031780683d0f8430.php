@@ -144,7 +144,7 @@
                     </div>
                     <div class="srch_bar">
                         <div class="stylish-input-group">
-                            <input type="text" class="search-bar" placeholder="Search">
+                            <input type="text" class="search-bar" placeholder="Search" id="chat_search">
                         </div>
                     </div>
                 </div>
@@ -158,7 +158,7 @@
                             <div class="chat_people"> <!--quando clica tem de acrescentar a class active-->
                                 <div class="chat_img"> <img src="<?php echo e(asset('images/user.png')); ?>" width=30px class="media-object"> </div>
                                 <div class="chat_ib">
-                                    <h5><?php echo e($utilizador->nome); ?><span class="chat_date"><?php echo e(date('d ', strtotime($utilizador->lm_date))); ?></span></h5>
+                                    <h5><?php echo e($utilizador->nome); ?><span class="chat_date"><?php echo e(date('d M', strtotime($utilizador->lm_date))); ?></span></h5>
                                     <p><?php echo e(str_limit($utilizador->last_message, $limit = 35, $end = '...')); ?></p>
                                 </div>
                             </div>
@@ -253,9 +253,8 @@
             });
         });      
 
-        // $(document).on('keyup', '.input-text input', function (e) {
         $(document).on('keyup', '.write_msg', function (e) {
-        var message = $(this).val();
+            var message = $(this).val();
             // check if enter key is pressed and message is not null also receiver is selected
             if (e.keyCode == 13 && message != '' && receiver_id != '') {
                 $(this).val(''); // while pressed enter text box will be empty
@@ -276,11 +275,11 @@
             }
         });
 
-        $(document).on('click', '.sendMessageIcon', function (e) {
-            var message = $('.writeMessage').val();
+        $(document).on('click', '.msg_send_btn', function (e) {
+            var message = $('.write_msg').val();
             // check if enter key is pressed and message is not null also receiver is selected
             if (message != '' && receiver_id != '') {
-                $('.writeMessage').val(''); // while pressed enter text box will be empty
+                $('.write_msg').val(''); // while pressed enter text box will be empty
                 var datastr = "receiver_id=" + receiver_id + "&message=" + message;
                 $.ajax({
                     type: "post",
@@ -296,7 +295,22 @@
                     }
                 })
             }
-        });   
+        });
+        
+        $(document).on('keyup', '#chat_search', function (e) {
+            var search = $('#chat_search').val();
+            $.ajax({
+                type: "get",
+                url: "/getUsers",
+                data: {'search': search},
+                cache: false,
+                success: function (data) {
+                    console.log(data.html)
+                    $(".inbox_chat").empty();
+                    $(".inbox_chat").html(data.html);
+                },
+            })
+        });  
     });      
 
 // make a function to scroll down auto
