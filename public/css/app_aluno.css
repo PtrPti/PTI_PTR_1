@@ -6446,24 +6446,30 @@ a.thumbnail.active {
 }
 
 .progress {
+  margin: 10px;
+  vertical-align: middle;
   height: 22px;
-  margin-bottom: 22px;
+  width: 62%;
+  border-radius: 20px;
+  display: inline-block;
   overflow: hidden;
-  background-color: #f5f5f5;
-  border-radius: 4px;
+  background-color: #dedede;
+  border-radius: 15px;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 2px rgba(99, 97, 97, 0.5);
 }
+
 
 .progress-bar {
   float: left;
   width: 0%;
+
   height: 100%;
   font-size: 12px;
   line-height: 22px;
-  color: #fff;
+  color: black;
   text-align: center;
-  background-color: #3097D1;
+  background-color: #e6e16c;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   -webkit-transition: width 0.6s ease;
@@ -8901,12 +8907,13 @@ li{
 }
 
 #esq{
-	margin-left: 20px;
-	margin-top: 20px;
-	display: inline-block;
-	width: 23%;
-	vertical-align: top;
-	margin-right: 30px;
+  display: inline-block;
+  width: 23%;
+  position: absolute;
+  top: 200px;
+  left: 30px;
+  bottom: 15px;
+  overflow-x: hidden;
 }
 
 /* Pastas/Ficheiros/Links */
@@ -8961,14 +8968,19 @@ li{
 /* tarefas */
 
 #drt{
-	display: inline-block;
-	width: 70%;
+  display: inline-block;
+  width: 65%;
+  position: absolute;
+  top: 150px;
+  right: 15px;
+  bottom: 15px;
+  overflow-y: hidden;
 }
 
 .containerCheckbox {
   margin-left: 10px;
   margin-bottom: 0px;
-	display: block;
+	display: inline-block;
 	position: relative;
 	padding-left: 37px;
 	cursor: pointer;
@@ -8977,7 +8989,6 @@ li{
 	-moz-user-select: none;
 	-ms-user-select: none;
   user-select: none;
-  
 }
   
 .containerCheckbox input {
@@ -8990,7 +9001,7 @@ li{
   
 .containerCheckbox .checkmark {
 	position: absolute;
-	top: 0;
+	top: 15px;
 	left: 0;
 	height: 20px;
 	width: 20px;
@@ -9042,7 +9053,7 @@ li{
 .containerCheckbox2 {
   margin-bottom: 0px;
   margin-left: 10px;
-	display: block;
+	display: inline-block;
 	position: relative;
 	padding-left: 30px;
 	cursor: pointer;
@@ -9064,13 +9075,14 @@ li{
   
 .containerCheckbox2 .checkmark {
 	position: absolute;
-	top: 0;
+	top: 12px;
 	left: 0;
 	height: 15px;
 	width: 15px;
 	background: none;
   border: 1px solid rgb(167, 167, 167);
   border-radius: 50%;
+  margin-top: 3px;
 }
   
 .containerCheckbox2:hover input ~ .checkmark {
@@ -9198,7 +9210,6 @@ li{
   align-items: center;
 }
 
-
 .popupDiv input{
 	padding:8px;
   margin-bottom: 15px;
@@ -9248,23 +9259,15 @@ li{
 .tarefaSeta{
   display: inline-block;
   vertical-align: -webkit-baseline-middle;
-  
 }
 
 .flip { transform: rotate(-180deg);}
 
 .tarefaSeta:hover{
   cursor: pointer;
-
-}
-
-.containerCheckbox{
-  font-size: 20px;
-  display: inline;
 }
 
 .visSub{ display: none;}
-
 
 .tarefa{
 	padding-top: 10px;
@@ -9273,16 +9276,37 @@ li{
   display: inline-block;
   width: 92%;
 }
+.ficheirosTarefa div{
+	margin-left: 2px;
+	margin-right: 2px;
+	display:inline-block ;
+	padding: 3px;
+}
+
+.ficheirosTarefa div:hover:not(.nameUser){
+	cursor: pointer;
+	background-color: rgba(182, 182, 182, 0.699);
+  border-radius: 50%;
+}
 
 .nameUser{
 	padding: 5px;
 	background-color: rgb(212, 212, 212);
 	display: inline-block;
-	float: right;
+  float: right;
 }
 
-.notaTarefa{
-	padding: 5px;
+.nameUser:hover{
+	cursor: default;
+}
+
+.ficheirosTarefa img{
+	height: 100% ;
+	vertical-align: middle;
+	align-items: center;
+}
+
+.ficheirosTarefa {
 	display: inline-block;
 	float: right;
 }
@@ -9306,9 +9330,9 @@ li{
 .searchcontainer{
   border: 1px solid grey;
   border-radius: 30px;
-  display: inline-block;
+  display: block;
   float: right;
-  margin-right: 70px;  
+  margin-right: 70px;
 }
 
 .searchcontainer input{
@@ -9489,4 +9513,330 @@ li{
 .msg_history {
   height: 516px;
   overflow-y: auto;
+}
+.editTarefa{
+  margin-left: 10px;
+  margin-top: 5px;
+  display: none; 
+}
+
+.editTarefa:hover{
+  cursor: pointer;
+}
+
+#btnsAddEdit div{
+  display: inline-block;
+  position: relative;
+  padding-top: 7px;
+  padding-bottom:7px ;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 40px;
+  width: 115px;
+  border: 1px solid gray;
+}
+
+#btnsAddEdit div:hover{
+  cursor: pointer;
+  z-index: 7;
+}
+
+#btnEdit{
+  background-color: #e6e16c;
+  margin-left: 25px;
+  z-index: 7;
+}
+#btnAdici{
+  margin-left: -25px;
+  z-index: 4;
+  background-color: white;
+}
+
+/* NOTA */
+
+#mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #d8c0cf;
+  text-align: center;
+  border: 1px solid #d3d3d3;
+}
+
+#mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  color: #fff;
+}
+
+#notaText{
+	resize: none;
+  width: 190px;
+	height: 114px;
+	overflow-y: scroll;
+	background: none;
+	border: none;
+}
+
+#notaText::placeholder{
+	color: grey;
+}
+
+.submited{
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.Notsubmited{
+  display: inline-block;
+  margin-right: 6px;
+  opacity: 0;
+}
+
+.inpt1{
+  display: block;
+}
+.inpt2{
+  display: block;
+}
+
+#btgrupoDocente{
+
+  background-color: #353535;
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  opacity: 0.8;
+  border-radius: 80px;
+}
+
+
+#btgrupoDocente:hover{
+  opacity:1;
+}
+
+
+.flex-right-footer {
+  display: flex;
+  align-content: flex-end;
+  margin-right: 50px;
+}
+
+.feedback-footer{
+  display: flex;
+  align-content: flex-end;
+  margin-right: 80px;
+
+}
+
+.feedback-footer .feedback-icon {
+ 
+  margin-right: 60px;
+}
+
+.flex-right-footer .footer-icon{
+  margin-right: 70px;
+}
+
+.chat-popup {
+  display: none;
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  border: 3px solid #f1f1f1;  
+  z-index: 9;
+}
+
+
+.chat_name{
+  position: relative;
+  top: -30px;
+  text-align: center;
+}
+
+.dropup p{
+  text-align: center;
+  position: relative;
+  
+}
+
+#btn_escolha{
+  margin-left: 250px;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: #cacaca;
+  border-radius: 10px;
+  border: 1px solid grey;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 9px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  min-height: 200px;
+  border: 1px solid grey;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/send button */
+.form-container .btn {
+  background-color: #353535;
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+  margin-left: 30px;
+  margin-bottom:10px;
+  opacity: 0.8;
+  border-radius: 80px;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: #353535;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
+/***** FEEDBACK ******/
+
+.backmsg{
+  width: 23px;
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
+.msg1{
+	background-color: #8080806b;
+	border-radius: 5px;
+	margin:8px;
+	padding-left: 10px;
+	padding-top: 5px;
+  padding-bottom:  5px;
+}
+
+.msg2{
+	background-color: white;
+  top: 0px;
+  left: 8px;
+  right: 8px;
+	position: absolute;
+	width: 98%;
+	height: 97%;
+
+}
+
+#allFeedback{
+	position: relative;
+	background-color: white;
+	width: 100%;
+  height: 100%;
+  
+}
+.borderFeed{
+  border: 1px solid gray;
+    padding: 15px;
+    border-radius: 13px;
+}
+
+.item1F{
+  cursor: pointer;
+}
+
+.grupop{
+	padding: 20px;
+	border-radius: 15px 15px 2px 15px;
+	background-color: #8080806b;
+	margin-left: 40px;
+  margin-right: 10px;
+  margin-top:15px;
+  color: #000;
+}
+.professorp{
+	padding: 20px;
+	border-radius: 15px 15px 15px 2px;
+	background-color: rgb(177, 177, 177);
+	margin-left: 10px;
+  margin-right: 40px;
+  margin-top: 10px;
+  
+}
+
+.p1{
+  padding: 10px;
+  margin:auto;
+  vertical-align:center;
+  overflow-x: hidden;
+  cursor: pointer;
+}
+.bola{
+padding-top: 0px;
+border-radius: 50%;
+background-color: #e6e16c;
+box-shadow: 1px 1px 2px 0px #808080ed;
+margin: 0px;
+padding-bottom: 0px;
+padding-right: 8px;
+padding-left: 8px;
+margin-right: 5px;
+}
+
+#tarefasBtn{
+  display: inline-block;
+  padding-bottom: 5px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-bottom: 2px solid grey;
+  font-size: 25px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+#feedbackBtn{
+  display: inline-block;
+  padding-bottom: 5px;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size: 25px;
+  margin-bottom: 20px;
+  cursor: pointer;
 }

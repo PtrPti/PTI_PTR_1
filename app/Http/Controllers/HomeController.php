@@ -48,14 +48,14 @@ class HomeController extends Controller
                                   ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
                                   ->join('projetos', 'grupos.projeto_id', '=', 'projetos.id')
                                   ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
-                                      ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id')->get();
+                                    ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id')->get();
             
         $grupos_ids = [];
 
         foreach($projetos as $g) {
             array_push($grupos_ids, $g->id);
         }
-            $utilizadores = ChatController::getUsers($grupos_ids, $user->id);
+        $utilizadores = ChatController::getUsers($grupos_ids, $user->id);
 
         return view('aluno.alunoHome', compact('cadeiras','projetos', 'utilizadores'));
     }
@@ -66,6 +66,7 @@ class HomeController extends Controller
                                   ->where('users_cadeiras.user_id', $user->id)->get();
         $grupos = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
                                   ->where('users_grupos.user_id', $user->id)->get();
+                                  
         $cadeira = DB::table('cadeiras')->where('cadeiras.id', $cadeira_id)->get();
 
         return view('aluno.disciplinasAluno', compact('cadeiras','grupos','cadeira'));

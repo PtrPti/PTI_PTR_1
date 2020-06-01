@@ -14,4 +14,5 @@ class Feedback extends Model
         'user_id' 
         
     ];
+    public $timestamps = false;
 }

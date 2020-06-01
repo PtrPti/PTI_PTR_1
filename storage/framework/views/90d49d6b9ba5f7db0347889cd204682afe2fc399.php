@@ -10,31 +10,22 @@
 
 <div id='esqdrt'>
     <div id="esq">
-
         <div id="divAdd">
 			<button id="btnAdd" ><img src="<?php echo e(asset('images/plus.png')); ?>" width="23"><span>Adicionar</span></button>
 			<div id="dropAdd">
-
                 <a class="pastaadd" ><img src="<?php echo e(asset('images/addpasta.png')); ?>" width="40"><span>Pasta</span></a>
-				
                 <hr>
                 <a class="uploadFile" ><img src="<?php echo e(asset('images/uploadficheiro.png')); ?>" width="40"><span>Carregar Ficheiro</span></a>
-				
-				<label class="addLabel"><img src="<?php echo e(asset('images/uploadpasta.png')); ?>" width="40">Carregar Pasta
-					<input type="file">
-				</label>
+				<label class="addLabel"><img src="<?php echo e(asset('images/uploadpasta.png')); ?>" width="40">Carregar Pasta<input type="file"></label>
 				<hr>
-
 				<a class="siteadd"><img src="<?php echo e(asset('images/link.png')); ?>" width="37"><span>Site</span></a>
 				<a class="siteadd"><img src="<?php echo e(asset('images/drive.png')); ?>" width="37"><span>Google Drive</span></a>
 				<a class="siteadd"><img src="<?php echo e(asset('images/github.png')); ?>" width="37"><span>Github</span></a>
 				<hr>
-                <a class="taskadd"><img src="<?php echo e(asset('images/addtarefa.png')); ?>"width="40"><span>Adicionar Tarefa</span></a>
-                <a class="taskSubadd"><img src="<?php echo e(asset('images/addtarefa.png')); ?>"width="40"><span>Adicionar Subtarefa</span></a>
-				<a class="taskadd"><img src="<?php echo e(asset('images/edittarefa.png')); ?>"width="40"><span>Editar Tarefa</span></a>
+                <a class="taskadd"><img src="<?php echo e(asset('images/addtarefa.png')); ?>"width="40"><span>Tarefa</span></a>
+                <a class="taskSubadd"><img src="<?php echo e(asset('images/addtarefa.png')); ?>"width="40"><span>Subtarefa</span></a>
 				<hr>
-				<a><img src="<?php echo e(asset('images/nota.png')); ?>" width="40"><span>Nota</span></a>
-				<a><span>Evento</span></a>
+				<a class="notaAdd"><img src="<?php echo e(asset('images/nota.png')); ?>" width="40"><span>Nota</span></a>
 			</div>
 		</div>
 
@@ -142,8 +133,8 @@
                 <form id="formUploadFicheiro" action="<?php echo e(route ('uploadFicheiro')); ?>" method="POST" enctype="multipart/form-data">
                     <?php echo e(csrf_field()); ?>
 
-                    <label for="pasta">Pasta</label>
-                    <select name='Pasta' id="pasta">
+                    <label for="pastaaa">Pasta</label>
+                    <select name='Pasta' id="pastaaa">  
                         <option value=''>Nenhuma</option>
                         <?php $__currentLoopData = $ficheiros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ficheiro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if($ficheiro->is_folder): ?>
@@ -158,17 +149,125 @@
 			</div>
 		</div>
 
+        <!-- Popup Adicionar Nota -->
+        <div id="all6" class="popUpBack">
+            <div id="addNota" class='popupDiv'>
+                <img class='closebtn' src="<?php echo e(asset('images/cancel.png')); ?>">
+                <h4>Adicione uma Nota</h4>
+                <form id="formAddNotaGrupo">
+                    <label for="pastaaa">Pasta</label>
+                    <select name='Pasta' id='pastaaa'>
+                        <option value=''>Nenhuma</option>
+                        <?php $__currentLoopData = $ficheiros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ficheiro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if($ficheiro->is_folder): ?>
+                                <option value="<?php echo e($ficheiro->id); ?>"><?php echo e($ficheiro->nome); ?></option>
+                            <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
+                    </select><br>
+                    <input type="text" name='nome' placeholder="nome..."><br>
+                    <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>"><br>
+                    <input type="hidden" name='tipo' value="grupo"><br>
+				    <input type="submit" value='Adicionar'>
+                </form>
+            </div>
+        </div>
+
+        <!-- Popup Escolher Ficheiros -->
+        <div id="all7" class="popUpBack">
+            <div id="addSubmissao" class='popupDiv'>
+                <img class='closebtn' src="<?php echo e(asset('images/cancel.png')); ?>">
+                <h4>Selecione</h4>
+                
+                    <?php $__currentLoopData = $ficheiros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ficheiro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($ficheiro->is_folder): ?>
+                            <label class='inpt1'>
+                                <input type="checkbox" class='fichIds' name="checkFich" value="<?php echo e($ficheiro->id); ?>">
+                                <img src="<?php echo e(asset('images/folder.png')); ?>" width="20"><?php echo e($ficheiro->nome); ?>
+
+                            </label>
+                            <?php $__currentLoopData = $ficheiros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subficheiro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($subficheiro->pasta_id === $ficheiro->id): ?>
+                                    <?php if( $subficheiro->link != "" and is_null($subficheiro->notas)): ?>
+                                        <label class='inpt2'>
+                                            <input type="checkbox" class='fichIds' name="checkFich"  value="<?php echo e($subficheiro->id); ?>">
+                                            <?php if(str_contains($subficheiro->link, 'drive.google.com')): ?>
+                                                <img src="<?php echo e(asset('images/drive.png')); ?>" width="20">
+                                            <?php elseif(str_contains($subficheiro->link, 'github.com')): ?>
+                                                <img src="<?php echo e(asset('images/github.png')); ?>" width="23">
+                                            <?php else: ?> 
+                                                <img src="<?php echo e(asset('images/link.png')); ?>" width="21">
+                                            <?php endif; ?>
+                                            <?php echo e($subficheiro->nome); ?>
+
+                                        </label>
+                                    <?php elseif( ! is_null($subficheiro->notas) ): ?>
+                                        <label class='inpt2'>
+                                            <input type="checkbox" class='fichIds' name="checkFich"  value="<?php echo e($subficheiro->id); ?>">
+                                            <img src="<?php echo e(asset('images/nota.png')); ?>" width="20"><?php echo e($subficheiro->nome); ?>
+
+                                        </label>
+                                    <?php else: ?>
+                                        <label class='inpt2'>
+                                            <input type="checkbox" class='fichIds' name="checkFich"  value="<?php echo e($subficheiro->id); ?>">
+                                            <img src="<?php echo e(asset('images/file.png')); ?>" width="20"><?php echo e($subficheiro->nome); ?>
+
+                                        </label>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>      
+                        <?php elseif( $ficheiro->is_folder == false and is_null($ficheiro->pasta_id)): ?>
+                            <?php if( ! is_null($ficheiro->link) and is_null($ficheiro->notas)): ?>
+                                <label class='inpt1'>
+                                    <input type="checkbox" class='fichIds' name="checkFich" value="<?php echo e($ficheiro->id); ?>" >
+                                    <?php if(str_contains($ficheiro->link, 'drive.google.com')): ?>
+                                        <img src="<?php echo e(asset('images/drive.png')); ?>" width="20">
+                                    <?php elseif(str_contains($ficheiro->link, 'github.com')): ?>
+                                        <img src="<?php echo e(asset('images/github.png')); ?>" width="23">
+                                    <?php else: ?> 
+                                        <img src="<?php echo e(asset('images/link.png')); ?>" width="21">
+                                    <?php endif; ?>
+                                    <?php echo e($ficheiro->nome); ?>
+
+                                </label>
+                            <?php elseif( ! is_null($ficheiro->notas) ): ?>
+                                <label class='inpt1'>
+                                    <input type="checkbox" class='fichIds' name="checkFich" value="<?php echo e($ficheiro->id); ?>" >
+                                    <img src="<?php echo e(asset('images/nota.png')); ?>" width="20"><?php echo e($ficheiro->nome); ?>
+
+                                </label>
+                            <?php else: ?>
+                                <label class='inpt1'>
+                                    <input type="checkbox" class='fichIds' name="checkFich" value="<?php echo e($ficheiro->id); ?>" >
+                                    <img src="<?php echo e(asset('images/file.png')); ?>" width="20"><?php echo e($ficheiro->nome); ?>
+
+                                </label>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  	
+                    <button onclick="selectFicheiros()">Guardar</button>
+            </div>
+        </div>
+
+
+        <div id="all8" class="popUpBack" >
+			<div id="feedbackdone" class='popupDiv'>
+                <img class='closebtn' src="<?php echo e(asset('images/cancel.png')); ?>">
+			</div>
+        </div>
 
         <!-- Lado esquerdo - pastas e ficheiros -->
         <div id="esqcontainer">
         <?php $__currentLoopData = $ficheiros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ficheiro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <?php if($ficheiro->is_folder): ?>
                 <div class="folder1">
-                    <a class="item1"><img src="<?php echo e(asset('images/folder.png')); ?>" width="25"><span><?php echo e($ficheiro->nome); ?></span></a>
+                    <a class="item1">
+                        <img src="<?php echo e(asset('images/folder.png')); ?>" width="25">
+                        <span><?php echo e($ficheiro->nome); ?></span>
+                    </a>
                     <?php $__currentLoopData = $ficheiros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subficheiro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php if($subficheiro->pasta_id === $ficheiro->id): ?>
                             <div class="folder2">
-                                <?php if( $subficheiro->link != "" ): ?>
+                                <?php if( $subficheiro->link != "" and is_null($subficheiro->notas)): ?>
                                     <a class="item2" href="<?php echo e($subficheiro->link); ?>">
                                         <?php if(str_contains($subficheiro->link, 'drive.google.com')): ?>
                                             <img src="<?php echo e(asset('images/drive.png')); ?>" width="23">
@@ -179,31 +278,41 @@
                                         <?php endif; ?>
                                         <span><?php echo e($subficheiro->nome); ?></span> 
                                     </a>
+                                <?php elseif( ! is_null($subficheiro->notas) ): ?>
+                                    <a class="item2" href="#" onclick="infoNota('grupo',<?php echo e($subficheiro->id); ?>)">
+                                        <img src="<?php echo e(asset('images/nota.png')); ?>" width="23">
+                                        <span><?php echo e($subficheiro->nome); ?></span>
+                                    </a> 
                                 <?php else: ?>
-                                <a class="item2" href="<?php echo e(url('/downloadF', $subficheiro->id.'.'.explode('.', $subficheiro->nome, 2)[1])); ?>">
-                                    <img src="<?php echo e(asset('images/file.png')); ?>" width="25">
-                                    <span><?php echo e($subficheiro->nome); ?></span>
-                                </a> 
+                                    <a class="item2" href="<?php echo e(url('/downloadF', $subficheiro->id.'.'.explode('.', $subficheiro->nome, 2)[1])); ?>">
+                                        <img src="<?php echo e(asset('images/file.png')); ?>" width="25">
+                                        <span><?php echo e($subficheiro->nome); ?></span>
+                                    </a> 
                                 <?php endif; ?>
                             </div>
                         <?php endif; ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>      
                 </div>
-            <?php elseif( $ficheiro->is_folder === false and in_null($ficheiro->pasta_id)): ?>
-                <?php if( ! is_null($ficheiro->link) ): ?>
-                    <a class="item2" href="<?php echo e($subficheiro->link); ?>">
+            <?php elseif( $ficheiro->is_folder == false and is_null($ficheiro->pasta_id)): ?>
+                <?php if( ! empty($ficheiro->link) and is_null($ficheiro->notas)): ?>
+                    <a class="item1" href="<?php echo e($subficheiro->link); ?>">
                         <?php if(str_contains($ficheiro->link, 'drive.google.com')): ?>
-                            <img src="<?php echo e(asset('images/drive.png')); ?>" width="23">>
+                            <img src="<?php echo e(asset('images/drive.png')); ?>" width="23">
                         <?php elseif(str_contains($ficheiro->link, 'github.com')): ?>
-                            <img src="<?php echo e(asset('images/github.png')); ?>"  width="23">>
+                            <img src="<?php echo e(asset('images/github.png')); ?>"  width="23">
                         <?php else: ?> 
-                            <img src="<?php echo e(asset('images/link.png')); ?>"  width="21">>
+                            <img src="<?php echo e(asset('images/link.png')); ?>"  width="21">
                         <?php endif; ?>
                         <span><?php echo e($ficheiro->nome); ?></span>
                     </a>
+                <?php elseif( ! is_null($ficheiro->notas) ): ?>
+                    <a class="item1" href="#"  onclick="infoNota('grupo',<?php echo e($ficheiro->id); ?>)">
+                        <img src="<?php echo e(asset('images/nota.png')); ?>" width="23">
+                        <span><?php echo e($ficheiro->nome); ?></span>
+                    </a> 
                 <?php else: ?>
-                    <a class="item2">
-                        <img src="<?php echo e(asset('images/file.png')); ?>" width="25">>
+                    <a class="item1">
+                        <img src="<?php echo e(asset('images/file.png')); ?>" width="25">
                         <span><?php echo e($ficheiro->nome); ?></span>
                     </a>
                 <?php endif; ?>
@@ -212,14 +321,17 @@
                     
     </div>
     </div>
-    
+
+
     <!-- Lado direito - Tarefas -->
 	<div id="drt">
-		<div id="tarefas">
 
+        <div id='tarefasBtn' >Tarefas</div>
+        <div id='feedbackBtn' >Feedback</div>
+
+		<div id="tarefas">
             <!-- view tarefasAluno -->
-            <?php echo $__env->make('aluno.tarefasAluno', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-            
+            <?php echo $__env->make('aluno.tarefasAluno', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>            
         </div>
         <button class="calendarBtn" onclick="ShowCalendar()"><i class="far fa-calendar-alt fa-3x"></i></button>
 
@@ -247,18 +359,95 @@
             <div id='calendar'></div>
 
             <div style='clear:both'></div>
-
         </div>
+        
+        <div id="allFeedback">
+            <!-- view feedbacksAluno -->
+            <?php echo $__env->make('aluno.feedbackAluno', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </div>
+</div>
+</div>
+
+<!-- Nota -->
+
+<div id="notaa">
+
+    <!-- view nota -->
+    <?php echo $__env->make('aluno.notaAluno', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+</div>
+
+<!-- Feedback -->
+
+<div class="feedback-footer">
+    <div class="chat-popup" id="chat">
+        <form id='formAddFeedback' class="form-container">
+            <input type="hidden" name="grupo_id" value=''>
+            <?php echo e(csrf_field()); ?>  
+            
+            <div class="dropup">
+                <p><strong>Envie um pedido de feedback para o Professor</strong></p>
+                <button type="button" id="btgrupos"> <i class="fa fa-users"></i> Escolher ficheiros</button>
+
+                <div class="dropdown">
+                    <span>Ficheiros</span>
+                    <div class="dropdown-content">
+                    </div>
+                </div><br>
+                <br>
+
+                <label for="msg"><b>Mensagens</b></label>
+                <textarea name="mensagem" id="message_content" ></textarea>
+
+                <input type="hidden" id='idsImput' name='ids'>
+                <input type="hidden"  name='tipo' value='grupo'>
+                <input type="hidden" name='grupoId' value="<?php echo e($IdGrupo); ?>"><br>
+
+                <button  type="submit" class="btn">Enviar Feedback</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Fechar</button>
+
+                </div>
+
+            </div>
+            
+        </form>
     </div>
 </div>
-</div>
+
+<button type="button" id="btgrupoDocente" onclick="Showfeedback()">  
+    <img src="<?php echo e(asset('images/feedback.png')); ?>" width="27" style="margin-right:10px">
+    Pedir Feedback ao Professor
+</button>
+
 
 <script>
-    
+    $(document).ready(function(){
+        if(<?php echo $tarefaId ?> > 0){
+            infoTarefa(<?php echo $tarefaId ?>);
+            $('#allEditT').show();
+        }
+    });
 
     $("#dropAdd").hide();
     $('div',".folder1").hide();
     $(".popUpBack").hide();
+    $('#mydiv').hide();
+    $('#allFeedback').hide();
+    
+
+    $("#tarefasBtn").click(function(){
+        $("#allFeedback").hide();
+        $("#tarefas").show();
+        $("#tarefasBtn").css({'border-bottom':'2px solid grey'});
+        $("#feedbackBtn").css({'border-bottom':'0px'});
+    });
+
+    $("#feedbackBtn").click(function(){
+        $("#tarefas").hide();
+        $("#allFeedback").show();
+        $("#feedbackBtn").css({'border-bottom':'2px solid grey'});
+        $("#tarefasBtn").css({'border-bottom':'0px'});
+    });
 
     $(".siteadd").click(function(){
         $("#all1").show();
@@ -276,8 +465,16 @@
         $("#all4").show();
     }); 
 
+    $(".notaAdd").click(function(){
+        $("#all6").show();
+    }); 
+
     $(".taskSubadd").click(function(){
         $("#all5").show();
+    });
+
+    $("#btgrupos").click(function(){
+        $("#all7").show();
     });
 
     $(".closebtn").click(function(){
@@ -296,11 +493,11 @@
     }); 
 
     $('.folder1 .item1').click(function() {
-        if ($('a img', $(this).parent()).attr("src") == "<?php echo e(asset('images/folder.png')); ?>") {
-            $('img:first',$(this).parent()).attr("src","<?php echo e(asset('images/openfolder.png')); ?>");
-            $('div',$(this).parent()).show();  
+        if ($('a img:nth-child(1)', $(this).parent()).attr("src") == "<?php echo e(asset('images/folder.png')); ?>") {
+            $('img',$(this).parent()).eq(0).attr("src","<?php echo e(asset('images/openfolder.png')); ?>");
+            $('div',$(this).parent()).show();
         } else  {
-            $('img:first',$(this).parent()).attr("src","<?php echo e(asset('images/folder.png')); ?>");
+            $('img',$(this).parent()).eq(0).attr("src","<?php echo e(asset('images/folder.png')); ?>");
             $('div',$(this).parent()).hide();
         }
     });
@@ -318,14 +515,40 @@
                     $('#subtarefasId').html(data)
                 }
             });
-        }).change(); 
+        }).change();
     });
 
     $("#formAddPasta").submit(function(event){
         event.preventDefault();
         var form_data = $(this).serialize();
         $.ajax({
-            url: '/addPasta',
+            url: '/uploadFicheiro',
+            type: 'GET',
+            data : form_data
+        }).done(function(response){ 
+            location.reload();
+        });
+    });
+
+    $("#formAddFeedback").submit(function(event){
+        event.preventDefault();
+        var form_data = $(this).serialize();
+        $.ajax({
+            url: '/addFeedback',
+            type: 'GET',
+            data : form_data
+        }).done(function(response){ 
+            $('#feedbackdone').append(response);
+            $('#all8').show();
+            closeForm();
+        });
+    });
+
+    $("#formAddNotaGrupo").submit(function(event){
+        event.preventDefault();
+        var form_data = $(this).serialize();
+        $.ajax({
+            url: '/addNota',
             type: 'GET',
             data : form_data
         }).done(function(response){ 
@@ -352,7 +575,7 @@
             url: '/addLink',
             type: 'GET',
             data : form_data
-        }).done(function(response){ //
+        }).done(function(response){ 
             location.reload();
         });
     });
@@ -364,10 +587,47 @@
             url: '/addTarefa',
             type: 'GET',
             data : form_data
-        }).done(function(response){ //
+        }).done(function(response){ 
             location.reload();
         });
     });
+
+    function infoNota(tipo,id){
+        $.ajax({
+            url: '/infoNota',
+            type: 'GET',
+            dataType: 'json',
+            success: 'success',
+            data : {'tipo': tipo, 'id':id},
+            success: function(data){
+                $('#notaa').html(data.html);
+                $('#notaa').show();
+            }
+        })
+    }
+
+    function selectFicheiros(){
+        var ids = [];
+        $(".dropdown-content").empty();
+        $("input:checkbox[name=checkFich]:checked").each(function(){
+            ids.push($(this).val());
+            $('.dropdown-content').append( '<p>'+($(this).parent().text())+'</p>' )
+        });
+        $('#idsImput').val(ids);
+        $('#all7').hide();
+    }
+
+    function Showfeedback() {
+        document.getElementById("chat").style.display = "block";}
+    
+    function closeForm() {
+        document.getElementById("chat").style.display = "none";
+        $('#message_content').val('');
+        $(".dropdown-content").empty();
+        $("input:checkbox[name=checkFich]").each(function(){
+            $(this).prop("checked", false );
+        });
+    }
 
 </script>
 
