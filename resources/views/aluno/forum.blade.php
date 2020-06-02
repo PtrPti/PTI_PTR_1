@@ -83,7 +83,7 @@ function addTopico() {
         type: 'POST',
         dataType: 'json',
         success: 'success',
-        data: {'assunto': $('#assunto'), 'mensagem':$("#mensagem"), 'cadeira_id': $('#cadeira_id'), '_token':'{{csrf_token()}}'},
+        data: {'assunto': $('#assunto').val(), 'mensagem':$("#mensagem").val(), 'cadeira_id': $('#cadeira_id').val(), '_token':'{{csrf_token()}}'},
         success: function(data){
             showForum($("#cadeira_id"));
         }
