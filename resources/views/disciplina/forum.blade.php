@@ -70,7 +70,6 @@
     <div id="novaMensagem" class="modal">
         <form action="/addMensagem" method="post"> 
             {{csrf_field()}}
-            <!-- <input type="hidden" name="duvida_id" value="<?php/* echo $duvida*/ ?>"> -->
             <input type="hidden" name="duvida_id">
             <div class="novo_topico">
                 <span class="close">&times;</span>
