@@ -74,7 +74,7 @@ Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina
 Route::get('showGruposA', 'DisciplinaController@showGruposA');
 Route::get('verMensagens', 'DisciplinaController@verMensagens');
 Route::get('showForum', 'DisciplinaController@showForum');
-Route::post('/addTopico', 'DisciplinaController@addTopico');
+Route::post('/addTopicoAluno', 'DisciplinaController@addTopicoAluno')->name('addTopicoAluno');
 Route::post('/addMensagem', 'DisciplinaController@addMensagem');
 Route::post('/removeUser', 'DisciplinaController@removeUser');
 Route::post('/addUser', 'DisciplinaController@addUser');

@@ -27,7 +27,6 @@
         </div>                       
     </div>
 
-
     <div class="pagDisciplina">
         <h3 class="disciplinaNome"><?php echo e($cadeira[0]->nome); ?></h3>
 
@@ -116,5 +115,4 @@
     
 </div>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.app_aluno', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

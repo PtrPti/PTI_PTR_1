@@ -6,9 +6,9 @@
     <p class="alert alert-danger">{{Session::get('serverError')}}</p>
 @endif
 <div id="myModal" class="modal">
-    <!-- <form action="/addTopico" method="post"> -->
+    <form action="{{ route ('addTopicoAluno') }}" method="post"> 
         {{csrf_field()}}
-        <input type="hidden" id="cadeira_id" value="<?php echo $cadeira[0]->id ?>">
+        <input type="hidden" name="cadeira_id" id="cadeira_id" value="<?php echo $cadeira[0]->id ?>">
         <div class="novo_topico">
             <span class="close">&times;</span>
             <h4> Novo tópico </h5><br>
@@ -29,12 +29,10 @@
                 </div>
             </div>
             <div class="row">
-                <button type="button" onclick="addTopico()" class="sub_novoTopico" id="button_style">Adicionar</button>
-                {{csrf_field()}}
-                <!-- <input id="button_style" type="submit" value="Adicionar"> -->
+                <input id="button_style" type="submit" value="Criar">
             </div>
         </div>
-    <!-- </form> -->
+    </form>
 </div>
 
 <table class="tableGrupos">
@@ -58,25 +56,20 @@
 var modal = document.getElementById("myModal");
 var btn = document.getElementById("button_style");
 var span = document.getElementsByClassName("close")[0];
-
 $('#button_style').click(function() {
     modal.style.display = "block";
 });
-
 btn.onclick = function() {
   modal.style.display = "block";
 }
-
 span.onclick = function() {
   modal.style.display = "none";
 }
-
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 }
-
 function addTopico() {
     $.ajax({
         url: '/addTopico',

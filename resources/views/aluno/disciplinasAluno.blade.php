@@ -29,7 +29,6 @@
         </div>                       
     </div>
 
-
     <div class="pagDisciplina">
         <h3 class="disciplinaNome">{{$cadeira[0]->nome}}</h3>
 

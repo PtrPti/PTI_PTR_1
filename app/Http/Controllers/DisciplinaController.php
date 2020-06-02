@@ -100,26 +100,24 @@ class DisciplinaController extends Controller
         return view('aluno.forum', compact('cadeira','duvidas'));
     }
 
-    public function addTopico(Request $request){
-        $user = Auth::user()->getUser()->id;
-        $assunto = $_POST['assunto'];
-        $mensagem = $_POST['mensagem'];
-        $cadeira_id = $_POST['cadeira_id'];
+    public function addTopicoAluno(Request $request){
+        $user = Auth::user()->getUser();
 
         $novoTopico = new ForumDuvidas;
-        $novoTopico->assunto = $assunto;
-        $novoTopico->primeiro_user = $user;
-        $novoTopico->ultimo_user = $user;
-        $novoTopico->cadeira_id = $cadeira_id;
+        $novoTopico->assunto = $request->assunto;
+        $novoTopico->primeiro_user = $user->id;
+        $novoTopico->ultimo_user = $user->id;
+        $novoTopico->cadeira_id = $request->cadeira_id;
         $novoTopico->save();
 
         $novaMensagem = new ForumMensagens;
         $novaMensagem->forum_duvida_id = $novoTopico->id;
-        $novaMensagem->user_id = $user;
-        $novaMensagem->mensagem = $mensagem;
+        $novaMensagem->user_id = $user->id;
+        $novaMensagem->mensagem = $request->mensagem;
+        $novaMensagem->bloco = 0;
         $novaMensagem->save();
     
-        // return redirect()->action('DisciplinaController@Forum', ['cadeira_id' => $request->cadeira_id]);
+        return redirect()->action('DisciplinaController@pagDisciplina', ['cadeira_id' => $request->cadeira_id]);
     }
 
     public function verMensagens(Request $request) {
@@ -257,7 +255,7 @@ class DisciplinaController extends Controller
         $openForm = "";
         $errors = Session::get('errors');
 
-        if(Session::has('func')){
+        if(Session::has('func')) {
             $funcParams = Session::get('func');
 
             if($errors != null) {
