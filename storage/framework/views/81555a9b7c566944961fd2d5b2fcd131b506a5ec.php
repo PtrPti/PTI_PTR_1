@@ -62,7 +62,6 @@
                             <form action="/addMensagem" method="post"> 
                                 <?php echo e(csrf_field()); ?>
 
-                                <!-- <input type="hidden" name="duvida_id" value="<?php/* echo $duvida*/ ?>"> -->
                                 <input type="hidden" name="duvida_id">
                                 <div class="novo_topico">
                                     <span class="close">&times;</span>
@@ -94,10 +93,7 @@
                         <?php $__currentLoopData = $cadeiraProjetos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $projeto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="projeto">
                             <a style="text-transform: capitalize; font-size:16px" onclick="ShowGruposA(<?php echo e($projeto->id); ?>)"><?php echo e($projeto->nome); ?></a><br>
-                            <!-- <h4 style="text-transform: capitalize;"><?php echo e($projeto->nome); ?></h4>           -->
                             <b>Data de entrega: </b><?php echo e($projeto->data_fim); ?>  
-                            <!-- <br>                
-                            <button type="button" class="showGrupos" onclick="ShowGruposA(<?php echo e($projeto->id); ?>)"> Ver projeto </button> -->
                         </div> 
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
                     </div>

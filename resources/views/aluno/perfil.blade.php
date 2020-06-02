@@ -13,7 +13,7 @@
                 <i id="i-disciplina" class="caret-icon fa fa-caret-down"></i>
             </button>
             <div class="dropdown-container">
-                @foreach ($disciplinas as $disciplina)
+                @foreach ($cadeiras as $disciplina)
                     <a href="{{ route('pagDisciplina', ['cadeira_id' => $disciplina->id]) }}"> {{$disciplina->nome}} </a>
                 @endforeach
             </div>

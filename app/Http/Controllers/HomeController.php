@@ -62,7 +62,7 @@ class HomeController extends Controller
 
     public function perfilAluno (){
         $user = Auth::user()->getUser();
-        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
+        $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
 
         $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
@@ -71,7 +71,14 @@ class HomeController extends Controller
                           ->join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')
                              ->where('users.id', $user->id)->select('cadeiras.nome as cadeiras', 'projetos.nome as projeto', 'grupos.numero','grupos.id','users_grupos.favorito as favorito','users_grupos.id as usersGrupos_id')->get();
 
-        return view ('aluno.perfil', compact('user','disciplinas','projetos'));
+        $grupos_ids = [];
+
+        foreach($projetos as $g) {
+            array_push($grupos_ids, $g->id);
+        }
+        $utilizadores = ChatController::getUsers($grupos_ids, $user->id);
+
+        return view ('aluno.perfil', compact('user','cadeiras','projetos', 'utilizadores'));
     }
 
     public function changeNome(Request $request){
