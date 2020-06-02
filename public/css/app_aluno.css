@@ -9317,13 +9317,20 @@ li{
   outline: none;
 }
 
-.searchcontainer button{
+
+
+#btn222{
   border-radius: 50%;
-  background: grey;
   border: none;
   margin: 3px;
   padding-top: 4px;
   padding-bottom: 4px;
+  background-color: grey;
+}
+#btn111{
+  background: none;
+  border: none;
+  margin-right: -2px;
 }
 
 .infMensagens{
@@ -9866,7 +9873,6 @@ margin-right: 5px;
   top: -4px;
   right: -10px;
   width: 20px;
-  cursor:pointer;
 }
 
 /* -------------------------------------------------- DISCIPLINAS ---------------------------------------------------*/

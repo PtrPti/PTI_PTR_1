@@ -10,16 +10,16 @@
     <!-- Procura -->
     <div class="searchcontainer">        
         <form id="formpesquisa">
-            <input type="text" placeholder="Pesquisar.." title="Pesquise por Aluno ou Tarefa" name="palavra">
+            <input type="text" id='inptPesquisa' placeholder="Pesquisar.." title="Pesquise por Aluno ou Tarefa" name="palavra">
             <input type="hidden" name='grupoId' value="{{$IdGrupo}}">
             <input type="hidden" name="clear" id='clear' value="0">
-            <button type="submit"><img class='psq' src="{{ asset('images/pesquisa.png') }}" width="20"></button>
-            <button type="submit"><img class='psq' onclick="Clear()" src="{{ asset('images/limpar_pesquisa.png') }}" width="20"></button>
+            <button type="submit" id='btn111' onclick="Clear()"><img class='psq2' src="{{ asset('images/cancel.png') }}" width="11"></button>
+            <button type="submit" id='btn222'><img class='psq' src="{{ asset('images/pesquisa.png') }}" width="20"></button>
             <script>
-function Clear() {
-    $("#clear").val(1);
-}
-                </script>
+                function Clear() {
+                    $("#clear").val(1);
+                }
+            </script>
         </form>
     </div><br><br>
     @foreach ($tarefas as $tarefa)
@@ -205,6 +205,7 @@ function Clear() {
 <script>
 
      $('#allEditT').hide();
+     $( "#btn111").hide();
 
     $('.divTarefa').each(function( index, element ) {
         if ($(".divSubTarefa .tarefa .containerCheckbox2", this).length > 0){ 
@@ -212,6 +213,15 @@ function Clear() {
         } else{
             $( '.tarefaSeta' , element ).css( 'opacity', '0' );
             $( '.tarefaSeta' , element ).css( 'cursor', 'default');
+        }
+    });
+
+    
+    $('#inptPesquisa').on('input', function() {
+        if (this.value == ""){
+            $( "#btn111").hide();
+        }else{
+            $( "#btn111").show();
         }
     });
 

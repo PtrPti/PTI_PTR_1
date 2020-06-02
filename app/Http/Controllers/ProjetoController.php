@@ -532,12 +532,12 @@ class ProjetoController extends Controller
         $clear = $_GET['clear'];
 
         $alunoId = User::select('id')->where('nome', 'LIKE', "%{$palavra}%")->get();
-
-        if ($alunoId->isEmpty()){
-            $tarefas = Tarefa::where('nome', 'LIKE', "%{$palavra}%")->orderBy('ordem','ASC')->get();
-        }
-        else if ($clear == "1") {
+        
+        if ($clear == "1") {
             $tarefas = Tarefa::where('grupo_id', $grupoId)->orderBy('ordem','ASC')->get();
+        }
+        else if ($alunoId->isEmpty()){
+            $tarefas = Tarefa::where('nome', 'LIKE', "%{$palavra}%")->orderBy('ordem','ASC')->get();
         }
         else{
             $tarefas = Tarefa::where('nome', 'LIKE', "%{$palavra}%")->orWhere('user_id', $alunoId[0]->id)->orderBy('ordem','ASC')->get();
