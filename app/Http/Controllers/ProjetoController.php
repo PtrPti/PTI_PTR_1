@@ -129,8 +129,8 @@ class ProjetoController extends Controller
                 }
             }
         }
-        $totalTarefas = count($tarefas) -count($ids);
-        $percentagem = round($tarefasDone*100/$totalTarefas);
+        $totalTarefas = count($tarefas) - count($ids);
+        $percentagem =  $totalTarefas == 0 ? 0 : round($tarefasDone*100/$totalTarefas);
         return $percentagem;
     }
 
