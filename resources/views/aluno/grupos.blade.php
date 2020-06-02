@@ -1,9 +1,5 @@
 <a onclick="return_trabalho()" id="return_btn"><b>Trabalhos</b></a> > <u>{{$projeto->nome}}</u>
 
-<!-- <div class="button">
-
-</div> -->
-<!-- <h4><b>{{$projeto->nome}}</b></h4> -->
 <table class="tableGrupos" style="margin-top:9%">
     <tr>
         <th>Número do grupo</th>

@@ -63,7 +63,6 @@
                         <div id="novaMensagem" class="modal">
                             <form action="/addMensagem" method="post"> 
                                 {{csrf_field()}}
-                                <!-- <input type="hidden" name="duvida_id" value="<?php/* echo $duvida*/ ?>"> -->
                                 <input type="hidden" name="duvida_id">
                                 <div class="novo_topico">
                                     <span class="close">&times;</span>
@@ -95,10 +94,7 @@
                         @foreach ($cadeiraProjetos as $projeto)
                         <div class="projeto">
                             <a style="text-transform: capitalize; font-size:16px" onclick="ShowGruposA({{$projeto->id}})">{{$projeto->nome}}</a><br>
-                            <!-- <h4 style="text-transform: capitalize;">{{$projeto->nome}}</h4>           -->
                             <b>Data de entrega: </b>{{$projeto->data_fim}}  
-                            <!-- <br>                
-                            <button type="button" class="showGrupos" onclick="ShowGruposA({{$projeto->id}})"> Ver projeto </button> -->
                         </div> 
                         @endforeach 
                     </div>
