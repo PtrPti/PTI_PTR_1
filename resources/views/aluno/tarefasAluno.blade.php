@@ -1,6 +1,5 @@
 <!-- Tarefas por fazer -->
 
-
 <div id="tarefasNaoFeitas">
     <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{$percentagem}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$percentagem}}%">

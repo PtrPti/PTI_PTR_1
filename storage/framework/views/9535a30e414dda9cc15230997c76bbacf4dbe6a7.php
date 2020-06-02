@@ -1,7 +1,6 @@
 <?php $__env->startSection('content'); ?>
 <div id="apps" class="sticky">
   <div class="nav_icons_home">
-
     <div style="border-bottom: 1.5px solid #e6e16c;">
         <a href="<?php echo e(route('alunoHome')); ?>"> <img src="<?php echo e(asset('images/home_icon.png')); ?>" width=23px> Home </a>
     </div>
@@ -27,7 +26,7 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
     </div>      
-  </div>          
+  </div>
 </div>
 
 <div class="homeAluno">    
@@ -51,7 +50,6 @@
         <img src="<?php echo e(asset('images/filter.png')); ?>" class="filtro_projeto">
       </a>
       <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="position: absolute;top: 24px;right: 10px;">
-        <!-- <form action="/filterProj" method="post"> -->
         <div id="filtroProjeto">
           <li class="dropdown-item">
             <input type="checkbox" id="favoritos" name="favoritos">
@@ -67,27 +65,10 @@
           </li>
           
           <button type='button' class="filtro_btn" onclick="filterProj()">Aplicar</button>
-          <!-- <button type='button' onclick="filterProj()">Aplicar</button> -->
         </div>
-        <!-- </form> -->
       </ul>
     </div>
-
-    <!-- <div class="grupo"> -->
-      <!-- <?php if(count($projetos) == 0): ?>
-          <p>Não está inscrito em nenhum projeto/grupo</p>                                   
-      <?php else: ?>
-          <?php $__currentLoopData = $projetos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proj): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-          <a href="<?php echo e(route('pagProjeto', ['id' => $proj->id])); ?>">
-              <div>
-                  <?php echo e($proj->projeto); ?> | Grupo Nº<?php echo e($proj->numero); ?><br>
-                  <small><?php echo e($proj->cadeiras); ?></small>
-              </div>
-          </a>
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-      <?php endif; ?> -->
       <?php echo $__env->make('aluno.filtroProjeto', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <!-- </div> -->
   </div>
 </div>
 

@@ -2,6 +2,36 @@
 
 @section('content')
 
+<div id="apps" class="sticky">
+  <div class="nav_icons_home">
+    <div style="border-bottom: 1.5px solid #e6e16c;">
+        <a href="{{ route('alunoHome') }}"> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
+    </div>
+
+    <div style="border-bottom: 1.5px solid #e6e16c;">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            <img src="{{ asset('images/disciplinas_icon.png') }}" width=23px> Disciplinas
+        </button>
+        <ul class="dropdown-menu">
+            @foreach ($cadeiras as $disciplina)
+            <li><a href="{{ route('pagDisciplina', ['cadeira_id' => $disciplina->id]) }}"> {{$disciplina->nome}} </a></li>
+            @endforeach
+        </ul>
+    </div>
+
+    <div style="border-bottom: 1.5px solid #e6e16c;">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            <img src="{{ asset('images/projetos_icon.png') }}" width=23px> Projetos
+        </button>
+        <ul class="dropdown-menu">
+            @foreach ($projetos as $proj)
+                <li><a href="{{ route('pagProjeto', ['id' => $proj->id]) }}"> {{$proj->projeto}} | Grupo Nº{{$proj->numero}}</a></li>
+            @endforeach
+        </ul>
+    </div>      
+  </div>
+</div>
+
 <div class=pagProjeto>
     <h1>{{$projeto->nome}}  |  Grupo Nº{{$grupo->numero}}  <small>  {{$disciplina->nome}}</small></h1>
     @foreach ($nomesUsers as $nome)

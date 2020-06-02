@@ -1,5 +1,35 @@
 <?php $__env->startSection('content'); ?>
 
+<div id="apps" class="sticky">
+  <div class="nav_icons_home">
+    <div style="border-bottom: 1.5px solid #e6e16c;">
+        <a href="<?php echo e(route('alunoHome')); ?>"> <img src="<?php echo e(asset('images/home_icon.png')); ?>" width=23px> Home </a>
+    </div>
+
+    <div style="border-bottom: 1.5px solid #e6e16c;">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            <img src="<?php echo e(asset('images/disciplinas_icon.png')); ?>" width=23px> Disciplinas
+        </button>
+        <ul class="dropdown-menu">
+            <?php $__currentLoopData = $cadeiras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $disciplina): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <li><a href="<?php echo e(route('pagDisciplina', ['cadeira_id' => $disciplina->id])); ?>"> <?php echo e($disciplina->nome); ?> </a></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </ul>
+    </div>
+
+    <div style="border-bottom: 1.5px solid #e6e16c;">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            <img src="<?php echo e(asset('images/projetos_icon.png')); ?>" width=23px> Projetos
+        </button>
+        <ul class="dropdown-menu">
+            <?php $__currentLoopData = $projetos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proj): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <li><a href="<?php echo e(route('pagProjeto', ['id' => $proj->id])); ?>"> <?php echo e($proj->projeto); ?> | Grupo Nº<?php echo e($proj->numero); ?></a></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </ul>
+    </div>      
+  </div>
+</div>
+
 <div class=pagProjeto>
     <h1><?php echo e($projeto->nome); ?>  |  Grupo Nº<?php echo e($grupo->numero); ?>  <small>  <?php echo e($disciplina->nome); ?></small></h1>
     <?php $__currentLoopData = $nomesUsers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nome): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

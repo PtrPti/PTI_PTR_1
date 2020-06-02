@@ -3,7 +3,6 @@
 @section('content')
 <div id="apps" class="sticky">
   <div class="nav_icons_home">
-
     <div style="border-bottom: 1.5px solid #e6e16c;">
         <a href="{{ route('alunoHome') }}"> <img src="{{ asset('images/home_icon.png') }}" width=23px> Home </a>
     </div>
@@ -29,7 +28,7 @@
             @endforeach
         </ul>
     </div>      
-  </div>          
+  </div>
 </div>
 
 <div class="homeAluno">    
@@ -53,7 +52,6 @@
         <img src="{{ asset('images/filter.png') }}" class="filtro_projeto">
       </a>
       <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="position: absolute;top: 24px;right: 10px;">
-        <!-- <form action="/filterProj" method="post"> -->
         <div id="filtroProjeto">
           <li class="dropdown-item">
             <input type="checkbox" id="favoritos" name="favoritos">
@@ -69,27 +67,10 @@
           </li>
           
           <button type='button' class="filtro_btn" onclick="filterProj()">Aplicar</button>
-          <!-- <button type='button' onclick="filterProj()">Aplicar</button> -->
         </div>
-        <!-- </form> -->
       </ul>
     </div>
-
-    <!-- <div class="grupo"> -->
-      <!-- @if (count($projetos) == 0)
-          <p>Não está inscrito em nenhum projeto/grupo</p>                                   
-      @else
-          @foreach ($projetos as $proj)
-          <a href="{{ route('pagProjeto', ['id' => $proj->id]) }}">
-              <div>
-                  {{$proj->projeto}} | Grupo Nº{{$proj->numero}}<br>
-                  <small>{{$proj->cadeiras}}</small>
-              </div>
-          </a>
-          @endforeach 
-      @endif -->
       @include('aluno.filtroProjeto')
-    <!-- </div> -->
   </div>
 </div>
 
