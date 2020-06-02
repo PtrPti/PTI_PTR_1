@@ -53,6 +53,7 @@
             <div class="disciplina_tab" id="tab1" onclick="ShowPagInicial()">Página Inicial </div>
             <div class="disciplina_tab" id="tab2" onclick="ShowAvaliacao()"> Avaliação </div>
             <div class="disciplina_tab" id="tab3" onclick="ShowHorario()"> Horários </div>
+            <div class="disciplina_tab" id="tab4" onclick="ShowUsers()"> Users </div>
         </div>
 
         <div class="flex-right-container">
@@ -62,6 +63,7 @@
             @include('disciplina.grupos')
             @include('disciplina.forum')
             @include('disciplina.forumMensagens')
+            @include('disciplina.lista_alunos')
         </div>
 
         <div id="projetoModal" class="model-content">

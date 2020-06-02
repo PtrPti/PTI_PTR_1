@@ -51,6 +51,7 @@
             <div class="disciplina_tab" id="tab1" onclick="ShowPagInicial()">Página Inicial </div>
             <div class="disciplina_tab" id="tab2" onclick="ShowAvaliacao()"> Avaliação </div>
             <div class="disciplina_tab" id="tab3" onclick="ShowHorario()"> Horários </div>
+            <div class="disciplina_tab" id="tab4" onclick="ShowUsers()"> Users </div>
         </div>
 
         <div class="flex-right-container">
@@ -60,6 +61,7 @@
             <?php echo $__env->make('disciplina.grupos', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
             <?php echo $__env->make('disciplina.forum', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
             <?php echo $__env->make('disciplina.forumMensagens', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php echo $__env->make('disciplina.lista_alunos', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         </div>
 
         <div id="projetoModal" class="model-content">

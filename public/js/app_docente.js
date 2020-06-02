@@ -8,6 +8,7 @@ function ShowPagInicial() {
     $("#tab3").removeClass('active');
     $("#tab2").removeClass('active');
     $("#tab1").addClass('active');
+    $("#tab4").removeClass('active');
 }
 
 function ShowAvaliacao() {
@@ -16,6 +17,7 @@ function ShowAvaliacao() {
     $("#tab3").removeClass('active');
     $("#tab1").removeClass('active');
     $("#tab2").addClass('active');
+    $("#tab4").removeClass('active');
 }
 
 function ShowHorario() {
@@ -24,6 +26,16 @@ function ShowHorario() {
     $("#tab1").removeClass('active');
     $("#tab2").removeClass('active');
     $("#tab3").addClass('active');
+    $("#tab4").removeClass('active');
+}
+
+function ShowUsers() {
+    $(".discpContainer").css('display', 'none');
+    $("#users").css('display', 'block');
+    $("#tab1").removeClass('active');
+    $("#tab2").removeClass('active');
+    $("#tab3").removeClass('active');
+    $("#tab4").addClass('active');
 }
 
 function IndexDocente() {

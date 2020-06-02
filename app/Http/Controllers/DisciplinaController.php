@@ -224,7 +224,7 @@ class DisciplinaController extends Controller
 
     //Docente
     public function indexDocente(Request $request, int $id, $tab = "tab1") {            
-        $user = Auth::user()->getUser();                    
+        $user = Auth::user()->getUser();
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
         $projetos = DB::select('select p.*, c.nome as cadeira, pf.nome as ficheiro 
                                 from projetos p
@@ -277,9 +277,13 @@ class DisciplinaController extends Controller
             array_push($cadeiras_id, $c->cadeira_id);
         }
 
-        $utilizadores = ChatController::getUsersDocente($cadeiras_id, $user->id, $user->departamento_id);     
+        $utilizadores = ChatController::getUsersDocente($cadeiras_id, $user->id, $user->departamento_id);   
+        
+        $lista_users = UserCadeira::join('users', 'users_cadeiras.user_id', '=', 'users.id')->
+                                    where('users_cadeiras.cadeira_id', $cadeira->id)->
+                                    where('users.perfil_id', 1)->get();
 
-        return view('disciplina.indexDocente', compact('projetos', 'projetos_cadeira', 'disciplinas', 'cadeira', 'docentes', 'utilizadores', 'active_tab', 'funcParams', 'openForm'));
+        return view('disciplina.indexDocente', compact('projetos', 'projetos_cadeira', 'disciplinas', 'cadeira', 'docentes', 'utilizadores', 'active_tab', 'funcParams', 'openForm', 'lista_users'));
     }
 
     public function showGrupos(Request $request) {
