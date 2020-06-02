@@ -4565,12 +4565,13 @@ tbody.collapse.in {
 
 .dropdown-menu > li > a {
   display: block;
-  padding: 3px 20px;
+  padding: 0px 20px;
   clear: both;
   font-weight: 400;
   line-height: 1.6;
   color: #333333;
   white-space: nowrap;
+  text-align: center;
 }
 
 .dropdown-menu > li > a:hover,
@@ -4605,7 +4606,6 @@ tbody.collapse.in {
 }
 
 .dropdown-item{
-  height: 25px;
   left: 5%;
   position: relative;
   top: -8px;
@@ -5092,12 +5092,12 @@ tbody.collapse.in {
   background-color: transparent;
 }
 
-.nav .open > a,
+/* .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
   background-color: #eeeeee;
   border-color: #3097D1;
-}
+} */
 
 .nav .nav-divider {
   height: 1px;
@@ -5256,7 +5256,6 @@ tbody.collapse.in {
 .navbar {
   position: relative;
   min-height: 50px;
-  margin-bottom: 22px;
   border: 1px solid transparent;
 }
 
@@ -5417,6 +5416,7 @@ tbody.collapse.in {
   padding: 14px 15px;
   font-size: 18px;
   line-height: 22px;
+  margin-left: -142px;
 }
 
 .navbar-brand:hover,
@@ -5754,7 +5754,8 @@ tbody.collapse.in {
 }
 
 .navbar-default .navbar-toggle {
-  border-color: #ddd;
+  /* 
+  border-color: #ddd; */
 }
 
 .navbar-default .navbar-toggle:hover,
@@ -7301,7 +7302,7 @@ button.list-group-item-danger.active:focus {
   border-radius: 3px;
 }
 
-.close {
+.close, .closeNome, .closeEmail, .closePass {
   float: right;
   font-size: 21px;
   font-weight: bold;
@@ -7312,8 +7313,10 @@ button.list-group-item-danger.active:focus {
   opacity: 0.2;
 }
 
-.close:hover,
-.close:focus {
+.close:hover,.close:focus,
+.closeNome:hover,.closeNome:focus,
+.closeEmail:hover,.closeEmail:focus,
+.closePass:hover,.closePass:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
@@ -8350,6 +8353,21 @@ button.close {
 
 /* LAYOUT ALUNO */
 
+.sticky{
+  position: -webkit-sticky;
+  /* position: sticky; */
+  width: 100%;
+  position: sticky;
+  top: 0;
+  /* background-color: #f5f8fa; */
+  padding: 10px;
+  z-index: 1
+}
+
+.sticky a button{
+  color: white;
+} 
+
 .logout_style{
   display: block;
   margin-top: 13px;
@@ -8396,13 +8414,21 @@ button.close {
   text-align: center;
 }
 
-.nav_icons {
+.layout_extra {
   display: grid;
-  grid-template-columns: 120px 120px 120px 120px;
-  margin-left: 8%;
+  grid-template-columns: 25% 75%;
+  position: fixed;
+  height: 100%;
+  width: 100%;
 }
 
-.nav_icons div{
+.nav_icons{
+  display: grid;
+  grid-template-columns: 100%;
+  margin-top: 6%;
+}
+
+.nav_icon div{
   padding-left: 1.5%;
   /* border-bottom: 1.5px solid #e6e16c; */
   display: inline-block;
@@ -8410,13 +8436,95 @@ button.close {
   margin:3px;
 }
 
+#nav_icon{
+  border-bottom: 1.5px solid #e6e16c;
+  height: 35px;
+}
+
+.nav_icons a, .dropdown-btn {
+  text-decoration: none;
+  font-size: 16px;
+  color: #626158;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.dropdown-container > a{
+  color: white; 
+  padding-left: 25px; 
+  font-size: 14px;
+  padding-bottom: 6px;
+}
+
+.dropdown-container > a:hover{
+  background-color: #757466;
+} 
+
+.dropdown-btn:hover{
+  font-weight: bold;
+}
+
+/* Add an active class to the active dropdown button */
+.icon_active {
+  background-color: #b5b153;
+  color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #626158;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+.fa-caret-up {
+  float: right;
+  padding-right: 8px;
+}
+
+.nav_icons_home {
+  display: grid;
+  grid-template-columns: 120px 120px 120px 120px 120px;
+  margin-left: 8%;
+}
+
+.nav_icons_home div{
+  padding-left: 1.5%;
+  /* border-bottom: 1.5px solid #e6e16c; */
+  display: inline-block;
+  padding-bottom: 5px;
+  margin:3px;
+}
+
+.barraLateral{
+  background-color: #e6e16c;
+  height: 100%;
+  z-index: -1;
+}
+
 .homeAluno{
   position: absolute;
-  display:grid;
-  grid-template-columns: auto auto;
-  grid-gap: 20px 20px;
-  margin: 30px;
-  left: 5%;
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(2, [col-start] minmax(55%, 1fr) [col-end]);
+    grid-gap: 20px 20px;
+    margin: 30px;
+    left: 6%;
+}
+
+#infDisciplina{
+  display: grid;
+  grid-template-columns: auto;
 }
 
 .divDisciplinas{
@@ -8425,6 +8533,7 @@ button.close {
   height: auto;
   position: relative;
   padding: 5px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .disciplina{
@@ -8433,11 +8542,12 @@ button.close {
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 20px 20px;
-  margin: 15px
+  margin: 15px;
+  text-align: center;
 }
 
 .disciplina div{
-  height: auto;
+  height: 100%;
   background: #e6e16c;
   padding: 20px;
   text-align: center;
@@ -8450,9 +8560,10 @@ button.close {
   height: auto;
   position: relative;
   padding: 5px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.grupo{
+.grupos{
   width: auto;
   position: relative;
   display: grid;
@@ -8461,7 +8572,7 @@ button.close {
   margin: 15px
 }
 
-.grupo div{
+.grupo{
   height: auto;
   background: #e6e16c;
   padding: 15px;
@@ -8480,12 +8591,20 @@ button.close {
 .filtro_projeto:hover{
   cursor: pointer;
 }
+
+.filtro_btn{
+  position: relative;
+  left: 89px;
+  background-color: #f5f8fa;
+  border: none;
+  text-align: center; 
+}
 /* PÁGINA DA DISCIPLINA */
 
 .disciplinaNome{
   position: relative;
-  left: 8%;
-  width: 52%;
+  margin-top: 37px;
+  margin-bottom: 26px;
 }
 
 .pagDisciplina{
@@ -8493,22 +8612,21 @@ button.close {
   width: 87%;
   height: 80%;
   left: 8%;
-  display: grid;
-  grid-template-columns: 22% 100%;
+  /* display: grid;
+  grid-template-columns: 22% 100%; */
 }
 
 .navDisciplina{
   /* position: relative; */
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 25% 25% 25% 25%;
   top: 17px;
-  left: 33px;
 }
 
 .navDisciplina button{
   background-color: #f5f8fa;
   border: none;
-  height: 100px;
+  min-height: 60px;
   text-align: center;
 }
 
@@ -8518,9 +8636,6 @@ button.close {
 
 .disciplinasAluno{
   background-color: #eee9e9;
-  width: 73%;
-  left: 213px;
-  bottom: 422px;
 }
 
 #outer{
@@ -8534,32 +8649,9 @@ button.close {
   justify-content: center;
 }
 
-#add_button{
-  width: auto;
-  height: 33px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-weight: 500;
-  color: #616161;
-  background-color: #f5f8fa;
-  border: none;
-  /* border-radius: 45px; */
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
-}
 
-#add_button:hover {
-  background-color: #e6e16c;
-  box-shadow: 0px 15px 20px rgba(230, 225, 108, 0.36);
-  color: #fff;
-  transform: translateY(-7px);
-}
 
-/* .pagInicial{
+.pagInicial{
   position: relative;
 } 
 
@@ -8585,24 +8677,8 @@ button.close {
   border-style: solid;
   border-width: 2px;
   border-color: #e6e16c;
+  margin: 10px;
 }
-
-.infProjeto{
-  position: relative;
-  margin-left: 25px;
-}
-
-/* .infDisciplina{
-  position: relative;
-  left: 40px;
-  top: 15px;
-} */
-
-/* .forumDuvidas{
-  position: relative;
-  top: 30px;
-  left: 30px;
-} */
 
 .forumDuvidas_btn{
   top:5px;
@@ -8613,104 +8689,8 @@ button.close {
 }
 
 
-
-.tableGrupos{
-  position: relative;
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 41px;
-}
-
-.tableGrupos th, td {
-  text-align: center;
-  padding: 8px;
-}
-
-.tableGrupos tr:nth-child(even){background-color: #f2f2f2}
-
-.tableGrupos th {
-  background-color: #e6e16c;
-  color: white;
-  text-align: center;
-}
-
 .addBtn{
   position:relative;
-}
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.novo_topico {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.inputTopico {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
-
-label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
-}
-
-.sub_novoTopico {
-  background-color: #e6e16c;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
-  margin-top: 10px;
-}
-
-.col-25 {
-  float: left;
-  width: 25%;
-  margin-top: 6px;
-}
-
-.col-75 {
-  float: left;
-  width: 75%;
-  margin-top: 6px;
 }
 
 /* Clear floats after the columns */
@@ -8732,11 +8712,6 @@ label {
 
 
 
-#return_btn:hover{
-  color:#d4cf5f;
-  cursor: pointer;
-}
-
 /* .divMensagens{
   position: relative;
   top: 30px;
@@ -8746,19 +8721,14 @@ label {
 .mensagem{
   position: relative;
   height: auto;
-  width: 895px;
+  width: 100%;
   padding: 10px;
   text-align: left;
   opacity: 0.8;
   border-style: solid;
   border-width: 2px;
   border-color: #e6e16c;
-}
-
-#add_mensagem{
-  position:relative;
-  top: 10px;
-  left: 808px;
+  margin: 10px;
 }
 
 ul{
@@ -9839,4 +9809,226 @@ margin-right: 5px;
   font-size: 25px;
   margin-bottom: 20px;
   cursor: pointer;
+}
+.buttun_group{
+  border-color: #dedcdc;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 6px;
+  padding: 5px 14px;
+  background-color: #dedcdc;
+  color: #000000;
+  opacity: 0.8;
+}
+
+.buttun_group:hover{
+  opacity: 1;
+}
+
+/* -------------------------------------------------- HOME ALUNO ---------------------------------------------------*/
+#peril_page{
+  width: 250px;
+  min-height: 200px;
+  margin-right: 26px;
+  margin-top: 7px;
+}
+
+#user_img{
+  width: 23%;
+  margin-top: 8%;
+}
+#user_name{
+  margin-top: 9px;
+}
+
+#perfil{
+  background-color: #eee9e9;
+  border: 2px solid #eee9e9;
+  border-radius: 13px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+
+#user{
+  width: 6%;
+  position: relative;
+  left: 89%;
+}
+
+/* DISCIPLINAS */
+
+/* PROJETOS */
+.grupo_favorito{
+  position: absolute;
+  z-index: 1;
+  top: -4px;
+  width: 20px;
+}
+
+/* -------------------------------------------------- DISCIPLINAS ---------------------------------------------------*/
+
+/* CÓDIGO COMUM */
+
+#button_style{
+  /* position: absolute; */
+  bottom: -31%;
+  right: 0%;
+  border-color: #e6e16c;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 6px;
+  padding: 5px 14px;
+  background-color: #e6e16c;
+  color: #f5f8fa; 
+}
+
+#button_style:hover{
+  background-color: #dcd868d6;
+  border-color: #dcd868d6;
+  border-style: solid;
+}
+
+#return_btn:hover{
+  color:#d4cf5f;
+  cursor: pointer;
+}
+
+.tableGrupos{
+  position: relative;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 18px;
+}
+
+.tableGrupos th, td {
+  text-align: center;
+  padding: 8px;
+}
+
+.tableGrupos tr:nth-child(even){background-color: #f2f2f2}
+
+.tableGrupos th {
+  background-color: #e6e16c;
+  color: white;
+  text-align: center;
+}
+
+
+/* '-> PAGINA INICIAL */
+
+/* '-> FORUM */
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.novo_topico, .name, .email, .password{
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.inputTopico {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+.col-25 {
+  float: left;
+  width: 18%;
+  margin-top: 6px;
+  padding-left: 17px;
+}
+
+.col-75 {
+  float: left;
+  width: 79%;
+  margin-top: 6px;
+}
+/* '-> AVALIAÇÃO */
+
+/* '-> HORÁRIOS */
+
+/* '-> TRABALHOS */
+
+/*---------------------------------------------PERFIL-----------------------------------------------*/
+.infPerfil{
+  position: relative;
+  width: 87%;
+  height: 80%;
+  left: 8%;
+}
+
+.primeira_coluna{
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: left;
+  width: 30%;
+}
+
+.tablePerfil{
+  margin-top: 5%n;
+  width:100%;
+}
+
+.tablePerfil td{
+  height: 80px;
+}
+
+#changeUser, #changeEmail{
+  width: 50%;
+  margin-left: 25%;
+  padding-left: 4%;
+  padding-bottom: 3%;
+}
+
+#changePass{
+  width: 66%;
+  margin-left: 17%;
+  padding-left: 4%;
+  padding-bottom: 3%;
+}
+
+#editNome, #editEmail, #editPassword{
+  background-color: transparent;
+  border: 2px solid transparent;
 }

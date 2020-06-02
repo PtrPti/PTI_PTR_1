@@ -62,18 +62,27 @@ Route::post('replyForum', 'DisciplinaController@replyForum')->name('replyForum')
 //Home
 Route::get('/alunoHome/{tab?}', 'HomeController@indexAluno')->name('homeAluno')->middleware('checkUserRole:1');
 Route::get('/alunoHome', 'HomeController@alunoHome')->name('alunoHome');
+Route::get('/filterProj', 'HomeController@filterProj');
+Route::post('/changeFavorito', 'HomeController@changeFavorito');
+Route::get('/perfilAluno', 'HomeController@perfilAluno')->name('perfilAluno');
+Route::post('/changeNome', 'HomeController@changeNome')->name('changeNome');
+Route::post('/changeEmail', 'HomeController@changeEmail')->name('changeEmail');
+Route::post('/changePass', 'HomeController@changePass')->name('changePass');
 
 //Disciplina
 Route::get('/disciplinasAluno/{cadeira_id}', 'DisciplinaController@pagDisciplina')->name('pagDisciplina')->middleware('checkUserRole:1');
 Route::get('showGruposA', 'DisciplinaController@showGruposA');
 Route::get('verMensagens', 'DisciplinaController@verMensagens');
+Route::get('showForum', 'DisciplinaController@showForum');
 Route::post('/addTopico', 'DisciplinaController@addTopico');
 Route::post('/addMensagem', 'DisciplinaController@addMensagem');
 Route::post('/removeUser', 'DisciplinaController@removeUser');
 Route::post('/addUser', 'DisciplinaController@addUser');
 Route::post('/addGroup', 'DisciplinaController@addGroup');
 Route::post('/addUserGroup', 'DisciplinaController@addUserGroup');
-Route::get('showGrup', 'DisciplinaController@showGrup');
+Route::get('forum', 'DisciplinaController@Forum');
+
+// Route::get('showGrup', 'DisciplinaController@showGrup');
 
 //Projeto
 Route::get('/projetosAluno/{id}/{tarefa_id?}', 'ProjetoController@pagProjeto')->name('pagProjeto')->middleware('checkUserRole:1');

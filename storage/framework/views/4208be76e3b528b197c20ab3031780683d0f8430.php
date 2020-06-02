@@ -48,7 +48,7 @@
                 <div class="navbar-header">
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
+                        <!-- <span class="sr-only">Toggle Navigation</span> -->
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -62,9 +62,9 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
+                    <!-- <ul class="nav navbar-nav">
                         &nbsp;
-                    </ul>
+                    </ul> -->
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
@@ -73,8 +73,31 @@
                             <li><a href="<?php echo e(route('login')); ?>">Inicar Sessão</a></li>
                             <li><a href="<?php echo e(route('registar')); ?>">Registo</a></li>
                         <?php else: ?>
-                            <div class="logout_style">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <div>
+                                <div class="dropdown" >
+                                    <a class="dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img id="user" src="<?php echo e(asset('images/pessoa.png')); ?>"> 
+                                    </a>
+                                    
+                                    <!-- <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <?php echo e(Auth::user()->nome); ?> <span class="caret"></span> 
+                                    </a> -->
+                                    <div class="dropdown-menu" id="peril_page" aria-labelledby="dropdownMenuLink">
+                                        <li><a><img id="user_img" src="<?php echo e(asset('images/pessoa.png')); ?>"> </a></li>
+                                        <li><a id="user_name"><b><?php echo e(Auth::user()->nome); ?></b></a></li>
+                                        <li><a id="user_email"><?php echo e(Auth::user()->email); ?></a></li>
+                                        <li><a href="<?php echo e(route('perfilAluno')); ?>" id="perfil">Gerir conta</a></li>
+                                        <!-- <a class="dropdown-item" id="user_numero"><?php echo e(Auth::user()->numero); ?></a> -->
+                                        <li class="divider"></li>
+                                        <li> <a id="logout" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                        <img src="<?php echo e(asset('images/logout.png')); ?>" width=20px>   Terminar sessão</a></li>
+                                        <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo e(csrf_field()); ?>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <?php echo e(Auth::user()->nome); ?> <span class="caret"></span>
                                 </a>                          
                                 <a href="<?php echo e(route('logout')); ?>"
@@ -82,10 +105,7 @@
                                     document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
-                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
-                                    <?php echo e(csrf_field()); ?>
-
-                                </form> 
+                                  -->
                             </div>
                         <?php endif; ?>
                     </ul>
@@ -93,7 +113,7 @@
             </div>
         </nav>
 
-        <div id="apps">
+        <!-- <div id="apps">
             <div class="nav_icons">
                 <div style="border-bottom: 1.5px solid #e6e16c;">
                 <a href="<?php echo e(route('alunoHome')); ?>"> <img src="<?php echo e(asset('images/home_icon.png')); ?>" width=23px> Home </a>
@@ -125,7 +145,7 @@
 
             <div id="menuProjetos">
             </div>                
-        </div>
+        </div> -->
 
         <?php echo $__env->yieldContent('content'); ?>
 

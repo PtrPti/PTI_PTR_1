@@ -1,5 +1,5 @@
 <p>
-    <a class="pagInicia_btn" id="return_btn"><b>Página Inicial</b></a> > <a class="forumDuvidas_btn" id="return_btn"><b>Forum de Dúvidas</b></a> > <u>{{$duvida[0]->assunto}}</u>
+    <a onclick="return_pagInicial()" id="return_btn"><b>Página Inicial</b></a> > <a onclick="return_forum()" id="return_btn"><b>Forum de Dúvidas</b></a> > <u>{{$duvida[0]->assunto}}</u>
 </p>
 
 @foreach($mensagens as $mensagem)
@@ -8,5 +8,5 @@
     <p>{{$mensagem->mensagem}}</p>
 </div>
 @endforeach
-
-<button type="button" id="add_mensagem">Responder</button>
+ 
+<button type="button" onclick="Responder()" id="button_style" style="position: absolute; bottom: -31%; right: 0%;">Responder</button>
