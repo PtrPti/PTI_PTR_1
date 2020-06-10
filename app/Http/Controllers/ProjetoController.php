@@ -80,7 +80,9 @@ class ProjetoController extends Controller
         $projeto = Projeto::where('id', $grupo->projeto_id)->first();
         $id_disciplina = $projeto->cadeira_id;
         $disciplina = Cadeira::where('id', $id_disciplina)->first();
-        $ficheiros = GrupoFicheiros::where('grupo_id',$grupo_id)->get();
+
+        $ficheiros = GrupoFicheiros::where('grupo_id',$grupo_id)->where('pasta_id', null)->orderBy('is_folder','desc')->orderBy('notas', 'asc')->orderBy('link', 'asc')->orderBy('nome', 'asc')->get();
+        $subFicheiros = GrupoFicheiros::where('grupo_id',$grupo_id)->where('pasta_id', '!=', null)->orderBy('is_folder','desc')->orderBy('nome', 'asc')->get();
         
         $tarefas = $data['tarefas'];
         $nomesUsers = $data['nomesUsers'];
@@ -105,7 +107,7 @@ class ProjetoController extends Controller
         return view('aluno.projetosAluno', compact('tarefaId','cadeiras','projetos','grupo',
                                                     'disciplina','projeto','ficheiros','tarefas',
                                                     'nomesUsers','IdGrupo','ficheirosTarefas',
-                                                    'percentagem', 'feedbacks', 'feedbackFicheiros','grupoFicheiros', 'users_grupo', 'utilizadores'));
+                                                    'percentagem', 'feedbacks', 'feedbackFicheiros','grupoFicheiros', 'users_grupo', 'utilizadores', 'subFicheiros'));
     }
 
     public function barraProgresso(Int $id){

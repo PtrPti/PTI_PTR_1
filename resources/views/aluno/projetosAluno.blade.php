@@ -288,7 +288,7 @@
                         <img src="{{ asset('images/folder.png') }}" width="25">
                         <span>{{$ficheiro->nome}}</span>
                     </a>
-                    @foreach ($ficheiros as $subficheiro)
+                    @foreach ($subFicheiros as $subficheiro)
                         @if ($subficheiro->pasta_id === $ficheiro->id)
                             <div class="folder2">
                                 @if ( $subficheiro->link != "" and is_null($subficheiro->notas))
@@ -341,9 +341,8 @@
                     </a>
                 @endif
             @endif
-        @endforeach  	
-                    
-    </div>
+        @endforeach
+        </div>
     </div>
 
 

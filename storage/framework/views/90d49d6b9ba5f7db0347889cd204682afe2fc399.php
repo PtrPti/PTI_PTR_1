@@ -294,7 +294,7 @@
                         <img src="<?php echo e(asset('images/folder.png')); ?>" width="25">
                         <span><?php echo e($ficheiro->nome); ?></span>
                     </a>
-                    <?php $__currentLoopData = $ficheiros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subficheiro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = $subFicheiros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subficheiro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php if($subficheiro->pasta_id === $ficheiro->id): ?>
                             <div class="folder2">
                                 <?php if( $subficheiro->link != "" and is_null($subficheiro->notas)): ?>
@@ -347,9 +347,8 @@
                     </a>
                 <?php endif; ?>
             <?php endif; ?>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  	
-                    
-    </div>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
     </div>
 
 
