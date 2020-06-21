@@ -120,9 +120,9 @@
                 <div class="top-right links">
                 @if(Auth::user() != null)
                     @if (Auth::user()->isAluno())
-                        <a href="{{ route('homeAluno') }}">Home</a>
+                        <a href="{{ route('home') }}">Home</a>
                     @elseif (Auth::user()->isProfessor())
-                        <a href="{{ route('homeDocente') }}">Home</a>
+                        <a href="{{ route('home') }}">Home</a>
                     @else
                         <a href="{{ url('/login') }}">Iniciar Sessão</a>
                         <a href="{{ url('/registar') }}">Registo</a>

@@ -120,9 +120,9 @@
                 <div class="top-right links">
                 <?php if(Auth::user() != null): ?>
                     <?php if(Auth::user()->isAluno()): ?>
-                        <a href="<?php echo e(route('homeAluno')); ?>">Home</a>
+                        <a href="<?php echo e(route('home')); ?>">Home</a>
                     <?php elseif(Auth::user()->isProfessor()): ?>
-                        <a href="<?php echo e(route('homeDocente')); ?>">Home</a>
+                        <a href="<?php echo e(route('home')); ?>">Home</a>
                     <?php else: ?>
                         <a href="<?php echo e(url('/login')); ?>">Iniciar Sessão</a>
                         <a href="<?php echo e(url('/registar')); ?>">Registo</a>

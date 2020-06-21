@@ -63,7 +63,7 @@ class HomeController extends Controller
 
         $utilizadores = User::get();
 
-        return view('novo.home', compact('disciplinas', 'projetos', 'utilizadores'));
+        return view('home', compact('disciplinas', 'projetos', 'utilizadores'));
     }
 
     public function perfilAluno (){
@@ -121,17 +121,17 @@ class HomeController extends Controller
         $user = Auth::user()->getUser();
 
         $query = "select c.nome as cadeiras, p.nome as projeto, g.numero, g.id, ug.favorito as favorito, ug.id as usersGrupos_id
-        from users u
-        inner join users_grupos ug
-            on u.id = ug.user_id
-        inner join grupos g
-            on ug.grupo_id = g.id
-        inner join projetos p
-            on g.projeto_id = p.id
-        inner join cadeiras c
-            on p.cadeira_id = c.id
-        where
-            u.id = " .  $user->id;
+                from users u
+                inner join users_grupos ug
+                    on u.id = ug.user_id
+                inner join grupos g
+                    on ug.grupo_id = g.id
+                inner join projetos p
+                    on g.projeto_id = p.id
+                inner join cadeiras c
+                    on p.cadeira_id = c.id
+                where
+                    u.id = " .  $user->id;
 
         if($favoritos == 'true') {
             $query = $query . " and ug.favorito = 1";
@@ -154,7 +154,7 @@ class HomeController extends Controller
             );
         }
         
-        $returnHTML = view('aluno.filtroProjeto')->with($data)->render();
+        $returnHTML = view('filtroProjeto')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
     }
 

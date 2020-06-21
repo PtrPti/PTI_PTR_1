@@ -60,7 +60,7 @@ Route::post('/projetosAluno/deleteEvents/{id}', 'CalendarController@delete')->na
 Route::get('/Home', 'HomeController@home')->name('home');
 Route::get('/filterProj', 'HomeController@filterProj');
 
-Route::get('/Home/Disciplina/{id}/{tab?}', 'DisciplinaController@index')->name('disciplina');
+Route::get('/Home/Disciplina/{id}/{tab?}/{proj?}', 'DisciplinaController@index')->name('disciplina');
 Route::post('criarProjeto', 'DisciplinaController@criarProjeto');
 Route::post('addFileProjeto', 'DisciplinaController@addFileProjeto')->name('addFileProjeto');
 Route::post('addLinkProjeto', 'DisciplinaController@addLinkProjeto');

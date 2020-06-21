@@ -268,11 +268,11 @@
     </div>
 
     <div class="tab-container" id="tab-1">
-        @include('novo.grupo.tarefas')
+        @include('grupo.tarefas')
     </div>
 
     <div class="tab-container" id="tab-2">
-        @include('novo.grupo.feedback')
+        @include('grupo.feedback')
     </div>
 
     <div class="tab-container" id="tab-3">

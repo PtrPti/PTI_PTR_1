@@ -44,7 +44,7 @@ class DisciplinaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index(Request $request, int $id, int $tab = 1) {
+    public function index(Request $request, int $id, int $tab = 1, int $proj = 0) {
         //Navbar
             $user = Auth::user()->getUser();
             $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
@@ -63,7 +63,7 @@ class DisciplinaController extends Controller
                 $projetos = DB::select($query, [$user->id, $user->id]);
             }
             else {
-                $query = "select p.id as id, p.nome as nome, c.nome as cadeira 
+                $query = "select p.id as id, p.nome as nome, c.nome as cadeira, c.id as cadeira_id
                         from projetos p
                         inner join cadeiras c
                             on p.cadeira_id = c.id
@@ -99,7 +99,11 @@ class DisciplinaController extends Controller
 
         $active_tab = $tab;
 
-        return view('novo.disciplina.indexDisciplina', compact('disciplinas', 'projetos', 'utilizadores', 'disciplina', 'docentes', 'projetos_cadeira', 'duvidas', 'lista_alunos', 'active_tab'));
+        if ($proj > 0) {
+            Session::flash('click', 'proj-' . $proj);
+        }
+
+        return view('disciplina.indexDisciplina', compact('disciplinas', 'projetos', 'utilizadores', 'disciplina', 'docentes', 'projetos_cadeira', 'duvidas', 'lista_alunos', 'active_tab'));
     }
 
     public function criarProjeto(ProjectPost $request) {
@@ -134,7 +138,7 @@ class DisciplinaController extends Controller
             'duvida' => $duvida,
         );
 
-        $returnHTML = view('novo.disciplina.forumMensagens')->with($data)->render();
+        $returnHTML = view('disciplina.forumMensagens')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
     }
 
@@ -182,7 +186,7 @@ class DisciplinaController extends Controller
             'pertenceGrupo' => $pertenceGrupo
         );
 
-        $returnHTML = view('novo.disciplina.grupos')->with($data)->render();
+        $returnHTML = view('disciplina.grupos')->with($data)->render();
         return response()->json(array('html'=>$returnHTML, 'nome' => $projeto->nome));
     }
 

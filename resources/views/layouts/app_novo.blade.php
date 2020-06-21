@@ -43,7 +43,7 @@
 <body>
     <div class="notifications">
         <i class="fas fa-bell fa-2x"></i>
-        <span class="notifNum">2</span>
+        <!-- <span class="notifNum">2</span> -->
     </div>
     <nav class="navsidebar">
         <ul class="navsidebar-nav">
@@ -84,7 +84,7 @@
                 <ul class="dropdown-menu" aria-labelledby="pLabel">
                     @foreach($projetos as $p)
                         @if (Auth::user()->isProfessor())
-                            <li><a href="{{ route('disciplina', ['id' => $p->id, 'tab' => 7]) }}" class="item-link">{{$p->nome}}</a></li>
+                            <li><a href="{{ route('disciplina', ['id' => $p->cadeira_id, 'tab' => 1, 'proj' => $p->id]) }}" class="item-link">{{$p->nome}}</a></li>
                         @else
                             <li><a href="{{ route('projeto', ['id' => $p->grupo_id]) }}" class="item-link">{{$p->nome}}</a></li>
                         @endif

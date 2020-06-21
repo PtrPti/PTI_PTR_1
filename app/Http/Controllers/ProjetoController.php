@@ -49,7 +49,7 @@ class ProjetoController extends Controller
                 $projetos = DB::select($query, [$user->id, $user->id]);
             }
             else {
-                $query = "select p.id as id, p.nome as nome, c.nome as cadeira 
+                $query = "select p.id as id, p.nome as nome, c.nome as cadeira, c.id as cadeira_id
                         from projetos p
                         inner join cadeiras c
                             on p.cadeira_id = c.id
@@ -92,7 +92,7 @@ class ProjetoController extends Controller
         
        Session::has('search') ? Session::forget('search') : null;
 
-        return view('novo.grupo.indexGrupo', compact('disciplinas','projetos','utilizadores','grupo','disciplina','projeto','tarefasNaoFeitas', 'tarefasFeitas', 'feedbacks', 'active_tab', 'ficheiros', 'subFicheiros', 'progresso', 'membros', 'pastasSelect', 'feedFicheiros'));
+        return view('grupo.indexGrupo', compact('disciplinas','projetos','utilizadores','grupo','disciplina','projeto','tarefasNaoFeitas', 'tarefasFeitas', 'feedbacks', 'active_tab', 'ficheiros', 'subFicheiros', 'progresso', 'membros', 'pastasSelect', 'feedFicheiros'));
     }
 
     public function verFeedback(Request $request) {
@@ -108,7 +108,7 @@ class ProjetoController extends Controller
             'feedbackFicheiros'  => $feedbackFicheiros,
         );
 
-        $returnHTML = view('novo.grupo.feedbackMensagens')->with($data)->render();
+        $returnHTML = view('grupo.feedbackMensagens')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
     }
 
@@ -208,7 +208,7 @@ class ProjetoController extends Controller
             $tarefasFeitas = DB::select('call GetTarefas(?,?,?)', [$grupo->grupo_id, true, null]);
 
             $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 'grupo_id' => $grupo->grupo_id);
-            $returnHTML = view('novo.grupo.tarefas')->with($data)->render();
+            $returnHTML = view('grupo.tarefas')->with($data)->render();
             return response()->json(array('html' => $returnHTML, 'title' => 'Sucesso', 'msg' => 'Tarefas alterada com sucesso'));
         }
         else {
@@ -350,7 +350,7 @@ class ProjetoController extends Controller
 
         $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 'grupo_id' => $grupoId, 'membros' => $membros);
 
-        $returnHTML = view('novo.grupo.tarefas')->with($data)->render();
+        $returnHTML = view('grupo.tarefas')->with($data)->render();
         return response()->json(array('html' => $returnHTML));
     }
 

@@ -23,7 +23,7 @@
 </div>
 
 <div class="tab-container" id="tab-1">
-    @include('novo.disciplina.pagInicial')
+    @include('disciplina.pagInicial')
 </div>
 
 <div class="tab-container" id="tab-2">
@@ -36,20 +36,20 @@
 
 @if (Auth::user()->isProfessor())
     <div class="tab-container" id="tab-4">
-    @include('novo.disciplina.listaAlunos')
+    @include('disciplina.listaAlunos')
     </div>
 @endif
 
 <div class="tab-container forum" id="tab-5">
-    @include('novo.disciplina.forum')
+    @include('disciplina.forum')
 </div>
 
 <div class="tab-container forumMensagens" id="tab-6">
-    @include('novo.disciplina.forumMensagens')
+    @include('disciplina.forumMensagens')
 </div>
 
 <div class="tab-container" id="tab-7">
-    @include('novo.disciplina.grupos')
+    @include('disciplina.grupos')
 </div>
 
 @if (Auth::user()->isProfessor())
