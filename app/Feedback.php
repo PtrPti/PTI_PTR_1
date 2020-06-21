@@ -11,8 +11,6 @@ class Feedback extends Model
     protected $fillable = [
         'mensagem', 
         'grupo_id',
-        'user_id' 
-        
+        'user_id'         
     ];
-    public $timestamps = false;
 }

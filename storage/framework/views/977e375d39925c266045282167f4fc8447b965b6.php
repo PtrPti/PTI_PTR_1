@@ -137,7 +137,7 @@
             <div class="content">
                 <div class="title m-b-md">
                     <img src="<?php echo e(asset('images/big_logo.png')); ?>" width=27% class="image_logo">
-                    <img src="<?php echo e(asset('images/group.svg')); ?>" width=57% class="image_back">                        
+                    <img src="<?php echo e(asset('images/group.svg')); ?>" width=57% class="image_back">
                 </div>                
 
                 <div class="links">

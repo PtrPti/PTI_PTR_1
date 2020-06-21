@@ -1,53 +1,20 @@
 <?php $__env->startSection('content'); ?>
-<div id="apps" class="sticky">
-  <div class="nav_icons_home">
-    <div style="border-bottom: 1.5px solid #e6e16c;">
-        <a href="<?php echo e(route('alunoHome')); ?>"> <img src="<?php echo e(asset('images/home_icon.png')); ?>" width=23px> Home </a>
-    </div>
 
-    <div style="border-bottom: 1.5px solid #e6e16c;">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-            <img src="<?php echo e(asset('images/disciplinas_icon.png')); ?>" width=23px> Disciplinas
-        </button>
-        <ul class="dropdown-menu">
-            <?php $__currentLoopData = $cadeiras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $disciplina): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <li><a href="<?php echo e(route('pagDisciplina', ['cadeira_id' => $disciplina->id])); ?>"> <?php echo e($disciplina->nome); ?> </a></li>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </ul>
+<div class="main-container">
+    <h5>Disciplinas</h5>
+    <div class="box-container">
+        <?php $__currentLoopData = $disciplinas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $disciplina): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <div class="box">
+                <a href="<?php echo e(route('indexDisciplinaDocente', ['id' => $disciplina->id])); ?>"><?php echo e($disciplina->nome); ?> </a>
+            </div>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>        
     </div>
-
-    <div style="border-bottom: 1.5px solid #e6e16c;">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-            <img src="<?php echo e(asset('images/projetos_icon.png')); ?>" width=23px> Projetos
-        </button>
-        <ul class="dropdown-menu">
-            <?php $__currentLoopData = $projetos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proj): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <li><a href="<?php echo e(route('pagProjeto', ['id' => $proj->id])); ?>"> <?php echo e($proj->projeto); ?> | Grupo Nº<?php echo e($proj->numero); ?></a></li>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </ul>
-    </div>      
-  </div>
 </div>
 
-<div class="homeAluno">    
-  <div class="divDisciplinas">
-      <h4 style="margin-left:15px;">Disciplinas</h4>
-      <div class="disciplina">
-          <?php $__currentLoopData = $cadeiras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $disciplina): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-          <a href="<?php echo e(route('pagDisciplina', ['cadeira_id' => $disciplina->id])); ?>"> 
-              <div> 
-                  <?php echo e($disciplina->nome); ?> 
-              </div>
-          </a>
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-      </div>
-  </div>
-
-  <div class="divGrupos">
-    <div class="dropdown" style="height: 15px;">
-      <h4 style="margin:15px;margin-right: 30px;"> Projetos </h4>
-      <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="#" style="background-color: #eee9e9;">
-        <img src="<?php echo e(asset('images/filter.png')); ?>" class="filtro_projeto">
+<div class="main-container">
+    <h5>Projetos
+      <a id="dLabel" role="button" data-toggle="dropdown" class="btn-filter" data-target="#" href="#" style="background-color: #eee9e9;">
+        <i class="fas fa-filter"></i>
       </a>
       <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="position: absolute;top: 24px;right: 10px;">
         <div id="filtroProjeto">
@@ -67,9 +34,14 @@
           <button type='button' class="filtro_btn" onclick="filterProj()">Aplicar</button>
         </div>
       </ul>
+    </h5>
+    <div class="search">
+      <input type="search" class="search-input" placeholder="Pesquisar" results="0">
+      <i class="fas fa-search search-icon"></i>
     </div>
-      <?php echo $__env->make('aluno.filtroProjeto', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-  </div>
+    <div class="box-container" id="projetos">
+      <?php echo $__env->make('aluno.filtroProjeto', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>     
+    </div>
 </div>
 
 <script>
@@ -97,7 +69,7 @@
            'terminados': $('#terminados').is(":checked")
           },
         success: function(data){
-          $(".grupos").replaceWith(data.html);
+          $("#projetos").html(data.html);
         }
       });
     }
@@ -105,4 +77,4 @@
 
 <?php $__env->stopSection(); ?> 
 
-<?php echo $__env->make('layouts.app_aluno', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.app_docente', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

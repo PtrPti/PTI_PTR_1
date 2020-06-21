@@ -1,3 +1,13 @@
+.calendarBtn {
+    color: black;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    right: 130px;
+    top: 10px;
+    background: none;
+}
+
 #calendarContainer {
     position: absolute;
     width: 1000px;
@@ -49,4 +59,7 @@
 
 .undraggable {
     cursor: default !important;
+}
+
+@media only screen and (max-width: 600px) {
 }

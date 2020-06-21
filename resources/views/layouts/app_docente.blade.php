@@ -11,15 +11,19 @@
     <title>{{ config('app.name', 'WeGroup') }}</title>    
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/app_docente.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
     <!-- FontAwesome Icons -->
     <script src="https://kit.fontawesome.com/f12fb584ff.js" crossorigin="anonymous"></script>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app_docente.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/site.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- DatePicker -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -27,6 +31,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="{{ asset('css/datetimepicker.css') }}" rel="stylesheet">
     <script src="{{ asset('js/datetimepicker.js') }}"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
     <!-- Calendario Disponibilidades -->
     <link rel="stylesheet" href="{{ asset('fullcalendar/core/main.css') }}">
@@ -43,142 +48,97 @@
     <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+    <div class="notifications">
+        <i class="fas fa-bell fa-2x"></i>
+        <span class="notifNum">2</span>
+    </div>
+    <nav class="navsidebar">
+        <ul class="navsidebar-nav">
+            <li class="logo">
+                <a href="#" class="navsidebar-link">
+                    <span class="link-text logo-text">WeGroup</span>
+                </a>
+            </li>
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+            <li class="navsidebar-text">
+                <span>Olá, {{Auth::user()->getUserName()}}</span>
+            </li>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/docenteHome') }}">
-                        <img src="{{ asset('images/big_logo.png') }}" width=88px >
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Inicar Sessão</a></li>
-                            <li><a href="{{ route('registar') }}">Registo</a></li>
-                        @else
-                            <div class="logout_style">
-                                <a href="{{ url('/docenteProfile') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->nome }} <span class="caret"></span>
-                                </a>                          
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form> 
-                            </div>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <!-- <div>
-            <button class="footer-icon" ><i class="fas fa-comment fa-2x"></i></button>
-                {{ csrf_field() }}
-                <div class="user-wrapper">
-                    <div class="nav_chat">
-                        <p> Chat Geral </p>
-                    </div>
-
-
-                    <ul class="users">
-                    @foreach ($utilizadores as $utilizador)
-                        <li class="user" id="{{$utilizador->id}}">
-                        @if($utilizador->unread)
-                            <span class="pending">{{ $utilizador->unread }}</span>
-                        @endif
-
-                        <div class="media">
-                            <div class="media-left">
-                            <img src="{{ asset('images/user.png') }}" width=30px class="media-object">
-                            </div>
-                            <div class="media-body">
-                            <p class="username"> {{$utilizador->nome}}</p>
-                            <p class="email">{{$utilizador->email}}</p>
-                            </div>
-                        </div>
-                        </li>
+            <li class="navsidebar-item">
+                <a href="{{ route('homeDocente') }}" class="navsidebar-link">
+                <i class="fas fa-home fa-2x i-nav"></i>
+                <span class="link-text">Home</span>
+                </a>
+            </li>
+            <li class="navsidebar-item dropdown">
+                <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="navsidebar-link">
+                    <i class="fas fa-book fa-2x i-nav"></i>
+                    <span class="link-text">Disciplinas</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    @foreach($disciplinas as $d)                
+                        <li><a href="{{ route('indexDisciplinaDocente', ['id' => $d->id]) }}" class="item-link">{{$d->nome}}</a></li>
                     @endforeach
-                    </ul>
-                </div>
-                <div class="message-wrapper" id="messages">
-              
-                </div>
-            </div>
-        </div>
+                </ul>
+            </li>
+            <li class="navsidebar-item dropdown">
+                <a id="pLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="navsidebar-link">
+                    <i class="fas fa-clipboard-list fa-2x i-nav"></i>
+                    <span class="link-text">Projetos</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="pLabel">
+                    @foreach($projetos as $p)
+                        <li><a href="{{ route('id_projeto', ['id' => $p->id]) }}" class="item-link">{{$p->nome}}</a></li>
+                    @endforeach
+                </ul>
+            </li>
 
-        <script>
-            function openForm() {
-                document.getElementById("chat").style.display = "block";
-            }
-            function closeForm() {
-                document.getElementById("chat").style.display = "none";
-            }
-        </script> -->
+            <li class="navsidebar-item">
+                <a href="#" class="navsidebar-link">
+                <i class="fas fa-user fa-2x i-nav"></i>
+                <span class="link-text">Perfil</span>
+                </a>
+            </li>
 
+            <li class="navsidebar-item">
+                <a href="{{ route('logout') }}" class="navsidebar-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt fa-2x i-nav"></i>
+                    <span class="link-text">Logout</span>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </li>
+        </ul>
+    </nav>
+    <main>
         @yield('content')
+    </main>
+    <div class="chat">
+        <i class="fas fa-comment fa-2x chat_icon"></i>
+    </div>
 
-        <div class="chat_icon">
-            <img src="{{ asset('images/chat_icon.png') }}" width=40px>
+    <div class="chat_msgs">
+        <div class="user-wrapper">
+            <div class="headind_srch">
+                <div class="recent_heading">
+                    <h4>Conversas</h4>
+                </div>
+                <div class="srch_bar">
+                    <div class="stylish-input-group">
+                        <input type="text" class="search-bar" placeholder="Search" id="chat_search">
+                    </div>
+                </div>
+            </div>
+
+            <div class="inbox_chat">
+                @include('layouts.chat.users')
+            </div>
         </div>
 
-        <!-- Chat -->
-        {{ csrf_field() }}
-        <div class="chat_msgs">
-            <div class="user-wrapper">
-                <div class="headind_srch">
-                    <div class="recent_heading">
-                        <h4>Conversas</h4>
-                    </div>
-                    <div class="srch_bar">
-                        <div class="stylish-input-group">
-                            <input type="text" class="search-bar" placeholder="Search" id="chat_search">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inbox_chat">
-                    @foreach ($utilizadores as $utilizador)
-                        <div class="chat_list" id="{{$utilizador->id}}"> 
-                            @if($utilizador->unread)
-                                <span class="pending">{{ $utilizador->unread }}</span>
-                            @endif
-                            <div class="chat_people"> <!--quando clica tem de acrescentar a class active-->
-                                <div class="chat_img"> <img src="{{ asset('images/user.png') }}" width=30px class="media-object"> </div>
-                                <div class="chat_ib">
-                                    <h5>{{$utilizador->nome}}<span class="chat_date">{{ date('d M', strtotime($utilizador->lm_date)) }}</span></h5>
-                                    <p>{{ str_limit($utilizador->last_message, $limit = 35, $end = '...') }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="message-wrapper" id="messages"> <!-- <div class="mesgs"> -->
-            </div>
+        <div class="message-wrapper" id="messages">
         </div>
     </div>
 </body>
@@ -323,11 +283,11 @@
         });  
     });      
 
-// make a function to scroll down auto
-function scrollToBottomFunc() {
-    $('.message-wrapper').animate({
-        scrollTop: $('.message-wrapper').get(0).scrollHeight
-    }, 50);
-}
+    // make a function to scroll down auto
+    function scrollToBottomFunc() {
+        $('.message-wrapper').animate({
+            scrollTop: $('.message-wrapper').get(0).scrollHeight
+        }, 50);
+    }
 </script>
 </html>
