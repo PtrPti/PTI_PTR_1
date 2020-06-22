@@ -41,56 +41,109 @@
     <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 </head>
 <body>
-    <div class="notifications">
-        <i class="fas fa-bell fa-2x"></i>
-        <!-- <span class="notifNum">2</span> -->
-    </div>
+    @if (!Auth::user()->isAdmin())
+        <div class="notifications">
+            <i class="fas fa-bell fa-2x"></i>
+            <!-- <span class="notifNum">2</span> -->
+        </div>
+    @endif
     <nav class="navsidebar">
         <ul class="navsidebar-nav">
             <li class="logo">
-                <a href="#" class="navsidebar-link">
-                    <span class="link-text logo-text">WeGroup</span>
-                </a>
+                @if (!Auth::user()->isAdmin())
+                    <a href="{{ route('home') }}" class="navsidebar-link">
+                        <span class="link-text logo-text">WeGroup</span>
+                    </a>
+                @else
+                    <a href="{{ route('homeAdmin') }}" class="navsidebar-link">
+                        <span class="link-text logo-text">WeGroup</span>
+                    </a>
+                @endif
             </li>
 
             <li class="navsidebar-text">
                 <span>Olá, {{Auth::user()->getUserName()}}</span>
             </li>
 
-            <li class="navsidebar-item">
-                <a href="{{ route('home') }}" class="navsidebar-link">
-                <i class="fas fa-home fa-2x i-nav"></i>
-                <span class="link-text">Home</span>
-                </a>
-            </li>
-            <li class="navsidebar-item dropdown">
-                <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
-                        aria-expanded="false" class="navsidebar-link">
-                    <i class="fas fa-book fa-2x i-nav"></i>
+            @if (!Auth::user()->isAdmin())
+                <li class="navsidebar-item">
+                    <a href="{{ route('home') }}" class="navsidebar-link">
+                    <i class="fas fa-home fa-2x i-nav"></i>
+                    <span class="link-text">Home</span>
+                    </a>
+                </li>
+                <li class="navsidebar-item dropdown">
+                    <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false" class="navsidebar-link">
+                        <i class="fas fa-book fa-2x i-nav"></i>
+                        <span class="link-text">Disciplinas</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        @foreach($disciplinas as $d)                
+                            <li><a href="{{ route('disciplina', ['id' => $d->id]) }}" class="item-link">{{$d->nome}}</a></li>
+                        @endforeach
+                    </ul>
+                </li>
+                <li class="navsidebar-item dropdown">
+                    <a id="pLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false" class="navsidebar-link">
+                        <i class="fas fa-clipboard-list fa-2x i-nav"></i>
+                        <span class="link-text">Projetos</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="pLabel">
+                        @foreach($projetos as $p)
+                            @if (Auth::user()->isProfessor())
+                                <li><a href="{{ route('disciplina', ['id' => $p->cadeira_id, 'tab' => 1, 'proj' => $p->id]) }}" class="item-link">{{$p->nome}}</a></li>
+                            @else
+                                <li><a href="{{ route('projeto', ['id' => $p->grupo_id]) }}" class="item-link">{{$p->nome}}</a></li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </li>
+            @else
+                <li class="navsidebar-item">
+                    <a href="{{ route('homeAdmin') }}" class="navsidebar-link">
+                    <i class="fas fa-home fa-2x i-nav"></i>
+                    <span class="link-text">Home</span>
+                    </a>
+                </li>
+                <li class="navsidebar-item">
+                    <a href="{{ route('getAnosLetivos') }}" class="navsidebar-link">
+                    <i class="fas fa-graduation-cap fa-2x i-nav"></i>
+                    <span class="link-text">Anos letivos</span>
+                    </a>
+                </li>
+                <li class="navsidebar-item">
+                    <a href="{{ route('getSemestres') }}" class="navsidebar-link">
+                    <i class="fas fa-graduation-cap fa-2x i-nav"></i>
+                    <span class="link-text">Semestres</span>
+                    </a>
+                </li>
+                <li class="navsidebar-item">
+                    <a href="{{ route('getDepartamentos') }}" class="navsidebar-link">
+                    <i class="fas fa-graduation-cap fa-2x i-nav"></i>
+                    <span class="link-text">Departamentos</span>
+                    </a>
+                </li>
+                <li class="navsidebar-item">
+                    <a href="{{ route('getCursos') }}" class="navsidebar-link">
+                    <i class="fas fa-graduation-cap fa-2x i-nav"></i>
+                    <span class="link-text">Cursos</span>
+                    </a>
+                </li>
+                <li class="navsidebar-item">
+                    <a href="{{ route('getCadeiras') }}" class="navsidebar-link">
+                    <i class="fas fa-graduation-cap fa-2x i-nav"></i>
                     <span class="link-text">Disciplinas</span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dLabel">
-                    @foreach($disciplinas as $d)                
-                        <li><a href="{{ route('disciplina', ['id' => $d->id]) }}" class="item-link">{{$d->nome}}</a></li>
-                    @endforeach
-                </ul>
-            </li>
-            <li class="navsidebar-item dropdown">
-                <a id="pLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
-                        aria-expanded="false" class="navsidebar-link">
-                    <i class="fas fa-clipboard-list fa-2x i-nav"></i>
-                    <span class="link-text">Projetos</span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="pLabel">
-                    @foreach($projetos as $p)
-                        @if (Auth::user()->isProfessor())
-                            <li><a href="{{ route('disciplina', ['id' => $p->cadeira_id, 'tab' => 1, 'proj' => $p->id]) }}" class="item-link">{{$p->nome}}</a></li>
-                        @else
-                            <li><a href="{{ route('projeto', ['id' => $p->grupo_id]) }}" class="item-link">{{$p->nome}}</a></li>
-                        @endif
-                    @endforeach
-                </ul>
-            </li>
+                    </a>
+                </li>
+                <li class="navsidebar-item">
+                    <a href="{{ route('getUtilizadores') }}" class="navsidebar-link">
+                    <i class="fas fa-users fa-2x i-nav"></i>
+                    <span class="link-text">Utilizadores</span>
+                    </a>
+                </li>
+            @endif
 
             <li class="navsidebar-item">
                 <a href="#" class="navsidebar-link">
@@ -113,36 +166,39 @@
     <main>
         @yield('content')
     </main>
-    <div class="chat">
-        <i class="fas fa-comment fa-2x chat_icon"></i>
-    </div>
+    @if (!Auth::user()->isAdmin())
+        <div class="chat">
+            <i class="fas fa-comment fa-2x chat_icon"></i>
+        </div>
 
-    <div class="chat_msgs">
-        <div class="user-wrapper">
-            <div class="headind_srch">
-                <div class="recent_heading">
-                    <h4>Conversas</h4>
-                </div>
-                <div class="srch_bar">
-                    <div class="stylish-input-group">
-                        <input type="text" class="search-bar" placeholder="Search" id="chat_search">
+        <div class="chat_msgs">
+            <div class="user-wrapper">
+                <div class="headind_srch">
+                    <div class="recent_heading">
+                        <h4>Conversas</h4>
+                    </div>
+                    <div class="srch_bar">
+                        <div class="stylish-input-group">
+                            <input type="text" class="search-bar" placeholder="Search" id="chat_search">
+                        </div>
                     </div>
                 </div>
+
+                <div class="inbox_chat">
+                    @include('layouts.chat.users')
+                </div>
             </div>
 
-            <div class="inbox_chat">
-                @include('layouts.chat.users')
+            <div class="message-wrapper" id="messages">
             </div>
         </div>
-
-        <div class="message-wrapper" id="messages">
-        </div>
-    </div>
+    @endif
 
     <div class="gritter">
         <h5 class="gritter-title"></h5>
     </div>
 </body>
+@if (!Auth::user()->isAdmin())
 <script>
     var receiver_id = '';
     var my_id = "{{ Auth::id() }}";
@@ -290,4 +346,5 @@
         }, 50);
     }
 </script>
+@endif
 </html>

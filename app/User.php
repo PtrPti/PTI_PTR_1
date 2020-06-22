@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->perfil()->pluck('id')->contains(2);
     }
 
+    public function isAdmin()
+    {
+        return $this->perfil()->pluck('id')->contains(3);
+    }
+
     public function perfil()
     {
         return $this->belongsTo('App\Perfil');

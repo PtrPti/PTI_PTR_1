@@ -19,14 +19,11 @@ class CreatePerfisTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('perfil_id')->unsigned();
-            $table->integer('departamento_id')->unsigned();
+            $table->integer('perfil_id')->unsigned();            
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('perfil_id')->references('id')->on('perfis')->onDelete('cascade');
-            $table->foreign('departamento_id')->references('id')->on('departamentos')->onDelete('cascade');
-        });
+            $table->foreign('perfil_id')->references('id')->on('perfis')->onDelete('cascade');        });
 
         Schema::table('cursos', function (Blueprint $table) {
             $table->integer('departamento_id')->unsigned();
@@ -46,9 +43,7 @@ class CreatePerfisTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['perfil_id']);
-            $table->dropForeign(['departamento_id']);
             $table->dropColumn('perfil_id');
-            $table->dropColumn('departamento_id');
         });
         Schema::table('cursos', function (Blueprint $table) {
             $table->dropForeign(['departamento_id']);

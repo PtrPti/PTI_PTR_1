@@ -17,8 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 //Login
 Route::get('/login', 'AuthController@getLogin')->name('login');
 
@@ -28,6 +26,54 @@ Route::post('/registar', 'AuthController@postRegistar')->name('registarPost');
 Route::get('/registar/getCursos', 'AuthController@changeDepartamentoId')->name('changeDepartamentoId');
 Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('changeCursoId');
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
+
+//---------------- ADMIN ----------------//
+Route::get('/Admin', 'AdminController@home')->name('homeAdmin')->middleware('checkUserRole:3');
+Route::get('/Admin/AnosLetivos', 'AdminController@getAnosLetivos')->name('getAnosLetivos')->middleware('checkUserRole:3');
+Route::get('/Admin/Semestres', 'AdminController@getSemestres')->name('getSemestres')->middleware('checkUserRole:3');
+Route::get('/Admin/Departamentos', 'AdminController@getDepartamentos')->name('getDepartamentos')->middleware('checkUserRole:3');
+Route::get('/Admin/Cursos', 'AdminController@getCursos')->name('getCursos')->middleware('checkUserRole:3');
+Route::get('/Admin/Disciplinas', 'AdminController@getCadeiras')->name('getCadeiras')->middleware('checkUserRole:3');
+Route::get('/Admin/Utilizadores', 'AdminController@getUtilizadores')->name('getUtilizadores')->middleware('checkUserRole:3');
+
+//---------------- NOVO ----------------//
+Route::get('/Home', 'HomeController@home')->name('home');
+Route::get('/filterProj', 'HomeController@filterProj');
+
+Route::get('/Home/Disciplina/{id}/{tab?}/{proj?}', 'DisciplinaController@index')->name('disciplina');
+Route::post('criarProjeto', 'DisciplinaController@criarProjeto')->middleware('checkUserRole:2');
+Route::post('addFileProjeto', 'DisciplinaController@addFileProjeto')->name('addFileProjeto')->middleware('checkUserRole:2');
+Route::post('addLinkProjeto', 'DisciplinaController@addLinkProjeto')->middleware('checkUserRole:2');
+
+Route::get('showGrupos', 'DisciplinaController@showGrupos');
+Route::post('addGrupo', 'DisciplinaController@addGrupo');
+Route::post('deleteGrupo','DisciplinaController@deleteGrupo')->middleware('checkUserRole:2');
+Route::post('removeUser', 'DisciplinaController@removeUser')->middleware('checkUserRole:1');
+Route::post('addUser', 'DisciplinaController@addUser')->middleware('checkUserRole:1');
+
+Route::post('addForumTopico', 'DisciplinaController@addForumTopico');
+Route::get('verMensagensForum', 'DisciplinaController@verMensagensForum');
+Route::post('replyForum', 'DisciplinaController@replyForum');
+
+Route::get('/Home/Disciplina/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
+
+Route::post('createTarefa', 'ProjetoController@createTarefa');
+Route::post('createPasta', 'ProjetoController@createPasta');
+Route::post('addFileGrupo', 'ProjetoController@addFileGrupo')->name('addFileGrupo');
+Route::post('addNotaGrupo', 'ProjetoController@addNotaGrupo');
+Route::post('addLinkGrupo', 'ProjetoController@addLinkGrupo');
+
+Route::get('pesquisarTarefas', 'ProjetoController@pesquisarTarefas');
+Route::get('editTarefa', 'ProjetoController@editTarefa');
+Route::post('editTarefaPost', 'ProjetoController@editTarefaPost');
+Route::post('checkTarefa', 'ProjetoController@checkTarefa');
+
+Route::post('addFileTarefa', 'ProjetoController@addFileTarefa')->name('addFileTarefa');
+Route::post('addLinkTarefa', 'ProjetoController@addLinkTarefa');
+Route::post('addNotaTarefa', 'ProjetoController@addNotaTarefa');
+
+Route::get('verFeedback', 'ProjetoController@verFeedback');
+Route::post('createFeedback', 'ProjetoController@createFeedback');
 
 //---------------- CHAT ----------------//
 Route::get('{route?}/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
@@ -54,43 +100,3 @@ Route::get('/projetosAluno/loadEvents/{grupo_id}', 'CalendarController@load')->n
 Route::post('/projetosAluno/createEvent/{title}/{start}/{end}/{allDay}/{grupo_id}', 'CalendarController@create')->name('createEvent');
 Route::post('/projetosAluno/updateEvents/{id}/{title}/{start}/{end}/{allDay}', 'CalendarController@update')->name('updateEvents');
 Route::post('/projetosAluno/deleteEvents/{id}', 'CalendarController@delete')->name('deleteEvents');
-
-
-//---------------- NOVO ----------------//
-Route::get('/Home', 'HomeController@home')->name('home');
-Route::get('/filterProj', 'HomeController@filterProj');
-
-Route::get('/Home/Disciplina/{id}/{tab?}/{proj?}', 'DisciplinaController@index')->name('disciplina');
-Route::post('criarProjeto', 'DisciplinaController@criarProjeto');
-Route::post('addFileProjeto', 'DisciplinaController@addFileProjeto')->name('addFileProjeto');
-Route::post('addLinkProjeto', 'DisciplinaController@addLinkProjeto');
-
-Route::get('showGrupos', 'DisciplinaController@showGrupos');
-Route::post('addGrupo', 'DisciplinaController@addGrupo');
-Route::post('deleteGrupo','DisciplinaController@deleteGrupo');
-Route::post('removeUser', 'DisciplinaController@removeUser');
-Route::post('addUser', 'DisciplinaController@addUser');
-
-Route::post('addForumTopico', 'DisciplinaController@addForumTopico');
-Route::get('verMensagensForum', 'DisciplinaController@verMensagensForum');
-Route::post('replyForum', 'DisciplinaController@replyForum');
-
-Route::get('/Home/Disciplina/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
-
-Route::post('createTarefa', 'ProjetoController@createTarefa');
-Route::post('createPasta', 'ProjetoController@createPasta');
-Route::post('addFileGrupo', 'ProjetoController@addFileGrupo')->name('addFileGrupo');
-Route::post('addNotaGrupo', 'ProjetoController@addNotaGrupo');
-Route::post('addLinkGrupo', 'ProjetoController@addLinkGrupo');
-
-Route::get('pesquisarTarefas', 'ProjetoController@pesquisarTarefas');
-Route::get('editTarefa', 'ProjetoController@editTarefa');
-Route::post('editTarefaPost', 'ProjetoController@editTarefaPost');
-Route::post('checkTarefa', 'ProjetoController@checkTarefa');
-
-Route::post('addFileTarefa', 'ProjetoController@addFileTarefa')->name('addFileTarefa');
-Route::post('addLinkTarefa', 'ProjetoController@addLinkTarefa');
-Route::post('addNotaTarefa', 'ProjetoController@addNotaTarefa');
-
-Route::get('verFeedback', 'ProjetoController@verFeedback');
-Route::post('createFeedback', 'ProjetoController@createFeedback');
