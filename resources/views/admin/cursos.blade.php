@@ -23,6 +23,4 @@
     </tbody>
 </table>
 
-{{ $cursos->links() }}
-
 @endsection
