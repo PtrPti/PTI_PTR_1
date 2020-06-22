@@ -143,7 +143,6 @@
         <h5 class="gritter-title"></h5>
     </div>
 </body>
-
 <script>
     var receiver_id = '';
     var my_id = "{{ Auth::id() }}";
