@@ -56,7 +56,7 @@
                 </div>
             @endforeach
         @else
-            @include('novo.filtroProjeto')
+            @include('filtroProjeto')
         @endif
     </div>
 </div>
