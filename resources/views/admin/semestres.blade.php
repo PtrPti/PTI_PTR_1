@@ -2,6 +2,10 @@
 
 @section('tables')
 
+<div class="row-title title-admin">
+    <h2>Semestres</h2>
+</div>
+
 <table class="adminTable">
     <thead>
         <tr>
@@ -24,5 +28,7 @@
         @endforeach
     </tbody>
 </table>
+
+{{$semestres->links()}}
 
 @endsection

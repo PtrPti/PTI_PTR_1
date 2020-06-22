@@ -36,6 +36,10 @@ Route::get('/Admin/Cursos', 'AdminController@getCursos')->name('getCursos')->mid
 Route::get('/Admin/Disciplinas', 'AdminController@getCadeiras')->name('getCadeiras')->middleware('checkUserRole:3');
 Route::get('/Admin/Utilizadores', 'AdminController@getUtilizadores')->name('getUtilizadores')->middleware('checkUserRole:3');
 
+Route::get('editUser', 'AdminController@editUser')->middleware('checkUserRole:3');
+Route::post('editUserPost', 'AdminController@editUserPost')->middleware('checkUserRole:3');
+Route::post('addUserFile', 'AdminController@addUserFile')->name('addUserFile')->middleware('checkUserRole:3');
+
 //---------------- NOVO ----------------//
 Route::get('/Home', 'HomeController@home')->name('home');
 Route::get('/filterProj', 'HomeController@filterProj');

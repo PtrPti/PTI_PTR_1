@@ -19,12 +19,6 @@ class User extends Authenticatable
         'nome',
         'email',
         'password',
-        'numero',
-        'data_nascimento',
-        'avatar',
-        'nome', 
-        'email', 
-        'password'
     ];
 
     protected $guarded = ['id', 'perfil_id', 'departamento_id'];

@@ -2,6 +2,10 @@
 
 @section('tables')
 
+<div class="row-title title-admin">
+    <h2>Disciplinas</h2>
+</div>
+
 <table class="adminTable">
     <thead>
         <tr>
@@ -28,4 +32,5 @@
 </table>
 
 {{$cadeiras->links()}}
+
 @endsection
