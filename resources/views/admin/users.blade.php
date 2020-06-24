@@ -7,7 +7,7 @@
 </div>
 
 <div class="row-add admin">
-    <button id="add_button" class="add-button" data-toggle="modal" data-target="#addUserFile">Importar ficheiro</button>
+    <button id="add_button" class="add-button" data-toggle="modal" data-target="#addCsvFile">Importar ficheiro</button>
 </div>
 
 <table class="adminTable">
@@ -26,7 +26,7 @@
     <tbody>
         @foreach($users as $user) 
             <tr>
-                <td><i class="fas fa-edit" onclick="EditModal({{$user->userId}}, 'User', 'editUser')" role="button" data-toggle="modal" data-target="#editUser"></i></td>
+                <td><i class="fas fa-edit" onclick="EditModal({{$user->userId}}, 'User', 'Editar utilizador')" role="button" data-toggle="modal" data-target="#edit"></i></td>
                 <td>{{$user->nome}}</td>
                 <td>{{$user->numero}}</td>
                 <td>{{$user->email}}</td>
@@ -39,17 +39,17 @@
     </tbody>
 </table>
 
-<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
     <div class="modal-dialog admin" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editUserLabel">Editar utilizador<span id="titleAdd"></span></h5>
+                <h5 class="modal-title" id="editLabel"><span id="titleAdd">Adicionar utilizador</span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="#" id="editUserForm" enctype="multipart/form-data">
+                <form method="post" action="#" id="editForm" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <input type="hidden" name="user_id" id="user_id" value="">
                     
@@ -106,10 +106,15 @@
                             <span class="bar"></span>
                             <label for="perfil" class="labelTextModal">Perfil</label>
                         </div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#perfil").prop('disabled', true);
+                            });
+                        </script>
                     </div>
                     <div class="row row-btn">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-primary" onclick="Save('editUserForm', '/editUserPost')" style="display: inline-block !important">Guardar</button>
+                            <button type="button" class="btn btn-primary" onclick="Save('editForm', '/editUserPost')" style="display: inline-block !important">Guardar</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">Fechar</button>
                         </div>
                     </div>
@@ -119,24 +124,24 @@
     </div>
 </div>
 
-<div class="modal fade" id="addUserFile" tabindex="-1" role="dialog" aria-labelledby="addUserFileLabel" aria-hidden="true">
-    <div class="modal-dialog admin" role="document" style="min-width: 500px">
+<div class="modal fade" id="addCsvFile" tabindex="-1" role="dialog" aria-labelledby="addCsvFileLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addUserFileLabel">Editar utilizador<span id="titleAdd"></span></h5>
+                <h5 class="modal-title" id="addCsvFileLabel">Importar utilizadores<span id="titleAdd"></span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ route ('addUserFile') }}" id="addUserFileForm" enctype="multipart/form-data">
+                <form method="post" action="{{ route ('addUserCsv') }}" id="addCsvForm" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="row group">
                         <div class="col-md-12">
-                            <input type="file" id="file" name="file">
+                            <input type="file" id="csvfile" name="csvfile">
                             <span class="highlight"></span>
                             <span class="bar"></span>
-                            <label for="file" class="labelTextModal">Ficheiro</label>
+                            <label for="csvfile" class="labelTextModal">Ficheiro</label>
                         </div>
                     </div>
                     <div class="row group">
@@ -157,34 +162,5 @@
 </div>
 
 {{$users->links()}}
-
-<script>
-    function EditModal(id, url, trgForm) {
-        $.ajax({
-            url: '/edit' + url,
-            type: 'GET',
-            data : {'user_id': id},
-            success: function(data) {
-                var prevKey = "";
-                var prevValue = "";
-                $.each( data, function( key, value ) {
-                    if (value != null) {
-                        $('#'+key).val(value);
-                        $('#'+key).addClass('used');
-                    }
-                    if (jQuery.isPlainObject(value)) {
-                        $.each( value, function( id, name ) {
-                            $("#"+key).append('<option value="'+ id + '" id="'+ key +'_' + id + '">'+ name +' </option>');
-                        });
-                        $("#" + key + '_' + prevValue).prop('selected', true)
-                    }
-                    prevKey = key;
-                    prevValue = value;
-                });
-                $("#perfil").prop('disabled', true);
-            }
-        });
-    }
-</script>
 
 @endsection

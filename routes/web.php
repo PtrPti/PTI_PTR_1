@@ -36,9 +36,21 @@ Route::get('/Admin/Cursos', 'AdminController@getCursos')->name('getCursos')->mid
 Route::get('/Admin/Disciplinas', 'AdminController@getCadeiras')->name('getCadeiras')->middleware('checkUserRole:3');
 Route::get('/Admin/Utilizadores', 'AdminController@getUtilizadores')->name('getUtilizadores')->middleware('checkUserRole:3');
 
+Route::get('editAnoLetivo', 'AdminController@editAnoLetivo')->middleware('checkUserRole:3');
+Route::post('editAnoLetivoPost', 'AdminController@editAnoLetivoPost')->middleware('checkUserRole:3');
+Route::get('editSemestre', 'AdminController@editSemestre')->middleware('checkUserRole:3');
+Route::post('editSemestrePost', 'AdminController@editSemestrePost')->middleware('checkUserRole:3');
 Route::get('editUser', 'AdminController@editUser')->middleware('checkUserRole:3');
 Route::post('editUserPost', 'AdminController@editUserPost')->middleware('checkUserRole:3');
-Route::post('addUserFile', 'AdminController@addUserFile')->name('addUserFile')->middleware('checkUserRole:3');
+Route::get('editDepartamento', 'AdminController@editDepartamento')->middleware('checkUserRole:3');
+Route::post('editDepartamentoPost', 'AdminController@editDepartamentoPost')->middleware('checkUserRole:3');
+Route::get('editCurso', 'AdminController@editCurso')->middleware('checkUserRole:3');
+Route::post('editCursoPost', 'AdminController@editCursoPost')->middleware('checkUserRole:3');
+Route::get('editCadeira', 'AdminController@editCadeira')->middleware('checkUserRole:3');
+Route::post('editCadeiraPost', 'AdminController@editCadeiraPost')->middleware('checkUserRole:3');
+
+Route::post('addUserCsv', 'AdminController@addUserCsv')->name('addUserCsv')->middleware('checkUserRole:3');
+Route::post('addDepartamentoCsv', 'AdminController@addDepartamentoCsv')->name('addDepartamentoCsv');
 
 //---------------- NOVO ----------------//
 Route::get('/Home', 'HomeController@home')->name('home');

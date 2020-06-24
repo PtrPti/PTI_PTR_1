@@ -16,8 +16,10 @@ class CreateAnoLetivo extends Migration
         Schema::create('ano_letivo', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ano');
+            $table->integer('dia_inicio');
             $table->integer('mes_inicio');
             $table->integer('ano_inicio');
+            $table->integer('dia_fim');
             $table->integer('mes_fim');
             $table->integer('ano_fim');
         });

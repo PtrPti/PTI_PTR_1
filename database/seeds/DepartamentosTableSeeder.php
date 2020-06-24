@@ -12,8 +12,8 @@ class DepartamentosTableSeeder extends Seeder
     public function run()
     {
         $departamentos = [
-            ['nome' => 'Informática', 'cod_departamentos' => '1'],
-            ['nome' => 'Matemática', 'cod_departamentos' => '2'],
+            ['nome' => 'Informática', 'codigo' => '1'],
+            ['nome' => 'Matemática', 'codigo' => '2'],
         ];
 
         DB::table('departamentos')->insert($departamentos);

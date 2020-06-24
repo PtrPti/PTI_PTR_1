@@ -649,6 +649,7 @@ main>div {
   border-radius: 0;
   border-bottom: 1px solid #757575;
 }
+
 .display-input:focus, .select-input:focus { outline: none; }
 .area-input:focus { outline: none; border: 1px solid #757575; margin-top: 10px; }
 
@@ -679,7 +680,9 @@ main>div {
   transition: all 0.2s ease;
 }
 
-.display-input:focus ~ .labelTextModal, .display-input.used ~ .labelTextModal, .select-input:focus ~ .labelTextModal, .select-input.used ~ .labelTextModal {
+.display-input:focus ~ .labelTextModal, .display-input.used ~ .labelTextModal, 
+.checkbox-input:focus ~ .labelTextModal, .checkbox-input.used ~ .labelTextModal, 
+.select-input:focus ~ .labelTextModal, .select-input.used ~ .labelTextModal {
   top: -52px;
   font-size: 14px;
   left: 2px;
@@ -754,7 +757,8 @@ select:-moz-focusring {
 
 .bar:after { right: 50%; }
 
-.display-input:focus ~ .bar:before, .display-input:focus ~ .bar:after, .select-input:focus ~ .bar:before, .select-input:focus ~ .bar:after { width: 50%; }
+.display-input:focus ~ .bar:before, .display-input:focus ~ .bar:after, .select-input:focus ~ .bar:before, .select-input:focus ~ .bar:after,
+
 
 .highlight {
   position: absolute;

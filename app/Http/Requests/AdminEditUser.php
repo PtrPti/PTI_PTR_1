@@ -64,6 +64,7 @@ class AdminEditUser extends FormRequest
             'departamento.required' => 'O campo :attribute é obrigatório',
             'curso.required' => 'O campo :attribute é obrigatório',
             'data_nascimento.required' => 'O campo :attribute é obrigatório',
+            'data_nascimento.date_format' => 'O campo :attribute tem de ter o formato dd/mm/aaaa',
         ];
     }
 }

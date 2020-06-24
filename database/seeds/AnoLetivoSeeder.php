@@ -12,7 +12,7 @@ class AnoLetivoSeeder extends Seeder
     public function run()
     {
         $ano_letivo = [
-            ['ano' => '19/20', 'mes_inicio' => '9', 'ano_inicio' => '2019', 'mes_fim' => '6', 'ano_fim' => '2020'],
+            ['ano' => '19/20', 'dia_inicio' => '9', 'mes_inicio' => '9', 'ano_inicio' => '2019', 'dia_fim' => '27', 'mes_fim' => '7', 'ano_fim' => '2020'],
         ];
 
         DB::table('ano_letivo')->insert($ano_letivo);

@@ -7,6 +7,14 @@ $(window, document, undefined).ready(function () {
             $this.removeClass('used');
     });
 
+    $('.checkbox-input').blur(function () {
+        var $this = $(this);
+        if ($this.is(':checked'))
+            $this.addClass('used');
+        else
+            $this.removeClass('used');
+    });
+
     $('.select-input').blur(function () {
         var $this = $(this);
         if ($this.val()) {
@@ -107,4 +115,46 @@ function AddGritter(title, msg, type) {
     setInterval(function () {
         $('.gritter').fadeOut();
     }, 4000);
+}
+
+//-------------------------------ADMIN---------------------------------------
+function EditModal(id, url, modalTitle) {
+    $.ajax({
+        url: '/edit' + url,
+        type: 'GET',
+        data: { 'id': id },
+        success: function (data) {
+            $("#titleAdd").text(modalTitle);
+
+            var prevKey = "";
+            var prevValue = "";
+            $.each(data, function (key, value) {
+                // if (prevKey == "checkbox") {
+                //     if (value == 1) {
+                //         $('#' + key).prop('checked', true);
+                //         $('#' + key).val(true);
+                //         $('#' + key).addClass('used');
+                //     }
+                //     else {
+                //         $('#' + key).prop('checked', false);
+                //         $('#' + key).val(false);
+                //     }
+                // }
+                // else
+                if (value != null) {
+                    $('#' + key).val(value);
+                    $('#' + key).addClass('used');
+                }
+
+                if (jQuery.isPlainObject(value)) {
+                    $.each(value, function (id, name) {
+                        $("#" + key).append('<option value="' + id + '" id="' + key + '_' + id + '">' + name + ' </option>');
+                    });
+                    $("#" + key + '_' + prevValue).prop('selected', true)
+                }
+                prevKey = key;
+                prevValue = value;
+            });
+        }
+    });
 }
