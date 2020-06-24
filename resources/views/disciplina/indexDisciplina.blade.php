@@ -5,20 +5,20 @@
 <div class="row-title">
     <h2>{{$disciplina->nome}}</h2>
     @if (Auth::user()->isProfessor())
-        <button id="add" type="button" class="btn-title" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus"></i> Criar/Adicionar</button>
+        <button id="add" type="button" class="btn-title" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus"></i>{{ __('change.criar_adicionar') }} </button>
         <ul class="dropdown-menu" aria-labelledby="add">
-            <li><i class="fas fa-clipboard-list"></i><a role="button" data-toggle="modal" data-target="#addProject"> Projeto </a></li>        
+            <li><i class="fas fa-clipboard-list"></i><a role="button" data-toggle="modal" data-target="#addProject"> {{ __('change.projeto') }} </a></li>        
             <!-- <li><i class="fas fa-file"> </i> <a id="addFile" role="button" data-toggle="modal" data-target="#addFile"> Carregar Ficheiro </a></li> -->
         </ul>
     @endif
 </div>
 
 <div class="nav-tabs">
-    <div class="tab tab-active" id="tab1" onclick="changeTab(1)">Página Inicial </div>
-    <div class="tab" id="tab2" onclick="changeTab(2)"> Avaliação </div>
-    <div class="tab" id="tab3" onclick="changeTab(3)"> Horários </div>
+    <div class="tab tab-active" id="tab1" onclick="changeTab(1)">{{ __('change.paginaInicial') }}</div>
+    <div class="tab" id="tab2" onclick="changeTab(2)"> {{ __('change.avaliacao') }} </div>
+    <div class="tab" id="tab3" onclick="changeTab(3)"> {{ __('change.horarios') }} </div>
     @if (Auth::user()->isProfessor())
-        <div class="tab" id="tab4" onclick="changeTab(4)"> Alunos </div>
+        <div class="tab" id="tab4" onclick="changeTab(4)"> {{ __('change.alunos') }} </div>
     @endif
 </div>
 
@@ -27,11 +27,11 @@
 </div>
 
 <div class="tab-container" id="tab-2">
-    Avaliação
+{{ __('change.avaliacao') }}
 </div>
 
 <div class="tab-container" id="tab-3">
-    Horário
+{{ __('change.horario') }}
 </div>
 
 @if (Auth::user()->isProfessor())
@@ -57,7 +57,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProjectLabel">Criar projeto</h5>
+                    <h5 class="modal-title" id="addProjectLabel">{{ __('change.criarPorjeto') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -72,13 +72,13 @@
                                 <input type="text" name="nome" class="display-input" id="nome">
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="nome" class="labelTextModal">Nome do projeto</label>
+                                <label for="nome" class="labelTextModal">{{ __('change.nomeDoProjeto') }}</label>
                             </div>
                             <div class="col-md-6">
                                 <input type="number" name="n_elem" class="display-input" id="n_elem" min="1" max="10" value="0" required>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="n_elem" class="labelTextModal">Nº de elementos</label>
+                                <label for="n_elem" class="labelTextModal">{{ __('change.numDeElementos') }}</label>
                             </div>
                         </div>
                         <div class="row group">
@@ -86,20 +86,20 @@
                                 <input type="date" class="display-input" name="datainicio" id="datainicio">
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="datainicio" class="labelTextModal">Data de início</label>
+                                <label for="datainicio" class="labelTextModal">{{ __('change.dataInicio') }}</label>
                             </div>
                             <div class="col-md-6">
                                 <input type="date" class="display-input" name="datafim" id="datafim">
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="datafim" class="labelTextModal">Data de entrega</label>
+                                <label for="datafim" class="labelTextModal">{{ __('change.dataEntrega') }}</label>
                             </div>
                         </div>
                         <div class="row row-btn">
                             <div class="col-md-12">
                                 <!-- <button type="submit" class="btn btn-primary ">Criar</button> -->
-                                <button type="button" class="btn btn-primary" onclick="Save('project', '/criarProjeto')">Criar</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-primary" onclick="Save('project', '/criarProjeto')">{{ __('change.criar') }}</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('change.fechar') }}</button>
                             </div>
                         </div>
                     </form>

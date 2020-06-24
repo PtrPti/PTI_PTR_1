@@ -1,9 +1,9 @@
 <table class="tableForum">
     @isset($lista_alunos)
         <tr>
-            <th>Nome do aluno</th>
-            <th>Número</th>
-            <th>Email</th>
+            <th>{{ __('change.nomeAluno') }}</th>
+            <th>{{ __('change.numeroAluno') }}</th>
+            <th>{{ __('change.emailAluno') }}</th>
         </tr>
         @foreach ($lista_alunos as $user)
             <tr id="user_{{$user->id}}">

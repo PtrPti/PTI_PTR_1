@@ -1,15 +1,15 @@
 @if (Auth::user()->isAluno())
     <div class="row-add">
-        <button id="add_button" class="add-button" data-toggle="modal" data-target="#createFeedback">Pedir feedback</button>
+        <button id="add_button" class="add-button" data-toggle="modal" data-target="#createFeedback">{{ __('change.pedirFeedback') }}</button>
     </div>
 @endif
 
 <table class="tableForum">
     <tr>
         <th></th>
-        <th>Mensagem do Grupo</th>
-        <th>Data de Envio</th>
-        <th>Resposta</th>
+        <th>{{ __('change.mensagemGrupo') }}</th>
+        <th>{{ __('change.dataEnvio') }}</th>
+        <th>{{ __('change.resposta') }}</th>
     </tr>
     @foreach($feedbacks as $feedback)
         <tr>
@@ -26,7 +26,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createFeedbackLabel">Pedir feedback</h5>
+                    <h5 class="modal-title" id="createFeedbackLabel">{{ __('change.pedirFeedback') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -41,7 +41,8 @@
                                 <div class="dropdownFiles">
                                     <!-- <span class="hida">Escolher ficheiros</span> -->
                                     <p class="multiSel">
-                                        Escolha os ficheiros para feedback
+                                        {{ __('change.escolherFicheirosFeedback') }}
+                                        
                                     </p>
                                     <div class="multiSelect">
                                         <ul>
@@ -60,14 +61,14 @@
                                 <textarea name="message" cols="63" rows="3" class="area-input" maxlength="4000" id="message"></textarea>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="message" class="labelAreaModal">Mensagem</label>
+                                <label for="message" class="labelAreaModal">{{ __('change.mensagem') }}</label>
                             </div>
                         </div>
                         <div class="row row-btn">
                             <div class="col-md-12">
                                 <!-- <button type="submit" class="btn btn-primary ">Criar</button> -->
-                                <button type="button" class="btn btn-primary" onclick="Save('createFeedbackForm', '/createFeedback')">Criar</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-primary" onclick="Save('createFeedbackForm', '/createFeedback')">{{ __('change.criar') }}</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('change.fechar') }}</button>
                             </div>
                         </div>
                     </form>

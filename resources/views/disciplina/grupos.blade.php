@@ -6,11 +6,11 @@
     @if (Auth::user()->isProfessor())
         <button type="button" data-toggle="dropdown" id="add" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-            <i class="fas fa-plus"></i> Adicionar
+            <i class="fas fa-plus"></i> {{ __('change.adicionar') }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="add">
-            <li><i class="fas fa-file"> </i><a class="addToProj" role="button" data-toggle="modal" data-target="#addToProj" data-id="1">Carregar ficheiro</a></li>
-            <li><i class="fas fa-link"></i><a class="addToProj" role="button" data-toggle="modal" data-target="#addToProj" data-id="2">Adicionar site/link</a></li>
+            <li><i class="fas fa-file"> </i><a class="addToProj" role="button" data-toggle="modal" data-target="#addToProj" data-id="1">{{ __('change.carregar_ficheiro') }}</a></li>
+            <li><i class="fas fa-link"></i><a class="addToProj" role="button" data-toggle="modal" data-target="#addToProj" data-id="2">{{ __('change.adicionarSiteLink') }}</a></li>
         </ul>
     @endif
 
@@ -35,7 +35,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addToProjLabel">Criar/Adicionar <span id="titleAdd"></span></h5>
+                        <h5 class="modal-title" id="addToProjLabel">{{ __('change.criar_adicionar') }} <span id="titleAdd"></span></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -48,12 +48,12 @@
                             <div class="row group">
                                 <div class="col-md-12">
                                     <select name="typeAdd" id="typeAdd" class="select-input">
-                                        <option value="1">Ficheiro</option>
-                                        <option value="2">Site/link</option>
+                                        <option value="1">{{ __('change.ficheiro') }}</option>
+                                        <option value="2">{{ __('change.siteLink') }}</option>
                                     </select>
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
-                                    <label for="typeAdd" class="labelTextModal">Criar/adicionar</label>
+                                    <label for="typeAdd" class="labelTextModal">{{ __('change.criar_adicionar') }}</label>
                                 </div>
                             </div>
                             <div id="modalP-1" class="modal-tab"><!-- Ficheiro -->
@@ -62,13 +62,13 @@
                                         <input type="file" id="projetoFile" name="projetoFile">
                                         <span class="highlight"></span>
                                         <span class="bar"></span>
-                                        <label for="projetoFile" class="labelTextModal">Ficheiro</label>
+                                        <label for="projetoFile" class="labelTextModal">{{ __('change.ficheiro') }}</label>
                                     </div>
                                 </div>
                                 <div class="row row-btn">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary" style="display: inline-block !important">Criar</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">Fechar</button>
+                                        <button type="submit" class="btn btn-primary" style="display: inline-block !important">{{ __('change.criar') }}</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -89,8 +89,8 @@
                                 </div>
                                 <div class="row row-btn">
                                     <div class="col-md-12">
-                                        <button type="button" class="btn btn-primary" onclick="Save('projAdd', '/addLinkProjeto')" style="display: inline-block !important">Criar</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">Fechar</button>
+                                        <button type="button" class="btn btn-primary" onclick="Save('projAdd', '/addLinkProjeto')" style="display: inline-block !important">{{ __('change.criar') }}</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                                     </div>
                                 </div>
                             </div>                      
@@ -106,14 +106,14 @@
     <div class="row-add">
         @isset($projeto)
             @if (Auth::user()->isProfessor())
-                <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1)"><i class="fas fa-plus"></i> Adicionar grupo </button>
-                <button type="button" class="add-button" data-toggle="modal" data-target="#addGrupo"><i class="fas fa-plus"></i> Adicionar múltiplos grupos</button>            
+                <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1)"><i class="fas fa-plus"></i> {{ __('change.adicionarGrupo') }} </button>
+                <button type="button" class="add-button" data-toggle="modal" data-target="#addGrupo"><i class="fas fa-plus"></i> {{ __('change.adicionarmGrupo') }}</button>            
 
                 <div class="modal fade" id="addGrupo" tabindex="-1" role="dialog" aria-labelledby="addGrupo" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addGrupoLabel">Criar grupos</h5>
+                                <h5 class="modal-title" id="addGrupoLabel">{{ __('change.criarGrupos') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
@@ -129,13 +129,13 @@
                                             <input type="number" name="n_grupos" min="1" max="10" value="0" class="display-input" id="n_grupos">
                                             <span class="highlight"></span>
                                             <span class="bar"></span>
-                                            <label for="n_grupos" class="labelTextModal">Nº de grupos</label>
+                                            <label for="n_grupos" class="labelTextModal">{{ __('change.numGrupos') }}</label>
                                         </div>
                                     </div>
                                     <div class="row row-btn">
                                         <div class="col-md-12">
-                                            <button type="button" class="btn btn-primary" onclick="Save('addMultGrupos', '/addGrupo')">Criar</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                            <button type="button" class="btn btn-primary" onclick="Save('addMultGrupos', '/addGrupo')">{{ __('change.criar') }}</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('change.fechar') }}</button>
                                         </div>
                                     </div>
                                 </form>
@@ -145,7 +145,7 @@
                 </div>
             @else
                 @if ($pertenceGrupo == null)
-                    <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1, true)"><i class="fas fa-plus"></i> Adicionar grupo </button>
+                    <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1, true)"><i class="fas fa-plus"></i> {{ __('change.adicionarGrupo') }} </button>
                 @endif
             @endif
         @endisset
@@ -155,7 +155,7 @@
         @if (Auth::user()->isProfessor())
             @isset($grupos)
                 <tr>
-                    <th colspan="4">Grupos Inscritos: {{ sizeof($grupos) }}</th>
+                    <th colspan="4">{{ __('change.gruposInscritos') }}: {{ sizeof($grupos) }}</th>
                 </tr>
                 @foreach ($grupos as $grupo)
                 <tr id="grupo_{{$grupo->id}}">
@@ -164,7 +164,7 @@
                             <i class="fas fa-trash-alt" onclick="DeleteGroup(<?php echo $grupo->id ?>)"></i>
                         @endif
                     </td>
-                    <td><a href="{{ route('projeto', $grupo->id) }}">Grupo {{$grupo->numero}}</a></td>
+                    <td><a href="{{ route('projeto', $grupo->id) }}">{{ __('change.grupo') }} {{$grupo->numero}}</a></td>
                     <td>{{$grupo->total_membros}}/{{$projeto->n_max_elementos}}</td>
                     <td>{{$grupo->elementos}}</td>
                 <tr>
@@ -173,18 +173,18 @@
         @else
             @isset($grupos)
                 <tr>
-                    <th>Número do grupo</th>
-                    <th>Total de membros</th>
-                    <th colspan="2">Elementos</th>
+                    <th>{{ __('change.numeroDoGrupo') }}</th>
+                    <th>{{ __('change.totalDeMembros') }}</th>
+                    <th colspan="2">{{ __('change.elementos') }}</th>
                 </tr>
                 <?php $inGroup = False; ?>
                 @foreach ($grupos as $grupo)
                 <tr>
                     <td>
                         @if($pertenceGrupo != null && $grupo->id == $pertenceGrupo->grupo_id)
-                            <a href="{{ route('projeto', $grupo->id) }}">Grupo {{$grupo->numero}}</a>
+                            <a href="{{ route('projeto', $grupo->id) }}">{{ __('change.grupo') }} {{$grupo->numero}}</a>
                         @else
-                            Grupo {{$grupo->numero}}
+                        {{ __('change.grupo') }} {{$grupo->numero}}
                         @endif
                     </td>
                     <td>{{$grupo->total_membros}} / {{$projeto->n_max_elementos}}</td>
@@ -193,7 +193,7 @@
                         <?php 
                             if ($pertenceGrupo != NULL) {
                                 if($grupo->id == $pertenceGrupo->grupo_id) {
-                                    echo "<button type='button' class='buttun_group' onclick='removeUser($grupo->id, $projeto->id)'>Sair do Grupo</button>", csrf_field();
+                                    echo "<button type='button' class='buttun_group' onclick='removeUser($grupo->id, $projeto->id)'>{{ __('change.sairDoGrupo') }}</button>", csrf_field();
                                 }
                                 else {
                                     echo " ";
@@ -206,7 +206,7 @@
                                     $inGroup = True;
                                 }
                                 else {
-                                    echo "<button type='button' class='buttun_group' onclick='addUser($grupo->id, $projeto->id)'>Entrar no Grupo</button>", csrf_field();
+                                    echo "<button type='button' class='buttun_group' onclick='addUser($grupo->id, $projeto->id)'>{{ __('change.entrarnoGrupo') }}</button>", csrf_field();
                                 }
                             }            
                         ?>

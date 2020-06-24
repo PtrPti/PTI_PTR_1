@@ -2,10 +2,12 @@
 
 @section('content')
 <div class="container">
+
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Inicar Sessão</div>
+                <div class="panel-heading1">{{ __('change.iniciarSessao') }}</div>
 
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
@@ -43,7 +45,7 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Guardar informação
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('change.guardarInformacao') }}
                                     </label>
                                 </div>
                             </div>
@@ -52,15 +54,15 @@
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <a class="btn btn-link login-text" href="{{ route('password.request') }}">
-                                    Esqueceste-te da tua password?
+                                {{ __('change.esquecerPassword') }}
                                 </a>
                                 <p>
                                 <button type="submit" class="btn btn-primary login-text">
-                                    Inicar Sessão
+                                    {{ __('change.iniciarSessao') }}
                                 </button>
                                
-                               <a class="btn btn-link login-text" href="{{ route('register') }}">
-                                    Criar conta
+                               <a class="btn btn-link login-text" href="{{ url('/registar') }}">
+                                {{ __('change.criarConta') }}
                                 </a>
 
                             </div>

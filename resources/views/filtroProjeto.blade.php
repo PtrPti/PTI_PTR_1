@@ -1,6 +1,7 @@
 @if (isset($projetos))
     @if (count($projetos) == 0)
-        <p>Não está inscrito em nenhum projeto/grupo</p>
+        <p>{{ __('change.naoInscrito') }}</p>
+        
     @else
         @foreach ($projetos as $proj)
             <div class="box">            
@@ -10,12 +11,12 @@
                     <img onclick="changeVal(0, <?php echo $proj->usersGrupos_id ?>)" src="{{ asset('images/favorito2.png') }}" />
                 @endif
                 <a href="{{ route('projeto', ['id' => $proj->grupo_id]) }}">
-                    {{$proj->nome}} | Grupo Nº{{$proj->numero}}<br>
+                    {{$proj->nome}} | {{ __('change.grupo') }} {{ __('change.num') }}{{$proj->numero}}<br>
                     <small>{{$proj->cadeira}}</small>
                 </a>
             </div>
         @endforeach
     @endif
 @else
-    <p>Não existem resultados</p>
+    <p>{{ __('change.naoExistemResultados') }}</p>
 @endif

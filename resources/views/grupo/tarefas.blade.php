@@ -171,7 +171,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addToTarefaLabel">Criar/Adicionar à tarefa <span id="titleAdd"></span></h5>
+                    <h5 class="modal-title" id="addToTarefaLabel">{{ __('change.criarAdicionarTarefa') }} <span id="titleAdd"></span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -188,13 +188,13 @@
                         <div class="row group">
                             <div class="col-md-12">
                                 <select name="typeAddTarefa" id="typeAddTarefa" class="select-input">
-                                    <option value="1">Nota</option>
-                                    <option value="2">Site/link</option>
-                                    <option value="3">Ficheiro</option>
+                                    <option value="1">{{ __('change.nota') }}</option>
+                                    <option value="2">{{ __('change.siteLink') }}</option>
+                                    <option value="3">{{ __('change.ficheiro') }}</option>
                                 </select>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="typeAddTarefa" class="labelTextModal">Criar/adicionar</label>
+                                <label for="typeAddTarefa" class="labelTextModal">{{ __('change.criar_adicionar') }}</label>
                             </div>
                         </div>
                         
@@ -204,7 +204,7 @@
                                     <input type="text" class="display-input" id="nomeNota" name="nomeNota">
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
-                                    <label for="nomeNota" class="labelTextModal">Título</label>
+                                    <label for="nomeNota" class="labelTextModal">{{ __('change.titulo') }}</label>
                                 </div>
                             </div>
                             <div class="row group">
@@ -212,13 +212,13 @@
                                     <textarea name="notaTexto" cols="63" rows="3" class="area-input" maxlength="4000" id="notaTexto"></textarea>
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
-                                    <label for="notaTexto" class="labelAreaModal">Texto</label>
+                                    <label for="notaTexto" class="labelAreaModal">{{ __('change.texto') }}</label>
                                 </div>
                             </div>
                             <div class="row row-btn">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary" onclick="Save('tarefaAdd', '/addNotaTarefa')" style="display: inline-block !important">Criar</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">Fechar</button>
+                                    <button type="button" class="btn btn-primary" onclick="Save('tarefaAdd', '/addNotaTarefa')" style="display: inline-block !important">{{ __('change.criar') }}</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +228,7 @@
                                     <input type="text" class="display-input" id="nomeLink" name="nomeLink">
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
-                                    <label for="nomeLink" class="labelTextModal">Nome</label>
+                                    <label for="nomeLink" class="labelTextModal">{{ __('change.nome') }}</label>
                                 </div>
                                 <div class="col-md-6">
                                     <input type="text" class="display-input" id="url" name="url">
@@ -239,8 +239,8 @@
                             </div>
                             <div class="row row-btn">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary" onclick="Save('tarefaAdd', '/addLinkTarefa')" style="display: inline-block !important">Criar</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">Fechar</button>
+                                    <button type="button" class="btn btn-primary" onclick="Save('tarefaAdd', '/addLinkTarefa')" style="display: inline-block !important">{{ __('change.criar') }}</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -250,13 +250,13 @@
                                     <input type="file" id="grupoFile" name="grupoFile">
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
-                                    <label for="grupoFile" class="labelTextModal">Ficheiro</label>
+                                    <label for="grupoFile" class="labelTextModal">{{ __('change.ficheiro') }}</label>
                                 </div>
                             </div>
                             <div class="row row-btn">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary" style="display: inline-block !important">Criar</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">Fechar</button>
+                                    <button type="submit" class="btn btn-primary" style="display: inline-block !important">{{ __('change.criar') }}</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                                 </div>
                             </div>
                         </div>                     
@@ -271,7 +271,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editTarefaLabel">Criar/Adicionar <span id="titleAdd"></span></h5>
+                <h5 class="modal-title" id="editTarefaLabel">{{ __('change.criar_adicionar') }} <span id="titleAdd"></span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -292,24 +292,24 @@
                                 <input type="text" name="nomeTarefa" class="display-input edit" id="nomeTarefa">
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="nomeTarefa" class="labelTextModal">Nome da tarefa</label>
+                                <label for="nomeTarefa" class="labelTextModal">{{ __('change.nomeTarefa') }}</label>
                             </div>
                             <div class="col-md-6">
                                 <select name="membro" id="membro" class="select-input">
-                                    <option value="" id="membro_0">--Selecionar pessoa--</option>
+                                    <option value="" id="membro_0">--{{ __('change.selecionarPessoa') }}--</option>
                                     @foreach($membros as $membro)
                                         <option value="{{$membro->id}}" id="membro_{{$membro->id}}">{{$membro->nome}}</option>
                                     @endforeach
                                 </select>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="membro" class="labelTextModal">Atribuir a</label>
+                                <label for="membro" class="labelTextModal">{{ __('change.atribuirA') }}</label>
                             </div>
                         </div>
                         <div class="row group">
                             <div class="col-md-6">
                                 <select name="tarefaAssociada" id="tarefaAssociada" class="select-input">
-                                    <option value="" id="assoc_0">--Selecionar tarefa--</option>
+                                    <option value="" id="assoc_0">--{{ __('change.selecionarTarefa') }}--</option>
                                     @foreach($tarefasNaoFeitas as $tarefa)
                                         @if($tarefa->tarefa_id == null)
                                             <option value="{{$tarefa->id}}" id="assoc_{{$tarefa->id}}">{{$tarefa->nome}}</option>
@@ -318,19 +318,19 @@
                                 </select>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="mensagem" class="labelTextModal">Associar à tarefa</label>
+                                <label for="mensagem" class="labelTextModal">{{ __('change.associarATarefa') }}</label>
                             </div>
                             <div class="col-md-6">
                                 <input type="date" class="display-input" name="prazo" id="prazo">
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label for="mensagem" class="labelTextModal">Data de fim prevista</label>
+                                <label for="mensagem" class="labelTextModal">{{ __('change.dataFimPrevista') }}</label>
                             </div>
                         </div>
                         <div class="row row-btn">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-primary" onclick="Save('editTarefaForm', '/editTarefaPost')" style="display: inline-block !important">Guardar</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">Fechar</button>
+                                <button type="button" class="btn btn-primary" onclick="Save('editTarefaForm', '/editTarefaPost')" style="display: inline-block !important">{{ __('change.guardar') }}</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                             </div>
                         </div>
                     <!-- </div> -->
