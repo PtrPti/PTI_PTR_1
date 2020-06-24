@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\UserInfo;
 use App\Curso;
 use App\CursoCadeira;
 use App\GrauAcademico;
 use App\Departamento;
 use App\UserCadeira;
-use App\AnoLetivo;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -43,21 +41,18 @@ class AuthController extends Controller
             ]); 
     
             $user = new User;
-            $user_info = new UserInfo;
     
             $user->nome = $request->name;
             $user->email = $request->email;
             $user->password = bcrypt($request['password']);
+            $user->numero = $request->numero;
+            $user->departamento_id = $request->departamento_id;
+            $user->curso_id = $request->curso_id;
+            $user->grau_academico_id = $request->grau_academico_id;
+            $user->data_nascimento = DateTime::createFromFormat('d-m-Y', $request->data_nascimento);
             $user->perfil_id = $request->perfil_id;
+    
             $user->save();
-            
-            $user_info->user_id = $user->id;
-            $user_info->numero = $request->numero;
-            $user_info->departamento_id = $request->departamento_id;
-            $user_info->curso_id = $request->curso_id;
-            $user_info->grau_academico_id = $request->grau_academico_id;
-            $user_info->data_nascimento = DateTime::createFromFormat('Y-m-d', $request->data_nascimento);
-            $user_info->save();
 
             foreach ($request->cadeiras as $cadeira) {
                 $cadeira_insert = new UserCadeira;
@@ -65,7 +60,6 @@ class AuthController extends Controller
                 $cadeira_insert->user_id = $user->id;
                 $cadeira_insert->cadeira_id = $cadeira;
                 $cadeira_insert->favorito = 0;
-                $cadeira_insert->ano_letivo_id = AnoLetivo::getCurrentAcademicYearId(date("Y"), date('m'));
 
                 $cadeira_insert->save();
             }
@@ -84,26 +78,22 @@ class AuthController extends Controller
             ]); 
     
             $user = new User;
-            $user_info = new UserInfo;
     
             $user->nome = $request->name;
             $user->email = $request->email;
             $user->password = bcrypt($request['password']);
+            $user->numero = $request->numero;
+            $user->departamento_id = $request->departamento_id;
+            $user->data_nascimento = DateTime::createFromFormat('d-m-Y', $request->data_nascimento);
             $user->perfil_id = $request->perfil_id;
+    
             $user->save();
-
-            $user_info->user_id = $user->id;
-            $user_info->numero = $request->numero;
-            $user_info->departamento_id = $request->departamento_id;
-            $user_info->data_nascimento = DateTime::createFromFormat('d-m-Y', $request->data_nascimento);
-            $user_info->save();
 
             foreach ($request->cadeiras as $cadeira) {
                 $cadeira_insert = new UserCadeira;
 
                 $cadeira_insert->user_id = $user->id;
                 $cadeira_insert->cadeira_id = $cadeira;
-                $cadeira_insert->ano_letivo_id = AnoLetivo::getCurrentAcademicYearId(date("Y"), date('m'));
 
                 $cadeira_insert->save();
             }
