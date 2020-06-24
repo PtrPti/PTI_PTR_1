@@ -79,6 +79,27 @@ main>div {
   font-weight: bold;
 }
 
+.languages{
+  position: fixed;
+  top: 0;
+  right: 110px;
+  margin: 20px 30px 0 0;
+  cursor: pointer;
+}
+
+
+
+ .pt{
+
+  right: 110px;
+
+}
+
+ .en{
+
+  right: 170px;
+
+}
 .navsidebar {
   position: fixed;
   background-color: var(--bg-primary);
@@ -482,7 +503,7 @@ main>div {
 
 .row-title {
   padding-left: 10px;
-  /*! margin: 45px 0 25px 0; */
+  margin: 45px 0 25px 0;
 }
 
 .btn-title {
@@ -649,7 +670,6 @@ main>div {
   border-radius: 0;
   border-bottom: 1px solid #757575;
 }
-
 .display-input:focus, .select-input:focus { outline: none; }
 .area-input:focus { outline: none; border: 1px solid #757575; margin-top: 10px; }
 
@@ -680,9 +700,7 @@ main>div {
   transition: all 0.2s ease;
 }
 
-.display-input:focus ~ .labelTextModal, .display-input.used ~ .labelTextModal, 
-.checkbox-input:focus ~ .labelTextModal, .checkbox-input.used ~ .labelTextModal, 
-.select-input:focus ~ .labelTextModal, .select-input.used ~ .labelTextModal {
+.display-input:focus ~ .labelTextModal, .display-input.used ~ .labelTextModal, .select-input:focus ~ .labelTextModal, .select-input.used ~ .labelTextModal {
   top: -52px;
   font-size: 14px;
   left: 2px;
@@ -757,8 +775,7 @@ select:-moz-focusring {
 
 .bar:after { right: 50%; }
 
-.display-input:focus ~ .bar:before, .display-input:focus ~ .bar:after, .select-input:focus ~ .bar:before, .select-input:focus ~ .bar:after,
-
+.display-input:focus ~ .bar:before, .display-input:focus ~ .bar:after, .select-input:focus ~ .bar:before, .select-input:focus ~ .bar:after { width: 50%; }
 
 .highlight {
   position: absolute;
@@ -1184,109 +1201,6 @@ select:-moz-focusring {
   display: none;
 }
 
-.title-admin {
-  display: flex;
-}
-
-.title-admin h2 {
-  margin: auto;
-  margin-bottom: 30px;
-}
-
-.adminTable {
-  margin: auto;
-  border: 1px solid black;
-  border-radius: 10px;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.adminTable i {
-  cursor: pointer;
-}
-
-.adminTable tr:first-child th:first-child {
-  border-top-left-radius: 10px;
-}
-.adminTable tr:first-child th:last-child {
-  border-top-right-radius: 10px;
-}
-.adminTable tr:last-child td:first-child {
-  border-bottom-left-radius: 10px;
-}
-.adminTable tr:last-child td:last-child {
-  border-bottom-right-radius: 10px;
-}
-
-.adminTable tr:nth-child(even) {
-  background: #f5f5f5;
-}
-
-.adminTable thead th {
-  background: #339989;
-}
-
-.adminTable td, .adminTable th {
-  padding: 5px 20px;
-}
-
-.pagination {
-  flex: 100%;
-  margin-top: 15px;
-  justify-content: center;
-}
-
-.pagination a {
-  color: black;
-}
-
-.pagination a:hover {
-  color: black;
-}
-
-.pagination .prev {
-  border: 1px solid #339989;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  padding: 5px;
-  background: #f5f5f5;
-}
-
-.pagination .next {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  padding: 5px 20px;
-  background: #f5f5f5;
-}
-
-.pagination li {
-  border: 1px solid #339989;
-  border-left: none;
-  padding: 5px 10px;
-}
-
-.pagination .active {
-  background: #339989;
-  color: white;
-}
-
-.adminResults {
-  margin-top: 10px;
-  flex: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.modal-dialog.admin {
-  min-width: 50%;
-}
-
-.row-add.admin {
-  margin: 0;
-  margin-bottom: 15px;
-}
-
 /* Small screens */
 @media only screen and (max-width: 600px) {
   .notifications {
@@ -1357,9 +1271,10 @@ select:-moz-focusring {
     margin-left: 30px;
     width: 89%;
   }
-  
-  .modal-dialog.admin {
-    min-width: 98%;
+
+  .nome_profile{
+    position: fixed;
+    left: 50px;
   }
 }
 
@@ -1396,3 +1311,47 @@ select:-moz-focusring {
   .labelDescription { grid-area: 5 / 1 / 6 / 2; }
   .displayDescription { grid-area: 5 / 2 / 6 / 3; }
 }
+
+.nome_profile{
+  position: fixed;
+  left: 590px;
+}
+
+
+
+.t1{
+  position: fixed;
+  top: 120px;
+  left: 700px;
+}
+
+.t2{
+  position: fixed;
+  top: 160px;
+  left: 700px;
+
+}
+
+.t3{
+  position: relative;
+  top: 100px;
+}
+
+
+.informacao a{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-left: 390px;
+  cursor: pointer;
+
+}
+
+
+.btn_perfil{
+  position: fixed;
+  top: 230px;
+  left: 355px;
+  background-color: #398989;
+}
+
