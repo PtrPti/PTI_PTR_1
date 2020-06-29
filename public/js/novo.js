@@ -7,14 +7,6 @@ $(window, document, undefined).ready(function () {
             $this.removeClass('used');
     });
 
-    $('.checkbox-input').blur(function () {
-        var $this = $(this);
-        if ($this.is(':checked'))
-            $this.addClass('used');
-        else
-            $this.removeClass('used');
-    });
-
     $('.select-input').blur(function () {
         var $this = $(this);
         if ($this.val()) {
@@ -65,6 +57,25 @@ function changeTab(tab = 1, display = "block", breadcrum = "") {
         $('.breadcrum').text(breadcrum);
     }
 }
+
+
+function changeTab_perfil(tab = 1, display = "block", breadcrum = "") {
+    if ($('#tab_perfil' + tab).length > 0) {
+        $('.tab_perfil').removeClass('tab_perfil-active');
+        $('.tab-container_perfil').hide();
+        $('#tab_perfil' + tab).addClass('tab_perfil-active');
+        $('#tab_perfil-' + tab).show();
+        $('#tab_perfil-' + tab).css('display', display);
+        $('.breadcrum').text(breadcrum);
+    }
+    else {
+        $('.tab-container_perfil').hide();
+        $('#tab_perfil-' + tab).show();
+        $('#tab_perfil-' + tab).css('display', display);
+        $('.breadcrum').text(breadcrum);
+    }
+}
+
 
 function Save(form, url) {
     var form = $("#" + form);
@@ -117,44 +128,36 @@ function AddGritter(title, msg, type) {
     }, 4000);
 }
 
-//-------------------------------ADMIN---------------------------------------
-function EditModal(id, url, modalTitle) {
+
+function SaveEvaluation(form, url) {
+    var form = $("#" + form);
+    var formData = form.serialize();
     $.ajax({
-        url: '/edit' + url,
-        type: 'GET',
-        data: { 'id': id },
+        url: url,
+        type: 'POST',
+        data: formData,
+        error: function (data) {
+            if (data.responseJSON) {
+                var erros = Object.keys(data.responseJSON);
+
+                var msg = "";
+
+                erros.forEach(function (k) {
+                    var erro = data.responseJSON[k][0];
+                    msg = msg + "<span class='gritter-text'>" + erro + "</span>";
+                    $('#' + k).addClass('error');
+                });
+
+                AddGritter('Erro', msg, 'error');
+            }
+        },
         success: function (data) {
-            $("#titleAdd").text(modalTitle);
+            var msg = "<span class='gritter-text'>" + data.msg + "</span>";
 
-            var prevKey = "";
-            var prevValue = "";
-            $.each(data, function (key, value) {
-                // if (prevKey == "checkbox") {
-                //     if (value == 1) {
-                //         $('#' + key).prop('checked', true);
-                //         $('#' + key).val(true);
-                //         $('#' + key).addClass('used');
-                //     }
-                //     else {
-                //         $('#' + key).prop('checked', false);
-                //         $('#' + key).val(false);
-                //     }
-                // }
-                // else
-                if (value != null) {
-                    $('#' + key).val(value);
-                    $('#' + key).addClass('used');
-                }
+            AddGritter(data.title, msg, 'success');
 
-                if (jQuery.isPlainObject(value)) {
-                    $.each(value, function (id, name) {
-                        $("#" + key).append('<option value="' + id + '" id="' + key + '_' + id + '">' + name + ' </option>');
-                    });
-                    $("#" + key + '_' + prevValue).prop('selected', true)
-                }
-                prevKey = key;
-                prevValue = value;
-            });
-        }
+           
+            window.location.href = data.redirect;
+        },
     });
 }

@@ -1,5 +1,5 @@
 .registo-active {
-    background-color: #e6e16c !important;
+    background-color: #339989 !important;
 }
 
 #registoProfessor {
@@ -37,5 +37,33 @@
 }
 
 .login-text {
-    color: #636b6f;
+    color: black;
 }
+
+
+.position-ref {
+    position: relative;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.top-right {
+    position: fixed;
+    right: 130px;
+    top: 22px;
+}
+
+.links > a {
+    color: #636b6f;
+    padding: 0 35px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;

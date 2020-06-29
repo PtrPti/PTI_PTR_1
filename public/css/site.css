@@ -928,6 +928,10 @@ select:-moz-focusring {
   margin: 0;
 }
 
+.split-right .nav-tabs_perfil {
+  margin: 0;
+}
+
 .progress {
   margin: 10px;
   vertical-align: middle;
@@ -1273,9 +1277,33 @@ select:-moz-focusring {
   }
 
   .nome_profile{
-    position: fixed;
-    left: 50px;
+    margin-left: -400px;
+    margin-top: 14px;
+    font-size: 15px;
   }
+
+  .img_profile{
+    margin-left: -315px;
+    margin-top: 20px;
+    width: 110px;
+  }
+
+  .btn_perfil{
+    margin-left: -182px;
+    margin-top: -125px;
+    background-color: #398989;
+  }
+
+
+  .infPerfil{
+    
+    margin-left: -431px;
+    margin-top: -10px;
+
+  }
+
+
+
 }
 
 /* Large screens */
@@ -1310,14 +1338,18 @@ select:-moz-focusring {
   .displayPass { grid-area: 4 / 2 / 5 / 3; }
   .labelDescription { grid-area: 5 / 1 / 6 / 2; }
   .displayDescription { grid-area: 5 / 2 / 6 / 3; }
+
+
 }
+
+
+/* Perfil */
+
 
 .nome_profile{
   position: fixed;
   left: 590px;
 }
-
-
 
 .t1{
   position: fixed;
@@ -1325,28 +1357,36 @@ select:-moz-focusring {
   left: 700px;
 }
 
-.t2{
+.tnum{
   position: fixed;
   top: 160px;
   left: 700px;
+}
+
+.t2{
+position: relative;
+color: #636b6f;
+padding: 0 35px;
+font-size: 13px;
+font-weight: 600;
+letter-spacing: .1rem;
+text-decoration: none;
+text-transform: uppercase;
+
 
 }
 
 .t3{
   position: relative;
-  top: 100px;
+  top: 40px;
+
+
 }
 
 
-.informacao a{
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  margin-left: 390px;
-  cursor: pointer;
-
+.informacao a:hover{
+  color:#398989 ;
 }
-
 
 .btn_perfil{
   position: fixed;
@@ -1354,4 +1394,150 @@ select:-moz-focusring {
   left: 355px;
   background-color: #398989;
 }
+
+.infPerfil{
+  position: relative;
+ 
+  
+  
+ 
+}
+
+.primeira_coluna{
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: left;
+  width: 170px;
+}
+
+.tablePerfil{
+  margin-top: 5%;
+  width:0%;
+  margin-left: 500px;
+}
+
+.tablePerfil td{
+  height: 80px;
+}
+
+#changeUser, #changeEmail{
+  width: 50%;
+  margin-left: 35%;
+  padding-left: 4%;
+  padding-bottom: 3%;
+  margin-top: 16%;
+}
+
+#changePass{
+  width: 66%;
+  margin-left: 17%;
+  padding-left: 4%;
+  padding-bottom: 3%;
+}
+
+#editNome, #editEmail, #editPassword{
+  background-color: transparent;
+  border: 2px solid transparent;
+}
+
+
+.nav-tabs_perfil {
+  display: flex;
+  justify-content: space-around;
+}
+
+.tab_perfil {
+  padding: 0.5% 1.5% 0.5% 1.5%;
+  border-bottom: 1.5px solid #acc;
+  border-right: 1.5px solid #acc;
+  flex: 100%;
+  margin-top: 230px;
+}
+
+.tab_perfil-active, .tab_perfil:hover {
+  background: #339989;
+  cursor: pointer;
+  color: white;
+}
+
+.tab-container_perfil {
+  display: none;
+  background: lightgray;
+  padding:15px;
+ height: 350px;
+  flex-wrap: wrap;
+}
+
+.tab-container_perfil >div {
+  flex: 100%;
+}
+
+.tab-container_perfil a {
+  
+  color: black;
+  text-decoration: none;
+}
+
+.tab-container_perfil a:hover {
+  color: #339989;
+  text-decoration: none;
+}
+
+
+.avaliacao_titulo{
+  position: relative;
+  top: 30px;
+  color: #636b6f;
+  padding: 0 35px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+
+}
+
+.avaliacao_titulo1{
+  position: relative;
+  color: #636b6f;
+  padding: 0 35px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+
+}
+
+
+#w3review{
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.btn_avaliacao{
+
+  position: relative;
+  top: 10px;
+  left: 1130px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  
+
+}
+
+#result {
+  position: absolute;
+  width: 100%;
+  max-width:870px;
+  cursor: pointer;
+  overflow-y: auto;
+  max-height: 400px;
+  box-sizing: border-box;
+  z-index: 1001;
+ }
+
+
+
+
 
