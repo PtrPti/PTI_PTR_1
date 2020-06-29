@@ -403,6 +403,8 @@ class DisciplinaController extends Controller
 
 
     public function search_aluno(Request $request){
+        
+       
 
         $user_id = $_POST['user_id'];
         $cadeiraId = $_POST['cadeira_id'];
@@ -412,7 +414,7 @@ class DisciplinaController extends Controller
         $addUser->cadeira_id = $request->cadeira_id;
         $addUser->save();
 
-        return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id, 'tab'=> 4]);
+        return redirect()->action('DisciplinaController@index', ['id'=> $request->user_id, 'c_id'=> $request->cadeira_id,  'tab'=> 4]);
 
         
 

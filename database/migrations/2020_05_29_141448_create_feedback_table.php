@@ -37,11 +37,12 @@ class CreateFeedbackTable extends Migration
      * @return void
      */
     public function down()
-    {        
+    {
+        Schema::dropIfExists('feedback');
+
         Schema::table('feedback', function (Blueprint $table) {
             $table->dropForeign(['grupo_id']);
             
         });
-        Schema::dropIfExists('feedback');
     }
 }

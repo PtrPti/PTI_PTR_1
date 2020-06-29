@@ -36,7 +36,6 @@ class AddUserIdToFeedbackTable extends Migration
     {
         Schema::table('feedback', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
         });
     }
 }
