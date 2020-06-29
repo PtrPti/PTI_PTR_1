@@ -12,6 +12,7 @@ use App\UsersGrupos;
 use App\ProjetoFicheiro;
 use App\ForumDuvidas;
 use App\ForumMensagens;
+use App\Avaliacao;
 use App\Http\Controllers\ChatController;
 use App\Http\Requests\ProjectPost;
 use App\Http\Requests\ForumTopicoPost;
@@ -19,6 +20,7 @@ use App\Http\Requests\AddGrupoPost;
 use App\Http\Requests\ReplyForumPost;
 use App\Http\Requests\ProjetoFilePost;
 use App\Http\Requests\ProjetoLinkPost;
+use App\Http\Requests\CreateEvaluation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -103,7 +105,9 @@ class DisciplinaController extends Controller
             Session::flash('click', 'proj-' . $proj);
         }
 
-        return view('disciplina.indexDisciplina', compact('disciplinas', 'projetos', 'utilizadores', 'disciplina', 'docentes', 'projetos_cadeira', 'duvidas', 'lista_alunos', 'active_tab'));
+        $avaliacao = DB::table('avaliacao')->select('id','cadeira_id', 'mensagem_criterios')->where('cadeira_id', $id)->get();
+
+        return view('disciplina.indexDisciplina', compact('disciplinas', 'projetos', 'utilizadores', 'disciplina', 'docentes', 'projetos_cadeira', 'duvidas', 'lista_alunos', 'active_tab', 'avaliacao'));
     }
 
     public function criarProjeto(ProjectPost $request) {
@@ -308,4 +312,114 @@ class DisciplinaController extends Controller
         Session::flash('click', 'duvida-'.$request->duvida_id);
         return response()->json(['title' => 'Sucesso', 'msg' => 'Resposta enviada com sucesso', 'redirect' => '/Home/Disciplina/'. $request->cadeira_id . '/5' ]);
     }
+
+
+    public function addEvaluation(CreateEvaluation $request){
+
+        $msg_criterios = $_POST['mensagem_criterios'];
+        $cadeiraId = $_POST['cadeira_id'];
+        
+        $avaliacao = new Avaliacao;
+        $avaliacao->mensagem_criterios = $request->mensagem_criterios;
+        $avaliacao->cadeira_id = $request->cadeira_id;
+        $avaliacao->save();
+        //$avaliacaoId = $avaliacao->id;
+
+
+        //return response()->json(['title' => 'Sucesso', 'msg' => 'Critério criado com sucesso', 'redirect' => '/Home/Disciplina'. $request->cadeira_id . '/2' ]);
+        return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id, 'tab'=> 2]);
+    }
+
+
+    public function verAvaliacaoDisciplina(Request $request) {
+        $msg_criterios = $_GET['mensagem_criterios'];
+        $id_cadeira = $_GET['id_cadeira'];
+
+        $mensagem = DB::table('avaliacao')->select('mensagem_criterios')->where('cadeira_id', $id_cadeira )->first();
+
+        $data = array(
+            
+            'mensagem_criterios'  => $mensagem,
+            'id_cadeira'=> $id_cadeira
+            
+        );
+
+        $returnHTML = view('disciplina.indexDisciplina')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+        //return redirect()->action('DisciplinaController@indexDocente');
+    }
+
+
+    public function changeEvaluation(Request $request){
+        
+        $nova_mensagem = $_POST['nova_mensagem'];
+        $cadeiraId = $_POST['cadeira_id'];
+        $id = $_POST['id'];
+
+        $mensagem = DB::table('avaliacao')->select('mensagem_criterios')->where('id', $id)->where('cadeira_id', $cadeiraId )->update(['mensagem_criterios' => $nova_mensagem]);
+        return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id,  'tab'=> 2]);
+    }
+
+
+    public function eraiseEvaluation(Request $request){
+        $cadeiraId = $_POST['cadeira_id'];
+        $id = $_POST['id'];
+
+        $mensagem = DB::table('avaliacao')->select('mensagem_criterios')->where('id', $id)->where('cadeira_id', $cadeiraId )->delete();
+        
+        return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id,  'tab'=> 2]);
+    }
+
+
+    public static function search_alunos($cadeiras_id, $user_id, $departamento_id, $search = "") {
+        DB::statement(DB::raw('set @row_number=0'));
+
+        $utilizadores = DB::select(DB::raw(
+            "select 
+                (@row_number:=@row_number + 1) AS row,
+                u.id,
+                u.nome,
+                u.email,
+                count(m.id_read) as unread,
+                m2.message as last_message,
+                m2.created_at as lm_date
+            from users u
+            inner join users_cadeiras uc
+                on u.id = uc.user_id
+                and uc.cadeira_id in (:cadeiras)
+            left join messages m
+                on u.id = m.from
+                and id_read = 0 
+                and m.to = :u1
+            left join (select * from messages order by created_at desc) as m2
+                on (m2.from = :u2 and m2.to = u.id)
+                or (m2.to = :u3 and m2.from = u.id)
+            where u.id != :u4 and u.departamento_id = :d " . $search .
+            " group by u.id, u.nome, u.email"), ['cadeiras' => implode("','", $cadeiras_id), 'u1' => $user_id, 'u2' => $user_id, 'u3' => $user_id, 'u4' => $user_id, 'd' => $departamento_id]
+        );
+        
+        return $utilizadores;
+    }
+
+
+    public function search_aluno(Request $request){
+
+        $user_id = $_POST['user_id'];
+        $cadeiraId = $_POST['cadeira_id'];
+        
+        $addUser = new UserCadeira;
+        $addUser->user_id = $request->user_id;
+        $addUser->cadeira_id = $request->cadeira_id;
+        $addUser->save();
+
+        return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id, 'tab'=> 4]);
+
+        
+
+
+    }
+
+
+
+
 }
