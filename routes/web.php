@@ -92,6 +92,16 @@ Route::post('addUser', 'DisciplinaController@addUser');
 Route::post('addForumTopico', 'DisciplinaController@addForumTopico');
 Route::get('verMensagensForum', 'DisciplinaController@verMensagensForum');
 Route::post('replyForum', 'DisciplinaController@replyForum');
+Route::post('createEvaluation', 'DisciplinaController@addEvaluation')->name('createEvaluation');
+Route::get('verAvaliacaoDisciplina', 'DisciplinaController@verAvaliacaoDisciplina');
+Route::post('/changeEvaluation', 'DisciplinaController@changeEvaluation')->name('changeEvaluation');
+Route::post('/eraiseEvaluation', 'DisciplinaController@eraiseEvaluation')->name('eraiseEvaluation');
+
+Route::post('/addAluno', 'DisciplinaController@search_aluno')->name('addAluno');
+Route::get('7search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
+
+
+
 
 Route::get('/Home/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
 
@@ -113,4 +123,8 @@ Route::post('addNotaTarefa', 'ProjetoController@addNotaTarefa');
 Route::get('verFeedback', 'ProjetoController@verFeedback');
 Route::post('createFeedback', 'ProjetoController@createFeedback');
 
-Route::get('/Home/Perfil', 'PerfilController@perfilDocente')->name('perfil');
+Route::get('/Home/Perfil/{tab?}', 'PerfilController@perfilDocente')->name('perfil');
+Route::post('/changeNome', 'PerfilController@changeNome')->name('changeNome');
+Route::post('/changeEmail', 'PerfilController@changeEmail')->name('changeEmail');
+Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
+

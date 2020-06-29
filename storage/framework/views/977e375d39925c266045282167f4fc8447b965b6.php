@@ -123,8 +123,6 @@
                         <a href="<?php echo e(route('home')); ?>">Home</a>
                     <?php elseif(Auth::user()->isProfessor()): ?>
                         <a href="<?php echo e(route('home')); ?>">Home</a>
-                    <?php elseif(Auth::user()->isAdmin()): ?>
-                        <a href="<?php echo e(route('homeAdmin')); ?>">Home</a>
                     <?php else: ?>
                         <a href="<?php echo e(url('/login')); ?>">Iniciar Sessão</a>
                         <a href="<?php echo e(url('/registar')); ?>">Registo</a>

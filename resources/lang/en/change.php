@@ -105,7 +105,32 @@ return [
     'terminados'=> 'Finished',
     'voltarPaginaInicial'=> '< Come Back to Inicial Page',
     'estatuto'=> 'Statute',
-    'mudarImagemPerfil'=>'Change Profile Picture'
+    'mudarImagemPerfil'=>'Change Profile Picture',
+    'sobre'=>'About',
+    'pontos'=> 'Points',
+    'gerirConta'=> 'Manage Account',
+    'alterar'=> 'Change',
+    'altereNome'=> 'Change your Name',
+    'altereEmail'=> 'Change your Email',
+    'altereSuaPalavraPasse'=>'Change your Password',
+    'palavraPasseAtual'=> 'Your Actual Password',
+    'novaPalavraPasse'=> 'New Password',
+    'repetirPassword'=> 'Repeat new Password',
+    'insiraAquiTexto'=> 'Type your text here',
+    'insiraMetodosAvaliacao'=> 'Please type the evaluation method for your Students',
+    'submeterCriterios'=> 'Submit information',
+    'criarCriteriosDeAvaliacao'=> 'Create Evaluation criterion',
+    'criadoA'=> 'Created in:',
+    'editarMetodosAvaliacao'=> 'Edit the Evaluation information',
+    'apagar'=> 'Delete',
+    'temACertezaQueQuerApagar'=> 'Sure you want to delete this?',
+    'metodosAvaliacao' => 'Evaluation Methods',
+    'aindaNaoExistemMetodosDeAvaliacao'=> 'There are no evaluation methods yet',
+    'adicionarAlunos'=> 'Add Students',
+    'adicioneMaisAlunos'=> 'Add Students to your Subject',
+    'adicionarAluno'=> 'Add Student'
+
+
 
 
 

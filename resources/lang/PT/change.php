@@ -105,7 +105,31 @@ return [
     'terminados'=> 'Finished',
     'voltarPaginaInicial'=> '< Voltar à Página Inicial',
     'estatuto'=> 'Estatuto',
-    'mudarImagemPerfil'=>'Mudar Imagem Perfil'
+    'mudarImagemPerfil'=>'Mudar Imagem Perfil',
+    'sobre'=>'Sobre',
+    'pontos'=> 'Pontos',
+    'gerirConta'=> 'Gerir Conta',
+    'alterar'=> 'Alterar',
+    'altereNome'=> 'Altere o seu Nome',
+    'altereEmail'=> 'Altere o seu Mail',
+    'altereSuaPalavraPasse'=>'Altere a sua Palavra Passe',
+    'palavraPasseAtual'=> 'A sua Palavra Passe Atual',
+    'novaPalavraPasse'=> 'Nova Palavra Passe',
+    'repetirPassword'=> 'Repita a sua Palavra Passe',
+    'insiraAquiTexto'=> 'Insira aqui o seu Texto',
+    'insiraMetodosAvaliacao'=> 'Insira os Métodos de Avaliação para os seus Alunos',
+    'submeterCriterios'=> 'Submeter critérios de Avaliação',
+    'criarCriteriosDeAvaliacao'=> 'Criar critérios de Avaliação',
+    'criadoA'=> 'Criado a:',
+    'editarMetodosAvaliacao'=> 'Editar método de avaliação',
+    'apagar'=> 'Apagar',
+    'temACertezaQueQuerApagar'=> 'Tem a certeza que quer apagar?',
+    'metodosAvaliacao' => 'Métodos de Avaliação',
+    'aindaNaoExistemMetodosDeAvaliacao'=> 'Ainda não existem métodos de Avaliação',
+    'adicionarAlunos'=> 'Adicionar Alunos',
+    'adicioneMaisAlunos'=> 'Adicione alunos à sua Disciplina',
+    'adicionarAluno'=> 'Adicionar Aluno'
+
 
 
     
