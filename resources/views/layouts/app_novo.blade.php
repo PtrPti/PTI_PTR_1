@@ -63,34 +63,59 @@
                 <span class="link-text">Home</span>
                 </a>
             </li>
-            <li class="navsidebar-item dropdown">
-                <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
-                        aria-expanded="false" class="navsidebar-link">
-                    <i class="fas fa-book fa-2x i-nav"></i>
-                    <span class="link-text">Disciplinas</span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dLabel">
+
+            <li class="navsidebar-item">
+                <button class="dropdown-btn disc" id="dropdownDisc">
+                    <i class="fas fa-book fa-2x i-nav-disc"></i>
+                    <a style="margin-left: 33px;">Disciplinas</a>
+                    <i id="i-disciplina" class="caret-icon fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-container">
                     @foreach($disciplinas as $d)                
-                        <li><a href="{{ route('disciplina', ['id' => $d->id]) }}" class="item-link">{{$d->nome}}</a></li>
+                        <a href="{{ route('disciplina', ['id' => $d->id]) }}" >{{$d->nome}}</a>
                     @endforeach
-                </ul>
+                </div>
             </li>
-            <li class="navsidebar-item dropdown">
-                <a id="pLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
-                        aria-expanded="false" class="navsidebar-link">
-                    <i class="fas fa-clipboard-list fa-2x i-nav"></i>
-                    <span class="link-text">Projetos</span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="pLabel">
-                    @foreach($projetos as $p)
-                        @if (Auth::user()->isProfessor())
-                            <li><a href="{{ route('disciplina', ['id' => $p->cadeira_id, 'tab' => 1, 'proj' => $p->id]) }}" class="item-link">{{$p->nome}}</a></li>
-                        @else
-                            <li><a href="{{ route('projeto', ['id' => $p->grupo_id]) }}" class="item-link">{{$p->nome}}</a></li>
-                        @endif
-                    @endforeach
-                </ul>
+
+            <li class="navsidebar-item">
+                <button class="dropdown-btn proj" id="dropdownProj">
+                    <i class="fas fa-clipboard-list fa-2x i-nav-proj"></i>
+                    <a style="margin-left: 39px;">Projetos</a>
+                    <i id="i-projeto" class="caret-icon fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-container">
+                    @if (Auth::user()->isProfessor())
+                        @foreach($projetos as $p)
+                        <a href="{{ route('disciplina', ['id' => $p->cadeira_id, 'tab' => 1, 'proj' => $p->id]) }}">{{$p->nome}}</a>
+                        @endforeach
+                    @else
+                        @foreach($projetos as $p)
+                        <a href="{{ route('projeto', ['id' => $p->grupo_id]) }}">{{$p->nome}}</a>
+                        @endforeach
+                    @endif
+                </div>
             </li>
+
+
+
+            <!-- RESPONSIVE
+            <li class="navsidebar-item">
+                <button class="dropdown-btn disc" id="dropdownDisc">
+                   
+                </button>
+                <div id="containerDisc">
+
+                </div>
+            </li>
+
+            <li class="navsidebar-item">
+                <button class="dropdown-btn proj" id="dropdownProj">
+
+                </button>
+                <div id="containerProj">
+                    
+                </div>
+            </li> -->
 
             <li class="navsidebar-item">
                 <a href="#" class="navsidebar-link">

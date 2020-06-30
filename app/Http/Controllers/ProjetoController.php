@@ -14,6 +14,7 @@ use App\GrupoFicheiros;
 use App\UsersGrupos;
 use App\FeedbackFicheiros;
 use App\TarefasFicheiros;
+use App\AvaliacaoMembros;
 use App\Http\Controllers\ChatController;
 use App\Http\Requests\TarefaPost;
 use App\Http\Requests\TarefaPastaPost;
@@ -87,12 +88,14 @@ class ProjetoController extends Controller
         $first = GrupoFicheiros::where('link', null)->where('notas', null)->where('is_folder', false)->where('grupo_id', $id)->select('id', 'nome', DB::raw("'grupo' as tipo"));
         $tarefasIds = Tarefa::select('id')->where('grupo_id', $id)->get();
         $feedFicheiros = TarefasFicheiros::where('link', null)->where('notas', null)->whereIn('tarefa_id', $tarefasIds)->select('id', 'nome', DB::raw("'ficheiro' as tipo"))->union($first)->get();
+        #avaliacoes dos membros
+        $avaliacoes = AvaliacaoMembros::join('users', 'avaliacao_membros.membro_avaliado', '=', 'users.id')->where('grupo_id',$id)->select('users.id', 'users.nome','avaliacao_membros.avaliado_por', 'avaliacao_membros.grupo_id', 'avaliacao_membros.nota')->get();
 
         $active_tab = $tab;
         
-       Session::has('search') ? Session::forget('search') : null;
+        Session::has('search') ? Session::forget('search') : null;
 
-        return view('grupo.indexGrupo', compact('disciplinas','projetos','utilizadores','grupo','disciplina','projeto','tarefasNaoFeitas', 'tarefasFeitas', 'feedbacks', 'active_tab', 'ficheiros', 'subFicheiros', 'progresso', 'membros', 'pastasSelect', 'feedFicheiros'));
+        return view('grupo.indexGrupo', compact('disciplinas','projetos','utilizadores','grupo','disciplina','projeto','tarefasNaoFeitas', 'tarefasFeitas', 'feedbacks', 'active_tab', 'ficheiros', 'subFicheiros', 'progresso', 'membros', 'pastasSelect', 'feedFicheiros','avaliacoes'));
     }
 
     public function verFeedback(Request $request) {
@@ -381,4 +384,19 @@ class ProjetoController extends Controller
 
         return response()->json(['title' => 'Sucesso', 'msg' => 'Feedback criado com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/2' ]);
     }
-}
+
+    public function addAvaliacao (Request $request) {     
+        $lista_membros = UsersGrupos::where('grupo_id', $request->grupo_id)->get();
+        
+        for($i = 0; $i < sizeof($lista_membros) - 1; $i++)
+            print_r($lista_membros[$i]->user_id);
+            $aval = new AvaliacaoMembros;
+            $aval->avaliado_por = Auth::user()->getUser()->id;
+            $aval->membro_avaliado = $lista_membros[$i]->user_id;
+            $aval->grupo_id = $request->grupo_id;
+            $nota_membro = "nota_".$lista_membros[$i]->user_id;
+            $aval->nota = $request->$nota_membro;
+            $aval->save();
+        }
+
+    }
