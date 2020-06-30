@@ -75,7 +75,7 @@ Route::post('addForumTopico', 'DisciplinaController@addForumTopico');
 Route::get('verMensagensForum', 'DisciplinaController@verMensagensForum');
 Route::post('replyForum', 'DisciplinaController@replyForum');
 
-Route::get('/Home/Disciplina/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
+Route::get('/Home/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
 
 Route::post('createTarefa', 'ProjetoController@createTarefa');
 Route::post('createPasta', 'ProjetoController@createPasta');
@@ -94,3 +94,5 @@ Route::post('addNotaTarefa', 'ProjetoController@addNotaTarefa');
 
 Route::get('verFeedback', 'ProjetoController@verFeedback');
 Route::post('createFeedback', 'ProjetoController@createFeedback');
+
+Route::get('infoNota', 'ProjetoController@infoNota');

@@ -77,6 +77,14 @@ class ProjetoController extends Controller
         $tarefasNaoFeitas = DB::select('call GetTarefas(?,?,?)', [$id, false, null]);
         #tarefas feitas
         $tarefasFeitas = DB::select('call GetTarefas(?,?,?)', [$id, true, null]);
+        #ficheiros tarefas
+        $tarefasIds = Tarefa::select('id')->where('grupo_id', $id)->get();
+        $ids = [];
+        foreach ($tarefasIds as $tarefa) {
+            array_push($ids, $tarefa->id);
+        }
+        $ficheirosTarefas = TarefasFicheiros::whereIn('tarefa_id', $ids )->get();
+        
         #feedback
         $feedbacks = Feedback::where('grupo_id', $id)->orderBy('created_at', 'desc')->get();
         #membros
@@ -85,14 +93,15 @@ class ProjetoController extends Controller
         $progresso = $this->barraProgresso($id);
         #ficheiros p/ feedback
         $first = GrupoFicheiros::where('link', null)->where('notas', null)->where('is_folder', false)->where('grupo_id', $id)->select('id', 'nome', DB::raw("'grupo' as tipo"));
-        $tarefasIds = Tarefa::select('id')->where('grupo_id', $id)->get();
         $feedFicheiros = TarefasFicheiros::where('link', null)->where('notas', null)->whereIn('tarefa_id', $tarefasIds)->select('id', 'nome', DB::raw("'ficheiro' as tipo"))->union($first)->get();
 
         $active_tab = $tab;
         
        Session::has('search') ? Session::forget('search') : null;
 
-        return view('grupo.indexGrupo', compact('disciplinas','projetos','utilizadores','grupo','disciplina','projeto','tarefasNaoFeitas', 'tarefasFeitas', 'feedbacks', 'active_tab', 'ficheiros', 'subFicheiros', 'progresso', 'membros', 'pastasSelect', 'feedFicheiros'));
+        return view('grupo.indexGrupo', compact('disciplinas','projetos','utilizadores','grupo','disciplina','projeto',
+                                                'tarefasNaoFeitas', 'tarefasFeitas','ficheirosTarefas', 'feedbacks', 'active_tab', 'ficheiros', 
+                                                'subFicheiros', 'progresso', 'membros', 'pastasSelect', 'feedFicheiros'));
     }
 
     public function verFeedback(Request $request) {
@@ -160,9 +169,7 @@ class ProjetoController extends Controller
 
     public function editTarefa(Request $request) {
         $id = $_GET['tarefa_id'];
-
         $tarefa = Tarefa::find($id);
-
         return response()->json(array('nome'=>$tarefa->nome, 'membro'=>$tarefa->user_id, 'prazo'=>$tarefa->prazo, 'tarefaAssoc'=>$tarefa->tarefa_id));
     }
 
@@ -187,16 +194,18 @@ class ProjetoController extends Controller
     public function checkTarefa(Request $request) {
         $id = $_POST['id'];
         $val = $_POST['val'] == "false" ? FALSE : TRUE;
+        $finished_time = $val == TRUE ? date('Y-m-d H:i:s') : null; 
 
         if ($_POST['changePai'] == "true") {
             $pai = Tarefa::select('tarefa_id')->where('id',$id)->first();
-            Tarefa::where('id', $pai->tarefa_id)->update(['estado'=>$val]);
+            Tarefa::where('id', $pai->tarefa_id)->update(['estado'=>$val,'finished_at'=>$finished_time]);
         }
         //Atualiza as tarefas filhos para o estado do pai
-        Tarefa::where('tarefa_id', $id)->update(['estado'=>$val]);
+        Tarefa::where('tarefa_id', $id)->update(['estado'=>$val,'finished_at'=>$finished_time]);
 
         $tarefa = Tarefa::find($id);
         $tarefa->estado = $val;
+        $tarefa->finished_at = $finished_time;
         $tarefa->save();
 
         // Id do grupo
@@ -206,14 +215,16 @@ class ProjetoController extends Controller
         if ($_POST['update'] == "true") {
             $tarefasNaoFeitas = DB::select('call GetTarefas(?,?,?)', [$grupo->grupo_id, false, null]);
             $tarefasFeitas = DB::select('call GetTarefas(?,?,?)', [$grupo->grupo_id, true, null]);
+            #membros
+            $membros = UsersGrupos::join('users', 'users_grupos.user_id', '=', 'users.id')->select('users.id', 'users.nome')->where('users_grupos.grupo_id', $grupo->grupo_id)->get();
 
-            $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 'grupo_id' => $grupo->grupo_id);
+            $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 'grupo_id' => $grupo->grupo_id, 'membros'=>$membros);
             $returnHTML = view('grupo.tarefas')->with($data)->render();
-            return response()->json(array('html' => $returnHTML, 'title' => 'Sucesso', 'msg' => 'Tarefas alterada com sucesso'));
+            return response()->json(array('html' => $returnHTML, 'title' => 'Sucesso', 'msg' => 'Tarefa alterada com sucesso'));
         }
         else {
             return response()->json(array('progresso'=>$progresso, 'title' => 'Sucesso', 'msg' => 'Tarefa alterada com sucesso'));
-        }        
+        }
     }
 
     public function createPasta(TarefaPastaPost $request) {
@@ -380,5 +391,20 @@ class ProjetoController extends Controller
         }
 
         return response()->json(['title' => 'Sucesso', 'msg' => 'Feedback criado com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/2' ]);
+    }
+
+    public function infoNota(Request $request) {
+        $tipo = $_GET['tipo']; 
+        $id = $_GET['id'];  
+
+        if($tipo == 'grupo'){
+            $nota = GrupoFicheiros::where('id',$id)->get();
+        } else {
+            $nota = TarefasFicheiros::where('id',$id)->get();
+        }
+
+        $data = array('nota' => $nota);
+        $returnHTML = view('grupo.nota')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
     }
 }

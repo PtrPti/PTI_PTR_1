@@ -42,26 +42,46 @@
                 </label>
                 @if (Auth::user()->isAluno())
                     <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+                    <i class="fas fa-plus-circle addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i>
                 @else
                     <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
                 @endif
 
                 <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
                 <div class="ficheirosTarefa">
-                    @if (Auth::user()->isAluno())
-                        <div class='ficheiroTarefa'><i class="fas fa-file addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[3, {{$tnf->id}}]"></i></div>
-                        <div class='notaTarefa'><i class="fas fa-sticky-note addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i></div>
-                        <div class='linkTarefa'><i class="fas fa-link addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[2, {{$tnf->id}}]"></i></div>
-                    @endif
                     @if(!is_null($tnf->atribuido))
                         <div class='nameUser'><span>{{ $tnf->atribuido }}</span></div>
                     @endif
+                    <button type="button" data-toggle="dropdown" id='fich{{ $tnf->id }}' class='ficheirosbtn' aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-paperclip"></i><i class="fas fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="fich{{ $tnf->id }}">
+                        @foreach($ficheirosTarefas as $fich)
+                            @if($fich->tarefa_id === $tnf->id)
+                                <?php $temFich = 1 ?>
+                                @if(is_null($fich->link) and is_null($fich->notas))
+                                    <li><i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}">{{ explode("_", $fich->nome, 2)[1] }}</a></li>
+                                @elseif(!is_null($fich->link))
+                                    @if(!is_null($fich->nome))
+                                        <li><i class="fas fa-link"></i><a href="{{$fich->link}}" target="_blank">{{ str_limit($fich->link, $limit = 25, $end = '...') }}</a></li>
+                                    @else 
+                                        <li><i class="fas fa-link"></i><a href="{{$fich->link}}" target="_blank">{{$fich->nome}}</a></li>
+                                    @endif
+                                @else
+                                    <li><i class="fas fa-sticky-note"></i><a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link">{{$fich->nome}}</a></li>
+                                @endif
+                           @endif
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         <?php $tarefaPai++; ?>
     @else
             <div class="divSubTarefa {{$tnf->tarefa_id}}" id="{{$tnf->id}}">
+                <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+                <i class="fas fa-plus-circle addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i>
                 <div class='tarefa'>
+                    
                     <label class="containerCheckbox">{{ $tnf->nome }}
                         <input type="hidden" value="">
                         @if (Auth::user()->isAluno())
@@ -72,18 +92,13 @@
                         <span class="checkmark"></span>
                     </label>
                     @if (Auth::user()->isAluno())
-                        <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+                        
                     @else
                         <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
                     @endif
 
                     <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
                     <div class="ficheirosTarefa">
-                        @if (Auth::user()->isAluno())
-                            <div class='ficheiroTarefa'><i class="fas fa-file addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[3, {{$tnf->id}}]"></i></div>
-                            <div class='notaTarefa'><i class="fas fa-sticky-note addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i></div>
-                            <div class='linkTarefa'><i class="fas fa-link addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[2, {{$tnf->id}}]"></i></div>
-                        @endif
                         @if(!is_null($tnf->atribuido))
                             <div class='nameUser'><span>{{ $tnf->atribuido }}</span></div>
                         @endif
@@ -123,12 +138,19 @@
                         <span class="checkmark"></span>
                     </label>
                     <i class="fas fa-edit" onclick="EditTarefa({{$tf->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
-
                     <div class="ficheirosTarefa">
                         @if(!is_null($tf->atribuido))
                             <div class='nameUser'><span>{{ $tf->atribuido }}</span></div>
                         @endif
                     </div>
+                    <br >
+                    <span class='duracao'>
+                        <i class="far fa-clock"></i>
+                        <?php   $datetime1 = new DateTime($tf->created_at);
+                                $datetime2 = new DateTime($tf->finished_at);
+                                $interval = date_diff($datetime1, $datetime2);
+                                echo $interval->format('%a dias e %h horas'); ?>
+                    </span>
                 </div>
             <?php $tarefaPai++; ?>
         @else
@@ -150,6 +172,14 @@
                                 <div class='nameUser'><span>{{ $tf->atribuido }}</span></div>
                             @endif
                         </div>
+                        <br >
+                        <span class='duracao'>
+                            <i class="far fa-clock"></i>
+                            <?php   $datetime1 = new DateTime($tf->created_at);
+                                $datetime2 = new DateTime($tf->finished_at);
+                                $interval = date_diff($datetime1, $datetime2);
+                                echo $interval->format('%a dias e %h horas'); ?>
+                        </span>
                     </div>
                 </div>
                 @if(Session::has('search'))
@@ -421,7 +451,7 @@
             type: 'POST',
             dataType: 'json',
             success: 'success',
-            data: {'id': id, 'val': val, 'update': update, 'changePai': changePai },
+            data: {'id': id, 'val': val, 'update': update, 'changePai': changePai, "_token": "{{ csrf_token() }}", },
             success: function(data) {
                 if (update) {
                     $("#tab-1").html(data.html);
