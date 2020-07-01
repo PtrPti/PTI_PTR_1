@@ -1,0 +1,16 @@
+D:
+cd DjangoEnvs
+set WORKON_HOME=%cd%
+mkvirutalenv {envName}
+pip install django
+cd {env_name}
+django-admin startproject {env_name} .
+
+set WORKON_HOME=%cd%
+
+workon {envName} : polls
+deactivate
+
+----------POSTGRES A PARTIR DA CMD------
+psql -U postgres
+pass: VEs8wkii

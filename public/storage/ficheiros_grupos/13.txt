@@ -1,0 +1,5 @@
+Pode vir a ser preciso instalar o seguinte:
+composer install league/flysystem-aws-s3-v3 ~1.0
+composer install league/flysystem-sftp ~1.0
+
+para se poder usar o storage com o S3 driver e FTP

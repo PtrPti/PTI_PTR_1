@@ -116,7 +116,7 @@ Route::post('/changeEvaluation', 'DisciplinaController@changeEvaluation')->name(
 Route::post('/eraiseEvaluation', 'DisciplinaController@eraiseEvaluation')->name('eraiseEvaluation');
 
 Route::post('/addAluno', 'DisciplinaController@search_aluno')->name('addAluno');
-Route::get('7search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
+Route::get('/search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
 
 Route::get('/Home/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
 
