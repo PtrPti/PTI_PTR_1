@@ -100,6 +100,12 @@
                         @endforeach
                     </ul>
                 </li>
+                <li class="navsidebar-item">
+                    <a href="#" class="navsidebar-link">
+                    <i class="fas fa-user fa-2x i-nav"></i>
+                    <span class="link-text">Perfil</span>
+                    </a>
+                </li>
             @else
                 <li class="navsidebar-item">
                     <a href="{{ route('homeAdmin') }}" class="navsidebar-link">
@@ -143,14 +149,8 @@
                     <span class="link-text">Utilizadores</span>
                     </a>
                 </li>
+                <li class="navsidebar-item"></li>
             @endif
-
-            <li class="navsidebar-item">
-                <a href="#" class="navsidebar-link">
-                <i class="fas fa-user fa-2x i-nav"></i>
-                <span class="link-text">Perfil</span>
-                </a>
-            </li>
 
             <li class="navsidebar-item">
                 <a href="{{ route('logout') }}" class="navsidebar-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

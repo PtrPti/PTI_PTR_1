@@ -27,7 +27,6 @@ class AdminEditCurso extends FormRequest
             'nome' => 'required|string|max:255',
             'codigo' => 'required|string|max:255',
             'departamento' => 'required|int',
-            'ativo' => 'boolean',
         ];
     }
 
@@ -42,7 +41,6 @@ class AdminEditCurso extends FormRequest
             'nome' => 'Nome',
             'codigo' => 'Código',
             'departamento' => 'Departamento',
-            'ativo' => 'Ativo',
         ];
     }
 
@@ -57,7 +55,6 @@ class AdminEditCurso extends FormRequest
             'nome.required' => 'O campo :attribute é obrigatório',
             'codigo.required' => 'O campo :attribute é obrigatório',
             'departamento.required' => 'O campo :attribute é obrigatório',
-            'ativo.required' => 'O campo :attribute é obrigatório',
         ];
     }
 }

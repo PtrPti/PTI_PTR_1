@@ -8,4 +8,8 @@ class Curso extends Model
 {
     protected $table = 'cursos';
     public $timestamps = false;
+
+    protected $attributes = [
+        'active' => true,
+    ];
 }

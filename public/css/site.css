@@ -611,11 +611,15 @@ main>div {
   margin-top: 20px;
 }
 
-.row-btn button, .add-button, .btn-title {
+.row-btn button, .add-button, .btn-title, .row-btn a button {
   border: 2px solid #339989;
   background: #339989;
   border-radius: 12px;
   color: white;
+}
+
+.row-btn a button{
+  padding: .375rem .75rem;
 }
 
 .row-btn button:hover, .add-button:hover, .btn-title:hover {
@@ -648,6 +652,11 @@ main>div {
   border: none;
   border-radius: 0;
   border-bottom: 1px solid #757575;
+}
+
+.input-form {
+  height: 30px;
+  margin-top: 5px;
 }
 
 .display-input:focus, .select-input:focus { outline: none; }
@@ -735,6 +744,14 @@ select {
 select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #000;
+}
+
+.checkbox-form {
+  margin-top: 20px;
+}
+
+.checkLabel {
+  top: 0;
 }
 
 .bar {
@@ -1203,6 +1220,11 @@ select:-moz-focusring {
 
 .adminTable i {
   cursor: pointer;
+  color: black;
+}
+
+.adminTable i:hover {
+  color: #339989;
 }
 
 .adminTable tr:first-child th:first-child {
@@ -1284,6 +1306,46 @@ select:-moz-focusring {
 
 .row-add.admin {
   margin: 0;
+  margin-bottom: 15px;
+}
+
+.subGrid {
+  margin: auto;
+}
+
+.subGrid thead {
+  border-bottom: 1px solid black;
+  background: #339989;
+  text-align: center;
+}
+
+.subGrid tbody {
+  text-align: center;
+}
+
+.subGrid thead th {
+  padding: 5px 30px;
+  border-left: 1px solid rgb(0,0,0,0.5);
+}
+.subGrid thead th:first-child {
+  border-left: none;
+}
+
+.subGrid tbody td {
+  padding: 5px 30px 5px 30px;
+  border-bottom: 1px solid black;
+}
+
+.order {
+  cursor: url(../images/order.png), auto;
+}
+
+.search-select {
+  display: inline;
+  width: 300px;
+}
+
+.search-row {
   margin-bottom: 15px;
 }
 
