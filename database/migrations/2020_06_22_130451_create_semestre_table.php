@@ -28,7 +28,7 @@ class CreateSemestreTable extends Migration
         Schema::table('semestre', function (Blueprint $table) {
             $table->foreign('ano_letivo_id')->references('id')->on('ano_letivo')->onDelete('cascade');
         });
-    }
+     }
 
     /**
      * Reverse the migrations.
@@ -38,5 +38,5 @@ class CreateSemestreTable extends Migration
     public function down()
     {
         Schema::dropIfExists('semestre');
-    }
-}
+     }
+ }

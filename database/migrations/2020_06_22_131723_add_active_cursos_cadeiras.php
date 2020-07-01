@@ -20,7 +20,7 @@ class AddActiveCursosCadeiras extends Migration
         Schema::table('cadeiras', function (Blueprint $table) {
             $table->boolean('active')->default(true);
         });
-    }
+     }
 
     /**
      * Reverse the migrations.
@@ -36,5 +36,5 @@ class AddActiveCursosCadeiras extends Migration
         Schema::table('cadeiras', function (Blueprint $table) {
             $table->dropColumn('active');
         });
-    }
-}
+     }
+ }

@@ -19,7 +19,7 @@ class AlterDepartamentoCodigo extends Migration
         Schema::table('departamentos', function (Blueprint $table) {
             $table->string('codigo', 50);
         });
-    }
+     }
 
     /**
      * Reverse the migrations.
@@ -31,5 +31,5 @@ class AlterDepartamentoCodigo extends Migration
         Schema::table('departamentos', function (Blueprint $table) {
             //
         });
-    }
-}
+     }
+ }

@@ -21,10 +21,11 @@ class User extends Authenticatable
         'password',
         'numero',
         'data_nascimento',
-        'avatar',
+        'avatar'=>'image|mimes:png,jpg,jpeg|max:10000',
         'nome', 
         'email', 
         'password'
+        
     ];
 
     protected $guarded = ['id', 'perfil_id', 'departamento_id'];

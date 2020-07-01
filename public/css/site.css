@@ -1637,11 +1637,18 @@ select:-moz-focusring {
 }
 
 .btn_perfil{
-  position: fixed;
-  top: 230px;
-  left: 355px;
+  position: relative;
+  top: 200px;
   background-color: #398989;
 }
+
+.btn_update{
+  position: relative;
+  top: 200px;
+  background-color: #398989;
+}
+
+
 
 .infPerfil{
   position: relative;
@@ -1762,61 +1769,45 @@ select:-moz-focusring {
 }
 
 #result {
-  position: absolute;
-  width: 100%;
-  max-width:870px;
+  position: relative;
+  max-width: 870px;
   cursor: pointer;
   overflow-y: auto;
   max-height: 400px;
   box-sizing: border-box;
-  z-index: 1001;
-}
-
-.duracao{
-  font-size: smaller;
-  margin-left: 53px;
-  color: #877;
-}
-
-.ficheirosbtn{
-  border: 1px solid rgb(49, 49, 49);
-  border-radius: 2px;
-}
-
-.ficheirosbtn i{
-  color: rgb(33, 33, 33);
-}
-
-#mydiv {
-  position: absolute;
-  z-index: 9;
-  background-color: #43434e;
-  text-align: center;
-  border: 1px solid grey;
-  border-radius: 2px;
-}
-
-#mydivheader {
+  background-color: lightgray;
   padding: 10px;
-  cursor: move;
-  z-index: 10;
-  color: #fff;
-  border-bottom: 2px solid grey;
+  z-index: 1001;
+ }
+
+.link-class:hover{
+  background-color:#f1f1f1;
 }
 
-#notaText{
-  resize: none;
-  width: 190px;
-  height: 114px;
-  overflow-y: scroll;
-  background: none;
+.show_al{
+  padding: 2px;
   border: none;
-  padding:5px;
-  color: beige;
+  background: none;
+
+}
+.show_al:hover{
+  background-color:#339989 ;
+  color: white;
 }
 
-#notaText::placeholder{
-  color: grey;
+.search_alunos{
+  float: left;
+}
+
+#update_file{
+  position: relative;
+  top: 170px;
+  left: 30px;
+}
+
+.btn_perfil{
+  position: relative;
+  left:180px;
 }
 
 .closebtn{

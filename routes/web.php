@@ -115,8 +115,8 @@ Route::get('verAvaliacaoDisciplina', 'DisciplinaController@verAvaliacaoDisciplin
 Route::post('/changeEvaluation', 'DisciplinaController@changeEvaluation')->name('changeEvaluation');
 Route::post('/eraiseEvaluation', 'DisciplinaController@eraiseEvaluation')->name('eraiseEvaluation');
 
-Route::post('/addAluno', 'DisciplinaController@search_aluno')->name('addAluno');
 Route::get('/search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
+Route::post('/addAluno', 'DisciplinaController@addAluno')->name('addAluno');
 
 Route::get('/Home/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
 
@@ -169,4 +169,10 @@ Route::post('/projetosAluno/deleteEvents/{id}', 'CalendarController@delete')->na
 Route::get('/Home/Perfil/{tab?}', 'PerfilController@perfilDocente')->name('perfil');
 Route::post('/changeNome', 'PerfilController@changeNome')->name('changeNome');
 Route::post('/changeEmail', 'PerfilController@changeEmail')->name('changeEmail');
+<<<<<<< HEAD
 Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
+=======
+Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
+Route::post('/profile', 'PerfilController@updateAvatar')->name('profile_update');
+
+>>>>>>> Bea

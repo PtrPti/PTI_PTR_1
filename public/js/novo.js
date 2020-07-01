@@ -234,6 +234,11 @@ function SaveEvaluation(form, url) {
     });
 }
 
+function idUser(id) {
+    $("#id_user").val(id);
+    return true;
+}
+
 //-------------------------------ADMIN---------------------------------------
 function EditModal(id, url, modalTitle, id2 = "") {
     $.ajax({
@@ -368,3 +373,4 @@ function SearchInput(url, page = "", input = null) {
 // var x = window.matchMedia("(max-width: 600px)")
 // responsiveProjeto(x) 
 // x.addListener(responsiveProjeto)
+
