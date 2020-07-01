@@ -26,6 +26,13 @@
     <link href="{{ asset('css/site.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
+
+    <!-- DatePicker -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
     <!-- Calendario Disponibilidades -->
     <link rel="stylesheet" href="{{ asset('fullcalendar/core/main.css') }}">
     <link rel="stylesheet" href="{{ asset('fullcalendar/daygrid/main.css') }}">
@@ -41,28 +48,35 @@
     <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 </head>
 <body>
-    @if (!Auth::user()->isAdmin())
-        <div class="notifications">
-            <i class="fas fa-bell fa-2x"></i>
-            <!-- <span class="notifNum">2</span> -->
-        </div>
-    @endif
+    <div class="notifications">
+        <i class="fas fa-bell fa-2x"></i>
+        <!-- <span class="notifNum">2</span> -->
+    </div>
+
+    <div class="languages">
+        
+        <ul class="navbar-nav mr-auto">
+            
+                <li class="nav-item ">
+                
+                    <a class="pt" href="{{ url('locale/PT') }}" ><img src="{{ asset('images/pt.png') }}" width=29px ></a>
+                    <a class="en" href="{{ url('locale/EN') }}" ><img src="{{ asset('images/uk.png') }}" width=29px ></a>
+                </li>
+
+           
+        </ul>
+    </div>
+
     <nav class="navsidebar">
         <ul class="navsidebar-nav">
             <li class="logo">
-                @if (!Auth::user()->isAdmin())
-                    <a href="{{ route('home') }}" class="navsidebar-link">
-                        <span class="link-text logo-text">WeGroup</span>
-                    </a>
-                @else
-                    <a href="{{ route('homeAdmin') }}" class="navsidebar-link">
-                        <span class="link-text logo-text">WeGroup</span>
-                    </a>
-                @endif
+                <a href="#" class="navsidebar-link">
+                    <span class="link-text logo-text">WeGroup</span>
+                </a>
             </li>
 
             <li class="navsidebar-text">
-                <span>Olá, {{Auth::user()->getUserName()}}</span>
+                <span>{{ __('change.ola') }}, {{Auth::user()->getUserName()}}</span>
             </li>
 
             @if (!Auth::user()->isAdmin())
@@ -75,7 +89,7 @@
                 <li class="navsidebar-item">
                     <button class="dropdown-btn disc" id="dropdownDisc">
                         <i class="fas fa-book fa-2x i-nav-disc"></i>
-                        <a style="margin-left: 33px;">Disciplinas</a>
+                        <a style="margin-left: 33px;">{{ __('change.disciplinas') }}</a>
                         <i id="i-disciplina" class="caret-icon fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-container">
@@ -87,7 +101,7 @@
                 <li class="navsidebar-item">
                     <button class="dropdown-btn proj" id="dropdownProj">
                         <i class="fas fa-clipboard-list fa-2x i-nav-proj"></i>
-                        <a style="margin-left: 39px;">Projetos</a>
+                        <a style="margin-left: 39px;">{{ __('change.projetos') }}</a>
                         <i id="i-projeto" class="caret-icon fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-container">
@@ -123,7 +137,7 @@
                 <li class="navsidebar-item">
                     <a href="#" class="navsidebar-link">
                     <i class="fas fa-user fa-2x i-nav"></i>
-                    <span class="link-text">Perfil</span>
+                    <span class="link-text">{{ __('change.perfil') }}</span>
                     </a>
                 </li>
             @else
@@ -186,39 +200,36 @@
     <main>
         @yield('content')
     </main>
-    @if (!Auth::user()->isAdmin())
-        <div class="chat">
-            <i class="fas fa-comment fa-2x chat_icon"></i>
-        </div>
+    <div class="chat">
+        <i class="fas fa-comment fa-2x chat_icon"></i>
+    </div>
 
-        <div class="chat_msgs">
-            <div class="user-wrapper">
-                <div class="headind_srch">
-                    <div class="recent_heading">
-                        <h4>Conversas</h4>
-                    </div>
-                    <div class="srch_bar">
-                        <div class="stylish-input-group">
-                            <input type="text" class="search-bar" placeholder="Search" id="chat_search">
-                        </div>
-                    </div>
+    <div class="chat_msgs">
+        <div class="user-wrapper">
+            <div class="headind_srch">
+                <div class="recent_heading">
+                    <h4>{{ __('change.conversas') }}</h4>
                 </div>
-
-                <div class="inbox_chat">
-                    @include('layouts.chat.users')
+                <div class="srch_bar">
+                    <div class="stylish-input-group">
+                        <input type="text" class="search-bar" placeholder="Search" id="chat_search">
+                    </div>
                 </div>
             </div>
 
-            <div class="message-wrapper" id="messages">
+            <div class="inbox_chat">
+                @include('layouts.chat.users')
             </div>
         </div>
-    @endif
+
+        <div class="message-wrapper" id="messages">
+        </div>
+    </div>
 
     <div class="gritter">
         <h5 class="gritter-title"></h5>
     </div>
 </body>
-@if (!Auth::user()->isAdmin())
 <script>
     var receiver_id = '';
     var my_id = "{{ Auth::id() }}";
@@ -366,5 +377,4 @@
         }, 50);
     }
 </script>
-@endif
 </html>

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     var Calendar = FullCalendar.Calendar;
     var Draggable = FullCalendarInteraction.Draggable;
 
@@ -82,6 +82,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function ShowCalendar() {
+
+    
+      
     if ($('#calendarContainer').css('visibility') === 'visible') {
         $('#calendarContainer').css('visibility', 'hidden');
     }

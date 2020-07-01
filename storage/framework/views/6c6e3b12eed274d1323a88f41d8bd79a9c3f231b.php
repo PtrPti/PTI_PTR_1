@@ -54,7 +54,7 @@
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         <?php else: ?>
-            <?php echo $__env->make('filtroProjeto', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php echo $__env->make('novo.filtroProjeto', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <?php endif; ?>
     </div>
 </div>

@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'PT',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'PT',
 
     /*
     |--------------------------------------------------------------------------
@@ -224,6 +224,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+    ],
+
+
+    'languages' =>[
+        'PT' => 'Português',
+        'EN' => 'Inglês',
     ],
 
 ];

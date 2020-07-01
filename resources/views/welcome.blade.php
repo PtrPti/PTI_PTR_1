@@ -123,15 +123,13 @@
                         <a href="{{ route('home') }}">Home</a>
                     @elseif (Auth::user()->isProfessor())
                         <a href="{{ route('home') }}">Home</a>
-                    @elseif (Auth::user()->isAdmin())
-                        <a href="{{ route('homeAdmin') }}">Home</a>
                     @else
-                        <a href="{{ url('/login') }}">Iniciar Sessão</a>
-                        <a href="{{ url('/registar') }}">Registo</a>
+                        <a href="{{ url('/login') }}">{{ __('change.iniciarSessao') }}</a>
+                        <a href="{{ url('/registar') }}">{{ __('change.registo') }}</a>
                     @endif                  
                 @else
-                    <a href="{{ url('/login') }}">Iniciar Sessão</a>
-                    <a href="{{ url('/registar') }}">Registo</a>
+                    <a href="{{ url('/login') }}">{{ __('change.iniciarSessao') }}</a>
+                    <a href="{{ url('/registar') }}">{{ __('change.registo') }}</a>
                 @endif
                 </div>
             @endif

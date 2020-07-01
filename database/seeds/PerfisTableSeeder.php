@@ -14,7 +14,6 @@ class PerfisTableSeeder extends Seeder
         $perfis = [
             ['nome' => 'Aluno'],
             ['nome' => 'Professor'],
-            ['nome' => 'Administrador'],
         ];
 
         DB::table('perfis')->insert($perfis);

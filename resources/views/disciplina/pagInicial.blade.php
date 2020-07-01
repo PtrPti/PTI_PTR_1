@@ -1,18 +1,18 @@
-<h4><b>Docentes</b></h4>
+<h4><b>{{ __('change.docentes') }}</b></h4>
 <ul>
     @foreach($docentes as $docente)
         <li><b>{{$docente->nome}}</b> ({{$docente->email}})</li>
     @endforeach
 </ul>
 @if(sizeof($projetos_cadeira) > 0)
-    <h4><b>Projetos</b></h4>
+    <h4><b>{{ __('change.projetos') }}</b></h4>
     <ul>
         @foreach($projetos_cadeira as $p)
             <li><a href="#" onclick="ShowGrupos({{$p->id}});" id="proj-{{$p->id}}">{{$p->nome}}</a></li>
         @endforeach
     </ul>
 @endif
-<a href="#" onclick="changeTab(5)" id="btn-forumDuvidas">Fórum de dúvidas <i class="fas fa-users"></i></a>
+<a href="#" onclick="changeTab(5)" id="btn-forumDuvidas">{{ __('change.forumDuvidas') }} <i class="fas fa-users"></i></a>
 
 <script>
     function ShowGrupos(id) {

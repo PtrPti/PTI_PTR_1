@@ -1,9 +1,9 @@
 <div class="back-links">
-    <a href="#" onclick="changeTab(2)"><i class="fas fa-chevron-circle-left"></i> Voltar</a>
+    <a href="#" onclick="changeTab(2)"><i class="fas fa-chevron-circle-left"></i> {{ __('change.voltar') }}</a>
 </div>
 
 <div class="split-left">
-    <h5>Ficheiros submetidos</h5>
+    <h5>{{ __('change.ficheirosSubmetidos') }}</h5>
     <ul class="grupoFiles">
         @foreach($feedbackFicheiros as $ff)
             @if($ff->tf_id == null || $ff->tf_id == "")

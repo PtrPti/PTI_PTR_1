@@ -11,12 +11,28 @@
 |
 */
 
+
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
-
+    
 Auth::routes();
+    
+Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('locale/{locale}', )->name('languages');
+
+Route::get('locale/{locale}', function ($locale){
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
+    
 //Login
 Route::get('/login', 'AuthController@getLogin')->name('login');
 
@@ -78,24 +94,32 @@ Route::get('searchSemestres', 'AdminController@searchSemestres')->middleware('ch
 Route::get('searchDepartamentos', 'AdminController@searchDepartamentos')->middleware('checkUserRole:3');
 Route::get('searchCursos', 'AdminController@searchCursos')->middleware('checkUserRole:3');
 Route::get('searchUsers', 'AdminController@searchUsers')->middleware('checkUserRole:3');
+
 //---------------- NOVO ----------------//
 Route::get('/Home', 'HomeController@home')->name('home');
 Route::get('/filterProj', 'HomeController@filterProj');
 
 Route::get('/Home/Disciplina/{id}/{tab?}/{proj?}', 'DisciplinaController@index')->name('disciplina');
-Route::post('criarProjeto', 'DisciplinaController@criarProjeto')->middleware('checkUserRole:2');
-Route::post('addFileProjeto', 'DisciplinaController@addFileProjeto')->name('addFileProjeto')->middleware('checkUserRole:2');
-Route::post('addLinkProjeto', 'DisciplinaController@addLinkProjeto')->middleware('checkUserRole:2');
+Route::post('criarProjeto', 'DisciplinaController@criarProjeto');
+Route::post('addFileProjeto', 'DisciplinaController@addFileProjeto')->name('addFileProjeto');
+Route::post('addLinkProjeto', 'DisciplinaController@addLinkProjeto');
 
 Route::get('showGrupos', 'DisciplinaController@showGrupos');
 Route::post('addGrupo', 'DisciplinaController@addGrupo');
-Route::post('deleteGrupo','DisciplinaController@deleteGrupo')->middleware('checkUserRole:2');
-Route::post('removeUser', 'DisciplinaController@removeUser')->middleware('checkUserRole:1');
-Route::post('addUser', 'DisciplinaController@addUser')->middleware('checkUserRole:1');
+Route::post('deleteGrupo','DisciplinaController@deleteGrupo');
+Route::post('removeUser', 'DisciplinaController@removeUser');
+Route::post('addUser', 'DisciplinaController@addUser');
 
 Route::post('addForumTopico', 'DisciplinaController@addForumTopico');
 Route::get('verMensagensForum', 'DisciplinaController@verMensagensForum');
 Route::post('replyForum', 'DisciplinaController@replyForum');
+Route::post('createEvaluation', 'DisciplinaController@addEvaluation')->name('createEvaluation');
+Route::get('verAvaliacaoDisciplina', 'DisciplinaController@verAvaliacaoDisciplina');
+Route::post('/changeEvaluation', 'DisciplinaController@changeEvaluation')->name('changeEvaluation');
+Route::post('/eraiseEvaluation', 'DisciplinaController@eraiseEvaluation')->name('eraiseEvaluation');
+
+Route::post('/addAluno', 'DisciplinaController@search_aluno')->name('addAluno');
+Route::get('7search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
 
 Route::get('/Home/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
 
@@ -144,3 +168,8 @@ Route::get('/projetosAluno/loadEvents/{grupo_id}', 'CalendarController@load')->n
 Route::post('/projetosAluno/createEvent/{title}/{start}/{end}/{allDay}/{grupo_id}', 'CalendarController@create')->name('createEvent');
 Route::post('/projetosAluno/updateEvents/{id}/{title}/{start}/{end}/{allDay}', 'CalendarController@update')->name('updateEvents');
 Route::post('/projetosAluno/deleteEvents/{id}', 'CalendarController@delete')->name('deleteEvents');
+Route::get('/Home/Perfil/{tab?}', 'PerfilController@perfilDocente')->name('perfil');
+Route::post('/changeNome', 'PerfilController@changeNome')->name('changeNome');
+Route::post('/changeEmail', 'PerfilController@changeEmail')->name('changeEmail');
+Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
+
