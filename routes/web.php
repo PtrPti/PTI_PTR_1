@@ -40,6 +40,10 @@ Route::get('/registar/getCursos', 'AuthController@changeDepartamentoId')->name('
 Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('changeCursoId');
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
 
+//Perfil
+Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
+Route::post('/profile', 'PerfilController@updateAvatar')->name('profile_update');
+
 //---------------- ADMIN ----------------//
 Route::get('/Admin', 'AdminController@home')->name('homeAdmin')->middleware('checkUserRole:3');
 Route::get('/Admin/AnosLetivos', 'AdminController@getAnosLetivos')->name('getAnosLetivos')->middleware('checkUserRole:3');
@@ -169,10 +173,3 @@ Route::post('/projetosAluno/deleteEvents/{id}', 'CalendarController@delete')->na
 Route::get('/Home/Perfil/{tab?}', 'PerfilController@perfilDocente')->name('perfil');
 Route::post('/changeNome', 'PerfilController@changeNome')->name('changeNome');
 Route::post('/changeEmail', 'PerfilController@changeEmail')->name('changeEmail');
-<<<<<<< HEAD
-Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
-=======
-Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
-Route::post('/profile', 'PerfilController@updateAvatar')->name('profile_update');
-
->>>>>>> Bea
