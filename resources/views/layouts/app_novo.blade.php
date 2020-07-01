@@ -19,6 +19,8 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/novo.js') }}"></script>
 
+    
+
     <!-- FontAwesome Icons -->
     <script src="https://kit.fontawesome.com/f12fb584ff.js" crossorigin="anonymous"></script>
 
@@ -76,7 +78,9 @@
             </li>
 
             <li class="navsidebar-text">
+                <img class="img_profile" src="/images/{{ Auth::user()->avatar }}" width=37px style="position:fixed; left:25px; top:83px; border-radius: 50%; margin-right:10px;">
                 <span>{{ __('change.ola') }}, {{Auth::user()->getUserName()}}</span>
+                
             </li>
 
             <li class="navsidebar-item">

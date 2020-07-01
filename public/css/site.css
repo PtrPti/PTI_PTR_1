@@ -1389,11 +1389,18 @@ text-transform: uppercase;
 }
 
 .btn_perfil{
-  position: fixed;
-  top: 230px;
-  left: 355px;
+  position: relative;
+  top: 200px;
   background-color: #398989;
 }
+
+.btn_update{
+  position: relative;
+  top: 200px;
+  background-color: #398989;
+}
+
+
 
 .infPerfil{
   position: relative;
@@ -1527,15 +1534,47 @@ text-transform: uppercase;
 }
 
 #result {
-  position: absolute;
-  width: 100%;
-  max-width:870px;
-  cursor: pointer;
-  overflow-y: auto;
-  max-height: 400px;
-  box-sizing: border-box;
-  z-index: 1001;
+  position: relative;
+    max-width: 870px;
+    cursor: pointer;
+    overflow-y: auto;
+    max-height: 400px;
+    box-sizing: border-box;
+    background-color: lightgray;
+    padding: 10px;
+    z-index: 1001;
  }
+
+ .link-class:hover{
+  background-color:#f1f1f1;
+ }
+
+ .show_al{
+  padding: 2px;
+  border: none;
+  background: none;
+
+ }
+ .show_al:hover{
+   background-color:#339989 ;
+   color: white;
+ }
+
+ .search_alunos{
+   float: left;
+ }
+
+ #update_file{
+   position: relative;
+   top: 170px;
+   left: 30px;
+ }
+
+ .btn_perfil{
+   position: relative;
+   left:180px;
+ }
+
 
 
 

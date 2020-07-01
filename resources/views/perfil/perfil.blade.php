@@ -5,9 +5,16 @@
 <div class="row-title breadcrums">
     
     
-    <img class="img_profile" src="{{ asset('images/perfil_page.svg') }}" width=10% style="position:fixed; top:40px; left:350px;">
+    <img class="img_profile" src="/images/{{ $user->avatar }}" width=10% style="position:fixed; top:40px; left:350px; border-radius: 50%;">
     <h2 class="nome_profile">{{Auth::user()->getUserName()}}</h2>
-    <button class="btn btn-primary btn_perfil">{{ __('change.mudarImagemPerfil') }}</button>
+    <!-- <button class="btn btn-primary btn_perfil">{{ __('change.mudarImagemPerfil') }}</button> -->
+
+    <form enctype="multipart/form-data" method="post" action="{{route('profile_update')}}" >
+        
+        <input type="file" name="avatar" class="btn btn-primary btn_update " >
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="submit" class="btn btn-primary btn_update" value="{{ __('change.mudarImagemPerfil') }}">
+    </form>
 </div>
 
 <div class="informacao">

@@ -13,13 +13,13 @@ class AlterDepartamentoCodigo extends Migration
      */
     public function up()
     {
-        Schema::table('departamentos', function (Blueprint $table) {
-            $table->dropColumn('cod_departamentos');
-        });
-        Schema::table('departamentos', function (Blueprint $table) {
-            $table->string('codigo', 50);
-        });
-    }
+//         Schema::table('departamentos', function (Blueprint $table) {
+//             $table->dropColumn('cod_departamentos');
+//         });
+//         Schema::table('departamentos', function (Blueprint $table) {
+//             $table->string('codigo', 50);
+//         });
+     }
 
     /**
      * Reverse the migrations.
@@ -28,8 +28,8 @@ class AlterDepartamentoCodigo extends Migration
      */
     public function down()
     {
-        Schema::table('departamentos', function (Blueprint $table) {
-            //
-        });
-    }
-}
+//         Schema::table('departamentos', function (Blueprint $table) {
+//             //
+//         });
+     }
+ }

@@ -13,14 +13,14 @@ class AddActiveCursosCadeiras extends Migration
      */
     public function up()
     {
-        Schema::table('cursos', function (Blueprint $table) {
-            $table->boolean('active')->default(true);
-        });
+//         Schema::table('cursos', function (Blueprint $table) {
+//             $table->boolean('active')->default(true);
+//         });
 
-        Schema::table('cadeiras', function (Blueprint $table) {
-            $table->boolean('active')->default(true);
-        });
-    }
+//         Schema::table('cadeiras', function (Blueprint $table) {
+//             $table->boolean('active')->default(true);
+//         });
+     }
 
     /**
      * Reverse the migrations.
@@ -29,12 +29,12 @@ class AddActiveCursosCadeiras extends Migration
      */
     public function down()
     {
-        Schema::table('cursos', function (Blueprint $table) {
-            $table->dropColumn('active');
-        });
+//         Schema::table('cursos', function (Blueprint $table) {
+//             $table->dropColumn('active');
+//         });
 
-        Schema::table('cadeiras', function (Blueprint $table) {
-            $table->dropColumn('active');
-        });
-    }
-}
+//         Schema::table('cadeiras', function (Blueprint $table) {
+//             $table->dropColumn('active');
+//         });
+     }
+ }

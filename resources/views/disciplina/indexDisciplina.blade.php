@@ -200,49 +200,9 @@
 
     <div class="tab-container" id="tab-4">
 
-    <div class="row-add">
-        <button id="add_button" class="add-button" data-toggle="modal" data-target="#addAluno">{{ __('change.adicionarAlunos') }}</button>        
-    </div>
-
-
-    <div class="modal fade" id="addAluno" tabindex="-1" role="dialog" aria-labelledby="addAlunoLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h6 class="modal-title" id="addAlunoLabel">{{ __('change.adicioneMaisAlunos') }}</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> 
-                    <div class="modal-body">
-                        <form method="POST" action="{{route('addAluno')}}" id="addAlunoForm">
-                            {{csrf_field()}}
-                            <input type="hidden" name="cadeira_id" value="{{ $disciplina->id }}" required>
-                            <input type="hidden" name="user_id" value="{{ $utilizador->id }}" id="id_user" required>
-                            
-                            <div class="row group">
-                                <div class="col-md-12">
-                                    <div class="search">
-                                        <input type="text" name="search" id="search_aluno" placeholder="{{ __('change.pesquisar') }}">
-                                        <i class="fas fa-search search-icon"></i>
-                                    </div>
-                                    <div class="match-list">
-                                    </div>
-                                </div>
-                            </div>
-                    
-                            <div class="row row-btn">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary ">{{ __('change.adicionarAluno') }}</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('change.fechar') }}</button>
-                                </div>
-                            </div> 
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+    
     @include('disciplina.listaAlunos')
+    
     </div>
 @endif
 
@@ -346,49 +306,9 @@
         }
 
 
-    function id_user(id){
-        $("#id_user").val(id);
-        
-    }
+    
 
-/* 
-        $(document).on('keyup', '#search_aluno', function (e) {
-            var search = $('#search_aluno').val();
-            $.ajax({
-                type: "get",
-                url: "/search_alunos",
-                data: {'search': search},
-                cache: false,
-                success: function (data) {
-                    console.log(data.html)
-                    $(".match-list").empty();
-                    $(".match-list").html(data.html);
-                },
-            })
-        });  
-    });
- */
-    $(document).ready(function() {
-    $("#search_aluno").keyup(function() {
-        var dInput = $(this).val();
-        $.ajax({
-                type: "get",
-                url: "/search_alunos",
-                data: {'search': search},
-                cache: false,
-                success: function (data) {
-                    console.log(data.html)
-                    $(".match-list").empty();
-                    $(".match-list").html(data.html);
-                },
-            });
-
-    });
-}); 
-
-
-
-
+ 
    
 </script>
 

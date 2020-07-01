@@ -97,8 +97,8 @@ Route::get('verAvaliacaoDisciplina', 'DisciplinaController@verAvaliacaoDisciplin
 Route::post('/changeEvaluation', 'DisciplinaController@changeEvaluation')->name('changeEvaluation');
 Route::post('/eraiseEvaluation', 'DisciplinaController@eraiseEvaluation')->name('eraiseEvaluation');
 
-Route::post('/addAluno', 'DisciplinaController@search_aluno')->name('addAluno');
-Route::get('7search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
+Route::get('/search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
+Route::post('/addAluno', 'DisciplinaController@addAluno')->name('addAluno');
 
 
 
@@ -127,4 +127,5 @@ Route::get('/Home/Perfil/{tab?}', 'PerfilController@perfilDocente')->name('perfi
 Route::post('/changeNome', 'PerfilController@changeNome')->name('changeNome');
 Route::post('/changeEmail', 'PerfilController@changeEmail')->name('changeEmail');
 Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
+Route::post('/profile', 'PerfilController@updateAvatar')->name('profile_update');
 

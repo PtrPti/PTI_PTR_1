@@ -13,14 +13,14 @@ class AddSemestreTables extends Migration
      */
     public function up()
     {
-        Schema::table('cadeiras', function (Blueprint $table) {
-            $table->integer('semestre_id')->unsigned();
-        });
+//         Schema::table('cadeiras', function (Blueprint $table) {
+//             $table->integer('semestre_id')->unsigned();
+//         });
 
-        Schema::table('cadeiras', function (Blueprint $table) {
-            $table->foreign('semestre_id')->references('id')->on('semestre')->onDelete('cascade');
-        });
-    }
+//         Schema::table('cadeiras', function (Blueprint $table) {
+//             $table->foreign('semestre_id')->references('id')->on('semestre')->onDelete('cascade');
+//         });
+     }
 
     /**
      * Reverse the migrations.
@@ -29,9 +29,9 @@ class AddSemestreTables extends Migration
      */
     public function down()
     {
-        Schema::table('cadeiras', function (Blueprint $table) {
-            $table->dropForeign(['semestre_id']);
-            $table->dropColumn('semestre_id');
-        });
-    }
-}
+//         Schema::table('cadeiras', function (Blueprint $table) {
+//             $table->dropForeign(['semestre_id']);
+//             $table->dropColumn('semestre_id');
+//         });
+   }
+ }

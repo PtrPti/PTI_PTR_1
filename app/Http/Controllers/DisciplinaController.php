@@ -13,6 +13,8 @@ use App\ProjetoFicheiro;
 use App\ForumDuvidas;
 use App\ForumMensagens;
 use App\Avaliacao;
+use App\CursoCadeira;
+use App\Curso;
 use App\Http\Controllers\ChatController;
 use App\Http\Requests\ProjectPost;
 use App\Http\Requests\ForumTopicoPost;
@@ -106,6 +108,7 @@ class DisciplinaController extends Controller
         }
 
         $avaliacao = DB::table('avaliacao')->select('id','cadeira_id', 'mensagem_criterios')->where('cadeira_id', $id)->get();
+  
 
         return view('disciplina.indexDisciplina', compact('disciplinas', 'projetos', 'utilizadores', 'disciplina', 'docentes', 'projetos_cadeira', 'duvidas', 'lista_alunos', 'active_tab', 'avaliacao'));
     }
@@ -371,55 +374,58 @@ class DisciplinaController extends Controller
     }
 
 
-    public static function search_alunos($cadeiras_id, $user_id, $departamento_id, $search = "") {
-        DB::statement(DB::raw('set @row_number=0'));
+    public function search_alunos(Request $request){
 
-        $utilizadores = DB::select(DB::raw(
-            "select 
-                (@row_number:=@row_number + 1) AS row,
-                u.id,
-                u.nome,
-                u.email,
-                count(m.id_read) as unread,
-                m2.message as last_message,
-                m2.created_at as lm_date
-            from users u
-            inner join users_cadeiras uc
-                on u.id = uc.user_id
-                and uc.cadeira_id in (:cadeiras)
-            left join messages m
-                on u.id = m.from
-                and id_read = 0 
-                and m.to = :u1
-            left join (select * from messages order by created_at desc) as m2
-                on (m2.from = :u2 and m2.to = u.id)
-                or (m2.to = :u3 and m2.from = u.id)
-            where u.id != :u4 and u.departamento_id = :d " . $search .
-            " group by u.id, u.nome, u.email"), ['cadeiras' => implode("','", $cadeiras_id), 'u1' => $user_id, 'u2' => $user_id, 'u3' => $user_id, 'u4' => $user_id, 'd' => $departamento_id]
-        );
+        $search = $_GET['search'];
+        $cadeiraId = $_GET['cadeira_id'];
+        $cursos_id = [];
+        $departamentos_id = [];
+        $y = CursoCadeira::select('curso_id')->where('cadeira_id',  $cadeiraId)->get();
         
-        return $utilizadores;
-    }
+        foreach($y as $y1 ){
+            array_push($cursos_id, $y1->curso_id);
+        }
+        $x = Curso::select('departamento_id')->whereIn('id', $cursos_id)->get();
 
-
-    public function search_aluno(Request $request){
-        
+        foreach($x as $x1 ){
+            array_push($departamentos_id, $x1->departamento_id);
+        }
        
 
-        $user_id = $_POST['user_id'];
+        $users = User::leftJoin('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')->select('nome', 'numero', 'users.id as id')->where(function($query) use ($cadeiraId) {
+            $query->where('cadeira_id', '!=', $cadeiraId)
+                  ->orWhere('cadeira_id', null);
+        })->whereIn('curso_id', $cursos_id)->whereIn('departamento_id', $departamentos_id)->where(function($query) use($search) {
+            $query->where('nome', 'like', '%'.$search.'%')
+                  ->orWhere('numero', 'like', '%'.$search.'%');
+        })->get()->mapWithKeys(function ($item) {
+            return [$item['nome'].'_'.$item['numero'] => $item['id']];
+        });
+
+       /*  $users = DB::select('select distinct u.nome, u.numero from users u left join users_cadeiras uc
+                    on u.id = uc.user_id
+                    where (uc.cadeira_id != ? or uc.cadeira_id is null) and u.departamento_id in (?) and u.curso_id in (?)
+                    and (u.nome like \'%?%\' or u.numero like \'%?%\')', [$cadeiraId, $departamentos_id, $cursos_id, $search, $search]); */
+
+        return response()->json(array('users' => $users));
+
+
+    }
+
+    public function addAluno(Request $request){
+
         $cadeiraId = $_POST['cadeira_id'];
-        
+        $user_id = $_POST['user_id'];
+
         $addUser = new UserCadeira;
-        $addUser->user_id = $request->user_id;
+        $addUser->user_id = $user_id;
         $addUser->cadeira_id = $request->cadeira_id;
         $addUser->save();
 
-        return redirect()->action('DisciplinaController@index', ['id'=> $request->user_id, 'c_id'=> $request->cadeira_id,  'tab'=> 4]);
-
-        
-
+        return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id,  'tab'=> 4]);
 
     }
+
 
 
 

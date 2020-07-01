@@ -161,3 +161,10 @@ function SaveEvaluation(form, url) {
         },
     });
 }
+
+
+function idUser(id){
+    $("#id_user").val(id);
+    return true;
+    
+}

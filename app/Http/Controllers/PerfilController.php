@@ -12,6 +12,7 @@ use App\Curso;
 use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Image;
 
 
 class PerfilController extends Controller
@@ -119,6 +120,24 @@ class PerfilController extends Controller
         // }
 
         //return redirect()->action('PerfilController@perfilDocente');
+    }
+
+    public function updateAvatar(Request $request){
+
+    	// Handle the user upload of avatar
+    	if($request->hasFile('avatar')){
+    		$avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+    		Image::make($avatar)->resize(300, 300)->save(public_path('images/' . $filename ));
+
+    		$user = Auth::user();
+    		$user->avatar = $filename;
+    		$user->save();
+    	}
+
+    	return redirect()->action('PerfilController@perfilDocente');
+        
+
     }
     
 }
