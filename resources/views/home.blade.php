@@ -44,7 +44,7 @@
     <div class="search">
         <input type="search" class="search-input" placeholder="Pesquisar" results="0">
         <i class="fas fa-search search-icon"></i>
-    </div>
+    </div> 
     <div class="box-container">
         @if (Auth::user()->isProfessor())
             @foreach ($projetos as $proj)

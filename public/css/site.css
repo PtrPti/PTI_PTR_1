@@ -860,8 +860,12 @@ select:-moz-focusring {
 
 .split-left {
   display: flex;
-  flex: 25% !important;;
+  flex: 25% !important;
   flex-direction: column;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .split-left button {
@@ -882,12 +886,12 @@ select:-moz-focusring {
 
 .split-left ul {
   list-style: none;
-  width: 75%;
+  width: 90%;
 }
 
-.split-left>ul {
+/* .split-left>ul {
   border-right: 1px solid black;
-}
+} */
 
 .split-left li{
   padding: 5px;
@@ -917,6 +921,10 @@ select:-moz-focusring {
 
 .split-right {
   flex: 75% !important;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .split-right>div {
@@ -1457,4 +1465,90 @@ select:-moz-focusring {
   .displayPass { grid-area: 4 / 2 / 5 / 3; }
   .labelDescription { grid-area: 5 / 1 / 6 / 2; }
   .displayDescription { grid-area: 5 / 2 / 6 / 3; }
+}
+
+.p_grupo{
+  display: grid;
+  grid-template-columns: 27% 71%;
+  grid-column-gap: 15px;
+}
+
+.dropdown-btn {
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #a1a1a5;
+  outline: none;
+  text-align: justify;
+  padding-left: 25px;
+  height: 5rem;
+}
+
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+.fa-caret-up {
+  float: right;
+  padding-right: 8px;
+}
+
+.dropdown-container {
+  display: none;
+  background-color: #626158;
+  padding-bottom: 1%;
+  padding-top: 1%;
+}
+
+.dropdown-container > a{
+  color: white; 
+  padding-left: 25px; 
+  font-size: 14px;
+  padding-bottom: 6px;
+  padding-right: 27px;
+}
+
+.dropdown-container > a:hover{
+  color: white;
+  width: 100%;
+}
+
+.i-nav-disc{
+  color: #a1a1a5;
+}
+
+.i-nav-proj{
+  color: #a1a1a5;
+}
+
+.vl {
+  border-left: 2px solid green;
+  height: 100px;
+  /* position: relative; */
+  /* left: 50%; */
+  margin-left: 50%;
+}
+
+.pag_avaliacao{
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+
+.tabela_aval{
+  border-collapse: collapse;
+  width: 50%;
+  text-align: center;
+}
+
+.primeira_coluna{
+  background-color: #acc;
+  width: 40%;
+}
+
+.segunda_coluna{
+  background-color: #f2f2f2;
+  width: 13%;
 }
