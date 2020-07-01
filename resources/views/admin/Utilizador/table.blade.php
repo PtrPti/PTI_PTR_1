@@ -30,8 +30,6 @@
     </tbody>
 </table>
 
-{{$users->links()}}
-
 @if(isset($cudepartamentorso) || isset($curso) || isset($perfil))
     {{$users->appends(['campos' => ['departamento' => $departamento, 'curso' => $curso, 'perfil' => $perfil]])->links()}}
 @else
