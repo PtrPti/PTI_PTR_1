@@ -341,6 +341,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
 
     public static $classMap = array (
         'AddBlocoForumMensagens' => __DIR__ . '/../..' . '/database/migrations/2020_05_14_212556_add_bloco_forum_mensagens.php',
+        'AddColumFinishedAtTarefasTable' => __DIR__ . '/../..' . '/database/migrations/2020_06_25_215458_add_colum_finished_at_tarefas_table.php',
         'AddColunasFeedback' => __DIR__ . '/../..' . '/database/migrations/2020_05_31_094608_add_colunas_feedback.php',
         'AddColunasProjetoTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_22_162817_add_colunas_projeto_table.php',
         'AddDataInicioProjeto' => __DIR__ . '/../..' . '/database/migrations/2020_05_06_235311_add_data_inicio_projeto.php',

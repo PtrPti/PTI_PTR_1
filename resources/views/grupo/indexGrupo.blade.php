@@ -40,6 +40,8 @@
                                 @else
                                     <li><i class="fas fa-sticky-note"></i><a href="#" class="no-link">{{$subficheiro->nome}}</a></li>
                                 @endif
+                            @else
+                                <li><i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$subficheiro->id}})">{{$subficheiro->nome}}</a></li>
                             @endif
                         @endforeach
                         </ul>
@@ -56,6 +58,8 @@
                     @else
                         <li><i class="fas fa-sticky-note"></i><a href="#" class="no-link">{{$ficheiro->nome}}</a></li>
                     @endif
+                @else
+                    <li><i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$ficheiro->id}})">{{$ficheiro->nome}}</a></li>
                 @endif
             @endforeach
         </ul>
@@ -288,8 +292,17 @@
     </div>
 </div>
 
+
+
 <i class="far fa-calendar-alt fa-3x calendarBtn" onclick="ShowCalendar()"></i>
 
+
+<div id="notaa">
+
+    <!-- view nota -->
+    @include('grupo.nota')
+
+</div>
 <script>
     $(document).ready(function () {
         changeTab(<?php echo $active_tab ?>);
@@ -318,6 +331,33 @@
                 $($(this)).prev().addClass('fa-folder');
             }
         });
+
+        function infoNota(tipo,id){
+            $.ajax({
+                url: '/infoNota',
+                type: 'GET',
+                dataType: 'json',
+                success: 'success',
+                data : {'tipo': tipo, 'id':id},
+                success: function(data){
+                    $('#notaa').html(data.html);
+                    $('#notaa').show();
+                }
+            })
+        }
     });
+    function infoNota(tipo,id){
+            $.ajax({
+                url: '/infoNota',
+                type: 'GET',
+                dataType: 'json',
+                success: 'success',
+                data : {'tipo': tipo, 'id':id},
+                success: function(data){
+                    $('#notaa').html(data.html);
+                    $('#notaa').show();
+                }
+            })
+        }
 </script>
 @endsection

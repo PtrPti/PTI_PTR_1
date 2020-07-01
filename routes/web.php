@@ -11,9 +11,6 @@
 |
 */
 
-
-
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -142,6 +139,7 @@ Route::get('verFeedback', 'ProjetoController@verFeedback');
 Route::post('createFeedback', 'ProjetoController@createFeedback');
 
 Route::post('addAvaliacao', 'ProjetoController@addAvaliacao')->name('addAvaliacao');
+Route::get('infoNota', 'ProjetoController@infoNota');
 
 //---------------- CHAT ----------------//
 Route::get('{route?}/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
@@ -172,4 +170,3 @@ Route::get('/Home/Perfil/{tab?}', 'PerfilController@perfilDocente')->name('perfi
 Route::post('/changeNome', 'PerfilController@changeNome')->name('changeNome');
 Route::post('/changeEmail', 'PerfilController@changeEmail')->name('changeEmail');
 Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
-

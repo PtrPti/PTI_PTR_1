@@ -1771,3 +1771,83 @@ select:-moz-focusring {
   box-sizing: border-box;
   z-index: 1001;
 }
+
+.duracao{
+  font-size: smaller;
+  margin-left: 53px;
+  color: #877;
+}
+
+.ficheirosbtn{
+  border: 1px solid rgb(49, 49, 49);
+  border-radius: 2px;
+}
+
+.ficheirosbtn i{
+  color: rgb(33, 33, 33);
+}
+
+#mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #43434e;
+  text-align: center;
+  border: 1px solid grey;
+  border-radius: 2px;
+}
+
+#mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  color: #fff;
+  border-bottom: 2px solid grey;
+}
+
+#notaText{
+  resize: none;
+  width: 190px;
+  height: 114px;
+  overflow-y: scroll;
+  background: none;
+  border: none;
+  padding:5px;
+  color: beige;
+}
+
+#notaText::placeholder{
+  color: grey;
+}
+
+.closebtn{
+  display: inline;
+  position: absolute;
+  right: 13px;
+  top: 13px;
+}
+.closebtn:hover{
+  cursor: pointer;
+}
+
+#notaText::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 10px;
+}
+
+/* Track */
+#notaText::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 10px;
+}
+  
+/* Handle */
+#notaText::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+#notaText::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+  border-radius: 10px;
+}
