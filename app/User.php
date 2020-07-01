@@ -19,12 +19,6 @@ class User extends Authenticatable
         'nome',
         'email',
         'password',
-        'numero',
-        'data_nascimento',
-        'avatar',
-        'nome', 
-        'email', 
-        'password'
     ];
 
     protected $guarded = ['id', 'perfil_id', 'departamento_id'];
@@ -46,6 +40,11 @@ class User extends Authenticatable
     public function isProfessor()
     {
         return $this->perfil()->pluck('id')->contains(2);
+    }
+
+    public function isAdmin()
+    {
+        return $this->perfil()->pluck('id')->contains(3);
     }
 
     public function perfil()

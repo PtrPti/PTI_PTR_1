@@ -15,7 +15,7 @@
 
 <div class="main-container">
   @if (Auth::user()->isAluno())
-    <h5>Projetos    
+    <h5>Projetos
       <a id="dropdownMenu" role="button" data-toggle="dropdown" class="btn-filter" data-target="#" href="#" style="background-color: #eee9e9;">
         <i class="fas fa-filter"></i>
       </a>

@@ -1,7 +1,31 @@
 $(window, document, undefined).ready(function () {
+    $(".display-input").each(function () {
+        var $this = $(this);
+        if ($this.val())
+            $this.addClass('used');
+        else
+            $this.removeClass('used');
+    });
+
+    $(".checkbox-input").each(function () {
+        var $this = $(this);
+        if ($this.is(':checked'))
+            $this.addClass('used');
+        else
+            $this.removeClass('used');
+    });
+
     $('.display-input').blur(function () {
         var $this = $(this);
         if ($this.val())
+            $this.addClass('used');
+        else
+            $this.removeClass('used');
+    });
+
+    $('.checkbox-input').blur(function () {
+        var $this = $(this);
+        if ($this.is(':checked'))
             $this.addClass('used');
         else
             $this.removeClass('used');
@@ -39,6 +63,8 @@ $(window, document, undefined).ready(function () {
         var $this = $(this);
         $this.removeClass('area-input-focus');
     });
+
+
 });
 
 function changeTab(tab = 1, display = "block", breadcrum = "") {
@@ -107,4 +133,78 @@ function AddGritter(title, msg, type) {
     setInterval(function () {
         $('.gritter').fadeOut();
     }, 4000);
+}
+
+//-------------------------------ADMIN---------------------------------------
+function EditModal(id, url, modalTitle, id2 = "") {
+    $.ajax({
+        url: '/edit' + url,
+        type: 'GET',
+        data: { 'id': id, 'id2': id2 },
+        success: function (data) {
+            $("#titleAdd").text(modalTitle);
+            var prevKey = "";
+            var prevValue = "";
+            $.each(data, function (key, value) {
+                if (prevKey == "checkbox") {
+                    if (value == 1) {
+                        $('#' + key).prop('checked', true);
+                        $('#' + key).addClass('used');
+                    }
+                    else {
+                        $('#' + key).prop('checked', false);
+                    }
+                }
+                else
+                    if (value != null) {
+                        $('#' + key).val(value);
+                        $('#' + key).addClass('used');
+                    }
+
+                if (jQuery.isPlainObject(value)) {
+                    $.each(value, function (id, name) {
+                        $("#" + key).append('<option value="' + id + '" id="' + key + '_' + id + '">' + name + ' </option>');
+                    });
+                    $("#" + key + '_' + prevValue).prop('selected', true);
+                }
+                prevKey = key;
+                prevValue = value;
+            });
+        }
+    });
+}
+
+function changeDropdown(url, paiId, selTarget, targetForm = "") {
+    $.ajax({
+        url: url + '/' + $("#" + paiId).val(),
+        method: 'GET',
+        success: function (data) {
+            if (targetForm != "") {
+                $('#' + targetForm + ' #' + selTarget).html(data.html);
+            }
+            else {
+                $('#' + selTarget).html(data.html);
+            }
+        }
+    });
+}
+
+function SearchInput(url, page = "", input = null) {
+    var clear = input != null ? input.value == "" ? true : false : true;
+    var campos = {};
+    $.each($(".search-select"), function (i, el) {
+        campos[el.id.split("-")[1]] = el.value;
+    });
+
+    var finalData = page != "" ?
+        { 'campos': campos, 'search': $('input[type=search]').val(), 'clear': clear, 'page': page, } :
+        { 'campos': campos, 'search': $('input[type=search]').val(), 'clear': clear };
+    $.ajax({
+        url: url,
+        type: 'GET',
+        data: finalData,
+        success: function (data) {
+            $(".resultsAdmin").html(data.html);
+        }
+    });
 }

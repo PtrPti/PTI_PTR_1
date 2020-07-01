@@ -45,7 +45,7 @@
                             <label for="data_nascimento" class="col-md-4 control-label">Data de nascimento</label>
 
                             <div class="col-md-6">
-                                <input id="data_nascimento" type="text" class="date form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" required autofocus>
+                                <input id="data_nascimento" type="date" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" required autofocus>
 
                                 @if ($errors->has('data_nascimento'))
                                     <span class="help-block">
@@ -320,11 +320,7 @@
 </div>
 
 <script type="text/javascript">
-    $('.date').datepicker({
-        dateFormat: "dd-mm-yy"
-     });
-
-    $("#departamento_id").change(function(){
+    $("#departamento_id").change(function() {
         $.ajax({
             url: "{{ route('changeDepartamentoId') }}?departamento_id=" + $(this).val(),
             method: 'GET',
