@@ -1,4 +1,4 @@
-@if (Auth::user()->isAluno())
+@if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
     <div class="row-add">
         <button id="add_button" class="add-button" data-toggle="modal" data-target="#createFeedback">{{ __('change.pedirFeedback') }}</button>
     </div>
@@ -21,7 +21,7 @@
     @endforeach
 </table>
 
-@if (Auth::user()->isAluno())
+@if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
     <div class="modal fade" id="createFeedback" tabindex="-1" role="dialog" aria-labelledby="createFeedbackLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

@@ -1,4 +1,4 @@
-@isset($nota)
+@isset($nota,$tipo)
 
 <div id="mydiv">
 	<div id="mydivheader"> 
@@ -8,7 +8,7 @@
 	</div>
 
 	<div id="downNota">
-		<textarea id="notaText" placeholder="Aa.." onchange="saveNota('grupo',{{$nota[0]->id }} )">{{$nota[0]->notas}}</textarea>
+		<textarea id="notaText" placeholder="Aa.." onchange="saveNota('{{$tipo}}',{{$nota[0]->id }} )">{{$nota[0]->notas}}</textarea>
 	</div>
 
 </div>

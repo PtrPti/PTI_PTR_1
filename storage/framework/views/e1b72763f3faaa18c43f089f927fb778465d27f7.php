@@ -3,6 +3,7 @@
 </div>
 
 <div class="split-left">
+    <h5>Ficheiros do projeto</h5>
     <?php if(Auth::user()->isProfessor()): ?>
         <button type="button" data-toggle="dropdown" id="add" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -23,7 +24,7 @@
                 <?php else: ?>
                     <?php if(is_null($ficheiro->nome)): ?>
                         <li><i class="fas fa-link"></i><a href="<?php echo e($ficheiro->link); ?>" target="_blank"><?php echo e(str_limit($ficheiro->link, $limit = 20, $end = '...')); ?></a></li>
-                    <?php else: ?> 
+                    <?php else: ?>
                         <li><i class="fas fa-link"></i><a href="<?php echo e($ficheiro->link); ?>" target="_blank"><?php echo e(str_limit($ficheiro->nome, $limit = 20, $end = '...')); ?></a></li>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -107,48 +108,50 @@
 <div class="split-right">
     <div class="row-add">
         <?php if(isset($projeto)): ?>
-            <?php if(Auth::user()->isProfessor()): ?>
-                <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1)"><i class="fas fa-plus"></i> <?php echo e(__('change.adicionarGrupo')); ?> </button>
-                <button type="button" class="add-button" data-toggle="modal" data-target="#addGrupo"><i class="fas fa-plus"></i> <?php echo e(__('change.adicionarmGrupo')); ?></button>            
+            <?php if($projeto->data_fim >= date('Y-m-d H:i:s')): ?>
+                <?php if(Auth::user()->isProfessor()): ?>
+                    <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1)"><i class="fas fa-plus"></i> <?php echo e(__('change.adicionarGrupo')); ?> </button>
+                    <button type="button" class="add-button" data-toggle="modal" data-target="#addGrupo"><i class="fas fa-plus"></i> <?php echo e(__('change.adicionarmGrupo')); ?></button>            
 
-                <div class="modal fade" id="addGrupo" tabindex="-1" role="dialog" aria-labelledby="addGrupo" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addGrupoLabel"><?php echo e(__('change.criarGrupos')); ?></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="post" action="#" id="addMultGrupos">
-                                    <?php echo e(csrf_field()); ?>
+                    <div class="modal fade" id="addGrupo" tabindex="-1" role="dialog" aria-labelledby="addGrupo" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addGrupoLabel"><?php echo e(__('change.criarGrupos')); ?></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="#" id="addMultGrupos">
+                                        <?php echo e(csrf_field()); ?>
 
-                                    <input type="hidden" name="projeto_id" value="<?php echo e($projeto->id); ?>" required>
-                                    <input type="hidden" name="cadeira_id" value="<?php echo e($projeto->cadeira_id); ?>" required>
-                                    <input type="hidden" name="entrar" value="false">
-                                    <div class="row group">
-                                        <div class="col-md-12">
-                                            <input type="number" name="n_grupos" min="1" max="10" value="0" class="display-input" id="n_grupos">
-                                            <span class="highlight"></span>
-                                            <span class="bar"></span>
-                                            <label for="n_grupos" class="labelTextModal"><?php echo e(__('change.numGrupos')); ?></label>
+                                        <input type="hidden" name="projeto_id" value="<?php echo e($projeto->id); ?>" required>
+                                        <input type="hidden" name="cadeira_id" value="<?php echo e($projeto->cadeira_id); ?>" required>
+                                        <input type="hidden" name="entrar" value="false">
+                                        <div class="row group">
+                                            <div class="col-md-12">
+                                                <input type="number" name="n_grupos" min="1" max="10" value="0" class="display-input" id="n_grupos">
+                                                <span class="highlight"></span>
+                                                <span class="bar"></span>
+                                                <label for="n_grupos" class="labelTextModal"><?php echo e(__('change.numGrupos')); ?></label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row row-btn">
-                                        <div class="col-md-12">
-                                            <button type="button" class="btn btn-primary" onclick="Save('addMultGrupos', '/addGrupo')"><?php echo e(__('change.criar')); ?></button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo e(__('change.fechar')); ?></button>
+                                        <div class="row row-btn">
+                                            <div class="col-md-12">
+                                                <button type="button" class="btn btn-primary" onclick="Save('addMultGrupos', '/addGrupo')"><?php echo e(__('change.criar')); ?></button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo e(__('change.fechar')); ?></button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php else: ?>
-                <?php if($pertenceGrupo == null): ?>
-                    <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1, true)"><i class="fas fa-plus"></i> <?php echo e(__('change.adicionarGrupo')); ?> </button>
+                <?php else: ?>
+                    <?php if($pertenceGrupo == null): ?>
+                        <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1, true)"><i class="fas fa-plus"></i> <?php echo e(__('change.adicionarGrupo')); ?> </button>
+                    <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>

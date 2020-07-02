@@ -398,14 +398,7 @@ class DisciplinaController extends Controller
             return [$item['nome'].'_'.$item['numero'] => $item['id']];
         });
 
-       /*  $users = DB::select('select distinct u.nome, u.numero from users u left join users_cadeiras uc
-                    on u.id = uc.user_id
-                    where (uc.cadeira_id != ? or uc.cadeira_id is null) and u.departamento_id in (?) and u.curso_id in (?)
-                    and (u.nome like \'%?%\' or u.numero like \'%?%\')', [$cadeiraId, $departamentos_id, $cursos_id, $search, $search]); */
-
         return response()->json(array('users' => $users));
-
-
     }
 
     public function addAluno(Request $request){

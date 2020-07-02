@@ -148,6 +148,7 @@ Route::post('createFeedback', 'ProjetoController@createFeedback');
 
 Route::post('addAvaliacao', 'ProjetoController@addAvaliacao')->name('addAvaliacao');
 Route::get('infoNota', 'ProjetoController@infoNota');
+Route::get('saveNota', 'ProjetoController@saveNota');
 
 //---------------- CHAT ----------------//
 Route::get('{route?}/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
