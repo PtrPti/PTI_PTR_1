@@ -1,5 +1,6 @@
 <div class="back-links">
-    <a href="#" onclick="changeTab(1)">Pág. Inicial</a> > <b><span class="breadcrum"></span></b>
+    
+    <a href="#" onclick="changeTab(1)">Pág. Inicial</a> > <b><span class="breadcrum"></span></b> @isset($projeto)<span> - Termina em: {{ $projeto->data_fim }}</span>@endisset
 </div>
 
 <div class="split-left">

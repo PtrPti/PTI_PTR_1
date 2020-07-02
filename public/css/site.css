@@ -1060,12 +1060,7 @@ select:-moz-focusring {
 
 .divSubTarefa{
     margin-left: 40px;
-    width: 95%;
     display: none;
-}
-
-.divSubTarefa .tarefa{
-  margin-left: 20px;
 }
 
 .containerCheckbox {
@@ -1780,43 +1775,43 @@ select:-moz-focusring {
   z-index: 1001;
  }
 
-.link-class:hover{
+.link-class:hover {
   background-color:#f1f1f1;
 }
 
-.show_al{
+.show_al {
   padding: 2px;
   border: none;
   background: none;
 
 }
-.show_al:hover{
+.show_al:hover {
   background-color:#339989 ;
   color: white;
 }
 
-.search_alunos{
+.search_alunos {
   float: left;
 }
 
-#update_file{
+#update_file {
   position: relative;
   top: 170px;
   left: 30px;
 }
 
-.btn_perfil{
+.btn_perfil {
   position: relative;
   left:180px;
 }
 
-.closebtn{
+.closebtn {
   display: inline;
   position: absolute;
   right: 13px;
   top: 13px;
 }
-.closebtn:hover{
+.closebtn:hover {
   cursor: pointer;
 }
 
@@ -1841,6 +1836,84 @@ select:-moz-focusring {
 #notaText::-webkit-scrollbar-thumb:hover {
   background: #555; 
   border-radius: 10px;
+}
+
+.ficheirosbtn {
+  background: #212529;
+  border: none;
+  border-radius: 3px;
+}
+.ficheirosbtn i {
+  color: #ffffffa6;
+  font-size: 13px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+/* NOTA */
+
+#mydiv {
+  position: absolute;
+  bottom: 15px;
+  z-index: 10;
+  background-color: #31313e;
+  text-align: center;
+  border-radius: 2px;
+  width: 190px;
+	height: 164px;
+  box-shadow: 0px 0px 13px 0px #2f2f2f;
+}
+
+#mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  color: #fff;
+  border-bottom: 1px solid #847c7c;
+}
+#nomeNota{
+  margin-right: 21px;
+}
+
+#notaText{
+  padding: 5px;
+	resize: none;
+  width: 190px;
+	height: 114px;
+	overflow-y: scroll;
+	background: none;
+  border: none;
+  color: aliceblue;
+}
+
+#notaText::placeholder{
+	color: grey;
+}
+
+.duracao{
+  margin-left: 41px;
+}
+
+#membros button{
+  border-radius: 10px;
+  background-color: #339989;
+  color: white;
+  border: none;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+#membros li:hover{
+  cursor: default;
+  background-color: white;
+}
+
+.ficheirosTarefa a {
+  text-decoration: none;
+  color: black;
+}
+.ficheirosTarefa li:hover{
+  color: black;
 }
 
 .split-left h5 {

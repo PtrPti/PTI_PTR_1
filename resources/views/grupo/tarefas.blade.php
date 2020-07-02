@@ -52,27 +52,28 @@
                     @if(!is_null($tnf->atribuido))
                         <div class='nameUser'><span>{{ $tnf->atribuido }}</span></div>
                     @endif
+                    
                     <button type="button" data-toggle="dropdown" id='fich{{ $tnf->id }}' class='ficheirosbtn' aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-paperclip"></i><i class="fas fa-caret-down"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="fich{{ $tnf->id }}">
                         @foreach($ficheirosTarefas as $fich)
                             @if($fich->tarefa_id === $tnf->id)
-                                <?php $temFich = 1 ?>
                                 @if(is_null($fich->link) and is_null($fich->notas))
-                                    <li><i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}">{{ explode("_", $fich->nome, 2)[1] }}</a></li>
+                                    <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><li><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</li></a>
                                 @elseif(!is_null($fich->link))
                                     @if(!is_null($fich->nome))
-                                        <li><i class="fas fa-link"></i><a href="{{$fich->link}}" target="_blank">{{ str_limit($fich->link, $limit = 25, $end = '...') }}</a></li>
+                                        <a href="{{$fich->link}}" target="_blank"><li><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</li></a>
                                     @else 
-                                        <li><i class="fas fa-link"></i><a href="{{$fich->link}}" target="_blank">{{$fich->nome}}</a></li>
+                                        <a href="{{$fich->link}}" target="_blank"><li><i class="fas fa-link"></i>{{$fich->nome}}</li></a>
                                     @endif
                                 @else
-                                    <li><i class="fas fa-sticky-note"></i><a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link">{{$fich->nome}}</a></li>
+                                    <a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><li><i class="fas fa-sticky-note"></i>{{$fich->nome}}</li></a>
                                 @endif
-                           @endif
+                            @endif
                         @endforeach
                     </ul>
+                    
                 </div>
             </div>
         <?php $tarefaPai++; ?>
@@ -99,6 +100,27 @@
                         @if(!is_null($tnf->atribuido))
                             <div class='nameUser'><span>{{ $tnf->atribuido }}</span></div>
                         @endif
+
+                        <button type="button" data-toggle="dropdown" id='fich{{ $tnf->id }}' class='ficheirosbtn' aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-paperclip"></i><i class="fas fa-caret-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="fich{{ $tnf->id }}">
+                            @foreach($ficheirosTarefas as $fich)
+                                @if($fich->tarefa_id === $tnf->id)
+                                    @if(is_null($fich->link) and is_null($fich->notas))
+                                        <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><li><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</li></a>
+                                    @elseif(!is_null($fich->link))
+                                        @if(!is_null($fich->nome))
+                                            <a href="{{$fich->link}}" target="_blank"><li><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</li></a>
+                                        @else 
+                                            <a href="{{$fich->link}}" target="_blank"><li><i class="fas fa-link"></i>{{$fich->nome}}</li></a>
+                                        @endif
+                                    @else
+                                        <a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><li><i class="fas fa-sticky-note"></i>{{$fich->nome}}</li></a>
+                                    @endif
+                                @endif
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -368,7 +390,14 @@
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function(){
+    
+        $('.ficheirosTarefa').each(function() {
+            if($(this).find( "li" ).length == 0 ){
+                $(this).children('button').hide();
+            }
+        });     
+
         $(".addToTarefa").click(function(){ // Click to only happen on announce links
             $('.modal-tab').css('display', 'none');
             $("#typeAddTarefa").val($(this).data('id')[0]);
@@ -381,6 +410,7 @@
             $('.modal-tab').css('display', 'none');
             $("#modalT-" + $(this).val()).css('display', 'block');
         });
+
     });
 
     $('.open-subTask').each(function(index, element) {
