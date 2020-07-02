@@ -97,7 +97,7 @@ class DisciplinaController extends Controller
                             where fd.cadeira_id = (?)
                             group by fd.id', [$id]);
         
-        $lista_alunos = UserCadeira::join('users', 'users_cadeiras.user_id', '=', 'users.id')->
+        $lista_alunos = UserCadeira::join('users', 'users_cadeiras.user_id', '=', 'users.id')->join('users_info', 'users.id', '=', 'users_info.user_id')->
                             where('users_cadeiras.cadeira_id', $id)->
                             where('users.perfil_id', 1)->get();
 
@@ -108,6 +108,7 @@ class DisciplinaController extends Controller
         }
 
         $avaliacao = DB::table('avaliacao')->select('id','cadeira_id', 'mensagem_criterios')->where('cadeira_id', $id)->get();
+    
   
 
         return view('disciplina.indexDisciplina', compact('disciplinas', 'projetos', 'utilizadores', 'disciplina', 'docentes', 'projetos_cadeira', 'duvidas', 'lista_alunos', 'active_tab', 'avaliacao'));
@@ -387,7 +388,7 @@ class DisciplinaController extends Controller
         }
        
 
-        $users = User::leftJoin('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')->select('nome', 'numero', 'users.id as id')->where(function($query) use ($cadeiraId) {
+        $users = User::leftJoin('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')->join('users_info', 'users.id', '=', 'users_info.user_id')->select('nome', 'numero', 'users.id as id')->where(function($query) use ($cadeiraId) {
             $query->where('cadeira_id', '!=', $cadeiraId)
                   ->orWhere('cadeira_id', null);
         })->whereIn('curso_id', $cursos_id)->whereIn('departamento_id', $departamentos_id)->where(function($query) use($search) {
@@ -397,14 +398,7 @@ class DisciplinaController extends Controller
             return [$item['nome'].'_'.$item['numero'] => $item['id']];
         });
 
-       /*  $users = DB::select('select distinct u.nome, u.numero from users u left join users_cadeiras uc
-                    on u.id = uc.user_id
-                    where (uc.cadeira_id != ? or uc.cadeira_id is null) and u.departamento_id in (?) and u.curso_id in (?)
-                    and (u.nome like \'%?%\' or u.numero like \'%?%\')', [$cadeiraId, $departamentos_id, $cursos_id, $search, $search]); */
-
         return response()->json(array('users' => $users));
-
-
     }
 
     public function addAluno(Request $request){

@@ -31,7 +31,7 @@
             </div>
         </div>
     @endif
-    @if($feedback->mensagem_grupo == null || $feedback->mensagem_grupo == "")
+    @if(($feedback->mensagem_grupo == null || $feedback->mensagem_grupo == "") && $projeto->data_fim >= date('Y-m-d H:i:s'))
         <div class="type_msg">
             <div class="input_msg_write">
                 <input type="text" class="write_msg" placeholder="Type a message" />
