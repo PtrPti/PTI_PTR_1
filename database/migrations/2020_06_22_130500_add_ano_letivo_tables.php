@@ -13,14 +13,6 @@ class AddAnoLetivoTables extends Migration
      */
     public function up()
     {
-        // Schema::table('users_cadeiras', function (Blueprint $table) {
-        //     $table->integer('ano_letivo_id')->unsigned();
-        // });
-
-        // Schema::table('users_cadeiras', function (Blueprint $table) {
-        //     $table->foreign('ano_letivo_id')->references('id')->on('ano_letivo')->onDelete('cascade');
-        // });
-
         Schema::table('cursos_cadeiras', function (Blueprint $table) {
             $table->integer('semestre_id')->unsigned();
         });
@@ -45,6 +37,6 @@ class AddAnoLetivoTables extends Migration
         Schema::table('users_cadeiras', function (Blueprint $table) {
             $table->dropForeign(['ano_letivo_id']);
             $table->dropColumn('ano_letivo_id');
-        }); */
+        });
     }
 }

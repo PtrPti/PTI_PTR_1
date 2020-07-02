@@ -1,9 +1,11 @@
 <?php $__env->startSection('content'); ?>
 <div class="container">
+
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Inicar Sessão</div>
+                <div class="panel-heading1"><?php echo e(__('change.iniciarSessao')); ?></div>
 
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="<?php echo e(route('login')); ?>">
@@ -42,7 +44,8 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember" <?php echo e(old('remember') ? 'checked' : ''); ?>> Guardar informação
+                                        <input type="checkbox" name="remember" <?php echo e(old('remember') ? 'checked' : ''); ?>> <?php echo e(__('change.guardarInformacao')); ?>
+
                                     </label>
                                 </div>
                             </div>
@@ -51,15 +54,18 @@
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <a class="btn btn-link login-text" href="<?php echo e(route('password.request')); ?>">
-                                    Esqueceste-te da tua password?
+                                <?php echo e(__('change.esquecerPassword')); ?>
+
                                 </a>
                                 <p>
                                 <button type="submit" class="btn btn-primary login-text">
-                                    Inicar Sessão
+                                    <?php echo e(__('change.iniciarSessao')); ?>
+
                                 </button>
                                
-                               <a class="btn btn-link login-text" href="<?php echo e(route('register')); ?>">
-                                    Criar conta
+                               <a class="btn btn-link login-text" href="<?php echo e(url('/registar')); ?>">
+                                <?php echo e(__('change.criarConta')); ?>
+
                                 </a>
 
                             </div>
@@ -75,4 +81,4 @@
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app_novo', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

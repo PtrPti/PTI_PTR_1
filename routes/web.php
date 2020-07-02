@@ -35,7 +35,8 @@ Route::get('/login', 'AuthController@getLogin')->name('login');
 
 //Registo
 Route::get('/registar', 'AuthController@getRegistar')->name('registar');
-Route::post('/registar', 'AuthController@postRegistar')->name('registarPost');
+Route::post('/registarAluno', 'AuthController@registarAluno')->name('registarAluno');
+Route::post('/registarProfessor', 'AuthController@registarProfessor')->name('registarProfessor');
 Route::get('/registar/getCursos', 'AuthController@changeDepartamentoId')->name('changeDepartamentoId');
 Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('changeCursoId');
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');

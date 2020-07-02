@@ -124,12 +124,12 @@
                     <?php elseif(Auth::user()->isProfessor()): ?>
                         <a href="<?php echo e(route('home')); ?>">Home</a>
                     <?php else: ?>
-                        <a href="<?php echo e(url('/login')); ?>">Iniciar Sessão</a>
-                        <a href="<?php echo e(url('/registar')); ?>">Registo</a>
+                        <a href="<?php echo e(url('/login')); ?>"><?php echo e(__('change.iniciarSessao')); ?></a>
+                        <a href="<?php echo e(url('/registar')); ?>"><?php echo e(__('change.registo')); ?></a>
                     <?php endif; ?>                  
                 <?php else: ?>
-                    <a href="<?php echo e(url('/login')); ?>">Iniciar Sessão</a>
-                    <a href="<?php echo e(url('/registar')); ?>">Registo</a>
+                    <a href="<?php echo e(url('/login')); ?>"><?php echo e(__('change.iniciarSessao')); ?></a>
+                    <a href="<?php echo e(url('/registar')); ?>"><?php echo e(__('change.registo')); ?></a>
                 <?php endif; ?>
                 </div>
             <?php endif; ?>

@@ -13,19 +13,20 @@
 
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading col-md-6 registo-active" id="registoAluno" onclick="ShowRegistoAluno()">{{ __('change.aluno') }} </div>
+                <div class="panel-heading col-md-6" id="registoAluno" onclick="ShowRegistoAluno()">{{ __('change.aluno') }} </div>
                 <div class="panel-heading col-md-6" id="registoProfessor" onclick="ShowRegistoProfessor()">{{ __('change.professor') }} </div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route ('registarPost') }}" id="formAluno">
+                    <form class="form-horizontal" method="POST" action="{{ route ('registarAluno') }}" id="formAluno">
                         {{ csrf_field() }}
                         <input type="hidden" name="perfil_id" id="perfil_id" value="1">
+                        <input type="hidden" name="tab_active" id="tab_active" value="#registoAluno">
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">{{ __('change.nome') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}"  autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -39,7 +40,7 @@
                             <label for="numero" class="col-md-4 control-label">{{ __('change.numeroAluno') }}</label>
 
                             <div class="col-md-6">
-                                <input id="numero" type="text" class="form-control" name="numero" value="{{ old('numero') }}" required autofocus>
+                                <input id="numero" type="text" class="form-control" name="numero" value="{{ old('numero') }}"  autofocus>
 
                                 @if ($errors->has('numero'))
                                     <span class="help-block">
@@ -53,7 +54,7 @@
                             <label for="data_nascimento" class="col-md-4 control-label">{{ __('change.dataNascimento') }}</label>
 
                             <div class="col-md-6">
-                                <input id="data_nascimento" type="text" class="date form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" required autofocus>
+                                <input id="data_nascimento" type="date" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}"  autofocus>
 
                                 @if ($errors->has('data_nascimento'))
                                     <span class="help-block">
@@ -67,7 +68,7 @@
                             <label for="departamento_id" class="col-md-4 control-label">{{ __('change.departamento') }}</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="departamento_id" id="departamento_id" required>
+                                <select class="form-control" name="departamento_id" id="departamento_id" >
                                     <option value="">-- {{ __('change.selecionar') }} --</option>
                                     @foreach($departamentos as $departamento)
                                         @if ($departamento->id == old('departamento_id'))
@@ -90,8 +91,15 @@
                             <label for="curso_id" class="col-md-4 control-label">{{ __('change.curso') }}</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="curso_id" id="curso_id" required>
-                                    <option value="">-- {{ __('change.escolherDepartamento') }}--</option>
+                                <select class="form-control" name="curso_id" id="curso_id" >
+                                    <option value="">-- {{ __('change.escolherCurso') }}--</option>
+                                    @foreach($cursos as $curso)
+                                        @if ($curso->id == old('curso_id'))
+                                            <option value="{{$curso->id}}" selected>{{$curso->nome}}</option>
+                                        @else
+                                        <option value="{{$curso->id}}">{{$curso->nome}}</option>
+                                        @endif
+                                    @endForeach
                                 </select>
 
                                 @if ($errors->has('curso_id'))
@@ -102,34 +110,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('grau_academico_id') ? ' has-error' : '' }}">
-                            <label for="grau_academico_id" class="col-md-4 control-label">{{ __('change.grauAcademico') }}</label>
-
-                            <div class="col-md-6">
-                                <select class="form-control" name="grau_academico_id" id="grau_academico_id" required>
-                                    <option value="">-- {{ __('change.selecionar') }} --</option>
-                                    @foreach($graus_academicos as $grau_academico)
-                                        @if ($grau_academico->id == old('grau_academico_id'))
-                                            <option value="{{$grau_academico->id}}" selected>{{$grau_academico->nome}}</option>
-                                        @else
-                                            <option value="{{$grau_academico->id}}">{{$grau_academico->nome}}</option>
-                                        @endif
-                                    @endForeach
-                                </select>
-
-                                @if ($errors->has('grau_academico_id'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('grau_academico_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" >
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -144,7 +129,7 @@
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password" >
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -158,7 +143,7 @@
                             <label for="password-confirm" class="col-md-4 control-label">{{ __('change.confirmarPass') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" >
                             </div>
                         </div>
 
@@ -166,8 +151,18 @@
                             <label for="cadeiras" class="col-md-4 control-label">{{ __('change.disciplinas') }}</label>
 
                             <div class="col-md-6">
-                                <select multiple="multiple" class="form-control" name="cadeiras[]" id="cadeirasAluno" required>
-                                    <option value="">-- {{ __('change.escolherCurso') }} --</option>
+                                <select multiple="multiple" class="form-control" name="cadeiras[]" id="cadeirasAluno" >
+                                    @if(sizeof($cadeiras) == 0)
+                                        <option value="">-- {{ __('change.escolherCurso') }} --</option>
+                                    @else
+                                        @foreach($cadeiras as $cadeira)
+                                            @if ($cadeira->id == old('cadeira_id'))
+                                                <option value="{{$cadeira->id}}" selected>{{$cadeira->nome}}</option>
+                                            @else
+                                                <option value="{{$cadeira->id}}">{{$cadeira->nome}}</option>
+                                            @endif
+                                        @endForeach
+                                    @endif
                                 </select>
 
                                 @if ($errors->has('cadeiras'))
@@ -187,60 +182,61 @@
                         </div>
                     </form>
 
-                    <form class="form-horizontal" method="POST" action="{{ route ('registarPost') }}" id="formProfessor">
+                    <form class="form-horizontal" method="POST" action="{{ route ('registarProfessor') }}" id="formProfessor">
                         {{ csrf_field() }}
                         <input type="hidden" name="perfil_id" id="perfil_id" value="2">
+                        <input type="hidden" name="tab_active" id="tab_active" value="#registoProfessor">
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">{{ __('change.nome') }}</label>
+                        <div class="form-group{{ $errors->has('nameProf') ? ' has-error' : '' }}">
+                            <label for="nameProf" class="col-md-4 control-label">{{ __('change.nome') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name2" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name2" type="text" class="form-control" name="nameProf" value="{{ old('nameProf') }}"  autofocus>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('nameProf'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('nameProf') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('numero') ? ' has-error' : '' }}">
-                            <label for="numero" class="col-md-4 control-label">{{ __('change.numDocente') }}</label>
+                        <div class="form-group{{ $errors->has('numeroProf') ? ' has-error' : '' }}">
+                            <label for="numeroProf" class="col-md-4 control-label">{{ __('change.numDocente') }}</label>
 
                             <div class="col-md-6">
-                                <input id="numero2" type="text" class="form-control" name="numero" value="{{ old('numero') }}" required autofocus>
+                                <input id="numero2" type="text" class="form-control" name="numeroProf" value="{{ old('numeroProf') }}"  autofocus>
 
-                                @if ($errors->has('numero'))
+                                @if ($errors->has('numeroProf'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('numero') }}</strong>
+                                        <strong>{{ $errors->first('numeroProf') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('data_nascimento') ? ' has-error' : '' }}">
-                            <label for="data_nascimento" class="col-md-4 control-label">{{ __('change.dataNascimento') }}</label>
+                        <div class="form-group{{ $errors->has('data_nascimentoProf') ? ' has-error' : '' }}">
+                            <label for="data_nascimentoProf" class="col-md-4 control-label">{{ __('change.dataNascimento') }}</label>
 
                             <div class="col-md-6">
-                                <input id="data_nascimento2" type="text" class="date form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" required autofocus>
+                                <input id="data_nascimento2" type="date" class="form-control" name="data_nascimentoProf" value="{{ old('data_nascimentoProf') }}"  autofocus>
 
-                                @if ($errors->has('data_nascimento'))
+                                @if ($errors->has('data_nascimentoProf'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('data_nascimento') }}</strong>
+                                        <strong>{{ $errors->first('data_nascimentoProf') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('departamento_id') ? ' has-error' : '' }}">
-                            <label for="departamento_id" class="col-md-4 control-label">{{ __('change.departamento') }}</label>
+                        <div class="form-group{{ $errors->has('departamento_idProf') ? ' has-error' : '' }}">
+                            <label for="departamento_idProf" class="col-md-4 control-label">{{ __('change.departamento') }}</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="departamento_id" id="departamento_id2" required>
+                                <select class="form-control" name="departamento_idProf" id="departamento_id2" >
                                     <option value="">-- {{ __('change.selecionar') }} --</option>
                                     @foreach($departamentos as $departamento)
-                                        @if ($departamento->id == old('departamento_id'))
+                                        @if ($departamento->id == old('departamento_idProf'))
                                             <option value="{{$departamento->id}}" selected>{{$departamento->nome}}</option>
                                         @else
                                         <option value="{{$departamento->id}}">{{$departamento->nome}}</option>
@@ -248,62 +244,72 @@
                                     @endForeach
                                 </select>
 
-                                @if ($errors->has('departamento_id'))
+                                @if ($errors->has('departamento_idProf'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('departamento_id') }}</strong>
+                                        <strong>{{ $errors->first('departamento_idProf') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail</label>
+                        <div class="form-group{{ $errors->has('emailProf') ? ' has-error' : '' }}">
+                            <label for="emailProf" class="col-md-4 control-label">E-Mail</label>
 
                             <div class="col-md-6">
-                                <input id="email2" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email2" type="email" class="form-control" name="emailProf" value="{{ old('emailProf') }}" >
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('emailProf'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('emailProf') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
                 
                     
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                        <div class="form-group{{ $errors->has('passwordProf') ? ' has-error' : '' }}">
+                            <label for="passwordProf" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password2" type="password" class="form-control" name="password" required>
+                                <input id="password2" type="password" class="form-control" name="passwordProf" >
 
-                                @if ($errors->has('password'))
+                                @if ($errors->has('passwordProf'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
+                                        <strong>{{ $errors->first('passwordProf') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">{{ __('change.confirmarPass') }}</label>
+                            <label for="passwordProf-confirm" class="col-md-4 control-label">{{ __('change.confirmarPass') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm2" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm2" type="password" class="form-control" name="passwordProf_confirmation" >
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('cadeiras') ? ' has-error' : '' }}">
-                            <label for="cadeiras" class="col-md-4 control-label">{{ __('change.disciplinas') }}</label>
+                        <div class="form-group{{ $errors->has('cadeirasProf') ? ' has-error' : '' }}">
+                            <label for="cadeirasProf" class="col-md-4 control-label">{{ __('change.disciplinas') }}</label>
 
                             <div class="col-md-6">
-                                <select multiple="multiple" class="form-control" name="cadeiras[]" id="cadeirasProfessor" required>
-                                    <option value="">-- {{ __('change.escolherDepartamento') }} --</option>
+                                <select multiple="multiple" class="form-control" name="cadeirasProf[]" id="cadeirasProfessor" >
+                                    @if(sizeof($cadeirasProf) == 0)
+                                        <option value="">-- {{ __('change.escolherDepartamento') }} --</option>
+                                    @else
+                                        @foreach($cadeirasProf as $cadeira)
+                                            @if ($cadeira->id == old('cadeira_id'))
+                                                <option value="{{$cadeira->id}}" selected>{{$cadeira->nome}}</option>
+                                            @else
+                                                <option value="{{$cadeira->id}}">{{$cadeira->nome}}</option>
+                                            @endif
+                                        @endForeach
+                                    @endif
                                 </select>
 
-                                @if ($errors->has('cadeiras'))
+                                @if ($errors->has('cadeirasProf'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('cadeiras') }}</strong>
+                                        <strong>{{ $errors->first('cadeirasProf') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -360,6 +366,15 @@
                 $('#cadeirasAluno').html(data.html);
             }
         });
+    });
+
+    $(document).ready(function() {
+        if('{{$tab_active}}' == "#registoAluno") {
+            ShowRegistoAluno();
+        }
+        else {
+            ShowRegistoProfessor();
+        }
     });
 </script>
 @endsection

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterCursoDepartamentoNull extends Migration
+class CreatePaisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AlterCursoDepartamentoNull extends Migration
      */
     public function up()
     {
-        Schema::table('cursos', function (Blueprint $table) {
-            //
+        Schema::create('paises', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nome');
+            $table->string('codigo');
         });
     }
 
@@ -25,8 +27,6 @@ class AlterCursoDepartamentoNull extends Migration
      */
     public function down()
     {
-        Schema::table('cursos', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('paises');
     }
 }

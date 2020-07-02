@@ -40,7 +40,6 @@
     color: black;
 }
 
-
 .position-ref {
     position: relative;
 }
@@ -50,8 +49,6 @@
     display: flex;
     justify-content: center;
 }
-
-
 
 .top-right {
     position: fixed;
@@ -67,3 +64,4 @@
     letter-spacing: .1rem;
     text-decoration: none;
     text-transform: uppercase;
+}

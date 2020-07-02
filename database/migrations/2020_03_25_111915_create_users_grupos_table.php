@@ -15,11 +15,9 @@ class CreateUsersGruposTable extends Migration
     {
         Schema::create('users_grupos', function (Blueprint $table) {
             $table->increments('id');
-        });
-
-        Schema::table('users_grupos', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->integer('grupo_id')->unsigned();
+            $table->boolean('favorito')->default(FALSE);
         });
 
         Schema::table('users_grupos', function (Blueprint $table) {

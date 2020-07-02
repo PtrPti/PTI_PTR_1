@@ -1,9 +1,11 @@
-<h4><b>{{ __('change.docentes') }}</b></h4>
-<ul>
-    @foreach($docentes as $docente)
-        <li><b>{{$docente->nome}}</b> ({{$docente->email}})</li>
-    @endforeach
-</ul>
+@if(sizeof($docentes) > 0)
+    <h4><b>{{ __('change.docentes') }}</b></h4>
+    <ul>
+        @foreach($docentes as $docente)
+            <li><b>{{$docente->nome}}</b> ({{$docente->email}})</li>
+        @endforeach
+    </ul>
+@endif
 @if(sizeof($projetos_cadeira) > 0)
     <h4><b>{{ __('change.projetos') }}</b></h4>
     <ul>
