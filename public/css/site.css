@@ -1458,13 +1458,13 @@ select:-moz-focusring {
 
   .img_profile{
     margin-left: -315px;
-    margin-top: 20px;
-    width: 110px;
+    margin-top: -14px;
+    width: 119px;
   }
 
   .btn_perfil{
     margin-left: -182px;
-    margin-top: -125px;
+    margin-top: -20px;
     background-color: #398989;
   }
 
@@ -1475,6 +1475,22 @@ select:-moz-focusring {
     margin-top: -10px;
 
   }
+
+  .btn_update{
+    margin-top: -53px;
+  }
+
+  .btn_update1{
+    margin-left: -623px;
+    
+  }
+
+  .t1{
+    margin-left: -510px;
+    font-size: 15px;
+    margin-top: -17px;
+  }
+  
 
 
 
@@ -1551,7 +1567,7 @@ select:-moz-focusring {
 
 .dropdown-container > a{
   color: white; 
-  padding-left: 25px; 
+  padding-left: 15px; 
   font-size: 14px;
   padding-bottom: 6px;
   padding-right: 27px;
@@ -1559,7 +1575,9 @@ select:-moz-focusring {
 
 .dropdown-container > a:hover{
   color: white;
+  background-color: #398989;
   width: 100%;
+  text-decoration: none;
 }
 
 .i-nav-disc{
@@ -1643,9 +1661,15 @@ select:-moz-focusring {
 }
 
 .btn_update{
-  position: relative;
-  top: 200px;
-  background-color: #398989;
+  position: fixed;
+  top: 250px;
+  
+}
+
+.btn_update1{
+  position: fixed;
+  top: 250px;
+  left: 650px;
 }
 
 
@@ -1654,7 +1678,7 @@ select:-moz-focusring {
   position: relative;
 }
 
-.primeira_coluna{
+.primeira_coluna_perfil{
   text-transform: uppercase;
   font-weight: bold;
   font-size: 13px;
@@ -1675,16 +1699,14 @@ select:-moz-focusring {
 #changeUser, #changeEmail{
   width: 50%;
   margin-left: 35%;
-  padding-left: 4%;
-  padding-bottom: 3%;
+  
   margin-top: 16%;
 }
 
 #changePass{
   width: 66%;
-  margin-left: 17%;
-  padding-left: 4%;
-  padding-bottom: 3%;
+  margin-left: 20%;
+  margin-top: 20%;
 }
 
 #editNome, #editEmail, #editPassword{
@@ -1841,4 +1863,33 @@ select:-moz-focusring {
 #notaText::-webkit-scrollbar-thumb:hover {
   background: #555; 
   border-radius: 10px;
+}
+
+
+.btn_update::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.btn_update::before {
+  content: "seleciona imagem";
+  display: inline-block;
+  background-color: #398989;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  color: white;
+  font-size: 10pt;
+}
+
+.btn_update:hover::before {
+  
+  color: black;
+  background-color: #339989;
+}
+
+.btn_update:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }

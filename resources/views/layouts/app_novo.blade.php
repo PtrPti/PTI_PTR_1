@@ -70,7 +70,7 @@
             </li>
 
             <li class="navsidebar-text">
-                <img class="img_profile" src="/images/{{ Auth::user()->avatar }}" width=37px style="position:fixed; left:25px; top:83px; border-radius: 50%; margin-right:10px;">
+                <img class="img_profile" src="/images/{{ Auth::user()->avatar }}" width=37px style=" border-radius: 50%; margin-right:10px;">
                 <span>{{ __('change.ola') }}, {{Auth::user()->getUserName()}}</span>
                 
             </li>
@@ -131,7 +131,7 @@
                     </div>
                 </li> -->
                 <li class="navsidebar-item">
-                    <a href="#" class="navsidebar-link">
+                    <a href="{{ route('perfil') }}" class="navsidebar-link">
                     <i class="fas fa-user fa-2x i-nav"></i>
                     <span class="link-text">{{ __('change.perfil') }}</span>
                     </a>

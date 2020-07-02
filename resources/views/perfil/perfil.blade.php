@@ -5,27 +5,27 @@
 <div class="row-title breadcrums">
     
     
-    <img class="img_profile" src="/images/{{ $user->avatar }}" width=10% style="position:fixed; top:40px; left:350px; border-radius: 50%;">
+    <img class="img_profile" src="/images/{{ $user->avatar }}" width=10% style="position:fixed;  left:350px; border-radius: 50%;">
     <h2 class="nome_profile">{{Auth::user()->getUserName()}}</h2>
     <!-- <button class="btn btn-primary btn_perfil">{{ __('change.mudarImagemPerfil') }}</button> -->
 
     <form enctype="multipart/form-data" method="post" action="{{route('profile_update')}}" >
         
-        <input type="file" name="avatar" class="btn btn-primary btn_update " >
+        <input type="file" name="avatar" class=" btn_update " >
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <input type="submit" class="btn btn-primary btn_update" value="{{ __('change.mudarImagemPerfil') }}">
+        <input type="submit" class="btn btn-primary btn_update1" value="{{ __('change.mudarImagemPerfil') }}">
     </form>
 </div>
 
 <div class="informacao">
         @if (Auth::user()->isProfessor())
             <h5 class="t1">{{ __('change.estatuto') }}: {{ __('change.professor') }} </h5>
-            
             <h5 class="tnum">{{ __('change.numDocente') }}: {{Auth::user()->numero}} </h5>
 
         @else
             <h5 class="t1">{{ __('change.estatuto') }}: {{ __('change.aluno') }} </h5>
-            <h5 class="tnum">{{ __('change.numeroAluno') }}: {{Auth::user()->numero}} </h5>
+            <h5 class="tnum">{{ __('change.numeroAluno') }}: {{$user->numero}} </h5>
+                
         @endif
 
 </div>
@@ -66,17 +66,17 @@
         <table class="tablePerfil">
            
             <tr>
-                <td class="primeira_coluna">{{ __('change.nome') }}</td>
+                <td class="primeira_coluna_perfil">{{ __('change.nome') }}</td>
                 <td>{{$user->nome}}</td>
                 <td><button id="editNome"><img src="{{ asset('images/edit_perfil.png') }}" width=18px></button></td>
             </tr>
             <tr>
-                <td class="primeira_coluna">E-mail</td>
+                <td class="primeira_coluna_perfil">E-mail</td>
                 <td>{{$user->email}}</td>
                 <td><button id="editEmail"><img src="{{ asset('images/edit_perfil.png') }}" width=18px></button></td>
             </tr>
             <tr>
-                <td class="primeira_coluna">Password</td>
+                <td class="primeira_coluna_perfil">Password</td>
                 <td>************</td>
                 <td><button id="editPassword"><img src="{{ asset('images/edit_perfil.png') }}" width=18px></button></td>
             </tr>
@@ -84,80 +84,108 @@
 
         <!-- Modal verde -->
 
-        <form method="post" action="{{route('changeNome')}}">
-            {{csrf_field()}}
-            <div id="Nome" class="modal">
-
-                <div class="modal-content" id="changeUser">
-                    <span class="closeNome" style="margin-top: 5px;margin-right: 15px;">&times;</span>
-                    <h3>{{ __('change.altereNome') }}</h3>
-                    <div style="display: grid;grid-template-columns: 20% 80%;margin-top: 18px;">
-                        <div>
-                            <label for="nome" style="padding: 0px;margin-top: 5px;">{{ __('change.nome') }}</label><br>
+        
+        <div id="Nome" class="modal">
+            <div  class="modal-content" id="changeUser">
+                <div class="modal-header">
+                    <h6 class="modal-title">{{ __('change.altereNome') }}</h6>
+                    <span class="closeNome" style="margin-top: 5px;margin-right: 15px; cursor:pointer;">&times;</span>
+                </div> 
+               
+                <div class="modal-body">
+                    <form method="post" action="{{route('changeNome')}}">
+                    {{csrf_field()}}
+                    <div class="row group">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="nome" style="padding: 0px;margin-top: 5px;">{{ __('change.nome') }}</label><br>
+                            </div>
+                            <div>
+                                <input type="text" id="novoNome" name="nome" style="width: 90%;" placeholder="{{$user->nome}}"><br>
+                            </div>
                         </div>
-                        <div>
-                            <input type="text" id="novoNome" name="nome" style="width: 90%;" placeholder="{{$user->nome}}"><br>
-                        </div>
-                        <button type='submit' > {{ __('change.alterar') }}</button>
                     </div>
-                </div>
-            </div>
-        </form> 
-        <form method="post" action="{{route('changeEmail')}}">
-            {{csrf_field()}}
-            <div id="Email" class="modal">
-                <div class="modal-content" id="changeEmail">
-                    <span class="closeEmail" style="margin-top: 5px;margin-right: 15px;">&times;</span>
-                    <h3>{{ __('change.altereEmail') }}</h3>
-                    <div style="display: grid;grid-template-columns: 20% 80%;margin-top: 18px;">
-                        <div>
-                            <label for="email" style="padding: 0px;margin-top: 5px;">Email</label><br>
+                    <div class="row row-btn">
+                        <div class="col-md-12">
+                            <button type='submit' class="btn btn-primary "> {{ __('change.alterar') }}</button>
+                           
                         </div>
-                        <div>
-                            <input type="email" name="email" id="novoEmail" style="width: 90%;" placeholder="{{$user->email}}"><br>
-                        </div>
-                        <button type='submit'>{{ __('change.alterar') }}</button>
                     </div>
-                </div>
-            </div>
-        </form> 
             
-        <div id="Password" class="modal">
-            <form method="post" action="{{route('changePass')}}">
-                {{csrf_field()}}
-                <div class="modal-content" id="changePass">
-                    <span class="closePass" style="margin-top: 5px;margin-right: 15px;">&times;</span>
-                    <h3>{{ __('change.altereSuaPalavraPasse') }}</h3>
-                    <div style="display: grid;grid-template-columns: 40% 60%;margin-top: 18px;">
-                        <div>
-                            <label for="pass" style="padding: 0px;margin-top: 5px;">{{ __('change.palavraPasseAtual') }}</label><br>
-                        </div>
-                        <div>
-                            <input type="password" name="old_pass" id="atualPass" style="width: 90%;" placeholder="************"><br>
-                        </div>
-                        <div>
-                            <label for="pass" style="padding: 0px;margin-top: 5px;" >{{ __('change.novaPalavraPasse') }}</label><br>
-                        </div>
-                        <div>
-                            <input type="password" name="nova_pass" id="novaPass" style="width: 90%;" placeholder="************"><br>
-                        </div>
-                        <div>
-                            <label for="pass" style="padding: 0px;margin-top: 5px;">{{ __('change.repetirPassword') }}</label><br>
-                        </div>
-                        <div>
-                            <input type="password" id="repNovaPass" name="nova_pass2" style="width: 90%;" placeholder="************"><br>
-                        </div>
-                        <button type='submit'>{{ __('change.alterar') }}</button>
-                        <div class="pass">
-                            
+                    </form>
+                </div>
+            </div>
+        </div> 
+
+
+        <div id="Email" class="modal">
+            <div  class="modal-content" id="changeEmail">
+                <div class="modal-header">
+                    <h6 class="modal-title">{{ __('change.altereEmail') }}</h6>
+                    <span class="closeEmail" style="margin-top: 5px;margin-right: 15px; cursor:pointer;">&times;</span>
+                </div> 
+               
+                <div class="modal-body">
+                    <form method="post" action="{{route('changeEmail')}}">
+                    {{csrf_field()}}
+                    <div class="row group">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="email" style="padding: 0px;margin-top: 5px;">Email</label><br>
+                            </div>
+                            <div>
+                                <input type="email" name="email" id="novoEmail" style="width: 90%;" placeholder="{{$user->email}}"><br>
+                            </div>
                         </div>
                     </div>
+                    <div class="row row-btn">
+                        <div class="col-md-12">
+                            <button type='submit' class="btn btn-primary "> {{ __('change.alterar') }}</button>
+                           
+                        </div>
+                    </div>
+            
+                    </form>
                 </div>
-            </form>
+            </div>
         </div> 
-    </div>
-</div>
-</div>
+
+
+        <div id="Password" class="modal">
+            <div  class="modal-content" id="changePass">
+                <div class="modal-header">
+                    <h6 class="modal-title">{{ __('change.altereSuaPalavraPasse') }}</h6>
+                    <span class="closePass" style="margin-top: 5px;margin-right: 15px; cursor:pointer;">&times;</span>
+                </div> 
+               
+                <div class="modal-body">
+                    <form method="post" action="{{route('changePass')}}">
+                    {{csrf_field()}}
+                    <div class="row group">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="pass" style="padding: 0px;margin-top: 5px;" >{{ __('change.novaPalavraPasse') }}</label><br>
+                            </div>
+                            <div>
+                                <input type="password" name="nova_pass" id="novaPass" style="width: 90%;" placeholder="************"><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-btn">
+                        <div class="col-md-12">
+                            <button type='submit' class="btn btn-primary "> {{ __('change.alterar') }}</button>
+                           
+                        </div>
+                    </div>
+            
+                    </form>
+                </div>
+            </div>
+        </div> 
+
+
+
+       
 
 
 
@@ -257,7 +285,7 @@ $(document).ready(function () {
             }
         });
     }
-    function checkPass(pass){
+   /*  function checkPass(pass){
         
         var atualPass = bcrypt($('#atualPass').val());
         var novaPass = bcrypt($('#novaPass').val());
@@ -281,7 +309,7 @@ $(document).ready(function () {
             element.appendChild(para);
         }
         return aprovado;
-    }
+    } */
 </script>
 
 

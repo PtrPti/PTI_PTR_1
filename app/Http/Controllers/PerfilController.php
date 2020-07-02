@@ -9,6 +9,7 @@ use App\UserCadeira;
 use App\UsersGrupos;
 use App\Grupo;
 use App\Curso;
+use App\UserInfo;
 use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -55,15 +56,21 @@ class PerfilController extends Controller
         foreach($projetos as $g) {
             array_push($grupos_ids, $g->id);
         }
-        $utilizadores = User::get();
-
+        $utilizadores = User::join('users_info', 'users.id', '=', 'users_info.user_id')->where('users.id', $user->id)->get();
+        
         $active_tab = $tab;
 
 
         $cursos = Curso::where('departamento_id', $request->departamento_id)->orderBy('nome')->get();
 
+        //$user_info = UserInfo::join('users_info', 'users.id', '=', 'users_info.user_id')->where('users.id', $user->id)->get();
 
-        return view ('perfil.perfil', compact('user', 'disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos'));
+        $lista_alunos = UserCadeira::join('users', 'users_cadeiras.user_id', '=', 'users.id')->join('users_info', 'users.id', '=', 'users_info.user_id')->
+                            where('users_cadeiras.cadeira_id', $user->id)->
+                            where('users.perfil_id', 1)->get();
+
+
+        return view ('perfil.perfil', compact('user', 'disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos'));
     }
 
 
@@ -91,11 +98,13 @@ class PerfilController extends Controller
 
     public function changePass(Request $request){
         $user = Auth::user()->getUser();
-        $oldPass = bcrypt($_POST['old_pass']);
+
+        $novaPass = bcrypt($_POST['nova_pass']);
+        /* $oldPass = bcrypt($_POST['old_pass']);
         $novaPass = bcrypt($_POST['nova_pass']);
         $novaPass2 = bcrypt($_POST['nova_pass2']);
-        
-        print_r($user->password. '||||');
+         */
+  /*       print_r($user->password. '||||');
         print_r($oldPass.'||||');
         print_r($novaPass.'||||');
         print_r($novaPass2);
@@ -106,20 +115,20 @@ class PerfilController extends Controller
                
             }
             elseif($novaPass == $novaPass2){
-                error_log('update');
+                error_log('update'); */
                 User::where('id',$user->id)->update(['password'=>$novaPass]);
-            }
+         /*    }
         }
-        else{
+        else{ */
             //dá erro
-        }
+        
         // f (password_verify('wegroup', $hash)) {
         //     echo 'Password is valid!';
         // } else {
         //     echo 'Invalid password.';
         // }
 
-        //return redirect()->action('PerfilController@perfilDocente');
+        return redirect()->action('PerfilController@perfilDocente');
     }
 
     public function updateAvatar(Request $request){

@@ -102,7 +102,7 @@ return [
     'registar'=> 'Registar',
     'numDocente'=> 'Número de Docente',
     'aluno'=> 'Aluno',
-    'terminados'=> 'Finished',
+    'terminados'=> 'Terminados',
     'voltarPaginaInicial'=> '< Voltar à Página Inicial',
     'estatuto'=> 'Estatuto',
     'mudarImagemPerfil'=>'Mudar Imagem Perfil',
@@ -128,7 +128,10 @@ return [
     'aindaNaoExistemMetodosDeAvaliacao'=> 'Ainda não existem métodos de Avaliação',
     'adicionarAlunos'=> 'Adicionar Alunos',
     'adicioneMaisAlunos'=> 'Adicione alunos à sua Disciplina',
-    'adicionarAluno'=> 'Adicionar Aluno'
+    'adicionarAluno'=> 'Adicionar Aluno',
+    'altereOseuNome' => 'Altere o seu Nome'
+
+
 
 
 
