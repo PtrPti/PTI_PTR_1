@@ -37,20 +37,20 @@
             @foreach ($ficheiros as $ficheiro)
                 @if ($ficheiro->is_folder)
                     <li class="folder">
-                        <i class="fas fa-folder"></i><a href="#" class="no-link">{{ $ficheiro->nome }}</a>
+                        <i class="fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i> <i class="fas fa-folder"></i><a href="#" class="no-link">{{ $ficheiro->nome }}</a>
                         <ul class="subFiles">
                         @foreach ($subFicheiros as $subficheiro)
                             @if ($subficheiro->pasta_id === $ficheiro->id)
                                 @if(is_null($subficheiro->link) and is_null($subficheiro->notas))
-                                    <li><i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $subficheiro->nome]) }}">{{ explode("_", $ficheiro->nome, 2)[1] }}</a></li>
+                                    <i class="fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i><li><i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $subficheiro->nome]) }}">{{ explode("_", $ficheiro->nome, 2)[1] }}</a></li>
                                 @elseif(!is_null($subficheiro->link))
                                     @if(is_null($subficheiro->nome))
-                                        <li><i class="fas fa-link"></i><a href="{{$subficheiro->link}}" target="_blank">{{ str_limit($subficheiro->link, $limit = 25, $end = '...') }}</a></li>
+                                        <i class="fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i><li><i class="fas fa-link"></i><a href="{{$subficheiro->link}}" target="_blank">{{ str_limit($subficheiro->link, $limit = 25, $end = '...') }}</a></li>
                                     @else 
-                                        <li><i class="fas fa-link"></i><a href="{{$subficheiro->link}}" target="_blank">{{ str_limit($subficheiro->nome, $limit = 25, $end = '...') }}</a></li>
+                                        <i class="fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i><li><i class="fas fa-link"></i><a href="{{$subficheiro->link}}" target="_blank">{{ str_limit($subficheiro->nome, $limit = 25, $end = '...') }}</a></li>
                                     @endif
                                 @else
-                                    <li><i class="fas fa-sticky-note"></i><a href="#" class="no-link">{{$subficheiro->nome}}</a></li>
+                                    <li><i class="fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i><i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$subficheiro->id}})">{{$subficheiro->nome}}</a></li>
                                 @endif
                             @else
                                 <li><i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$subficheiro->id}})">{{$subficheiro->nome}}</a></li>
@@ -356,19 +356,7 @@
             }
         });
 
-        function infoNota(tipo,id){
-            $.ajax({
-                url: '/infoNota',
-                type: 'GET',
-                dataType: 'json',
-                success: 'success',
-                data : {'tipo': tipo, 'id':id},
-                success: function(data){
-                    $('#notaa').html(data.html);
-                    $('#notaa').show();
-                }
-            })
-        }
+        
     });
 
     function infoNota(tipo,id){
@@ -384,5 +372,22 @@
                 }
             })
         }
+
+    function remover(tipo,id,grupoId){
+        $.ajax({
+            url: '/remover',
+            type: 'GET',
+            dataType: 'json',
+            success: 'success',
+            data : {'tipo': tipo, 'id':id, 'grupoId': grupoId},
+            success: function(data){
+                var msg = "<span class='gritter-text'>" + data.msg + "</span>";
+
+                AddGritter(data.title, msg, 'success');
+
+                window.location.href = data.redirect;
+            }
+        })
+    }
 </script>
 @endsection

@@ -150,6 +150,8 @@ Route::post('addAvaliacao', 'ProjetoController@addAvaliacao')->name('addAvaliaca
 Route::get('infoNota', 'ProjetoController@infoNota');
 Route::get('saveNota', 'ProjetoController@saveNota');
 
+Route::get('remover', 'ProjetoController@remover');
+
 //---------------- CHAT ----------------//
 Route::get('{route?}/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
 Route::get('/alunomessage/{id}', 'ChatController@getMessage')->name('getmessage');
