@@ -42,8 +42,11 @@ Route::get('/registar/getCadeirasAluno', 'AuthController@changeCursoId')->name('
 Route::get('/registar/getCadeirasProf', 'AuthController@changeDepartamentoProfId')->name('changeDepartamentoProfId');
 
 //Perfil
+Route::get('/Home/Perfil/{tab?}', 'PerfilController@perfilDocente')->name('perfil');
 Route::post('/changePass', 'PerfilController@changePass')->name('changePass');
 Route::post('/profile', 'PerfilController@updateAvatar')->name('profile_update');
+Route::post('/changeNome', 'PerfilController@changeNome')->name('changeNome');
+Route::post('/changeEmail', 'PerfilController@changeEmail')->name('changeEmail');
 
 //---------------- ADMIN ----------------//
 Route::get('/Admin', 'AdminController@home')->name('homeAdmin')->middleware('checkUserRole:3');
@@ -167,10 +170,8 @@ Route::get('download/{folder}/{filename}', function($folder, $filename) {
 })->where('filename', '[A-Za-z0-9\-\_\.]+');
 
 //---------------- CALENDARIO ----------------//
-Route::get('/projetosAluno/loadEvents/{grupo_id}', 'CalendarController@load')->name('loadEvents');
-Route::post('/projetosAluno/createEvent/{title}/{start}/{end}/{allDay}/{grupo_id}', 'CalendarController@create')->name('createEvent');
-Route::post('/projetosAluno/updateEvents/{id}/{title}/{start}/{end}/{allDay}', 'CalendarController@update')->name('updateEvents');
-Route::post('/projetosAluno/deleteEvents/{id}', 'CalendarController@delete')->name('deleteEvents');
-Route::get('/Home/Perfil/{tab?}', 'PerfilController@perfilDocente')->name('perfil');
-Route::post('/changeNome', 'PerfilController@changeNome')->name('changeNome');
-Route::post('/changeEmail', 'PerfilController@changeEmail')->name('changeEmail');
+Route::get('/calendar/loadEvents/{grupo_id}', 'CalendarController@load')->name('loadEvents');
+Route::post('/calendar/createEvent/{title}/{start}/{end}/{allDay}/{grupo_id}', 'CalendarController@create')->name('createEvent');
+Route::post('/calendar/updateEvents/{id}/{title}/{start}/{end}/{allDay}', 'CalendarController@update')->name('updateEvents');
+Route::post('/calendar/deleteEvents/{id}', 'CalendarController@delete')->name('deleteEvents');
+

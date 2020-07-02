@@ -22,11 +22,24 @@ class CalendarController extends Controller
             $endDate = date_add(DateTime::createFromFormat('d-m-Y H:i:s', $start), new DateInterval('P1H'));
         }
 
-        Calendar::insert([
-            ['title' => $title, 'start' => DateTime::createFromFormat('d-m-Y H:i:s', $start), 'end' => $endDate, 'allDay' => $allDayBool, 'grupo_id' => $grupo_id],
-        ]);        
+        // Calendar::insert([
+        //     ['title' => $title, 'start' => DateTime::createFromFormat('d-m-Y H:i:s', $start), 'end' => $endDate, 'allDay' => $allDayBool, 'grupo_id' => $grupo_id],
+        // ]);     
+        // return response()->json(['message' => 'create success']);
+        
+        $calendar = new Calendar;
+        $calendar->title = $title;
+        $calendar->start = DateTime::createFromFormat('d-m-Y H:i:s', $start);
+        $calendar->end = $endDate;
+        $calendar->allDay = $allDayBool;
+        $calendar->grupo_id = $grupo_id;
+        $calendar->save();
 
-        return response()->json(['message' => 'create success']);
+        // $id = DB::table('calendario')->insertGetId([
+        //     ['title' => $title, 'start' => DateTime::createFromFormat('d-m-Y H:i:s', $start), 'end' => $endDate, 'allDay' => $allDayBool, 'grupo_id' => $grupo_id],
+        // ]);        
+
+        return response()->json(['message' => 'create success', 'id' => $calendar->id]);
     }
 
     public function update(Request $request, $id, $title, $start, $end, $allDay) {
@@ -36,8 +49,6 @@ class CalendarController extends Controller
         if (!$allDayBool && $endDate == null) {
             $endDate = date_add(DateTime::createFromFormat('d-m-Y H:i:s', $start), new DateInterval('PT1H'));
         }
-
-        // error_log($endDate);
 
         Calendar::where('id', $id)->update(['title' => $title, 'start' => DateTime::createFromFormat('d-m-Y H:i:s', $start), 'end' => $endDate, 'allDay' => $allDayBool]);
 

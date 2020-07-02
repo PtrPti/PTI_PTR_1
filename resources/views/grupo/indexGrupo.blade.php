@@ -56,10 +56,8 @@
                             <li><i class="fas fa-link"></i><a href="{{$ficheiro->link}}" target="_blank">{{$ficheiro->nome}}</a></li>
                         @endif
                     @else
-                        <li><i class="fas fa-sticky-note"></i><a href="#" class="no-link">{{$ficheiro->nome}}</a></li>
-                    @endif
-                @else
-                    <li><i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$ficheiro->id}})">{{$ficheiro->nome}}</a></li>
+                        <li><i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$ficheiro->id}})">{{$ficheiro->nome}}</a></li>
+                    @endif               
                 @endif
             @endforeach
         </ul>
@@ -292,17 +290,31 @@
     </div>
 </div>
 
-
-
 <i class="far fa-calendar-alt fa-3x calendarBtn" onclick="ShowCalendar()"></i>
+<div id='calendarContainer'>
+    <div id='external-events'>
+        <h4>Elementos do grupo</h4>
+        <div id='external-events-list'>
+            @foreach ($membros as $ug)                
+                @if (Auth::user()->getUserId() == $ug->id)
+                    <div class='fc-event draggable'>{{ $ug->nome }}</div>
+                @else
+                    <div class='fc-event undraggable'>{{ $ug->nome }}</div>
+                @endif
+            @endforeach
+        </div>
+    </div>
 
+    <div id='calendar'></div>
+
+    <div style='clear:both'></div>
+</div>
 
 <div id="notaa">
-
     <!-- view nota -->
     @include('grupo.nota')
-
 </div>
+
 <script>
     $(document).ready(function () {
         changeTab(<?php echo $active_tab ?>);

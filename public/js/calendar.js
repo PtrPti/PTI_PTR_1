@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var Calendar = FullCalendar.Calendar;
     var Draggable = FullCalendarInteraction.Draggable;
 
@@ -35,16 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
             ev.event.setProp('color', ev.draggedEl.dataset.color);
             var end = ev.event.end == null ? null : moment(ev.event.end).format("DD-MM-YYYY HH:mm:ss");
             $.ajax({
-                url: '/projetosAluno/createEvent/' + ev.event.title + '/' + moment(ev.event.start).format("DD-MM-YYYY HH:mm:ss") + '/' + end + '/' + ev.event.allDay + '/' + $("input[name=grupoId]").val(),
+                url: '/calendar/createEvent/' + ev.event.title + '/' + moment(ev.event.start).format("DD-MM-YYYY HH:mm:ss") + '/' + end + '/' + ev.event.allDay + '/' + $("input[name=grupo_id]").val(),
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
+                    ev.event.setExtendedProp('db_id', data.id);
                 }
             });
         },
         eventClick: function (ev) {
+            var evId = ev.event.id == "" ? ev.event.extendedProps.db_id : ev.event.id;
             $.ajax({
-                url: '/projetosAluno/deleteEvents/' + ev.event.id,
+                url: '/calendar/deleteEvents/' + evId,
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
@@ -57,8 +59,9 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         eventDrop: function (ev) { //quando altera a data do evento -> update
             var end = ev.event.end == null ? null : moment(ev.event.end).format("DD-MM-YYYY HH:mm:ss");
+            var evId = ev.event.id == "" ? ev.event.extendedProps.db_id : ev.event.id;
             $.ajax({
-                url: '/projetosAluno/updateEvents/' + ev.event.id + '/' + ev.event.title + '/' + moment(ev.event.start).format("DD-MM-YYYY HH:mm:ss") + '/' + end + '/' + ev.event.allDay,
+                url: '/calendar/updateEvents/' + evId + '/' + ev.event.title + '/' + moment(ev.event.start).format("DD-MM-YYYY HH:mm:ss") + '/' + end + '/' + ev.event.allDay,
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
@@ -67,24 +70,22 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         eventResize: function (ev) { //quando altera a duracao do evento -> update
             var end = ev.event.end == null ? null : moment(ev.event.end).format("DD-MM-YYYY HH:mm:ss");
+            var evId = ev.event.id == "" ? ev.event.extendedProps.db_id : ev.event.id;
             $.ajax({
-                url: '/projetosAluno/updateEvents/' + ev.event.id + '/' + ev.event.title + '/' + moment(ev.event.start).format("DD-MM-YYYY HH:mm:ss") + '/' + end + '/' + ev.event.allDay,
+                url: '/calendar/updateEvents/' + evId + '/' + ev.event.title + '/' + moment(ev.event.start).format("DD-MM-YYYY HH:mm:ss") + '/' + end + '/' + ev.event.allDay,
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
                 }
             });
         },
-        events: "/projetosAluno/loadEvents/" + $("input[name=grupoId]").val()
+        events: "/calendar/loadEvents/" + $("input[name=grupo_id]").val()
     });
 
     calendar.render();
 });
 
 function ShowCalendar() {
-
-    
-      
     if ($('#calendarContainer').css('visibility') === 'visible') {
         $('#calendarContainer').css('visibility', 'hidden');
     }
