@@ -63,6 +63,7 @@
                 @endif
             @endforeach
         </ul>
+
         @if (Auth::user()->isAluno())
             <div class="modal fade" id="addToGrupo" tabindex="-1" role="dialog" aria-labelledby="addToGrupoLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -207,12 +208,11 @@
                                             <span class="bar"></span>
                                             <label for="nomeLink" class="labelTextModal">{{ __('change.nome') }}</label>
                                         </div>
-                                            <div class="col-md-6">
-                                                <input type="text" class="display-input" id="url" name="url">
-                                                <span class="highlight"></span>
-                                                <span class="bar"></span>
-                                                <label for="url" class="labelTextModal">URL</label>
-                                            </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="display-input" id="url" name="url">
+                                            <span class="highlight"></span>
+                                            <span class="bar"></span>
+                                            <label for="url" class="labelTextModal">URL</label>
                                         </div>
                                     </div>
                                     <div class="row row-btn">
@@ -269,7 +269,7 @@
 
     <div class="split-right">
         <div class="nav-tabs">
-            <div class="tab tab-active" id="tab1" onclick="changeTab(1)">>{{ __('change.tarefas') }}</div>
+            <div class="tab tab-active" id="tab1" onclick="changeTab(1)">{{ __('change.tarefas') }}</div>
             <div class="tab" id="tab2" onclick="changeTab(2)">Feedbacks</div>
             <div class="tab" id="tab4" onclick="changeTab(4)">Avaliação</div>
         </div>

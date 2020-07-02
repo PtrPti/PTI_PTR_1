@@ -17,9 +17,7 @@
     <!-- <script src="{{ asset('js/app.js') }}"></script> -->
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/novo.js') }}"></script>
-
-    
+    <script src="{{ asset('js/novo.js') }}"></script>    
 
     <!-- FontAwesome Icons -->
     <script src="https://kit.fontawesome.com/f12fb584ff.js" crossorigin="anonymous"></script>
@@ -28,12 +26,10 @@
     <link href="{{ asset('css/site.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
-
     <!-- DatePicker -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
     <!-- Calendario Disponibilidades -->
     <link rel="stylesheet" href="{{ asset('fullcalendar/core/main.css') }}">

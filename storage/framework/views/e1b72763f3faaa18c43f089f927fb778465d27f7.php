@@ -242,7 +242,7 @@
             type: 'POST',
             dataType: 'json',
             success: 'success',
-            data: {'projeto_id': id, 'n_grupos': grupos, 'entrar': entrar},
+            data: {'projeto_id': id, 'n_grupos': grupos, 'entrar': entrar, 'cadeira_id': <?php if (isset($projeto))echo $projeto->cadeira_id ?>},
             success: function(data) {
                 ShowGrupos(id);
                 AddGritter('Sucesso', '<span class="gritter-text">Grupo criado com sucesso</span>', 'success');

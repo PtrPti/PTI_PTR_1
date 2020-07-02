@@ -15,7 +15,7 @@ class CreateAvalicaoMembrosTable extends Migration
     {
         Schema::create('avaliacao_membros', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('avaliado por');
+            $table->string('avaliado_por');
             $table->string('membro_avaliado');
             $table->integer('grupo_id');
             $table->integer('nota');

@@ -316,7 +316,6 @@ class DisciplinaController extends Controller
         return response()->json(['title' => 'Sucesso', 'msg' => 'Resposta enviada com sucesso', 'redirect' => '/Home/Disciplina/'. $request->cadeira_id . '/5' ]);
     }
 
-
     public function addEvaluation(CreateEvaluation $request){
 
         $msg_criterios = $_POST['mensagem_criterios'];
@@ -332,7 +331,6 @@ class DisciplinaController extends Controller
         //return response()->json(['title' => 'Sucesso', 'msg' => 'Critério criado com sucesso', 'redirect' => '/Home/Disciplina'. $request->cadeira_id . '/2' ]);
         return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id, 'tab'=> 2]);
     }
-
 
     public function verAvaliacaoDisciplina(Request $request) {
         $msg_criterios = $_GET['mensagem_criterios'];
@@ -352,7 +350,6 @@ class DisciplinaController extends Controller
         //return redirect()->action('DisciplinaController@indexDocente');
     }
 
-
     public function changeEvaluation(Request $request){
         
         $nova_mensagem = $_POST['nova_mensagem'];
@@ -363,7 +360,6 @@ class DisciplinaController extends Controller
         return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id,  'tab'=> 2]);
     }
 
-
     public function eraiseEvaluation(Request $request){
         $cadeiraId = $_POST['cadeira_id'];
         $id = $_POST['id'];
@@ -372,7 +368,6 @@ class DisciplinaController extends Controller
         
         return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id,  'tab'=> 2]);
     }
-
 
     public function search_alunos(Request $request){
 
@@ -425,9 +420,4 @@ class DisciplinaController extends Controller
         return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id,  'tab'=> 4]);
 
     }
-
-
-
-
-
 }
