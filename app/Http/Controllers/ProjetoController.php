@@ -164,7 +164,7 @@ class ProjetoController extends Controller
         $novaTarefa->tarefa_id = $tarefaAssociada == "" ? null : $tarefaAssociada;
         $novaTarefa->save();
 
-        return response()->json(['title' => 'Sucesso', 'msg' => 'Tarefa criada com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/1' ]);
+        return response()->json(['title' => 'Sucesso', 'msg' => 'Tarefa criada com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
     }
 
     public function editTarefa(Request $request) {
@@ -188,7 +188,7 @@ class ProjetoController extends Controller
         $tarefa->tarefa_id = $tarefaAssociada == "" ? null : $tarefaAssociada;
         $tarefa->save();
 
-        return response()->json(['title' => 'Sucesso', 'msg' => 'Tarefa alterada com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/1' ]);
+        return response()->json(['title' => 'Sucesso', 'msg' => 'Tarefa alterada com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
     }
 
     public function checkTarefa(Request $request) {
@@ -237,7 +237,7 @@ class ProjetoController extends Controller
         $pasta->is_folder = TRUE;
         $pasta->save();
 
-        return response()->json(['title' => 'Sucesso', 'msg' => 'Pasta criada com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/1' ]);
+        return response()->json(['title' => 'Sucesso', 'msg' => 'Pasta criada com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
     }
 
     public function addNotaGrupo(TarefaNotaPost $request) {
@@ -254,7 +254,7 @@ class ProjetoController extends Controller
         $nota->notas = $texto;
         $nota->save();
 
-        return response()->json(['title' => 'Sucesso', 'msg' => 'Nota criada com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/1' ]);
+        return response()->json(['title' => 'Sucesso', 'msg' => 'Nota criada com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
     }
 
     public function addNotaTarefa(TarefaNotaPost $request) {
@@ -269,7 +269,7 @@ class ProjetoController extends Controller
         $nota->notas = $texto;
         $nota->save();
 
-        return response()->json(['title' => 'Sucesso', 'msg' => 'Nota criada com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/1' ]);
+        return response()->json(['title' => 'Sucesso', 'msg' => 'Nota criada com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
     }
 
     public function addLinkGrupo(TarefaLinkPost $request) {
@@ -286,7 +286,7 @@ class ProjetoController extends Controller
         $site->link = $link;
         $site->save();
 
-        return response()->json(['title' => 'Sucesso', 'msg' => 'Link adicionado com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/1' ]);
+        return response()->json(['title' => 'Sucesso', 'msg' => 'Link adicionado com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
     }
 
     public function addLinkTarefa(TarefaLinkPost $request) {
@@ -301,7 +301,7 @@ class ProjetoController extends Controller
         $site->link = $link;
         $site->save();
 
-        return response()->json(['title' => 'Sucesso', 'msg' => 'Link adicionado com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/1' ]);
+        return response()->json(['title' => 'Sucesso', 'msg' => 'Link adicionado com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
     }
 
     public function addFileGrupo(TarefaFilePost $request) {
@@ -390,7 +390,7 @@ class ProjetoController extends Controller
             $feedbackFicheiro->save();
         }
 
-        return response()->json(['title' => 'Sucesso', 'msg' => 'Feedback criado com sucesso', 'redirect' => '/Home/Disciplina/Projeto/Grupo/'. $grupoId . '/2' ]);
+        return response()->json(['title' => 'Sucesso', 'msg' => 'Feedback criado com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/2' ]);
     }
 
     public function infoNota(Request $request) {

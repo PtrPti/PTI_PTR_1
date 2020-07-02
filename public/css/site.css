@@ -1292,12 +1292,12 @@ color: #877;
 }
 
 .ficheirosbtn{
-  border: 1px solid rgb(49, 49, 49);
+  background:rgb(49, 49, 49);
   border-radius: 2px;
 }
 
 .ficheirosbtn i{
-  color: rgb(33, 33, 33);
+  color: white;
 }
 
 #mydiv {
