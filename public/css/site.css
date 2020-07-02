@@ -1842,3 +1842,8 @@ select:-moz-focusring {
   background: #555; 
   border-radius: 10px;
 }
+
+.split-left h5 {
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -117,9 +117,15 @@ class ProjetoController extends Controller
                                                 ->leftJoin('grupos_ficheiros', 'feedback_ficheiros.grupo_ficheiro_id', '=', 'grupos_ficheiros.id')
                                                 ->select('tarefas_ficheiros.id as tf_id', 'tarefas_ficheiros.nome as tf_nome', 'grupos_ficheiros.id as gf_id', 'grupos_ficheiros.nome as gf_nome')
                                                 ->where('feedback_ficheiros.feedback_id', $id)->get();
+
+        $projeto = Feedback::join('grupos', 'feedback.grupo_id', '=', 'grupos.id')->
+                            join('projetos', 'grupos.projeto_id', '=', 'projetos.id')->
+                            select('projetos.*')->where('feedback.id', $id)->first();
+
         $data = array(
             'feedback'  => $feedback,
             'feedbackFicheiros'  => $feedbackFicheiros,
+            'projeto' => $projeto
         );
 
         $returnHTML = view('grupo.feedbackMensagens')->with($data)->render();

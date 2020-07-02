@@ -8,7 +8,8 @@
 
 <div class="p_grupo">
     <div class="split-left">
-        @if (Auth::user()->isAluno())
+        <h5>Ficheiros do grupo</h5>
+        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
             <button type="button" data-toggle="dropdown" id="add" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-plus"></i> {{ __('change.adicionar') }}
             </button>
@@ -269,7 +270,9 @@
         <div class="nav-tabs">
             <div class="tab tab-active" id="tab1" onclick="changeTab(1)">{{ __('change.tarefas') }}</div>
             <div class="tab" id="tab2" onclick="changeTab(2)">Feedbacks</div>
-            <div class="tab" id="tab4" onclick="changeTab(4)">Avaliação</div>
+            @if($projeto->data_fim < date('Y-m-d H:i:s'))
+                <div class="tab" id="tab4" onclick="changeTab(4)">Avaliação</div>
+            @endif
         </div>
 
         <div class="tab-container" id="tab-1">
@@ -284,9 +287,11 @@
             <!-- é preenchido por ajax no feedback -->
         </div>
 
-        <div class="tab-container" id="tab-4">
-            @include('grupo.informacoes')
-        </div>        
+        @if($projeto->data_fim < date('Y-m-d H:i:s'))
+            <div class="tab-container" id="tab-4">
+                @include('grupo.informacoes')
+            </div>
+        @endif
     </div>
 </div>
 
@@ -295,8 +300,8 @@
     <div id='external-events'>
         <h4>Elementos do grupo</h4>
         <div id='external-events-list'>
-            @foreach ($membros as $ug)                
-                @if (Auth::user()->getUserId() == $ug->id)
+            @foreach ($membros as $ug)
+                @if (Auth::user()->getUserId() == $ug->id && $projeto->data_fim >= date('Y-m-d H:i:s'))
                     <div class='fc-event draggable'>{{ $ug->nome }}</div>
                 @else
                     <div class='fc-event undraggable'>{{ $ug->nome }}</div>

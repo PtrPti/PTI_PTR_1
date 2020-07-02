@@ -33,14 +33,14 @@
                 <i class="fas fa-chevron-circle-down open-subTask"></i>
                 <label class="containerCheckbox">{{ $tnf->nome }}
                     <input type="hidden" value="">
-                    @if (Auth::user()->isAluno())
+                    @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                         <input class="input-pai" type="checkbox" @if (($tnf->estado)) checked @endif >
                     @else
                         <input class="input-pai" type="checkbox" disabled @if (($tnf->estado)) checked @endif >
                     @endif
                     <span class="checkmark"></span>
                 </label>
-                @if (Auth::user()->isAluno())
+                @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                     <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
                     <i class="fas fa-plus-circle addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i>
                 @else
@@ -78,25 +78,22 @@
         <?php $tarefaPai++; ?>
     @else
             <div class="divSubTarefa {{$tnf->tarefa_id}}" id="{{$tnf->id}}">
-                <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
-                <i class="fas fa-plus-circle addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i>
-                <div class='tarefa'>
-                    
+                @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                    <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+                    <i class="fas fa-plus-circle addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i>
+                @else
+                    <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+                @endif
+                <div class='tarefa'>                    
                     <label class="containerCheckbox">{{ $tnf->nome }}
                         <input type="hidden" value="">
-                        @if (Auth::user()->isAluno())
+                        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                             <input type="checkbox" @if (($tnf->estado)) checked @endif >
                         @else
                             <input type="checkbox" disabled @if (($tnf->estado)) checked @endif >
                         @endif
                         <span class="checkmark"></span>
                     </label>
-                    @if (Auth::user()->isAluno())
-                        
-                    @else
-                        <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
-                    @endif
-
                     <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
                     <div class="ficheirosTarefa">
                         @if(!is_null($tnf->atribuido))
@@ -130,7 +127,7 @@
                     <i class="fas fa-chevron-circle-down open-subTask"></i>
                     <label class="containerCheckbox">{{ $tf->nome }}
                         <input type="hidden" value="">
-                        @if (Auth::user()->isAluno())
+                        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                             <input class="input-pai" type="checkbox" @if (($tf->estado)) checked @endif >
                         @else
                             <input class="input-pai" type="checkbox" disabled @if (($tf->estado)) checked @endif >
@@ -158,7 +155,7 @@
                     <div class='tarefa'>
                         <label class="containerCheckbox">{{ $tf->nome }}
                             <input type="hidden" value="">
-                            @if (Auth::user()->isAluno())
+                            @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                 <input type="checkbox" @if (($tf->estado)) checked @endif >
                             @else
                                 <input type="checkbox" disabled @if (($tf->estado)) checked @endif >
