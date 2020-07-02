@@ -417,11 +417,34 @@ class ProjetoController extends Controller
 
         if($tipo == 'grupo'){
             $nota = GrupoFicheiros::where('id',$id)->get();
+
         } else {
             $nota = TarefasFicheiros::where('id',$id)->get();
         }
 
-        $data = array('nota' => $nota);
+        $data = array('nota' => $nota, 'tipo'=> $tipo);
+        $returnHTML = view('grupo.nota')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function saveNota(Request $request) {
+        $tipo = $_GET['tipo']; 
+        $id = $_GET['id'];
+        $nota = $_GET['nota'];
+
+        if($tipo == 'grupo'){
+            $notaa = GrupoFicheiros::find($id);
+            $notaa->notas = $nota;
+            $notaa->save();
+            $nota = GrupoFicheiros::where('id',$id)->get();
+        } else {
+            $notaa = TarefasFicheiros::find($id);
+            $notaa->notas = $nota;
+            $notaa->save();
+            $nota = TarefasFicheiros::where('id',$id)->get();
+        }
+
+        $data = array('nota' => $nota, 'tipo'=> $tipo);
         $returnHTML = view('grupo.nota')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
     }

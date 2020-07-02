@@ -7,6 +7,8 @@ return [
     'em_curso'=> 'Ongoing',
     'aplicar'=> 'Apply',
     'pesquisar' => 'Search',
+    'membros' => 'Members',
+    'dataFinal' => 'Final Date',
     'ola'=> 'Hi',
     'perfil'=> 'Profile',
     'conversas'=> 'Conversations',

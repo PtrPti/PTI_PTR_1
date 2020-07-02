@@ -6,6 +6,18 @@
     <h3><a href="{{ route('disciplina', ['id' => $disciplina->id]) }}">{{ $disciplina->nome }}</a> » {{ $projeto->nome }}</h3>
 </div>
 
+<div id='membros'>
+    <button type="button" data-toggle="dropdown" id="membros" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-users"></i> {{ __('change.membros') }}
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="membros">
+        @foreach($membros as $membro)
+            <li>{{$membro->nome}}</li>
+        @endforeach
+    </ul>
+    <span><strong>{{ __('change.dataFinal') }}:</strong> {{ $projeto->data_fim }}</span>
+</div>
+
 <div class="p_grupo">
     <div class="split-left">
         @if (Auth::user()->isAluno())
@@ -13,11 +25,11 @@
                 <i class="fas fa-plus"></i> {{ __('change.adicionar') }}
             </button>
             <ul class="dropdown-menu" aria-labelledby="add">
-                <li><i class="fas fa-tasks"></i><a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="1">{{ __('change.criarTarefaSubTarefa') }}</a></li>
-                <li><i class="fas fa-folder"></i><a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="2">{{ __('change.criarPasta') }}</a></li>
-                <li><i class="fas fa-file"> </i><a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="3">{{ __('change.carregar_ficheiro') }}</a></li>
-                <li><i class="fas fa-link"></i><a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="4">{{ __('change.adicionarSiteLink') }}</a></li>
-                <li><i class="fas fa-sticky-note"></i><a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="5">{{ __('change.criarNota') }}</a></li>
+                <a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="1"><li><i class="fas fa-tasks"></i>{{ __('change.criarTarefaSubTarefa') }}</li></a>
+                <a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="2"><li><i class="fas fa-folder"></i>{{ __('change.criarPasta') }}</li></a>
+                <a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="3"><li><i class="fas fa-file"> </i>{{ __('change.carregar_ficheiro') }}</li></a>
+                <a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="4"><li><i class="fas fa-link"></i>{{ __('change.adicionarSiteLink') }}</li></a>
+                <a class="addToGrupo" role="button" data-toggle="modal" data-target="#addToGrupo" data-id="5"><li><i class="fas fa-sticky-note"></i>{{ __('change.criarNota') }}</li></a>
             </ul>
         @endif
 
@@ -358,6 +370,7 @@
             })
         }
     });
+
     function infoNota(tipo,id){
             $.ajax({
                 url: '/infoNota',
