@@ -89,7 +89,9 @@ class ProjetoController extends Controller
         #feedback
         $feedbacks = Feedback::where('grupo_id', $id)->orderBy('created_at', 'desc')->get();
         #membros
-        $membros = UsersGrupos::join('users', 'users_grupos.user_id', '=', 'users.id')->select('users.id', 'users.nome')->where('users_grupos.grupo_id', $id)->get();
+        $membros = UsersGrupos::join('users', 'users_grupos.user_id', '=', 'users.id')->
+                    join('users_info', 'users.id', '=', 'users_info.user_id')
+                    ->select('users.id', 'users.nome', 'users_info.numero')->where('users_grupos.grupo_id', $id)->get();
         #progresso
         $progresso = $this->barraProgresso($id);
         #ficheiros p/ feedback
