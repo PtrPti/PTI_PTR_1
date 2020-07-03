@@ -36,7 +36,7 @@ class HomeController extends Controller
     
     public function home(Request $request) {
         $user = Auth::user()->getUser();
-        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
+        $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->orderBy('nome')->get();
 
         if($user->perfil_id == 1) { //se for aluno
             $query = "select p.id as id, p.nome as nome, c.nome as cadeira, g.id as grupo_id, g.numero as numero, ug.favorito as favorito, ug.id as usersGrupos_id
@@ -70,6 +70,12 @@ class HomeController extends Controller
         $user = Auth::user()->getUser();
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
+                    
+        $cadeira_ids = [];
+
+        foreach($cadeiras as $g) {
+            array_push($cadeira_ids, $g->cadeira_id);
+        }
 
         $projetos = User::join('users_grupos', 'users.id', '=', 'users_grupos.user_id')
                           ->join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
@@ -82,7 +88,7 @@ class HomeController extends Controller
         foreach($projetos as $g) {
             array_push($grupos_ids, $g->id);
         }
-        $utilizadores = ChatController::getUsers($grupos_ids, $user->id);
+        $utilizadores = ChatController::getUsers($grupos_ids, $cadeira_ids, $user->id);
 
         return view ('aluno.perfil', compact('user','cadeiras','projetos', 'utilizadores'));
     }

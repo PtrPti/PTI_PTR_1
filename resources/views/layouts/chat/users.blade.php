@@ -3,7 +3,7 @@
         @if($utilizador->unread)
             <span class="pending">{{ $utilizador->unread }}</span>
         @endif
-        <div class="chat_people"> <!--quando clica tem de acrescentar a class active-->
+        <div class="chat_people">
             <div class="chat_img"> <img src="{{ asset('images/user.png') }}" width=30px class="media-object"> </div>
             <div class="chat_ib">
                 <h5>{{$utilizador->nome}}<span class="chat_date">{{ date('d M', strtotime($utilizador->lm_date)) }}</span></h5>

@@ -61,27 +61,27 @@
                             @if($fich->tarefa_id === $tnf->id)
                                 @if(is_null($fich->link) and is_null($fich->notas))
                                     <li>
-                                    @if (Auth::user()->isAluno())
+                                    @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                         <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                     @endif
                                     <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</a></li>
                                 @elseif(!is_null($fich->link))
                                     @if(!is_null($fich->nome))
                                         <li>
-                                        @if (Auth::user()->isAluno())
+                                        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                             <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                         @endif
                                         <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</a></li>
                                     @else 
                                         <li>
-                                        @if (Auth::user()->isAluno())
+                                        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                             <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                         @endif
                                         <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{$fich->nome}}</a></li>
                                     @endif
                                 @else
                                     <li>
-                                    @if (Auth::user()->isAluno())
+                                    @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                         <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                     @endif
                                     <a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><i class="fas fa-sticky-note"></i>{{$fich->nome}}</a></li>
@@ -126,27 +126,27 @@
                                 @if($fich->tarefa_id === $tnf->id)
                                     @if(is_null($fich->link) and is_null($fich->notas))
                                         <li>
-                                        @if (Auth::user()->isAluno())
+                                        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                             <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                         @endif
                                         <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</a></li>
                                     @elseif(!is_null($fich->link))
                                         @if(!is_null($fich->nome))
                                             <li>
-                                            @if (Auth::user()->isAluno())
+                                            @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                                 <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                             @endif
                                             <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</a></li>
                                         @else 
                                             <li>
-                                            @if (Auth::user()->isAluno())
+                                            @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                                 <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                             @endif
                                             <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{$fich->nome}}</a></li>
                                         @endif
                                     @else
                                         <li>
-                                        @if (Auth::user()->isAluno())
+                                        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                             <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                         @endif
                                         <a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><i class="fas fa-sticky-note"></i>{{$fich->nome}}</a></li>
