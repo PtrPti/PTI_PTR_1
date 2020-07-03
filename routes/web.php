@@ -107,6 +107,7 @@ Route::post('unlockUser', 'AdminController@unlockUser')->middleware('checkUserRo
 //---------------- NOVO ----------------//
 Route::get('/Home', 'HomeController@home')->name('home');
 Route::get('/filterProj', 'HomeController@filterProj');
+Route::post('/changeFavorito', 'HomeController@changeFavorito');
 
 Route::get('/Home/Disciplina/{id}/{tab?}/{proj?}', 'DisciplinaController@index')->name('disciplina');
 Route::post('criarProjeto', 'DisciplinaController@criarProjeto');

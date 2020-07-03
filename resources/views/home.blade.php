@@ -62,3 +62,33 @@
 </div>
 
 @endsection
+
+<script>
+    function changeVal(val, usersGrupos_id){
+      $.ajax({
+        url: '/changeFavorito',
+        type: 'POST',
+        dataType: 'json',
+        success: 'success',
+        data: {'usersGrupos_id': usersGrupos_id, 'val': val, '_token':'{{csrf_token()}}'},
+        success: function(data){
+          window.location.href = '/Home';
+        }
+      });
+    }
+    function filterProj(){
+      $.ajax({
+        url: '/filterProj',
+        type: 'GET',
+        dataType: 'json',
+        success: 'success',
+        data: {'favoritos': $('#favoritos').is(":checked"),
+           'em_curso': $('#em_curso').is(":checked"), 
+           'terminados': $('#terminados').is(":checked")
+          },
+        success: function(data){
+          $(".grupos").replaceWith(data.html);
+        }
+      });
+    }
+</script>

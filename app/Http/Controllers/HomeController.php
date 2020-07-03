@@ -126,7 +126,7 @@ class HomeController extends Controller
         $terminados = $request->terminados;
         $user = Auth::user()->getUser();
 
-        $query = "select c.nome as cadeiras, p.nome as projeto, g.numero, g.id, ug.favorito as favorito, ug.id as usersGrupos_id
+        $query = "select c.nome as cadeira, p.nome as nome, g.numero, g.id, ug.favorito as favorito, ug.id as usersGrupos_id
                 from users u
                 inner join users_grupos ug
                     on u.id = ug.user_id
