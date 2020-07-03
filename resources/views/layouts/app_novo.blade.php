@@ -42,10 +42,10 @@
     <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 </head>
 <body>
-    <div class="notifications">
+    <!-- <div class="notifications">
         <i class="fas fa-bell fa-2x"></i>
-        <!-- <span class="notifNum">2</span> -->
-    </div>
+    </div> -->
+    <!-- <span class="notifNum">2</span> -->
 
     <div class="languages">
         
