@@ -130,7 +130,9 @@ return [
     'aindaNaoExistemMetodosDeAvaliacao'=> 'There are no evaluation methods yet',
     'adicionarAlunos'=> 'Add Students',
     'adicioneMaisAlunos'=> 'Add Students to your Subject',
-    'adicionarAluno'=> 'Add Student'
+    'adicionarAluno'=> 'Add Student',
+    'entrarnogrupo'=> 'Enter in Group',
+    'altereOseuNome' => 'Change your Name'
 
 
 

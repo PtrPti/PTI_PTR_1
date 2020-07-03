@@ -197,7 +197,7 @@
                         <?php 
                             if ($pertenceGrupo != NULL) {
                                 if($grupo->id == $pertenceGrupo->grupo_id) {
-                                    echo "<button type='button' class='buttun_group' onclick='removeUser($grupo->id, $projeto->id)'>{{ __('change.sairDoGrupo') }}</button>", csrf_field();
+                                    echo "<button type='button' class='buttun_group' onclick='removeUser($grupo->id, $projeto->id)'>Sair do Grupo</button>", csrf_field();
                                 }
                                 else {
                                     echo " ";
@@ -210,7 +210,7 @@
                                     $inGroup = True;
                                 }
                                 else {
-                                    echo "<button type='button' class='buttun_group' onclick='addUser($grupo->id, $projeto->id)'>{{ __('change.entrarnoGrupo') }}</button>", csrf_field();
+                                    echo "<button type='button' class='buttun_group' onclick='addUser($grupo->id, $projeto->id)'>Entrar No Grupo</button>", csrf_field();
                                 }
                             }            
                         ?>

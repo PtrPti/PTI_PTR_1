@@ -7,7 +7,7 @@
                 @foreach($membros as $membro)
                 <tr> 
                     <td class='primeira_coluna'>{{$membro->nome}}</td>
-                    <td class='segunda_coluna'><input type="number" id="nota" name="nota_{{$membro->id}}" min="0" max="20" required></td>
+                    <td class='segunda_coluna'><input type="number" id="nota_{{$membro->id}}" name="nota_{{$membro->id}}" min="0" max="20" required></td>
                 </tr>
                 @endforeach
             </table>

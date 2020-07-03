@@ -331,7 +331,7 @@ class ProjetoController extends Controller
             $ficheiro->save();
         }
 
-        return redirect()->action('ProjetoController@index',['grupo_id'=>$grupoId]);
+        return redirect()->action('ProjetoController@index',['id'=>$grupoId]);
     }
 
     public function addFileTarefa(TarefaFilePost $request) {
@@ -348,7 +348,7 @@ class ProjetoController extends Controller
             $file->save();
         }
 
-        return redirect()->action('ProjetoController@index',['grupo_id'=>$grupoId]);
+        return redirect()->action('ProjetoController@index',['id'=>$grupoId]);
     }
 
     public function pesquisarTarefas(Request $request) {
@@ -407,8 +407,7 @@ class ProjetoController extends Controller
     public function addAvaliacao (Request $request) {     
         $lista_membros = UsersGrupos::where('grupo_id', $request->grupo_id)->get();
         
-        for($i = 0; $i < sizeof($lista_membros) - 1; $i++) {
-            print_r($lista_membros[$i]->user_id);
+        /* for($i = 0; $i < sizeof($lista_membros) - 1; $i++) {
             $aval = new AvaliacaoMembros;
             $aval->avaliado_por = Auth::user()->getUser()->id;
             $aval->membro_avaliado = $lista_membros[$i]->user_id;
@@ -416,7 +415,19 @@ class ProjetoController extends Controller
             $nota_membro = "nota_".$lista_membros[$i]->user_id;
             $aval->nota = $request->$nota_membro;
             $aval->save();
+        } */
+
+        foreach($lista_membros as $membro){
+            $aval = new AvaliacaoMembros;
+            $aval->avaliado_por = Auth::user()->getUser()->id;
+            $aval->membro_avaliado = $membro->user_id;
+            $aval->grupo_id = $request->grupo_id;
+            $nota_membro = "nota_".$membro->user_id;
+            $aval->nota = $request->$nota_membro;
+            $aval->save();
         }
+
+        return redirect()->action('ProjetoController@index',['id'=>$request->grupo_id, 'tab'=>4]);
     }
     
     public function infoNota(Request $request) {
@@ -455,5 +466,33 @@ class ProjetoController extends Controller
         $data = array('nota' => $nota, 'tipo'=> $tipo);
         $returnHTML = view('grupo.nota')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function remover(Request $request) {
+        $tipo = $_GET['tipo']; 
+        $id = $_GET['id'];
+        $grupoId = $_GET['grupoId'];
+        
+        if($tipo == 'grupo'){
+            
+            $ficheiro = GrupoFicheiros::find($id);
+            if ($ficheiro->is_folder){
+                $deletedRows = GrupoFicheiros::where('pasta_id', $id)->delete();
+            } else{
+                if(Storage::disk('local')->exists($ficheiro->nome)){
+                    Storage::delete($ficheiro->nome); 
+                }
+            }
+            $ficheiro->delete();
+            
+        } else {
+            $ficheiro = TarefasFicheiros::find($id);
+            if(Storage::disk('local')->exists($ficheiro->nome)){
+                Storage::delete($ficheiro->nome); 
+            }
+            $ficheiro->delete();
+        }
+
+        return response()->json(['title' => 'Sucesso', 'msg' => 'Removido com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
     }
 }
