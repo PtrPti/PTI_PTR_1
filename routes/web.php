@@ -88,6 +88,7 @@ Route::post('addCursosCsv', 'AdminController@addCursosCsv')->name('addCursosCsv'
 Route::post('addCadeirasCsv', 'AdminController@addCadeirasCsv')->name('addCadeirasCsv')->middleware('checkUserRole:3');
 Route::post('addAnoLetivoCsv', 'AdminController@addAnoLetivoCsv')->name('addAnoLetivoCsv')->middleware('checkUserRole:3');
 Route::post('addSemestreCsv', 'AdminController@addSemestreCsv')->name('addSemestreCsv')->middleware('checkUserRole:3');
+Route::post('addUserCsv', 'AdminController@addUserCsv')->name('addUserCsv')->middleware('checkUserRole:3');
 
 Route::get('getSemestres/{id}', 'AdminController@changeAnoLetivoId')->middleware('checkUserRole:3');
 Route::get('getCursos/{id}', 'AdminController@changeDepartamentoId')->middleware('checkUserRole:3');

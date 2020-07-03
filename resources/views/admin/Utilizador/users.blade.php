@@ -7,7 +7,7 @@
 </div>
 
 <div class="row-add admin">
-    <button id="add_button" class="add-button" data-toggle="modal" data-target="#addCsvFile">Importar ficheiro</button>
+    <button id="add_button" class="add-button" data-toggle="modal" data-target="#addCsvFile">Adicionar</button>
 </div>
 
 <div class="search-row">    
@@ -116,6 +116,51 @@
                     <div class="row row-btn">
                         <div class="col-md-12">
                             <button type="button" class="btn btn-primary" onclick="Save('editForm', '/editUserPost')" style="display: inline-block !important">Guardar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">Fechar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addCsvFile" tabindex="-1" role="dialog" aria-labelledby="addCsvFileLabel" aria-hidden="true">
+    <div class="modal-dialog admin" role="document" style="min-width: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCsvFileLabel">Importar utilizadores<span id="titleAdd"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{ route ('addUserCsv') }}" id="addCsvForm" enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    <div class="row group">
+                        <div class="col-md-12">
+                            <input type="file" id="csvfile" name="csvfile">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label for="csvfile" class="labelTextModal">Ficheiro de utilizadores</label>
+                        </div>
+                    </div>
+                    <div class="row group">
+                        <div class="col-md-12">
+                            <input type="file" id="csvfilecadeira" name="csvfilecadeira">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label for="csvfilecadeira" class="labelTextModal">Ficheiro de disciplinas</label>
+                        </div>
+                    </div>
+                    <div class="row group">
+                        <div class="col-md-12">
+                            <p>Nota: Só são permitidos ficheiros .csv. Tem de importar os ficheiros dos utilizadores e das disciplinas a que pertencem em simultâneo.</p>
+                        </div>
+                    </div>
+                    <div class="row row-btn">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary" style="display: inline-block !important">Criar</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">Fechar</button>
                         </div>
                     </div>
