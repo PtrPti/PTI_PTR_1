@@ -905,6 +905,10 @@ select:-moz-focusring {
 .split-left ul {
   list-style: none;
   width: 90%;
+  padding-left: 13px;
+}
+.split-left ul .subFiles {
+  padding-left: 17px;
 }
 
 /* .split-left>ul {
@@ -1978,4 +1982,9 @@ select:-moz-focusring {
 .split-left h5 {
   margin-left: auto;
   margin-right: auto;
+}
+
+.ficheirosTarefa .remove {
+  padding-left: 2px;
+  padding-right: 7px;
 }

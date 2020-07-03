@@ -79,12 +79,6 @@
         <?php $tarefaPai++; ?>
     @else
             <div class="divSubTarefa {{$tnf->tarefa_id}}" id="{{$tnf->id}}">
-                @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
-                    <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
-                    <i class="fas fa-plus-circle addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i>
-                @else
-                    <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
-                @endif
                 <div class='tarefa'>                    
                     <label class="containerCheckbox">{{ $tnf->nome }}
                         <input type="hidden" value="">
@@ -95,6 +89,13 @@
                         @endif
                         <span class="checkmark"></span>
                     </label>
+
+                    @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                        <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+                        <i class="fas fa-plus-circle addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i>
+                    @else
+                        <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+                    @endif
                     <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
                     <div class="ficheirosTarefa">
                         @if(!is_null($tnf->atribuido))
@@ -122,6 +123,7 @@
                             @endforeach
                         </ul>
                     </div>
+                    
                 </div>
             </div>
             @if(Session::has('search'))
