@@ -125,6 +125,7 @@ return array(
     'ChangeDefaultsGruposFicheiros' => $baseDir . '/database/migrations/2020_06_19_162550_change_defaults_grupos_ficheiros.php',
     'ChangePrazoNull' => $baseDir . '/database/migrations/2020_06_19_113249_change_prazo_null.php',
     'CreateAnoLetivo' => $baseDir . '/database/migrations/2020_06_22_122648_create_ano_letivo.php',
+    'CreateAvaliacaoDocente' => $baseDir . '/database/migrations/2020_07_03_110959_create_avaliacao_docente.php',
     'CreateAvaliacaoTable' => $baseDir . '/database/migrations/2020_06_25_115307_create_avaliacao_table.php',
     'CreateAvalicaoMembrosTable' => $baseDir . '/database/migrations/2020_06_25_154815_create_avalicao_membros_table.php',
     'CreateCalendarioTable' => $baseDir . '/database/migrations/2020_05_03_022920_create_calendario_table.php',

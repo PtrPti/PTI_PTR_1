@@ -19,16 +19,10 @@ class User extends Authenticatable
         'nome',
         'email',
         'password',
-        'numero',
-        'data_nascimento',
-        'avatar'=>'image|mimes:png,jpg,jpeg|max:10000',
-        'nome', 
-        'email', 
-        'password'
-        
+        'avatar'=>'image|mimes:png,jpg,jpeg|max:10000',        
     ];
 
-    protected $guarded = ['id', 'perfil_id', 'departamento_id'];
+    protected $guarded = ['id', 'perfil_id'];
 
     /**
      * The attributes that should be hidden for arrays.

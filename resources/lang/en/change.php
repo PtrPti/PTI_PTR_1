@@ -10,6 +10,7 @@ return [
     'membros' => 'Members',
     'dataFinal' => 'Final Date',
     'construcao' => 'In development',
+    'avaliar' => 'Evaluation',
     'ola'=> 'Hi',
     'perfil'=> 'Profile',
     'conversas'=> 'Conversations',

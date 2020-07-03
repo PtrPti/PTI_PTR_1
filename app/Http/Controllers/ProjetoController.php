@@ -15,6 +15,7 @@ use App\UsersGrupos;
 use App\FeedbackFicheiros;
 use App\TarefasFicheiros;
 use App\AvaliacaoMembros;
+use App\AvaliacaoDocente;
 use App\Http\Controllers\ChatController;
 use App\Http\Requests\TarefaPost;
 use App\Http\Requests\TarefaPastaPost;
@@ -99,14 +100,14 @@ class ProjetoController extends Controller
         $feedFicheiros = TarefasFicheiros::where('link', null)->where('notas', null)->whereIn('tarefa_id', $tarefasIds)->select('id', 'nome', DB::raw("'ficheiro' as tipo"))->union($first)->get();
         #avaliacoes dos membros
         $avaliacoes = AvaliacaoMembros::join('users', 'avaliacao_membros.membro_avaliado', '=', 'users.id')->where('grupo_id',$id)->select('users.id', 'users.nome','avaliacao_membros.avaliado_por', 'avaliacao_membros.grupo_id', 'avaliacao_membros.nota')->get();
-
+        $avaliacoesDocente = AvaliacaoDocente::join('users', 'avaliacao_docente.user_id', '=', 'users.id')->where('grupo_id',$id)->select('users.id', 'users.nome', 'avaliacao_docente.avaliacao')->get();
         $active_tab = $tab;
         
         Session::has('search') ? Session::forget('search') : null;
 
         return view('grupo.indexGrupo', compact('disciplinas','projetos','utilizadores','grupo','disciplina','projeto',
                                                 'tarefasNaoFeitas', 'tarefasFeitas','ficheirosTarefas', 'feedbacks', 'active_tab', 'ficheiros', 
-                                                'subFicheiros', 'progresso', 'membros', 'pastasSelect', 'feedFicheiros', 'avaliacoes'));
+                                                'subFicheiros', 'progresso', 'membros', 'pastasSelect', 'feedFicheiros', 'avaliacoes', 'avaliacoesDocente'));
     }
 
     public function verFeedback(Request $request) {
@@ -224,12 +225,22 @@ class ProjetoController extends Controller
         $progresso = $this->barraProgresso($grupo->grupo_id);        
         
         if ($_POST['update'] == "true") {
+            $projeto = Projeto::join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->select('projetos.*')->where('grupos.id', $grupo->grupo_id)->first();
+
+            $tarefasIds = Tarefa::select('id')->where('grupo_id', $id)->get();
+            $ids = [];
+            foreach ($tarefasIds as $tarefa) {
+                array_push($ids, $tarefa->id);
+            }
+            $ficheirosTarefas = TarefasFicheiros::whereIn('tarefa_id', $ids )->get();
+
             $tarefasNaoFeitas = DB::select('call GetTarefas(?,?,?)', [$grupo->grupo_id, false, null]);
             $tarefasFeitas = DB::select('call GetTarefas(?,?,?)', [$grupo->grupo_id, true, null]);
             #membros
             $membros = UsersGrupos::join('users', 'users_grupos.user_id', '=', 'users.id')->select('users.id', 'users.nome')->where('users_grupos.grupo_id', $grupo->grupo_id)->get();
 
-            $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 'grupo_id' => $grupo->grupo_id, 'membros'=>$membros);
+            $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 
+                        'grupo_id' => $grupo->grupo_id, 'membros'=>$membros, 'projeto' => $projeto, 'ficheirosTarefas' => $ficheirosTarefas);
             $returnHTML = view('grupo.tarefas')->with($data)->render();
             return response()->json(array('html' => $returnHTML, 'title' => 'Sucesso', 'msg' => 'Tarefa alterada com sucesso'));
         }
@@ -424,6 +435,21 @@ class ProjetoController extends Controller
             $aval->grupo_id = $request->grupo_id;
             $nota_membro = "nota_".$membro->user_id;
             $aval->nota = $request->$nota_membro;
+            $aval->save();
+        }
+
+        return redirect()->action('ProjetoController@index',['id'=>$request->grupo_id, 'tab'=>4]);
+    }
+
+    public function avaliar (Request $request) {     
+        $lista_membros = UsersGrupos::where('grupo_id', $request->grupo_id)->get();
+        
+        foreach($lista_membros as $membro){
+            $aval = new AvaliacaoDocente;
+            $aval->user_id = $membro->user_id;
+            $aval->grupo_id = $request->grupo_id;
+            $nota_membro = "nota_".$membro->user_id;
+            $aval->avaliacao = $request->$nota_membro;
             $aval->save();
         }
 

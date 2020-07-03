@@ -42,6 +42,7 @@ class PerfilController extends Controller
 
     public function perfilDocente (Request $request , int $tab = 1){
         $user = Auth::user()->getUser();
+        $user_info = User::join('users_info', 'users.id', '=', 'users_info.user_id')->where('users.id', $user->id)->first();
         $disciplinas = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')->where('users_cadeiras.user_id', $user->id)->get();
         $cadeiras = UserCadeira::join('cadeiras', 'users_cadeiras.cadeira_id', '=', 'cadeiras.id')
                                   ->where('users_cadeiras.user_id', $user->id)->get();
@@ -64,7 +65,7 @@ class PerfilController extends Controller
 
         $cursos = Curso::where('departamento_id', $request->departamento_id)->orderBy('nome')->get();
 
-        //$user_info = UserInfo::join('users_info', 'users.id', '=', 'users_info.user_id')->where('users.id', $user->id)->get();
+        $user_info = UserInfo::join('users_info', 'users.id', '=', 'users_info.user_id')->where('users.id', $user->id)->get();
 
         $lista_alunos = UserCadeira::join('users', 'users_cadeiras.user_id', '=', 'users.id')->join('users_info', 'users.id', '=', 'users_info.user_id')->
                             where('users_cadeiras.cadeira_id', $user->id)->
@@ -80,7 +81,8 @@ class PerfilController extends Controller
         
 
 
-        return view ('perfil.perfil', compact('user', 'disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'media', 'projetos_avaliacao'));
+        return view ('perfil.perfil', compact('user', 'user_info','disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'media', 'projetos_avaliacao'));
+        
     }
 
 

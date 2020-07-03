@@ -1984,6 +1984,10 @@ select:-moz-focusring {
   margin-right: auto;
 }
 
+.chat-active {
+  background: #acc;
+}
+
 .ficheirosTarefa .remove {
   padding-left: 2px;
   padding-right: 7px;
