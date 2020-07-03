@@ -479,6 +479,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'ChangeDefaultsGruposFicheiros' => __DIR__ . '/../..' . '/database/migrations/2020_06_19_162550_change_defaults_grupos_ficheiros.php',
         'ChangePrazoNull' => __DIR__ . '/../..' . '/database/migrations/2020_06_19_113249_change_prazo_null.php',
         'CreateAnoLetivo' => __DIR__ . '/../..' . '/database/migrations/2020_06_22_122648_create_ano_letivo.php',
+        'CreateAvaliacaoDocente' => __DIR__ . '/../..' . '/database/migrations/2020_07_03_110959_create_avaliacao_docente.php',
         'CreateAvaliacaoTable' => __DIR__ . '/../..' . '/database/migrations/2020_06_25_115307_create_avaliacao_table.php',
         'CreateAvalicaoMembrosTable' => __DIR__ . '/../..' . '/database/migrations/2020_06_25_154815_create_avalicao_membros_table.php',
         'CreateCalendarioTable' => __DIR__ . '/../..' . '/database/migrations/2020_05_03_022920_create_calendario_table.php',

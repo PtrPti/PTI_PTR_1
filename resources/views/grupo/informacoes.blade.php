@@ -17,7 +17,7 @@
     </div>
 @else
     <div>
-        <h4><b>Avaliação Submetida</b></h4>
+        <h5><b>Avaliação Submetida</b></h4>
         <table class='tabela_aval'>
             @foreach($avaliacoes as $aval)
             <tr> 
@@ -28,3 +28,26 @@
         </table>
     </div>
 @endif
+
+    <div>
+        <h5><b>Avaliação Professor</b></h4>
+        <table class='tabela_aval'>
+            @if(Auth::user()->isAluno())
+                @foreach($avaliacoesDocente as $avalD)
+                    @if(Auth::user()->getUserId() == $avalD->id)
+                        <tr> 
+                            <td class='primeira_coluna'>{{$avalD->nome}}</td>
+                            <td class='segunda_coluna'>{{$avalD->avaliacao}}</td>
+                        </tr>
+                    @endif
+                @endforeach
+            @else
+                @foreach($avaliacoesDocente as $avalD)
+                    <tr> 
+                        <td class='primeira_coluna'>{{$avalD->nome}}</td>
+                        <td class='segunda_coluna'>{{$avalD->avaliacao}}</td>
+                    </tr>
+                @endforeach
+            @endif
+        </table>
+    </div>
