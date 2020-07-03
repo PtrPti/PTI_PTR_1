@@ -700,7 +700,7 @@ class AdminController extends Controller
                         join('perfis', 'users.perfil_id', '=', 'perfis.id')->
                         join('departamentos', 'users_info.departamento_id', '=', 'departamentos.id')->
                         join('cursos', 'users_info.curso_id', '=', 'cursos.id')->
-                        select('users.id as userId', 'users.nome as nome', 'users.email as email', 'users_info.*', 'perfis.nome as perfil', 'perfis.id as perfil_id', 'departamentos.id as departamento_id',
+                        select('users.id as userId', 'users.nome as nome', 'users.email as email','users.active', 'users_info.*', 'perfis.nome as perfil', 'perfis.id as perfil_id', 'departamentos.id as departamento_id',
                              'departamentos.nome as departamento', 'cursos.id as cruso_id', 'cursos.nome as curso')->
                         where('users.perfil_id', '!=', 3)->paginate(10);
             $departamentos = Departamento::select('id', 'nome')->orderBy('nome')->get();
@@ -884,6 +884,22 @@ class AdminController extends Controller
 
             $returnHTML = view('admin.Utilizador.table')->with($data)->render();
             return response()->json(array('html'=>$returnHTML));
+        }
+
+        public function lockUser(Request $request) {
+            $id = $_POST['id'];
+            $user = User::find($id);
+            $user->active = false;
+            $user->save();
+            return response()->json(['title' => 'Sucesso', 'msg' => 'Utilizador desativado com sucesso', 'redirect' => '/Admin/Utilizadores' ]);
+        }
+
+        public function unlockUser(Request $request) {
+            $id = $_POST['id'];
+            $user = User::find($id);
+            $user->active = true;
+            $user->save();
+            return response()->json(['title' => 'Sucesso', 'msg' => 'Utilizador ativado com sucesso', 'redirect' => '/Admin/Utilizadores' ]);
         }
     #Utilizadores    
 

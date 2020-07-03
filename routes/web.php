@@ -101,6 +101,9 @@ Route::get('searchDepartamentos', 'AdminController@searchDepartamentos')->middle
 Route::get('searchCursos', 'AdminController@searchCursos')->middleware('checkUserRole:3');
 Route::get('searchUsers', 'AdminController@searchUsers')->middleware('checkUserRole:3');
 
+Route::post('lockUser', 'AdminController@lockUser')->middleware('checkUserRole:3');
+Route::post('unlockUser', 'AdminController@unlockUser')->middleware('checkUserRole:3');
+
 //---------------- NOVO ----------------//
 Route::get('/Home', 'HomeController@home')->name('home');
 Route::get('/filterProj', 'HomeController@filterProj');
