@@ -5,7 +5,7 @@
 <div class="row-title breadcrums">
     
     
-    <img class="img_profile" src="/images/{{ $user->avatar }}" width=10% style="position:fixed;  left:350px; border-radius: 50%;">
+    <img class="img_profile" src="/images/{{ $user_info->avatar }}" width=10% style="position:fixed;  left:350px; border-radius: 50%;">
     <h2 class="nome_profile">{{Auth::user()->getUserName()}}</h2>
     <!-- <button class="btn btn-primary btn_perfil">{{ __('change.mudarImagemPerfil') }}</button> -->
 
@@ -20,11 +20,11 @@
 <div class="informacao">
         @if (Auth::user()->isProfessor())
             <h5 class="t1">{{ __('change.estatuto') }}: {{ __('change.professor') }} </h5>
-            <h5 class="tnum">{{ __('change.numDocente') }}: {{Auth::user()->numero}} </h5>
+            <h5 class="tnum">{{ __('change.numDocente') }}: {{$user_info->numero}} </h5>
 
         @else
             <h5 class="t1">{{ __('change.estatuto') }}: {{ __('change.aluno') }} </h5>
-            <h5 class="tnum">{{ __('change.numeroAluno') }}: {{$user->numero}} </h5>
+            <h5 class="tnum">{{ __('change.numeroAluno') }}: {{$user_info->numero}} </h5>
                 
         @endif
 
@@ -67,12 +67,12 @@
            
             <tr>
                 <td class="primeira_coluna_perfil">{{ __('change.nome') }}</td>
-                <td>{{$user->nome}}</td>
+                <td>{{$user_info->nome}}</td>
                 <td><button id="editNome"><img src="{{ asset('images/edit_perfil.png') }}" width=18px></button></td>
             </tr>
             <tr>
                 <td class="primeira_coluna_perfil">E-mail</td>
-                <td>{{$user->email}}</td>
+                <td>{{$user_info->email}}</td>
                 <td><button id="editEmail"><img src="{{ asset('images/edit_perfil.png') }}" width=18px></button></td>
             </tr>
             <tr>
@@ -101,7 +101,7 @@
                                 <label for="nome" style="padding: 0px;margin-top: 5px;">{{ __('change.nome') }}</label><br>
                             </div>
                             <div>
-                                <input type="text" id="novoNome" name="nome" style="width: 90%;" placeholder="{{$user->nome}}"><br>
+                                <input type="text" id="novoNome" name="nome" style="width: 90%;" placeholder="{{$user_info->nome}}"><br>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                                 <label for="email" style="padding: 0px;margin-top: 5px;">Email</label><br>
                             </div>
                             <div>
-                                <input type="email" name="email" id="novoEmail" style="width: 90%;" placeholder="{{$user->email}}"><br>
+                                <input type="email" name="email" id="novoEmail" style="width: 90%;" placeholder="{{$user_info->email}}"><br>
                             </div>
                         </div>
                     </div>

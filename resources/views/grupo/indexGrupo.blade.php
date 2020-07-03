@@ -38,38 +38,77 @@
             @foreach ($ficheiros as $ficheiro)
                 @if ($ficheiro->is_folder)
                     <li class="folder">
-                        <i class="fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i> <i class="fas fa-folder"></i><a href="#" class="no-link">{{ $ficheiro->nome }}</a>
+                        @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                            <i class="fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i>
+                        @endif
+                        <i class="fas fa-folder"></i><a href="#" class="no-link">{{ $ficheiro->nome }}</a>
                         <ul class="subFiles">
                         @foreach ($subFicheiros as $subficheiro)
                             @if ($subficheiro->pasta_id === $ficheiro->id)
                                 @if(is_null($subficheiro->link) and is_null($subficheiro->notas))
-                                    <li><i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i><i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $subficheiro->nome]) }}">{{ explode("_", $ficheiro->nome, 2)[1] }}</a></li>
+                                    <li>
+                                    @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                        <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i>
+                                    @endif
+                                    <i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $subficheiro->nome]) }}">{{ explode("_", $ficheiro->nome, 2)[1] }}</a></li>
                                 @elseif(!is_null($subficheiro->link))
                                     @if(is_null($subficheiro->nome))
-                                        <li><i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i><i class="fas fa-link"></i><a href="{{$subficheiro->link}}" target="_blank">{{ str_limit($subficheiro->link, $limit = 25, $end = '...') }}</a></li>
+                                        <li>
+                                        @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                            <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i>
+                                        @endif
+                                        <i class="fas fa-link"></i><a href="{{$subficheiro->link}}" target="_blank">{{ str_limit($subficheiro->link, $limit = 25, $end = '...') }}</a></li>
                                     @else 
-                                        <li><i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i><i class="fas fa-link"></i><a href="{{$subficheiro->link}}" target="_blank">{{ str_limit($subficheiro->nome, $limit = 25, $end = '...') }}</a></li>
+                                        <li>
+                                        @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                            <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i>
+                                        @endif
+                                        <i class="fas fa-link"></i><a href="{{$subficheiro->link}}" target="_blank">{{ str_limit($subficheiro->nome, $limit = 25, $end = '...') }}</a></li>
                                     @endif
                                 @else
-                                    <li><i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i><i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$subficheiro->id}})">{{$subficheiro->nome}}</a></li>
+                                    <li>
+                                    @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                        <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i>
+                                    @endif
+                                    <i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$subficheiro->id}})">{{$subficheiro->nome}}</a></li>
                                 @endif
                             @else
-                                <li><i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i> <i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$subficheiro->id}})">{{$subficheiro->nome}}</a></li>
+                                <li>
+                                @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                    <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i>
+                                @endif
+                                <i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$subficheiro->id}})">{{$subficheiro->nome}}</a></li>
                             @endif
                         @endforeach
                         </ul>
                     </li>
                 @elseif ( !$ficheiro->is_folder and is_null($ficheiro->pasta_id))
                     @if(is_null($ficheiro->link) and is_null($ficheiro->notas))
-                        <li><i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i><i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $ficheiro->nome]) }}">{{ explode("_", $ficheiro->nome, 2)[1] }}</a></li>
+                        <li>
+                        @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                            <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i>
+                        @endif
+                        <i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $ficheiro->nome]) }}">{{ explode("_", $ficheiro->nome, 2)[1] }}</a></li>
                     @elseif(!is_null($ficheiro->link))
                         @if(!is_null($ficheiro->nome))
-                            <li><i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i><i class="fas fa-link"></i><a href="{{$ficheiro->link}}" target="_blank">{{ str_limit($ficheiro->link, $limit = 25, $end = '...') }}</a></li>
+                            <li>
+                            @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i>
+                            @endif
+                            <i class="fas fa-link"></i><a href="{{$ficheiro->link}}" target="_blank">{{ str_limit($ficheiro->link, $limit = 25, $end = '...') }}</a></li>
                         @else 
-                            <li><i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i><i class="fas fa-link"></i><a href="{{$ficheiro->link}}" target="_blank">{{$ficheiro->nome}}</a></li>
+                            <li>
+                            @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i>
+                            @endif
+                            <i class="fas fa-link"></i><a href="{{$ficheiro->link}}" target="_blank">{{$ficheiro->nome}}</a></li>
                         @endif
                     @else
-                        <li><i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i><i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$ficheiro->id}})">{{$ficheiro->nome}}</a></li>
+                        <li>
+                        @if( && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                            <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i>
+                        @endif
+                        <i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$ficheiro->id}})">{{$ficheiro->nome}}</a></li>
                     @endif               
                 @endif
             @endforeach
@@ -359,24 +398,22 @@
                 $($(this)).prev().removeClass('fa-folder-open');
                 $($(this)).prev().addClass('fa-folder');
             }
-        });
-
-        
+        });        
     });
 
     function infoNota(tipo,id){
-            $.ajax({
-                url: '/infoNota',
-                type: 'GET',
-                dataType: 'json',
-                success: 'success',
-                data : {'tipo': tipo, 'id':id},
-                success: function(data){
-                    $('#notaa').html(data.html);
-                    $('#notaa').show();
-                }
-            })
-        }
+        $.ajax({
+            url: '/infoNota',
+            type: 'GET',
+            dataType: 'json',
+            success: 'success',
+            data : {'tipo': tipo, 'id':id},
+            success: function(data){
+                $('#notaa').html(data.html);
+                $('#notaa').show();
+            }
+        });
+    }
 
     function remover(tipo,id,grupoId){
         $.ajax({
@@ -392,7 +429,7 @@
 
                 window.location.href = data.redirect;
             }
-        })
+        });
     }
 </script>
 @endsection

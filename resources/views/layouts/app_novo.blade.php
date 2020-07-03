@@ -112,24 +112,6 @@
                         @endif
                     </div>
                 </li>
-                <!-- RESPONSIVE
-                <li class="navsidebar-item">
-                    <button class="dropdown-btn disc" id="dropdownDisc">
-                    
-                    </button>
-                    <div id="containerDisc">
-
-                    </div>
-                </li>
-
-                <li class="navsidebar-item">
-                    <button class="dropdown-btn proj" id="dropdownProj">
-
-                    </button>
-                    <div id="containerProj">
-                        
-                    </div>
-                </li> -->
                 <li class="navsidebar-item">
                     <a href="{{ route('perfil') }}" class="navsidebar-link">
                     <i class="fas fa-user fa-2x i-nav"></i>
@@ -249,11 +231,8 @@
             }
         });
 
-        Pusher.logToConsole = true;
-
         var pusher = new Pusher('20d78dea728a19ccdd1b', {
-        cluster: 'eu',
-        forceTLS: true
+            cluster: 'eu'
         });
 
         var channel = pusher.subscribe('my-channel');
@@ -276,7 +255,7 @@
                 }
             }
             }
-        });           
+        });
 
         $('.chat_list').click(function (event, clickedByUser = true) {
             $(this).find('.pending').remove();
@@ -285,14 +264,24 @@
                 if ($(".message-wrapper").hasClass('show') && $(".message-wrapper").hasClass(receiver_id)) {
                     $('.message-wrapper').attr('class', 'message-wrapper');
                     $('.message-wrapper').attr('id', '');
+                    if($(this).hasClass('chat-active')) {
+                        $(this).removeClass('chat-active');
+                    }
                 }
                 else if ($(".message-wrapper").hasClass('show') && !$(".message-wrapper").hasClass(receiver_id)){
                     $('.message-wrapper').attr('class', 'message-wrapper show ' + receiver_id);
                     $('.message-wrapper').attr('id', receiver_id);
+                    $('.chat_list').removeClass('chat-active');
+                    if(!$(this).hasClass('chat-active')) {
+                        $(this).addClass('chat-active');
+                    }
                 }
                 else {
                     $('.message-wrapper').addClass('show ' + receiver_id);
                     $('.message-wrapper').attr('id', receiver_id);
+                    if(!$(this).hasClass('chat-active')) {
+                        $(this).addClass('chat-active');
+                    }
                 }
             }
             $.ajax({    
@@ -318,7 +307,9 @@
                     url: "message", // need to create this post route
                     data: datastr,
                     cache: false,
-                    success: function (data) {                     
+                    success: function (data) {         
+                        $('.message-wrapper').html(data.html);
+                        scrollToBottomFunc();            
                     },
                     error: function (jqXHR, status, err) {
                     },
@@ -340,7 +331,9 @@
                     url: "message", // need to create this post route
                     data: datastr,
                     cache: false,
-                    success: function (data) {                     
+                    success: function (data) {
+                        $('.message-wrapper').html(data.html);
+                        scrollToBottomFunc();
                     },
                     error: function (jqXHR, status, err) {
                     },
@@ -350,22 +343,20 @@
                 })
             }
         });
-        
-        $(document).on('keyup', '#chat_search', function (e) {
-            var search = $('#chat_search').val();
-            $.ajax({
-                type: "get",
-                url: "/getUsersDocente",
-                data: {'search': search},
-                cache: false,
-                success: function (data) {
-                    console.log(data.html)
-                    $(".inbox_chat").empty();
-                    $(".inbox_chat").html(data.html);
-                },
-            })
-        });  
-    });      
+        // $(document).on('keyup', '#chat_search', function (e) {
+        //     var search = $('#chat_search').val();
+        //     $.ajax({
+        //         type: "get",
+        //         url: "/getUsersDocente",
+        //         data: {'search': search},
+        //         cache: false,
+        //         success: function (data) {
+        //             $(".inbox_chat").empty();
+        //             $(".inbox_chat").html(data.html);
+        //         },
+        //     })
+        // });  
+    });
 
     // make a function to scroll down auto
     function scrollToBottomFunc() {
@@ -374,4 +365,41 @@
         }, 50);
     }
 </script>
+@if (Auth::user()->isAluno())
+    <script>
+        $(document).ready(function () {
+        $(document).on('keyup', '#chat_search', function (e) {
+                var search = $('#chat_search').val();
+                $.ajax({
+                    type: "get",
+                    url: "/getUsers",
+                    data: {'search': search},
+                    cache: false,
+                    success: function (data) {
+                        $(".inbox_chat").empty();
+                        $(".inbox_chat").html(data.html);
+                    },
+                })
+            });  
+        });
+    </script>
+@elseif (Auth::user()->isProfessor())
+    <script>
+        $(document).ready(function () {
+            $(document).on('keyup', '#chat_search', function (e) {
+                var search = $('#chat_search').val();
+                $.ajax({
+                    type: "get",
+                    url: "/getUsersDocente",
+                    data: {'search': search},
+                    cache: false,
+                    success: function (data) {
+                        $(".inbox_chat").empty();
+                        $(".inbox_chat").html(data.html);
+                    },
+                })
+            });  
+        });
+    </script>
+@endif
 </html>

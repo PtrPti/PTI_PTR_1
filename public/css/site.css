@@ -1979,3 +1979,7 @@ select:-moz-focusring {
   margin-left: auto;
   margin-right: auto;
 }
+
+.chat-active {
+  background: #acc;
+}

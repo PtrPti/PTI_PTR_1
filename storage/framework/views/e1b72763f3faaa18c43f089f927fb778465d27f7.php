@@ -1,5 +1,6 @@
 <div class="back-links">
-    <a href="#" onclick="changeTab(1)">Pág. Inicial</a> > <b><span class="breadcrum"></span></b>
+    
+    <a href="#" onclick="changeTab(1)">Pág. Inicial</a> > <b><span class="breadcrum"></span></b> <?php if(isset($projeto)): ?><span> - Termina em: <?php echo e($projeto->data_fim); ?></span><?php endif; ?>
 </div>
 
 <div class="split-left">
@@ -200,7 +201,7 @@
                         <?php 
                             if ($pertenceGrupo != NULL) {
                                 if($grupo->id == $pertenceGrupo->grupo_id) {
-                                    echo "<button type='button' class='buttun_group' onclick='removeUser($grupo->id, $projeto->id)'>{{ __('change.sairDoGrupo') }}</button>", csrf_field();
+                                    echo "<button type='button' class='buttun_group' onclick='removeUser($grupo->id, $projeto->id)'>Sair do Grupo</button>", csrf_field();
                                 }
                                 else {
                                     echo " ";
@@ -213,7 +214,7 @@
                                     $inGroup = True;
                                 }
                                 else {
-                                    echo "<button type='button' class='buttun_group' onclick='addUser($grupo->id, $projeto->id)'>{{ __('change.entrarnoGrupo') }}</button>", csrf_field();
+                                    echo "<button type='button' class='buttun_group' onclick='addUser($grupo->id, $projeto->id)'>Entrar No Grupo</button>", csrf_field();
                                 }
                             }            
                         ?>
