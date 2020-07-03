@@ -184,16 +184,10 @@
     @endif
    
 
-
-
-    
-
-    
-
 </div>
 
 <div class="tab-container" id="tab-3">
-{{ __('change.horario') }}
+{{ __('change.construcao') }}
 </div>
 
 @if (Auth::user()->isProfessor())

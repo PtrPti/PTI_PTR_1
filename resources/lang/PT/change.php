@@ -9,6 +9,7 @@ return [
     'pesquisar'=> 'Pesquisar',
     'membros'=> 'Membros',
     'dataFinal' => 'Data Final',
+    'construcao' => 'Em desenvolvimento',
     'ola'=> 'Olá',
     'perfil'=>'Perfil',
     'conversas'=> 'Conversas',

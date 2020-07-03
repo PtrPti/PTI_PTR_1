@@ -60,15 +60,15 @@
                         @foreach($ficheirosTarefas as $fich)
                             @if($fich->tarefa_id === $tnf->id)
                                 @if(is_null($fich->link) and is_null($fich->notas))
-                                    <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><li><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</li></a>
+                                    <li><i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</a></li>
                                 @elseif(!is_null($fich->link))
                                     @if(!is_null($fich->nome))
-                                        <a href="{{$fich->link}}" target="_blank"><li><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</li></a>
+                                        <li><i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }}, {{ $grupo->id }})"></i><a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</a></li>
                                     @else 
-                                        <a href="{{$fich->link}}" target="_blank"><li><i class="fas fa-link"></i>{{$fich->nome}}</li></a>
+                                        <li><i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i><a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{$fich->nome}}</a></li>
                                     @endif
                                 @else
-                                    <a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><li><i class="fas fa-sticky-note"></i>{{$fich->nome}}</li></a>
+                                    <li><i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i><a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><i class="fas fa-sticky-note"></i>{{$fich->nome}}</a></li>
                                 @endif
                             @endif
                         @endforeach
@@ -108,15 +108,15 @@
                             @foreach($ficheirosTarefas as $fich)
                                 @if($fich->tarefa_id === $tnf->id)
                                     @if(is_null($fich->link) and is_null($fich->notas))
-                                        <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><li><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</li></a>
+                                        <li><i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</a></li>
                                     @elseif(!is_null($fich->link))
                                         @if(!is_null($fich->nome))
-                                            <a href="{{$fich->link}}" target="_blank"><li><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</li></a>
+                                            <li><i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i><a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</a></li>
                                         @else 
-                                            <a href="{{$fich->link}}" target="_blank"><li><i class="fas fa-link"></i>{{$fich->nome}}</li></a>
+                                            <li><i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i><a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{$fich->nome}}</a></li>
                                         @endif
                                     @else
-                                        <a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><li><i class="fas fa-sticky-note"></i>{{$fich->nome}}</li></a>
+                                        <li><i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i><a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><i class="fas fa-sticky-note"></i>{{$fich->nome}}</a></li>
                                     @endif
                                 @endif
                             @endforeach

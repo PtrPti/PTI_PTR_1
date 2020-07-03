@@ -9,6 +9,7 @@ return [
     'pesquisar' => 'Search',
     'membros' => 'Members',
     'dataFinal' => 'Final Date',
+    'construcao' => 'In development',
     'ola'=> 'Hi',
     'perfil'=> 'Profile',
     'conversas'=> 'Conversations',
