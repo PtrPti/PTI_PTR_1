@@ -770,13 +770,71 @@ class AdminController extends Controller
         }
 
         public function addUserCsv(AddCsvFile $request) {
-            if (Input::hasFile('csvfile')) {
-                $path = $request->file('csvfile')->getRealPath();
-                error_log($path);
+            $usersIds = [];
+            if (($handle = fopen($request->file('csvfile')->getRealPath(), "r")) !== FALSE) { #users
+                while (($data = fgetcsv($handle, 1000, "\n")) !== FALSE) {
+                    $line = preg_split("/[,]\b/", $data[0]);
+                    
+                    if (sizeof($line) != 18) {
+                        //return erro;
+                    }
+                    else {
+                        $nome = mb_convert_encoding($line[1], "UTF-8", "auto");
+                        $email = mb_convert_encoding($line[2], "UTF-8", "auto");
+                        $password = mb_convert_encoding($line[3], "UTF-8", "auto");
+                        $perfil = mb_convert_encoding($line[6], "UTF-8", "auto");
+                        $numero = mb_convert_encoding($line[10], "UTF-8", "auto");
+                        $departamento = mb_convert_encoding($line[11], "UTF-8", "auto");
+                        $curso = mb_convert_encoding($line[12], "UTF-8", "auto");
 
-                $data = array_map('str_getcsv', file($path));
-                print_r($data);
+                        $user = new User;
+                        $user->nome = $nome;
+                        $user->email = $email;
+                        $user->password = bcrypt($password);
+                        $user->perfil_id = $perfil;
+                        $user->save();
+                        
+                        $user_info = new UserInfo;
+                        $user_info->user_id = $user->id;
+                        $user_info->numero = $numero;
+                        $user_info->departamento_id = $departamento;
+                        $user_info->curso_id = $curso;
+                        $user_info->data_nascimento = new DateTime('2000-01-01');
+                        $user_info->save();
+                        array_push($usersIds, $user->id);
+                        array_push($usersIds, $user->id);
+                        array_push($usersIds, $user->id);
+                        array_push($usersIds, $user->id);
+                    }
+                }
+                fclose($handle);
             }
+
+            if (($handle = fopen($request->file('csvfilecadeira')->getRealPath(), "r")) !== FALSE) { #users
+                while (($data = fgetcsv($handle, 1000, "\n")) !== FALSE) {
+                    $line = preg_split("/[,]\b/", $data[0]);
+
+                    if (sizeof($line) != 4) {
+                        //return erro;
+                    }
+                    else {
+                        set_time_limit(20);
+                        $cadeira = mb_convert_encoding($line[2], "UTF-8", "auto");
+                        $favorito = mb_convert_encoding($line[3], "UTF-8", "auto");
+
+                        $c = Cadeira::select('id')->where('nome', 'like', '%'.$cadeira.'%')->first();
+                        $cadeira_id = $c->id;
+
+                        $uc = new UserCadeira;
+                        $uc->user_id = array_shift($usersIds);
+                        $uc->cadeira_id = $cadeira_id;
+                        $uc->favorito = $favorito;
+                        $uc->save();
+                    }
+                }
+                fclose($handle);
+            }
+            return redirect()->action('AdminController@getUtilizadores');
         }
 
         public function searchUsers(Request $request) {            
@@ -827,8 +885,7 @@ class AdminController extends Controller
             $returnHTML = view('admin.Utilizador.table')->with($data)->render();
             return response()->json(array('html'=>$returnHTML));
         }
-    #Utilizadores
-    
+    #Utilizadores    
 
     public function changeAnoLetivoId(Request $request, int $id) {
         $html = '<option value="">-- Selecionar semestre --</option>';

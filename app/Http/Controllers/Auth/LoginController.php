@@ -28,14 +28,15 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {
-        // if (Auth::user()->isAluno())
-        //     return route('homeAluno');
-        // else if (Auth::user()->isProfessor())
-        //     return route('homeDocente');
-        if (Auth::user()->isAluno() || Auth::user()->isProfessor())
+        if (Auth::user()->isAluno() || Auth::user()->isProfessor()) {
             return route('home');
-        else
+        }
+        else if (Auth::user()->isAdmin()) {
+            return route('homeAdmin');
+        }
+        else {
             return route('welcome');
+        }
     }
 
     /**

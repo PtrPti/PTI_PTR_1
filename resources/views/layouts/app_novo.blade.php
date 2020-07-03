@@ -196,32 +196,33 @@
     <main>
         @yield('content')
     </main>
-    <div class="chat">
-        <i class="fas fa-comment fa-2x chat_icon"></i>
-    </div>
+    @if (!Auth::user()->isAdmin())
+        <div class="chat">
+            <i class="fas fa-comment fa-2x chat_icon"></i>
+        </div>
 
-    <div class="chat_msgs">
-        <div class="user-wrapper">
-            <div class="headind_srch">
-                <div class="recent_heading">
-                    <h4>{{ __('change.conversas') }}</h4>
-                </div>
-                <div class="srch_bar">
-                    <div class="stylish-input-group">
-                        <input type="text" class="search-bar" placeholder="Search" id="chat_search">
+        <div class="chat_msgs">
+            <div class="user-wrapper">
+                <div class="headind_srch">
+                    <div class="recent_heading">
+                        <h4>{{ __('change.conversas') }}</h4>
+                    </div>
+                    <div class="srch_bar">
+                        <div class="stylish-input-group">
+                            <input type="text" class="search-bar" placeholder="Search" id="chat_search">
+                        </div>
                     </div>
                 </div>
+
+                <div class="inbox_chat">
+                    @include('layouts.chat.users')
+                </div>
             </div>
 
-            <div class="inbox_chat">
-                @include('layouts.chat.users')
+            <div class="message-wrapper" id="messages">
             </div>
         </div>
-
-        <div class="message-wrapper" id="messages">
-        </div>
-    </div>
-
+    @endif
     <div class="gritter">
         <h5 class="gritter-title"></h5>
     </div>
