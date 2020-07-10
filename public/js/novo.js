@@ -156,7 +156,7 @@ function Save(form, url) {
     $.ajax({
         url: url,
         type: 'POST',
-        data: formData,
+        data: formData, 'token': '{{csrf_token}}',
         error: function (data) {
             if (data.responseJSON) {
                 var erros = Object.keys(data.responseJSON);
