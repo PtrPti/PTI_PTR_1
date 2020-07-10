@@ -45,7 +45,7 @@
         <input type="search" class="search-input" placeholder="{{ __('change.pesquisar') }}" results="0">
         <i class="fas fa-search search-icon"></i>
     </div> 
-    <div class="box-container">
+    <div class="box-container" id='grupos'>
         @if (Auth::user()->isProfessor())
             @foreach ($projetos as $proj)
                 <div class="box">
@@ -87,7 +87,19 @@
            'terminados': $('#terminados').is(":checked")
           },
         success: function(data){
-          $(".grupos").replaceWith(data.html);
+          if ($('#favoritos').is(":checked")){
+            $('#favoritos').checked = true;
+          }
+
+          if ($('#em_curso').is(":checked")){
+            $('#em_curso').checked = true;
+          }
+
+          if ($('#terminados').is(":checked")){
+            $('#terminados').checked = true;
+          }
+          console.log(data.html)
+          $("#grupos").replaceWith(data.html);
         }
       });
     }

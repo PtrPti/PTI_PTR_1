@@ -203,20 +203,42 @@ class DisciplinaController extends Controller
         $id = $_POST['projeto_id'];
         $n_grupos = $_POST['n_grupos'];
         $entrar = $_POST['entrar'];
-
-        $numero = Grupo::where('projeto_id', $id)->max('numero');
-        $numero = $numero == null ? 1 : $numero;
+        $primeiro_numero = $_POST['primeiro_numero'];
 
         $projeto = Projeto::where('id', $id)->first();
+
+        $numero = Grupo::where('projeto_id', $id)->max('numero');
+        $numero = $numero == null ? 0 : $numero;
         
-        for ($i = 1; $i <= $n_grupos; $i++, $numero++) {
-            $grupo = new Grupo;
-            $grupo->projeto_id = $id;
-            $grupo->numero = $numero + 1;
-            $grupo->save();
+        if ($primeiro_numero != null){
+            $numero = $primeiro_numero - 1;
+        }
+
+        // for ($i = 1; $i <= $n_grupos; $i++, $numero++) {
+        //     $grupo = new Grupo;
+        //     $grupo->projeto_id = $id;
+        //     $grupo->numero = $numero + 1;
+        //     $grupo->save();
             
-            if($entrar == "true") {                
-                UsersGrupos::insert(["user_id" => $user->id, "grupo_id" => $grupo->id]);
+        //     if($entrar == "true") {                
+        //         UsersGrupos::insert(["user_id" => $user->id, "grupo_id" => $grupo->id]);
+        //     }
+        $i = 1;
+        while ($i <= $n_grupos) {
+            if (Grupo::where('numero', $numero + 1)->where('projeto_id', $id)->first() == null){
+                $grupo = new Grupo;
+                $grupo->projeto_id = $id;
+                $grupo->numero = $numero + 1;
+                $grupo->save();
+                
+                if($entrar == "true") {                
+                    UsersGrupos::insert(["user_id" => $user->id, "grupo_id" => $grupo->id]);
+                }
+                $i ++;
+                $numero ++;
+            }else{
+                $i --;
+                $numero ++;
             }
         }
 

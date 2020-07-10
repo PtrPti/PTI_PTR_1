@@ -148,7 +148,7 @@ class HomeController extends Controller
         if($terminados == 'true') {
             $query = $query . " and p.data_fim < NOW()";
         }
-
+        
         $projetos = DB::select($query);
 
         if($projetos == null) { 
