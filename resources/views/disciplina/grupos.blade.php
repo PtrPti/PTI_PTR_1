@@ -134,6 +134,12 @@
                                                 <span class="bar"></span>
                                                 <label for="n_grupos" class="labelTextModal">{{ __('change.numGrupos') }}</label>
                                             </div>
+                                            <div class="col-md-12">
+                                                <input type="number" name="primeiro_numero" min="1" max="50" value="0" class="display-input" id="n_grupos">
+                                                <span class="highlight"></span>
+                                                <span class="bar"></span>
+                                                <label for="primeiro_numero" class="labelTextModal">{{ __('change.primeiroGrupo') }}</label>
+                                            </div>
                                         </div>
                                         <div class="row row-btn">
                                             <div class="col-md-12">
@@ -236,13 +242,13 @@
             $("#modalP-" + $(this).val()).css('display', 'block');
         });
     });
-    function AddGrupo(id, grupos, entrar = false) {
+    function AddGrupo(id, grupos, entrar = false, primeiro_numero = null) {
         $.ajax({
             url: '/addGrupo',
             type: 'POST',
             dataType: 'json',
-            success: 'success',
-            data: {'projeto_id': id, 'n_grupos': grupos, 'entrar': entrar, 'cadeira_id': <?php if (isset($projeto))echo $projeto->cadeira_id ?>},
+            success: 'success',  
+            data: {'projeto_id': id, 'n_grupos': grupos, 'entrar': entrar, 'primeiro_numero':primeiro_numero, "_token": "{{csrf_token()}}", 'cadeira_id': <?php if (isset($projeto)) echo $projeto->cadeira_id; else echo 0;?>},
             success: function(data) {
                 ShowGrupos(id);
                 AddGritter('Sucesso', '<span class="gritter-text">Grupo criado com sucesso</span>', 'success');

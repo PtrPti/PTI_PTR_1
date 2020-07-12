@@ -204,6 +204,7 @@ class DisciplinaController extends Controller
         $id = $_POST['projeto_id'];
         $n_grupos = $_POST['n_grupos'];
         $entrar = $_POST['entrar'];
+        $primeiro_numero = $_POST['primeiro_numero'];
 
         $projeto = Projeto::where('id', $id)->first();
 
@@ -217,7 +218,7 @@ class DisciplinaController extends Controller
         $i = 1;
         $var_bool = TRUE;
         while ($var_bool == TRUE){
-            if($i < $n_grupos){ 
+            if($i <= $n_grupos){ 
                 if (Grupo::where('numero', $numero + 1)->where('projeto_id', $id)->first()== null){
                     $grupo = new Grupo;
                     $grupo->projeto_id = $id;
