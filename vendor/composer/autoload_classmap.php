@@ -33,6 +33,7 @@ return array(
     'AlterGruposFicheirosTable' => $baseDir . '/database/migrations/2020_04_22_115310_alter_grupos_ficheiros_table.php',
     'AlterMensagensFeedback' => $baseDir . '/database/migrations/2020_05_31_152614_alter_mensagens_feedback.php',
     'AlterStp' => $baseDir . '/database/migrations/2020_06_21_154900_alter_stp.php',
+    'AlterStpGetTarefas' => $baseDir . '/database/migrations/2020_07_12_190636_alter_stp_getTarefas.php',
     'AnoLetivoSeeder' => $baseDir . '/database/seeds/AnoLetivoSeeder.php',
     'App\\AnoLetivo' => $baseDir . '/app/AnoLetivo.php',
     'App\\Avaliacao' => $baseDir . '/app/Avaliacao.php',

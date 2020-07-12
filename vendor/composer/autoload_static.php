@@ -512,6 +512,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'AlterGruposFicheirosTable' => __DIR__ . '/../..' . '/database/migrations/2020_04_22_115310_alter_grupos_ficheiros_table.php',
         'AlterMensagensFeedback' => __DIR__ . '/../..' . '/database/migrations/2020_05_31_152614_alter_mensagens_feedback.php',
         'AlterStp' => __DIR__ . '/../..' . '/database/migrations/2020_06_21_154900_alter_stp.php',
+        'AlterStpGetTarefas' => __DIR__ . '/../..' . '/database/migrations/2020_07_12_190636_alter_stp_getTarefas.php',
         'AnoLetivoSeeder' => __DIR__ . '/../..' . '/database/seeds/AnoLetivoSeeder.php',
         'App\\AnoLetivo' => __DIR__ . '/../..' . '/app/AnoLetivo.php',
         'App\\Avaliacao' => __DIR__ . '/../..' . '/app/Avaliacao.php',

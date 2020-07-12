@@ -348,7 +348,7 @@ class DisciplinaController extends Controller
         $avaliacao->mensagem_criterios = $request->mensagem_criterios;
         $avaliacao->cadeira_id = $request->cadeira_id;
         $avaliacao->save();
-        
+
         return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id, 'tab'=> 2]);
     }
 
@@ -359,10 +359,8 @@ class DisciplinaController extends Controller
         $mensagem = DB::table('avaliacao')->select('mensagem_criterios')->where('cadeira_id', $id_cadeira )->first();
 
         $data = array(
-
             'mensagem_criterios'  => $mensagem,
             'id_cadeira'=> $id_cadeira
-
         );
 
         $returnHTML = view('disciplina.indexDisciplina')->with($data)->render();
