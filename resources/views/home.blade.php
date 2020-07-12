@@ -41,10 +41,8 @@
   @else
     <h5>{{ __('change.projetos') }}</h5>
   @endif
-    <div class="search">
-        
-        <input type="text" name="search" class="search-input" id="search_projeto"  placeholder="{{ __('change.pesquisar') }}">
-        
+    <div class="search">        
+        <input type="text" name="search" class="search-input" id="search_projeto" placeholder="{{ __('change.pesquisar') }}" results="0">        
         <i class="fas fa-search search-icon"></i>
     </div> 
     <div class="box-container_projetos" >
@@ -62,8 +60,6 @@
         @endif
     </div>
 </div>
-
-
 
 <script>
     function changeVal(val, usersGrupos_id){

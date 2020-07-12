@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\MessageBag;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Requests\AdminEditUser;
 use App\Http\Requests\AdminEditDepartamento;
@@ -102,13 +103,16 @@ class AdminController extends Controller
         }
 
         public function addAnoLetivoCsv(AddCsvFile $request) {
+            $linha = 1;
             if (Input::hasFile('csvfile')) {
                 if (($handle = fopen($request->file('csvfile')->getRealPath(), "r")) !== FALSE) {
                     while (($data = fgetcsv($handle, 1000, "\n")) !== FALSE) {
                         $line = preg_split("/[,]\b/", $data[0]);
 
                         if (sizeof($line) != 7) {
-                            //return erro;
+                            $message_bag = new MessageBag;
+                            $message_bag->add('Format', 'A linha '. $linha .' do ficheiro não tem o formato correto.');
+                            return redirect()->action('AdminController@getAnosLetivos')->withErrors($message_bag);
                         }
                         else {
                             $anoLetivo = new AnoLetivo;
@@ -129,6 +133,8 @@ class AdminController extends Controller
                             $anoLetivo->mes_fim = $mf;
                             $anoLetivo->ano_fim = $af;
                             $anoLetivo->save();
+
+                            $linha++;
                         }
                     }
                     fclose($handle);
@@ -224,13 +230,16 @@ class AdminController extends Controller
         }
 
         public function addSemestreCsv(AddCsvFile $request) {
+            $linha = 1;
             if (Input::hasFile('csvfile')) {
                 if (($handle = fopen($request->file('csvfile')->getRealPath(), "r")) !== FALSE) {
                     while (($data = fgetcsv($handle, 1000, "\n")) !== FALSE) {
                         $line = preg_split("/[,]\b/", $data[0]);
 
                         if (sizeof($line) != 8) {
-                            //return erro;
+                            $message_bag = new MessageBag;
+                            $message_bag->add('Format', 'A linha '. $linha .' do ficheiro não tem o formato correto.');
+                            return redirect()->action('AdminController@getSemestres')->withErrors($message_bag);
                         }
                         else {
                             $semestre = new Semestre;
@@ -262,6 +271,8 @@ class AdminController extends Controller
                             $semestre->ano_fim = $af;
                             $semestre->ano_letivo_id = $ano_letivo_id;
                             $semestre->save();
+
+                            $linha++;
                         }
                     }
                     fclose($handle);
@@ -337,13 +348,16 @@ class AdminController extends Controller
         }
 
         public function addDepartamentoCsv(AddCsvFile $request) {
+            $linha = 1;
             if (Input::hasFile('csvfile')) {
                 if (($handle = fopen($request->file('csvfile')->getRealPath(), "r")) !== FALSE) {
                     while (($data = fgetcsv($handle, 1000, "\n")) !== FALSE) {
                         $line = preg_split("/[,]\b/", $data[0]);
 
                         if (sizeof($line) != 2) {
-                            //return erro;
+                            $message_bag = new MessageBag;
+                            $message_bag->add('Format', 'A linha '. $linha .' do ficheiro não tem o formato correto.');
+                            return redirect()->action('AdminController@getDepartamentos')->withErrors($message_bag);
                         }
                         else {
                             $departamento = new Departamento;
@@ -354,6 +368,8 @@ class AdminController extends Controller
                             $departamento->nome = $nome;
                             $departamento->codigo = $codigo;
                             $departamento->save();
+
+                            $linha++;
                         }
                     }
                     fclose($handle);
@@ -431,13 +447,16 @@ class AdminController extends Controller
         }
 
         public function addCursosCsv(AddCsvFile $request) {
+            $linha = 1;
             if (Input::hasFile('csvfile')) {
                 if (($handle = fopen($request->file('csvfile')->getRealPath(), "r")) !== FALSE) {
                     while (($data = fgetcsv($handle, 1000, "\n")) !== FALSE) {
                         $line = preg_split("/[,]\b/", $data[0]);
 
                         if (sizeof($line) != 3) {
-                            //return erro;
+                            $message_bag = new MessageBag;
+                            $message_bag->add('Format', 'A linha '. $linha .' do ficheiro não tem o formato correto.');
+                            return redirect()->action('AdminController@getCursos')->withErrors($message_bag);
                         }
                         else {
                             $curso = new Curso;
@@ -459,6 +478,7 @@ class AdminController extends Controller
                             $curso->codigo = $codigo;
                             $curso->departamento_id = $departamento_id;
                             $curso->save();
+                            $linha++;
                         }
                     }
                     fclose($handle);
@@ -590,13 +610,16 @@ class AdminController extends Controller
         }
 
         public function addCadeirasCsv(AddCsvFile $request) {
+            $linha = 1;
             if (Input::hasFile('csvfile')) {
                 if (($handle = fopen($request->file('csvfile')->getRealPath(), "r")) !== FALSE) {
                     while (($data = fgetcsv($handle, 1000, "\n")) !== FALSE) {
                         $line = preg_split("/[,]\b/", $data[0]);
 
                         if (sizeof($line) != 7) {
-                            //return erro;
+                            $message_bag = new MessageBag;
+                            $message_bag->add('Format', 'A linha '. $linha .' do ficheiro não tem o formato correto.');
+                            return redirect()->action('AdminController@getCadeiras')->withErrors($message_bag);
                         }
                         else {
                             $nome = mb_convert_encoding($line[0], "UTF-8", "auto");
@@ -647,6 +670,8 @@ class AdminController extends Controller
                             $curso_cadeira->curso_id = $curso_id;
                             $curso_cadeira->semestre_id = $semestre_id;
                             $curso_cadeira->save();
+
+                            $linha++;
                         }
                     }
                     fclose($handle);

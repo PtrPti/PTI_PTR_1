@@ -204,6 +204,7 @@ class DisciplinaController extends Controller
         $id = $_POST['projeto_id'];
         $n_grupos = $_POST['n_grupos'];
         $entrar = $_POST['entrar'];
+        $primeiro_numero = $_POST['primeiro_numero'];
 
         $projeto = Projeto::where('id', $id)->first();
 
