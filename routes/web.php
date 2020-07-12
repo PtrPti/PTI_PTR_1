@@ -143,7 +143,7 @@ Route::post('/eraiseEvaluation', 'DisciplinaController@eraiseEvaluation')->name(
 Route::get('/search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
 Route::post('/addAluno', 'DisciplinaController@addAluno')->name('addAluno');
 
-Route::get('/search_projeto', 'ProjetoController@search_projetos')->name('search_projeto');
+Route::get('/search_projeto', 'HomeController@search_projetos')->name('search_projeto');
 
 Route::get('/Home/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
 

@@ -45,7 +45,7 @@
         <input type="text" name="search" class="search-input" id="search_projeto" placeholder="{{ __('change.pesquisar') }}" results="0">        
         <i class="fas fa-search search-icon"></i>
     </div> 
-    <div class="box-container_projetos" >
+    <div class="box-container_projetos" id="grupos">
         @if (Auth::user()->isProfessor())
             @foreach ($projetos as $proj)
                 <div class="box" id="result_projetos">
@@ -96,7 +96,6 @@
           if ($('#terminados').is(":checked")){
             $('#terminados').checked = true;
           }
-          console.log(data.html);
           $("#grupos").empty();
           $("#grupos").html(data.html);
         }
@@ -105,7 +104,6 @@
 
     $('#search_projeto').keyup(function() {
       var search = $('#search_projeto').val();
-      console.log(search);
       $.ajax({
           type: "get",
           url: "/search_projeto",

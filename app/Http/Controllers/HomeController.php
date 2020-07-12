@@ -137,7 +137,7 @@ class HomeController extends Controller
                 inner join cadeiras c
                     on p.cadeira_id = c.id
                 where
-                    u.id = " .  $user->id;
+                    u.id = " .  $user->id ;
 
         if($favoritos == 'true') {
             $query = $query . " and ug.favorito = 1";
@@ -149,7 +149,7 @@ class HomeController extends Controller
             $query = $query . " and p.data_fim < NOW()";
         }
         
-        $projetos = DB::select($query);
+        $projetos = DB::select($query . " order by p.nome");
 
         if($projetos == null) { 
             $data = array();
@@ -159,6 +159,25 @@ class HomeController extends Controller
                 'projetos'  => $projetos,
             );
         }
+        
+        $returnHTML = view('filtroProjeto')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function search_projetos(Request $request){
+        $user = Auth::user()->getUser();
+        $user_id = $user->id;
+        $search = $_GET['search'];
+
+        $query_p = Projeto::join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')->join('users_cadeiras', 'cadeiras.id', '=', 'users_cadeiras.cadeira_id')
+        ->join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->join('users_grupos', 'grupos.id', '=', 'users_grupos.grupo_id')
+        ->where('users_grupos.user_id', '=', $user_id)
+        ->where('users_cadeiras.user_id', '=', $user_id)
+        ->select('projetos.id as id', 'projetos.nome as nome', 'cadeiras.nome as cadeira', 'grupos.id as grupo_id', 'grupos.numero as numero', 'users_grupos.favorito as favorito', 'users_grupos.id as usersGrupos_id');
+
+        $projetos = $query_p->where('projetos.nome', 'like', '%'.$search.'%')->orderBy('projetos.nome', 'asc')->get();
+
+        $data = ['projetos'=> $projetos, 'mensagem' => 'Não foram encontrados Projetos'];
         
         $returnHTML = view('filtroProjeto')->with($data)->render();
         return response()->json(array('html'=>$returnHTML));
