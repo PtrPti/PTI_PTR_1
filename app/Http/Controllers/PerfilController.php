@@ -13,6 +13,7 @@ use App\UserInfo;
 use App\AvaliacaoMembros;
 use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use Image;
 
@@ -70,7 +71,7 @@ class PerfilController extends Controller
                             where('users_cadeiras.cadeira_id', $user->id)->
                             where('users.perfil_id', 1)->get();
 
-      
+
         $resultados = DB::select(DB::raw('select avg(nota) as nota, p.nome from avaliacao_membros am
                                             join grupos g
                                             on am.grupo_id = g.id
@@ -84,7 +85,7 @@ class PerfilController extends Controller
           $avatar = Storage::disk('s3')->url($user->avatar);
         }
 
-        return view ('perfil.perfil', compact('user', 'user_info','disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'projetos_avaliacao'));        
+        return view ('perfil.perfil', compact('user', 'user_info','disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'avatar'));
     }
 
     public function changeNome(Request $request){

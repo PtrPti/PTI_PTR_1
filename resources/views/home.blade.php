@@ -103,21 +103,20 @@
       });
     }
 
-
     $('#search_projeto').keyup(function() {
-    var search = $('#search_projeto').val();
-    console.log(search);
-    $.ajax({
-        type: "get",
-        url: "/search_projeto",
-        data: {'search': search},
-        cache: false,
-        success: function (data) {
-            $(".box-container_projetos").html(data.html);
-            
-                },
-            })
-});
+      var search = $('#search_projeto').val();
+      console.log(search);
+      $.ajax({
+          type: "get",
+          url: "/search_projeto",
+          data: {'search': search},
+          cache: false,
+          success: function (data) {
+              $(".box-container_projetos").html(data.html);
+              
+          },
+      })
+    });
 
 </script>
 @endsection
