@@ -381,8 +381,17 @@ class ProjetoController extends Controller
             $tarefasNaoFeitas = DB::select('call GetTarefas(?,?,?)', [$grupoId, false, $search]);
             $tarefasFeitas = DB::select('call GetTarefas(?,?,?)', [$grupoId, true, $search]);
         }
+        
+        $projeto = Projeto::join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->select('projetos.*')->where('grupos.id', $grupoId)->first();
 
-        $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 'grupo_id' => $grupoId, 'membros' => $membros);
+        $tarefasIds = Tarefa::select('id')->where('grupo_id', $grupoId)->get();
+        $ids = [];
+        foreach ($tarefasIds as $tarefa) {
+            array_push($ids, $tarefa->id);
+        }
+        $ficheirosTarefas = TarefasFicheiros::whereIn('tarefa_id', $ids )->get();
+
+        $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 'grupo_id' => $grupoId, 'membros' => $membros, 'projeto' => $projetos, 'ficheirosTarefas' => $ficheirosTarefas);
 
         $returnHTML = view('grupo.tarefas')->with($data)->render();
         return response()->json(array('html' => $returnHTML));
@@ -416,18 +425,23 @@ class ProjetoController extends Controller
         return response()->json(['title' => 'Sucesso', 'msg' => 'Feedback criado com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/2' ]);
     }
 
+    public function addMensagemFeedbackDocente(Request $request){
+        $this->validate($request, [
+            'mensagem_docente' => 'bail|required|string|max:4000',]);
+
+        $id = $request->grupo_id;
+        $feedback = Feedback::find($_POST['id']);
+        $feedback->mensagem_docente = $request->mensagem_docente;
+        $feedback->docente_id =$request->docente_id;
+        $feedback->vista_docente = TRUE;
+
+        $feedback->save();
+    
+        return redirect()->action('ProjetoController@GrupoDocente', ['id_grupo' => $id] );
+    }
+
     public function addAvaliacao (Request $request) {     
         $lista_membros = UsersGrupos::where('grupo_id', $request->grupo_id)->get();
-        
-        /* for($i = 0; $i < sizeof($lista_membros) - 1; $i++) {
-            $aval = new AvaliacaoMembros;
-            $aval->avaliado_por = Auth::user()->getUser()->id;
-            $aval->membro_avaliado = $lista_membros[$i]->user_id;
-            $aval->grupo_id = $request->grupo_id;
-            $nota_membro = "nota_".$lista_membros[$i]->user_id;
-            $aval->nota = $request->$nota_membro;
-            $aval->save();
-        } */
 
         foreach($lista_membros as $membro){
             $aval = new AvaliacaoMembros;

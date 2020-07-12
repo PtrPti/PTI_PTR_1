@@ -101,9 +101,13 @@ Route::get('searchDepartamentos', 'AdminController@searchDepartamentos')->middle
 Route::get('searchCursos', 'AdminController@searchCursos')->middleware('checkUserRole:3');
 Route::get('searchUsers', 'AdminController@searchUsers')->middleware('checkUserRole:3');
 
+Route::post('lockUser', 'AdminController@lockUser')->middleware('checkUserRole:3');
+Route::post('unlockUser', 'AdminController@unlockUser')->middleware('checkUserRole:3');
+
 //---------------- NOVO ----------------//
 Route::get('/Home', 'HomeController@home')->name('home');
 Route::get('/filterProj', 'HomeController@filterProj');
+Route::post('/changeFavorito', 'HomeController@changeFavorito');
 
 Route::get('/Home/Disciplina/{id}/{tab?}/{proj?}', 'DisciplinaController@index')->name('disciplina');
 Route::post('criarProjeto', 'DisciplinaController@criarProjeto');
@@ -148,6 +152,7 @@ Route::post('addNotaTarefa', 'ProjetoController@addNotaTarefa');
 
 Route::get('verFeedback', 'ProjetoController@verFeedback');
 Route::post('createFeedback', 'ProjetoController@createFeedback');
+Route::post('addMensagemFeedbackDocente', 'ProjetoController@addMensagemFeedbackDocente');
 
 Route::post('addAvaliacao', 'ProjetoController@addAvaliacao')->name('addAvaliacao');
 Route::post('avaliar', 'ProjetoController@avaliar')->name('avaliar');

@@ -16,7 +16,7 @@
                 @else
                     <img onclick="changeVal(0, <?php echo $proj->usersGrupos_id ?>)" src="{{ asset('images/favorito2.png') }}" />
                 @endif
-                <a href="{{ route('projeto', ['id' => $proj->grupo_id]) }}">
+                    <a href="{{ route('projeto', ['id' => $proj->id]) }}">
                     {{$proj->nome}} | {{ __('change.grupo') }} {{ __('change.num') }}{{$proj->numero}}<br>
                     <small>{{$proj->cadeira}}</small>
                 </a>

@@ -12,6 +12,7 @@ return [
     'construcao' => 'Em desenvolvimento',
     'ola'=> 'Olá',
     'perfil'=>'Perfil',
+    'primeiroGrupo' => 'Nº do Primeiro Grupo',
     'avaliar' => 'Avaliar',
     'conversas'=> 'Conversas',
     'criar_topico'=> 'Criar Tópico',

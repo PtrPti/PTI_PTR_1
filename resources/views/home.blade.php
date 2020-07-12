@@ -63,9 +63,52 @@
     </div>
 </div>
 
-<script>
 
-$('#search_projeto').keyup(function() {
+
+<script>
+    function changeVal(val, usersGrupos_id){
+      $.ajax({
+        url: '/changeFavorito',
+        type: 'POST',
+        dataType: 'json',
+        success: 'success',
+        data: {'usersGrupos_id': usersGrupos_id, 'val': val, '_token':'{{csrf_token()}}'},
+        success: function(data){
+          window.location.href = '/Home';
+        }
+      });
+    }
+    function filterProj(){
+      $.ajax({
+        url: '/filterProj',
+        type: 'GET',
+        dataType: 'json',
+        success: 'success',
+        data: {'favoritos': $('#favoritos').is(":checked"),
+           'em_curso': $('#em_curso').is(":checked"), 
+           'terminados': $('#terminados').is(":checked")
+          },
+        success: function(data){
+          if ($('#favoritos').is(":checked")){
+            $('#favoritos').checked = true;
+          }
+
+          if ($('#em_curso').is(":checked")){
+            $('#em_curso').checked = true;
+          }
+
+          if ($('#terminados').is(":checked")){
+            $('#terminados').checked = true;
+          }
+          console.log(data.html);
+          $("#grupos").empty();
+          $("#grupos").html(data.html);
+        }
+      });
+    }
+
+
+    $('#search_projeto').keyup(function() {
     var search = $('#search_projeto').val();
     console.log(search);
     $.ajax({
@@ -80,8 +123,5 @@ $('#search_projeto').keyup(function() {
             })
 });
 
-
-
 </script>
-
 @endsection

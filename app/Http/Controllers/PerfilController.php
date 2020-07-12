@@ -39,7 +39,6 @@ class PerfilController extends Controller
         return view('perfil.perfil');
     }
 
-
     public function perfilDocente (Request $request , int $tab = 1){
         $user = Auth::user()->getUser();
         $user_info = User::join('users_info', 'users.id', '=', 'users_info.user_id')->where('users.id', $user->id)->first();
@@ -71,7 +70,7 @@ class PerfilController extends Controller
                             where('users_cadeiras.cadeira_id', $user->id)->
                             where('users.perfil_id', 1)->get();
 
-        //$resultados = AvaliacaoMembros::join('avaliacao_membros', 'users.id', '=', 'avaliacao_membros.membro_avaliado')->where('users.id', $user->id)->get();
+      
         $resultados = DB::select(DB::raw('select avg(nota) as nota, p.nome from avaliacao_membros am
                                             join grupos g
                                             on am.grupo_id = g.id
@@ -82,10 +81,7 @@ class PerfilController extends Controller
   
 
 
-        //$projetos_avaliacao = Grupo::join('grupos', 'avaliacao_membros.grupo_id', '=', 'grupos.id')->get();
-        //$projetos_avaliacao = Grupos::join('projetos', 'grupos.projeto_id', '=', 'projetos.id')->where('grupos.id', $id)->get();
         $projetos_avaliacao = Projeto::join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->join('avaliacao_membros', 'grupos.id', '=', 'avaliacao_membros.grupo_id')->get();
-        
 
 
         return view ('perfil.perfil', compact('user', 'user_info','disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'projetos_avaliacao'));
