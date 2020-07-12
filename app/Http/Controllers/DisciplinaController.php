@@ -348,10 +348,7 @@ class DisciplinaController extends Controller
         $avaliacao->mensagem_criterios = $request->mensagem_criterios;
         $avaliacao->cadeira_id = $request->cadeira_id;
         $avaliacao->save();
-        //$avaliacaoId = $avaliacao->id;
-
-
-        //return response()->json(['title' => 'Sucesso', 'msg' => 'Critério criado com sucesso', 'redirect' => '/Home/Disciplina'. $request->cadeira_id . '/2' ]);
+        
         return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id, 'tab'=> 2]);
     }
 
