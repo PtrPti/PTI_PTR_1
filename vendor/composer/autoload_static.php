@@ -488,6 +488,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'AddActiveCursosCadeiras' => __DIR__ . '/../..' . '/database/migrations/2020_06_22_131723_add_active_cursos_cadeiras.php',
         'AddActiveUsers' => __DIR__ . '/../..' . '/database/migrations/2020_07_03_133003_add_active_users.php',
         'AddAnoLetivoTables' => __DIR__ . '/../..' . '/database/migrations/2020_06_22_130500_add_ano_letivo_tables.php',
+        'AddAssuntoEAssuntoIdToFeedback' => __DIR__ . '/../..' . '/database/migrations/2020_07_08_145340_add_assunto_e_assuntoId_to_feedback.php',
         'AddAvatarToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2020_07_01_174636_add_avatar_to_users_table.php',
         'AddBlocoForumMensagens' => __DIR__ . '/../..' . '/database/migrations/2020_05_14_212556_add_bloco_forum_mensagens.php',
         'AddColumFinishedAtTarefasTable' => __DIR__ . '/../..' . '/database/migrations/2020_06_25_215458_add_colum_finished_at_tarefas_table.php',

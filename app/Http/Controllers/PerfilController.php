@@ -70,19 +70,22 @@ class PerfilController extends Controller
                             where('users_cadeiras.cadeira_id', $user->id)->
                             where('users.perfil_id', 1)->get();
 
-        $resultados = AvaliacaoMembros::select('nota')->where('membro_avaliado', $user->id)->get();
-        $media = AvaliacaoMembros::avg('nota');
+      
+        $resultados = DB::select(DB::raw('select avg(nota) as nota, p.nome from avaliacao_membros am
+                                            join grupos g
+                                            on am.grupo_id = g.id
+                                            join projetos p
+                                            on g.projeto_id = p.id
+                                            where membro_avaliado = ? group by am.grupo_id'), [$user->id]);
 
-        $projetos_avaliacao = Projeto::join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->join('avaliacao_membros', 'grupos.id', '=', 'avaliacao_membros.grupo_id')->get();
         if ($user->avatar == null){
           $avatar= Storage::disk('s3')->url('images/default.png');
         }else{
           $avatar = Storage::disk('s3')->url($user->avatar);
         }
 
-        return view ('perfil.perfil', compact('user', 'user_info', 'disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'avatar','media', 'projetos_avaliacao'));
+        return view ('perfil.perfil', compact('user', 'user_info','disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'projetos_avaliacao'));        
     }
-
 
     public function changeNome(Request $request){
         $user = Auth::user()->getUser();

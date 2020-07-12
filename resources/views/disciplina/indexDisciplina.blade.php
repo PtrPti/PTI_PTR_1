@@ -78,7 +78,7 @@
                 <tbody>
                     @foreach($avaliacao as $a)
                         <tr>
-                            <td > {{$a->mensagem_criterios}}</td>
+                            <td> {{$a->mensagem_criterios}}</td>
                             <td> <a onclick="EditEvaluation({{$a->id}})" style="cursor:pointer;" data-toggle="modal" data-target="#editEvaluation"><img src="{{ asset('images/edit_perfil.png') }}" width=18px ></a>  <a style="cursor:pointer;" onclick="EraiseEvaluation({{$a->id}})"><img src="{{ asset('images/delete.png') }}" width=18px data-toggle="modal" data-target="#eraiseEvaluation"></a></td>    
                         </tr>   
                     @endforeach
@@ -100,13 +100,15 @@
                         <form method="POST" action="{{route('changeEvaluation')}}" id="editEvaluationForm">
                             {{csrf_field()}}
                             <input type="hidden" name="cadeira_id" value="{{ $disciplina->id }}" required>
-                            @foreach($avaliacao as $a)
+                            
                             <input type="hidden" name="id" value="" id="avaliacao_id" required>
-                            @endforeach
+                            
                             
                             <div class="row group">
                                 <div class="col-md-12">
-                                    <textarea style="width:100%;" name="nova_mensagem" cols="63" rows="3" class="area-input" maxlength="10000" id="nova_mensagem" placeholder="{{ __('change.insiraAquiTexto') }}"></textarea>
+                                    @foreach($avaliacao as $a)
+                                    <textarea style="width:100%;" name="nova_mensagem" cols="63" rows="3" class="area-input" maxlength="10000" id="nova_mensagem" placeholder="{{ __('change.insiraAquiTexto') }}">{{$a->mensagem_criterios}}</textarea>
+                                    @endforeach
                                 </div>
                             </div>
                            
@@ -194,7 +196,6 @@
 
     <div class="tab-container" id="tab-4">
 
-    
     @include('disciplina.listaAlunos')
     
     </div>

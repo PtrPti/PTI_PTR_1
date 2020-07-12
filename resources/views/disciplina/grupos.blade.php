@@ -129,7 +129,7 @@
                                         <input type="hidden" name="entrar" value="false">
                                         <div class="row group">
                                             <div class="col-md-12">
-                                                <input type="number" name="n_grupos" min="1" max="10" value="0" class="display-input" id="n_grupos">
+                                                <input type="number" name="n_grupos" min="1" max="50" value="0" class="display-input" id="n_grupos">
                                                 <span class="highlight"></span>
                                                 <span class="bar"></span>
                                                 <label for="n_grupos" class="labelTextModal">{{ __('change.numGrupos') }}</label>
