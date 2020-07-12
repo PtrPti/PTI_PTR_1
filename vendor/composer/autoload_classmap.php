@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddActiveCursosCadeiras' => $baseDir . '/database/migrations/2020_06_22_131723_add_active_cursos_cadeiras.php',
     'AddAnoLetivoTables' => $baseDir . '/database/migrations/2020_06_22_130500_add_ano_letivo_tables.php',
+    'AddAssuntoEAssuntoIdToFeedback' => $baseDir . '/database/migrations/2020_07_08_145340_add_assunto_e_assuntoId_to_feedback.php',
     'AddAvatarToUsersTable' => $baseDir . '/database/migrations/2020_07_01_174636_add_avatar_to_users_table.php',
     'AddBlocoForumMensagens' => $baseDir . '/database/migrations/2020_05_14_212556_add_bloco_forum_mensagens.php',
     'AddColumFinishedAtTarefasTable' => $baseDir . '/database/migrations/2020_06_25_215458_add_colum_finished_at_tarefas_table.php',
@@ -33,6 +34,7 @@ return array(
     'AnoLetivoSeeder' => $baseDir . '/database/seeds/AnoLetivoSeeder.php',
     'App\\AnoLetivo' => $baseDir . '/app/AnoLetivo.php',
     'App\\Avaliacao' => $baseDir . '/app/Avaliacao.php',
+    'App\\AvaliacaoDocente' => $baseDir . '/app/AvaliacaoDocente.php',
     'App\\AvaliacaoMembros' => $baseDir . '/app/AvaliacaoMembros.php',
     'App\\Cadeira' => $baseDir . '/app/Cadeira.php',
     'App\\Calendar' => $baseDir . '/app/Calendar.php',

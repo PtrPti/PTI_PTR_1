@@ -5,18 +5,16 @@
 @endif
 
 <table class="tableForum">
-    <tr>
+    <!-- <tr>
         <th></th>
         <th>{{ __('change.mensagemGrupo') }}</th>
         <th>{{ __('change.dataEnvio') }}</th>
         <th>{{ __('change.resposta') }}</th>
-    </tr>
+    </tr> -->
     @foreach($feedbacks as $feedback)
-        <tr>
-            <td><i onclick="verFeedback({{ $feedback->id }})" class="fas fa-eye"></i></td>
-            <td>{{$feedback->mensagem_grupo}}</td>
+        <tr onclick="verFeedback({{ $feedback->id }},@if(Auth::user()->isAluno())'aluno'@else'docente'@endif)">
+            <td>{{$feedback->mensagem}}</td>
             <td>{{$feedback->created_at}}</td>
-            <td>{{$feedback->mensagem_docente}}</td>
         </tr>
     @endforeach
 </table>
@@ -35,7 +33,17 @@
                     <form method="post" action="#" id="createFeedbackForm">
                         {{csrf_field()}}
                         <input type="hidden" name="grupo_id" value="{{ $grupo->id }}">
+                        <input type="hidden" name="aluno_id" value="{{ Auth::user()->getUserId() }}">
                         <input type="hidden" name="files_ids" id="files_ids" value="">
+                        <div class="row group">
+                            <div class="col-md-12">
+                                <input type="text" class="display-input" id="assunto" name="assunto">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label for="assunto" class="labelTextModal">Assunto</label>
+                            </div>
+                        </div>
+                        
                         <div class="row group" style="margin-bottom: 45px">
                             <div class="col-md-12">
                                 <div class="dropdownFiles">
@@ -80,6 +88,7 @@
 
 <script>
     $(document).ready(function () {
+        
         $(".dropdownFiles p").click(function () {
             if ($(".multiSelect").hasClass('show')) {
                 $(".multiSelect").removeClass('show');
@@ -121,17 +130,18 @@
         });
     });
 
-    function verFeedback(id) {
+    function verFeedback(id,user) {
         $.ajax({
             url: '/verFeedback',
             type: 'GET',
             dataType: 'json',
             success: 'success',
-            data: { 'id': id },
+            data: { 'id': id, 'user': user },
             success: function (data) {
                 $("#tab-3").html(data.html);
                 changeTab(3, 'flex');
             }
         });
     }
+
 </script>

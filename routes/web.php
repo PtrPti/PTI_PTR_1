@@ -146,6 +146,7 @@ Route::post('addNotaTarefa', 'ProjetoController@addNotaTarefa');
 
 Route::get('verFeedback', 'ProjetoController@verFeedback');
 Route::post('createFeedback', 'ProjetoController@createFeedback');
+Route::post('sendFeedback', 'ProjetoController@sendFeedback');
 
 Route::post('addAvaliacao', 'ProjetoController@addAvaliacao')->name('addAvaliacao');
 Route::post('avaliar', 'ProjetoController@avaliar')->name('avaliar');

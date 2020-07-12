@@ -362,6 +362,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
     public static $classMap = array (
         'AddActiveCursosCadeiras' => __DIR__ . '/../..' . '/database/migrations/2020_06_22_131723_add_active_cursos_cadeiras.php',
         'AddAnoLetivoTables' => __DIR__ . '/../..' . '/database/migrations/2020_06_22_130500_add_ano_letivo_tables.php',
+        'AddAssuntoEAssuntoIdToFeedback' => __DIR__ . '/../..' . '/database/migrations/2020_07_08_145340_add_assunto_e_assuntoId_to_feedback.php',
         'AddAvatarToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2020_07_01_174636_add_avatar_to_users_table.php',
         'AddBlocoForumMensagens' => __DIR__ . '/../..' . '/database/migrations/2020_05_14_212556_add_bloco_forum_mensagens.php',
         'AddColumFinishedAtTarefasTable' => __DIR__ . '/../..' . '/database/migrations/2020_06_25_215458_add_colum_finished_at_tarefas_table.php',
@@ -387,6 +388,7 @@ class ComposerStaticInit8c8cc937034207560cd9945549570d85
         'AnoLetivoSeeder' => __DIR__ . '/../..' . '/database/seeds/AnoLetivoSeeder.php',
         'App\\AnoLetivo' => __DIR__ . '/../..' . '/app/AnoLetivo.php',
         'App\\Avaliacao' => __DIR__ . '/../..' . '/app/Avaliacao.php',
+        'App\\AvaliacaoDocente' => __DIR__ . '/../..' . '/app/AvaliacaoDocente.php',
         'App\\AvaliacaoMembros' => __DIR__ . '/../..' . '/app/AvaliacaoMembros.php',
         'App\\Cadeira' => __DIR__ . '/../..' . '/app/Cadeira.php',
         'App\\Calendar' => __DIR__ . '/../..' . '/app/Calendar.php',
