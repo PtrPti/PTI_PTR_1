@@ -53,7 +53,6 @@
         @endforeach
     @endisset
 </table>
-
 <script>
 
 $('#search_aluno').keyup(function() {
@@ -64,7 +63,6 @@ $('#search_aluno').keyup(function() {
         data: {'search': search, 'cadeira_id': <?php echo $disciplina->id?>},
         cache: false,
         success: function (data) {
-            console.log(data.users)
             $(".inbox_aluno").empty();
             $.each(data.users, function (nome,id) {
                 $("#result").append('<li><button type="submit" class="show_al" onclick="idUser(' + id + ')"  >' + nome.split("_")[0] + ' | ' + nome.split("_")[1] +' </button></li>');

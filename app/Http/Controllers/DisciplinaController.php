@@ -26,6 +26,7 @@ use App\Http\Requests\CreateEvaluation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Auth;
 use DateTime;
 use Session;
