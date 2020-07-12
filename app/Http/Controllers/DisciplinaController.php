@@ -23,6 +23,7 @@ use App\Http\Requests\ReplyForumPost;
 use App\Http\Requests\ProjetoFilePost;
 use App\Http\Requests\ProjetoLinkPost;
 use App\Http\Requests\CreateEvaluation;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
