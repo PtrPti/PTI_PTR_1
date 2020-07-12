@@ -11,6 +11,10 @@
 |
 */
 
+use App\GrupoFicheiros;
+use App\TarefasFicheiros;
+use App\ProjetoFicheiro;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -23,9 +27,9 @@ Auth::routes();
     
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('locale/{locale}', )->name('languages');
+Route::get('locale/{lang}', )->name('languages');
 
-Route::get('locale/{locale}', function ($locale) {
+Route::get('locale/{lang}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();
 });
@@ -104,6 +108,14 @@ Route::get('searchUsers', 'AdminController@searchUsers')->middleware('checkUserR
 Route::post('lockUser', 'AdminController@lockUser')->middleware('checkUserRole:3');
 Route::post('unlockUser', 'AdminController@unlockUser')->middleware('checkUserRole:3');
 
+Route::get('exportAnosLetivosExcel', 'AdminController@exportUsersExcel')->name('exportUsersExcel')->middleware('checkUserRole:3');
+Route::get('exportSemestresExcel', 'AdminController@exportUsersExcel')->name('exportUsersExcel')->middleware('checkUserRole:3');
+Route::get('exportDepartamentosExcel', 'AdminController@exportUsersExcel')->name('exportUsersExcel')->middleware('checkUserRole:3');
+Route::get('exportCursosExcel', 'AdminController@exportUsersExcel')->name('exportUsersExcel')->middleware('checkUserRole:3');
+Route::get('exportDisciplinasExcel', 'AdminController@exportUsersExcel')->name('exportUsersExcel')->middleware('checkUserRole:3');
+Route::get('exportUsersExcel', 'AdminController@exportUsersExcel')->name('exportUsersExcel')->middleware('checkUserRole:3');
+Route::get('exportExcel', 'AdminController@exportExcel')->name('exportExcel')->middleware('checkUserRole:3');
+
 //---------------- NOVO ----------------//
 Route::get('/Home', 'HomeController@home')->name('home');
 Route::get('/filterProj', 'HomeController@filterProj');
@@ -131,6 +143,8 @@ Route::post('/eraiseEvaluation', 'DisciplinaController@eraiseEvaluation')->name(
 Route::get('/search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
 Route::post('/addAluno', 'DisciplinaController@addAluno')->name('addAluno');
 
+Route::get('/search_projeto', 'ProjetoController@search_projetos')->name('search_projeto');
+
 Route::get('/Home/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
 
 Route::post('createTarefa', 'ProjetoController@createTarefa');
@@ -150,6 +164,7 @@ Route::post('addNotaTarefa', 'ProjetoController@addNotaTarefa');
 
 Route::get('verFeedback', 'ProjetoController@verFeedback');
 Route::post('createFeedback', 'ProjetoController@createFeedback');
+Route::post('sendFeedback', 'ProjetoController@sendFeedback');
 Route::post('addMensagemFeedbackDocente', 'ProjetoController@addMensagemFeedbackDocente');
 
 Route::post('addAvaliacao', 'ProjetoController@addAvaliacao')->name('addAvaliacao');
@@ -168,16 +183,31 @@ Route::post('message', 'ChatController@sendMessage');
 
 //---------------- DOWNLOAD ----------------//
 //Download
-Route::get('download/{folder}/{filename}', function($folder, $filename) {
-    $file_path = storage_path() .'/app/public/' . $folder . '/'. $filename;
-    if (file_exists($file_path)) {
-        $name = explode("_", $filename, 2)[1];
-        return Response::download($file_path, $name, ['Content-Length: '. filesize($file_path)]);
+Route::get('download/{id}/{local}', function($id, $local) {
+    if ($local == 'grupo'){
+      $ficheiro= GrupoFicheiros::where('id', $id)->first();
     }
-    else {
-        exit('Requested file does not exist on our server!');
+    elseif ($local == 'tarefa'){
+      $ficheiro= TarefasFicheiros::where('id', $id)->first();
     }
-})->where('filename', '[A-Za-z0-9\-\_\.]+');
+    elseif ($local == 'projeto'){
+      $ficheiro= ProjetoFicheiro::where('id', $id)->first();
+    }
+  
+      //$file_path = Storage::disk('s3')->url($ficheiro->nome);
+      //$file_path = storage_path() .'/app/public/' . $folder . '/'. $filename;
+      if ( Storage::disk('s3')->has($ficheiro->nome)) {
+          //$name = explode("_", $filename, 2)[1];
+            $headers = [
+              //'Content-Type'        => 'application/x-httpd-php',
+              'Content-Disposition' => 'attachment; filename="'. $ficheiro->nome .'"',
+            ];
+          return Response::make(Storage::disk('s3')->get($ficheiro->nome), 200, $headers);
+      }
+      else {
+          exit('Requested file does not exist on our server!');
+      }
+  })->where('filename', '[A-Za-z0-9\-\_\.]+');
 
 //---------------- CALENDARIO ----------------//
 Route::get('/calendar/loadEvents/{grupo_id}', 'CalendarController@load')->name('loadEvents');

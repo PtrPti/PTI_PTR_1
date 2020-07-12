@@ -52,19 +52,19 @@
                     @if(!is_null($tnf->atribuido))
                         <div class='nameUser'><span>{{ $tnf->atribuido }}</span></div>
                     @endif
-                    
+
                     <button type="button" data-toggle="dropdown" id='fich{{ $tnf->id }}' class='ficheirosbtn' aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-paperclip"></i><i class="fas fa-caret-down"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="fich{{ $tnf->id }}">
                         @foreach($ficheirosTarefas as $fich)
                             @if($fich->tarefa_id === $tnf->id)
-                                @if(is_null($fich->link) and is_null($fich->notas))
+                                @if(is_null($fich->link) and is_null($fich->notas)  and !is_null($fich->nome))
                                     <li>
                                     @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                         <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                     @endif
-                                    <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</a></li>
+                                    <a href="{{ url('/download', ['id' => $fich->id, 'local' => 'tarefa']) }}"><i class="fas fa-file"></i>{{ explode("/", $fich->nome)[2] }}</a></li>
                                 @elseif(!is_null($fich->link))
                                     @if(!is_null($fich->nome))
                                         <li>
@@ -72,7 +72,7 @@
                                             <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                         @endif
                                         <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</a></li>
-                                    @else 
+                                    @else
                                         <li>
                                         @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                             <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
@@ -89,82 +89,87 @@
                             @endif
                         @endforeach
                     </ul>
-                    
+
                 </div>
             </div>
         <?php $tarefaPai++; ?>
-    @else
-            <div class="divSubTarefa {{$tnf->tarefa_id}}" id="{{$tnf->id}}">
-                <div class='tarefa'>                    
-                    <label class="containerCheckbox">{{ $tnf->nome }}
-                        <input type="hidden" value="">
-                        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
-                            <input type="checkbox" @if (($tnf->estado)) checked @endif >
-                        @else
-                            <input type="checkbox" disabled @if (($tnf->estado)) checked @endif >
-                        @endif
-                        <span class="checkmark"></span>
-                    </label>
-
-                    @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
-                        <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
-                        <i class="fas fa-plus-circle addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$tnf->id}}]"></i>
-                    @else
-                        <i class="fas fa-edit" onclick="EditTarefa({{$tnf->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
-                    @endif
-                    <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
-                    <div class="ficheirosTarefa">
-                        @if(!is_null($tnf->atribuido))
-                            <div class='nameUser'><span>{{ $tnf->atribuido }}</span></div>
-                        @endif
-
-                        <button type="button" data-toggle="dropdown" id='fich{{ $tnf->id }}' class='ficheirosbtn' aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-paperclip"></i><i class="fas fa-caret-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="fich{{ $tnf->id }}">
-                            @foreach($ficheirosTarefas as $fich)
-                                @if($fich->tarefa_id === $tnf->id)
-                                    @if(is_null($fich->link) and is_null($fich->notas))
-                                        <li>
-                                        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
-                                            <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
-                                        @endif
-                                        <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</a></li>
-                                    @elseif(!is_null($fich->link))
-                                        @if(!is_null($fich->nome))
-                                            <li>
-                                            @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
-                                                <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
-                                            @endif
-                                            <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</a></li>
-                                        @else 
-                                            <li>
-                                            @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
-                                                <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
-                                            @endif
-                                            <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{$fich->nome}}</a></li>
-                                        @endif
-                                    @else
-                                        <li>
-                                        @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
-                                            <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
-                                        @endif
-                                        <a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><i class="fas fa-sticky-note"></i>{{$fich->nome}}</a></li>
-                                    @endif
+        @if($tarefaPai > 0)
+            @foreach($tarefasNaoFeitas as $subtarefa)
+                @if($subtarefa->tarefa_id == $tnf->id)
+                    <div class="divSubTarefa {{$subtarefa->tarefa_id}}" id="{{$subtarefa->id}}">
+                        <div class='tarefa'>                    
+                            <label class="containerCheckbox">{{ $subtarefa->nome }}
+                                <input type="hidden" value="">
+                                @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                    <input type="checkbox" @if (($subtarefa->estado)) checked @endif >
+                                @else
+                                    <input type="checkbox" disabled @if (($subtarefa->estado)) checked @endif >
                                 @endif
-                            @endforeach
-                        </ul>
+                                <span class="checkmark"></span>
+                            </label>
+
+                            @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                <i class="fas fa-edit" onclick="EditTarefa({{$subtarefa->id}})" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+                                <i class="fas fa-plus-circle addToTarefa" role="button" data-toggle="modal" data-target="#addToTarefa" data-id="[1, {{$subtarefa->id}}]"></i>
+                            @else
+                                <i class="fas fa-edit" onclick="EditTarefa({{$subtarefa->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+                            @endif
+                            <!-- Notas/Aluno/Ficheiro/Link -> Tarefa -->
+                            <div class="ficheirosTarefa">
+                                @if(!is_null($subtarefa->atribuido))
+                                    <div class='nameUser'><span>{{ $subtarefa->atribuido }}</span></div>
+                                @endif
+
+                                <button type="button" data-toggle="dropdown" id='fich{{ $subtarefa->id }}' class='ficheirosbtn' aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-paperclip"></i><i class="fas fa-caret-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="fich{{ $subtarefa->id }}">
+                                    @foreach($ficheirosTarefas as $fich)
+                                        @if($fich->tarefa_id === $subtarefa->id)
+                                            @if(is_null($fich->link) and is_null($fich->notas))
+                                                <li>
+                                                @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                                    <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
+                                                @endif
+                                                <a href="{{ url('/download', ['id' => $fich->id, 'local' => 'tarefa']) }}"><i class="fas fa-file"></i>{{ explode("/", $fich->nome)[2] }}</a></li>
+                                            @elseif(!is_null($fich->link))
+                                                @if(!is_null($fich->nome))
+                                                    <li>
+                                                    @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                                        <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
+                                                    @endif
+                                                    <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</a></li>
+                                                @else 
+                                                    <li>
+                                                    @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                                        <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
+                                                    @endif
+                                                    <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{$fich->nome}}</a></li>
+                                                @endif
+                                            @else
+                                                <li>
+                                                @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                                    <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
+                                                @endif
+                                                <a href="#" onclick="infoNota('tarefa',{{$fich->id}})" class="no-link"><i class="fas fa-sticky-note"></i>{{$fich->nome}}</a></li>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                            
+                        </div>
                     </div>
-                    
-                </div>
-            </div>
-            @if(Session::has('search'))
-                <script>
-                    $(document).ready(function() {
-                        $('#{{$tnf->id}}').css('display', 'block');
-                    });
-                </script>
-            @endif
+                    @if(Session::has('search'))
+                        <script>
+                            $(document).ready(function() {
+                                $('#{{$subtarefa->id}}').css('display', 'block');
+                            });
+                        </script>
+                    @endif
+                @endif
+            @endforeach
+        @endif
     @endif
 @endforeach
 @if($tarefaPai > 0)
@@ -206,44 +211,51 @@
                     </span>
                 </div>
             <?php $tarefaPai++; ?>
-        @else
-                <div class="divSubTarefa {{$tf->tarefa_id}}" id="{{$tf->id}}">
-                    <div class='tarefa'>
-                        <label class="containerCheckbox">{{ $tf->nome }}
-                            <input type="hidden" value="">
-                            @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
-                                <input type="checkbox" @if (($tf->estado)) checked @endif >
-                            @else
-                                <input type="checkbox" disabled @if (($tf->estado)) checked @endif >
-                            @endif
-                            <span class="checkmark"></span>
-                        </label>
-                        <i class="fas fa-edit" onclick="EditTarefa({{$tf->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
 
-                        <div class="ficheirosTarefa">
-                            @if(!is_null($tf->atribuido))
-                                <div class='nameUser'><span>{{ $tf->atribuido }}</span></div>
-                            @endif
+        @if($tarefaPai > 0)
+            @foreach($tarefasFeitas as $subtarefa)
+                @if($subtarefa->tarefa_id == $tf->id)
+                    <div class="divSubTarefa {{$subtarefa->tarefa_id}}" id="{{$subtarefa->id}}">
+                        <div class='tarefa'>
+                            <label class="containerCheckbox">{{ $subtarefa->nome }}
+                                <input type="hidden" value="">
+                                @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
+                                    <input type="checkbox" @if (($subtarefa->estado)) checked @endif >
+                                @else
+                                    <input type="checkbox" disabled @if (($subtarefa->estado)) checked @endif >
+                                @endif
+                                <span class="checkmark"></span>
+                            </label>
+                            <i class="fas fa-edit" onclick="EditTarefa({{$subtarefa->id}}, true)" role="button" data-toggle="modal" data-target="#editTarefa"></i>
+
+                            <div class="ficheirosTarefa">
+                                @if(!is_null($subtarefa->atribuido))
+                                    <div class='nameUser'><span>{{ $subtarefa->atribuido }}</span></div>
+                                @endif
+                            </div>
+                            <br >
+                            <span class='duracao'>
+                                <i class="far fa-clock"></i>
+                                <?php   $datetime1 = new DateTime($subtarefa->created_at);
+                                    $datetime2 = new DateTime($subtarefa->finished_at);
+                                    $interval = date_diff($datetime1, $datetime2);
+                                    echo $interval->format('%a dias e %h horas'); ?>
+                            </span>
                         </div>
-                        <br >
-                        <span class='duracao'>
-                            <i class="far fa-clock"></i>
-                            <?php   $datetime1 = new DateTime($tf->created_at);
-                                $datetime2 = new DateTime($tf->finished_at);
-                                $interval = date_diff($datetime1, $datetime2);
-                                echo $interval->format('%a dias e %h horas'); ?>
-                        </span>
                     </div>
-                </div>
-                @if(Session::has('search'))
-                    <script>
-                        $(document).ready(function() {
-                            $('#{{$tf->id}}').css('display', 'block');
-                        });
-                    </script>
+                    @if(Session::has('search'))
+                        <script>
+                            $(document).ready(function() {
+                                $('#{{$subtarefa->id}}').css('display', 'block');
+                            });
+                        </script>
+                    @endif
                 @endif
+            @endforeach
+        @endif
         @endif
     @endforeach
+
     @if($tarefaPai > 0)
         </div>
     @endif
@@ -280,7 +292,7 @@
                                 <label for="typeAddTarefa" class="labelTextModal">{{ __('change.criar_adicionar') }}</label>
                             </div>
                         </div>
-                        
+
                         <div id="modalT-1" class="modal-tab"><!-- Nota -->
                             <div class="row group">
                                 <div class="col-md-12">
@@ -342,7 +354,7 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                                 </div>
                             </div>
-                        </div>                     
+                        </div>
                     </form>
                 </div>
             </div>
@@ -368,7 +380,7 @@
                     @else
                         <input type="hidden" name="grupo_id" id="grupo_id" value="{{$grupo->id}}">
                     @endif
-                    
+
                     <!-- <div id="editT-1" class="modal-tab"> -->
                         <div class="row group">
                             <div class="col-md-6">
@@ -403,6 +415,16 @@
                                 <span class="bar"></span>
                                 <label for="mensagem" class="labelTextModal">{{ __('change.associarATarefa') }}</label>
                             </div>
+
+                            <div class="col-md-6">
+                                <select name="ordem" id="ordem" class="select-input">
+                                                   
+                                </select>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label for="mensagem" class="labelTextModal">Ordem da Tarefa</label>
+                            </div>
+
                             <div class="col-md-6">
                                 <input type="date" class="display-input" name="prazo" id="prazo">
                                 <span class="highlight"></span>
@@ -425,12 +447,12 @@
 
 <script>
     $(document).ready(function(){
-    
+
         $('.ficheirosTarefa').each(function() {
             if($(this).find( "li" ).length == 0 ){
                 $(this).children('button').hide();
             }
-        });     
+        });
 
         $(".addToTarefa").click(function(){ // Click to only happen on announce links
             $('.modal-tab').css('display', 'none');
@@ -452,7 +474,7 @@
             $(element).css('visibility', 'hidden');
         }
     });
-    
+
     $('.open-subTask').click(function() {
         if($(this).hasClass('fa-chevron-circle-down')) {
             $(this).removeClass('fa-chevron-circle-down');
@@ -563,17 +585,17 @@
                 $("#membro_" + data.membro).prop('selected', true);
                 if (data.membro != null) {
                     $("#editTarefaForm #membro").addClass('used');
-                } 
+                }
                 else {
                     $("#membro_0").prop('selected', true);
                 }
 
                 $("#assoc_" + data.tarefaAssoc).prop('selected', true);
-                if (data.tarefaAssoc != null){                    
+                if (data.tarefaAssoc != null){
                     $("#editTarefaForm #tarefaAssociada").addClass('used');
                 }
                 else {
-                    $("#assoc_0").prop('selected', true); ;
+                    $("#assoc_0").prop('selected', true); 
                 }
 
                 $("#editTarefaForm #prazo").val(data.prazo);
@@ -585,6 +607,17 @@
                     $("#editTarefaForm input").prop('disabled', true);
                     $("#editTarefaForm select").prop('disabled', true);
                 }
+                
+                $("#ordem").empty();
+                
+                $("#ordem").append('<option value="1" id="ord_1">--Inicio--</option>')
+                
+                for (var i = 0; i < data.tarefasNomes.length; i++) {
+                    var a = i+2;
+                    $("#ordem").append("<option value="+ a +" id='ord_"+ a +"' >-- Depois de: "+data.tarefasNomes[i]+" --</option>")    
+                }
+                $("#ord_"+data.ordem).prop('selected', true);
+                
             }
         });
     }

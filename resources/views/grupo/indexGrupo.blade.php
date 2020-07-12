@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row-title breadcrums">
-    <h3><a href="{{ route('disciplina', ['id' => $disciplina->id]) }}">{{ $disciplina->nome }}</a> » {{ $projeto->nome }}</h3>
+    <h3><a href="{{ route('disciplina', ['id' => $disciplina->id, 'local' => 'grupo']) }}">{{ $disciplina->nome }}</a> » {{ $projeto->nome }}</h3>
 </div>
 
 <div id='membros'>
@@ -19,9 +19,9 @@
 
     @if ($projeto->data_fim >= date('Y-m-d H:i:s'))
         <span><strong>{{ __('change.dataFinal') }}:</strong>{{ $projeto->data_fim }}</span>
-        
+
     @else
-        
+
         @if (Auth::user()->isAluno())
             <span><strong>{{ __('change.dataFinal') }}:</strong>encerrado</span>
         @else
@@ -60,12 +60,12 @@
                         <ul class="subFiles">
                         @foreach ($subFicheiros as $subficheiro)
                             @if ($subficheiro->pasta_id === $ficheiro->id)
-                                @if(is_null($subficheiro->link) and is_null($subficheiro->notas))
+                                @if(is_null($subficheiro->link) and is_null($subficheiro->notas) and !is_null($subficheiro->nome))
                                     <li>
                                         @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                             <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i>
                                         @endif
-                                        <i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $subficheiro->nome]) }}">{{ explode("_", $ficheiro->nome, 2)[1] }}</a></li>
+                                        <i class="fas fa-file"></i><a href="{{ url('/download', ['id' => $subficheiro->id , 'local' => 'grupo']) }}">{{ explode("/", $subficheiro->nome )[2] }}</a></li>
                                 @elseif(!is_null($subficheiro->link))
                                     @if(is_null($subficheiro->nome))
                                         <li>
@@ -73,7 +73,7 @@
                                             <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i>
                                         @endif
                                         <i class="fas fa-link"></i><a href="{{$subficheiro->link}}" target="_blank">{{ str_limit($subficheiro->link, $limit = 25, $end = '...') }}</a></li>
-                                    @else 
+                                    @else
                                         <li>
                                         @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                             <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $subficheiro->id }}, {{ $grupo->id }})"></i>
@@ -98,12 +98,12 @@
                         </ul>
                     </li>
                 @elseif ( !$ficheiro->is_folder and is_null($ficheiro->pasta_id))
-                    @if(is_null($ficheiro->link) and is_null($ficheiro->notas))
+                    @if(is_null($ficheiro->link) and is_null($ficheiro->notas) and !is_null($ficheiro->nome))
                         <li>
                         @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                             <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i>
                         @endif
-                            <i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $ficheiro->nome]) }}">{{ explode("_", $ficheiro->nome, 2)[1] }}</a></li>
+                            <i class="fas fa-file"></i><a href="{{ url('/download', ['id' =>  $ficheiro->id , 'local'=>'grupo']) }}">{{ explode("/", $ficheiro->nome)[2] }}</a></li>
                     @elseif(!is_null($ficheiro->link))
                         @if(!is_null($ficheiro->nome))
                             <li>
@@ -111,7 +111,7 @@
                                 <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i>
                             @endif
                             <i class="fas fa-link"></i><a href="{{$ficheiro->link}}" target="_blank">{{ str_limit($ficheiro->link, $limit = 25, $end = '...') }}</a></li>
-                        @else 
+                        @else
                             <li>
                             @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                 <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i>
@@ -124,7 +124,7 @@
                             <i class="remove fas fa-times-circle" onclick="remover('grupo',{{ $ficheiro->id }}, {{ $grupo->id }})"></i>
                         @endif
                         <i class="fas fa-sticky-note"></i><a href="#" class="no-link" onclick="infoNota('grupo',{{$ficheiro->id}})">{{$ficheiro->nome}}</a></li>
-                    @endif               
+                    @endif
                 @endif
             @endforeach
         </ul>
@@ -158,7 +158,7 @@
                                         <label for="typeAdd" class="labelTextModal">{{ __('change.criar_adicionar') }}</label>
                                     </div>
                                 </div>
-                                
+
                                 <div id="modalG-1" class="modal-tab"><!-- Tarefa -->
                                     <div class="row group">
                                         <div class="col-md-6">
@@ -322,8 +322,8 @@
                                             <button type="button" class="btn btn-primary" onclick="Save('grupoAdd', '/addNotaGrupo')" style="display: inline-block !important">{{ __('change.criar') }}</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                                         </div>
-                                    </div>         
-                                </div>               
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -344,12 +344,12 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" action="{{ route('avaliar') }}" id='avaliacaoform' enctype="multipart/form-data">
-                    {{csrf_field()}}    
+                    {{csrf_field()}}
                         <div class="row group">
                             <div class="col-md-12">
                                 <table class='tabela_aval'>
                                     @foreach($membros as $membro)
-                                    <tr> 
+                                    <tr>
                                         <td class='primeira_coluna'>{{$membro->nome}}</td>
                                         <td class='segunda_coluna'><input type="number" id="nota_{{$membro->id}}" name="nota_{{$membro->id}}" min="0" max="20" required></td>
                                     </tr>
@@ -357,7 +357,7 @@
                                 </table>
 
                                 <input type="hidden" name="grupo_id" value="{{ $grupo->id }}">
-                                
+
                             </div>
                         </div>
                         <div class="row row-btn">
@@ -373,7 +373,7 @@
         </div>
     </div>
 
-    
+
 
     <div class="split-right">
         <div class="nav-tabs">
@@ -439,7 +439,7 @@
             $("#modalG-" + $(this).data('id')).css('display', 'block');
             $("#typeAdd").addClass('used');
         });
- 
+
         $('#typeAdd').change(function() {
             $('.modal-tab').css('display', 'none');
             $("#modalG-" + $(this).val()).css('display', 'block');
@@ -456,7 +456,7 @@
                 $($(this)).prev().removeClass('fa-folder-open');
                 $($(this)).prev().addClass('fa-folder');
             }
-        });        
+        });
     });
 
     function infoNota(tipo,id){

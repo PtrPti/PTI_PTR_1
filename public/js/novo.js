@@ -313,64 +313,6 @@ function SearchInput(url, page = "", input = null) {
     });
 }
 
-// function responsiveDisciplina(x) {
-//     href = "{{ route('disciplina', ['id' => $d->id]) }}"
-//     if (x.matches) { // If media query matches
-//         $("#dropdownDisc").html('<i class="fas fa-book fa-2x i-nav-disc"></i>');
-//         $("#containerDisc").html('<ul class="dropdown-menu" aria-labelledby="dLabel">\
-//                                     @foreach($disciplinas as $d) \
-//                                         <li><a href="'+ href + '" class="item-link">{{$d->nome}}</a></li> \
-//                                     @endforeach\
-//                                  </ul>');
-//     } else {
-//         $("#dropdownDisc").html('<i class="fas fa-book fa-2x i-nav-disc"></i>\
-//                                  <a style="margin-left: 33px;">Disciplinas</a>\
-//                                  <i id="i-disciplina" class="caret-icon fa fa-caret-down"></i>');
-//         $("#containerDisc").html('<div class="dropdown-container">\
-//                                     @foreach($disciplinas as $d)\
-//                                         <a href="'+ href + '">{{$d->nome}}</a>\
-//                                     @endforeach\
-//                                  </div>');
-//     }
-// }
-
-// var x = window.matchMedia("(max-width: 600px)")
-// responsiveDisciplina(x) 
-// x.addListener(responsiveDisciplina)
-
-// function responsiveProjeto(x) {
-//     var href_1 = "{{ route('disciplina', ['id' => $p->cadeira_id, 'tab' => 1, 'proj' => $p->id]) }}";
-//     var href_2 = "{{ route('projeto', ['id' => $p->grupo_id]) }}"
-//     if (x.matches) { // If media query matches
-//         $("#dropdownProj").html('<i class="fas fa-clipboard-list fa-2x i-nav-proj"></i>');
-//         $("#contairnerProj").html('<ul class="dropdown-menu" aria-labelledby="pLabel"> \
-//                                     @foreach($projetos as $p) \
-//                                         @if (Auth::user()->isProfessor()) \
-//                                             <li><a href="' + href_1 + '" class="item-link">{{$p->nome}}</a></li>\
-//                                         @else \
-//                                             <li><a href="' + href_2 + '" class="item-link">{{$p->nome}}</a></li>\
-//                                         @endif\
-//                                     @endforeach\
-//                                  </ul>');
-//     } else {
-//         $("#dropdownProj").html('<i class="fas fa-clipboard-list fa-2x i-nav-proj">\
-//                                  </i><a style="margin-left: 39px;">Projetos</a>\
-//                                  <i id="i-projeto" class="caret-icon fa fa-caret-down"></i>');
-//         $("#containerProj").html('<div class="dropdown-container">\
-//                                     @if (Auth::user()->isProfessor())\
-//                                         @foreach($projetos as $p)\
-//                                         <a href="' + href_1 + '">{{$p->nome}}</a>\
-//                                         @endforeach\
-//                                     @else\
-//                                         @foreach($projetos as $p)\
-//                                         <a href="' + href_2 + '">{{$p->nome}}</a>\
-//                                         @endforeach\
-//                                     @endif\
-//                                  </div>');
-//     }
-// }
-
-// var x = window.matchMedia("(max-width: 600px)")
-// responsiveProjeto(x) 
-// x.addListener(responsiveProjeto)
-
+function exportExcel() {
+    $("#excelData").val('<table>' + $('.adminTable').html() + '</table>');
+}

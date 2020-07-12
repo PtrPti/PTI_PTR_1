@@ -233,7 +233,7 @@
                     </div>
                     <div class="row group">
                         <div class="col-md-12">
-                            <p>Nota: Só são permitidos ficheiros .csv. O ficheiro tem de ter o formato: Ano,DataInicio,DataFim</p>
+                            <p>Nota: Só são permitidos ficheiros .csv. O ficheiro tem de ter o formato: Nome,Código,Ano,Semestre,Curso,Ano letivo,Ativo</p>
                         </div>
                     </div>
                     <div class="row row-btn">

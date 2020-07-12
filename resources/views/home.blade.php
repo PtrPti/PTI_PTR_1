@@ -42,13 +42,15 @@
     <h5>{{ __('change.projetos') }}</h5>
   @endif
     <div class="search">
-        <input type="search" class="search-input" placeholder="{{ __('change.pesquisar') }}" results="0">
+        
+        <input type="text" name="search" class="search-input" id="search_projeto"  placeholder="{{ __('change.pesquisar') }}">
+        
         <i class="fas fa-search search-icon"></i>
     </div> 
-    <div class="box-container" id='grupos'>
+    <div class="box-container_projetos" >
         @if (Auth::user()->isProfessor())
             @foreach ($projetos as $proj)
-                <div class="box">
+                <div class="box" id="result_projetos">
                     <a href="{{ route('disciplina', ['id' => $proj->cadeira_id, 'tab' => 1, 'proj' => $proj->id]) }}">
                         {{$proj->nome}}<br>
                         <small>{{$proj->cadeira}}</small>
@@ -61,7 +63,7 @@
     </div>
 </div>
 
-@endsection
+
 
 <script>
     function changeVal(val, usersGrupos_id){
@@ -104,4 +106,21 @@
         }
       });
     }
-</script>D
+
+    $('#search_projeto').keyup(function() {
+      var search = $('#search_projeto').val();
+      console.log(search);
+      $.ajax({
+          type: "get",
+          url: "/search_projeto",
+          data: {'search': search},
+          cache: false,
+          success: function (data) {
+              $(".box-container_projetos").html(data.html);
+              
+          },
+      })
+    });
+
+</script>
+@endsection

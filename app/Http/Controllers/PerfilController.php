@@ -12,6 +12,7 @@ use App\Curso;
 use App\UserInfo;
 use App\AvaliacaoMembros;
 use App\Http\Controllers\ChatController;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use Image;
@@ -59,7 +60,7 @@ class PerfilController extends Controller
         }
 
         $utilizadores = User::join('users_info', 'users.id', '=', 'users_info.user_id')->where('users.id', $user->id)->get();
-        
+
         $active_tab = $tab;
 
         $cursos = Curso::where('departamento_id', $request->departamento_id)->orderBy('nome')->get();
@@ -70,14 +71,22 @@ class PerfilController extends Controller
                             where('users_cadeiras.cadeira_id', $user->id)->
                             where('users.perfil_id', 1)->get();
 
-        $resultados = AvaliacaoMembros::select('nota')->where('membro_avaliado', $user->id)->get();
-        $media = AvaliacaoMembros::avg('nota');
 
-        $projetos_avaliacao = Projeto::join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->join('avaliacao_membros', 'grupos.id', '=', 'avaliacao_membros.grupo_id')->get();
+        $resultados = DB::select(DB::raw('select avg(nota) as nota, p.nome from avaliacao_membros am
+                                            join grupos g
+                                            on am.grupo_id = g.id
+                                            join projetos p
+                                            on g.projeto_id = p.id
+                                            where membro_avaliado = ? group by am.grupo_id'), [$user->id]);
 
-        return view ('perfil.perfil', compact('user', 'user_info', 'disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'media', 'projetos_avaliacao'));        
+        if ($user->avatar == null){
+          $avatar= Storage::disk('s3')->url('images/default.png');
+        }else{
+          $avatar = Storage::disk('s3')->url($user->avatar);
+        }
+
+        return view ('perfil.perfil', compact('user', 'user_info','disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'avatar'));
     }
-
 
     public function changeNome(Request $request){
         $user = Auth::user()->getUser();
@@ -98,7 +107,7 @@ class PerfilController extends Controller
             //dá erro
         }
         return redirect()->action('PerfilController@perfilDocente');
-        
+
     }
 
     public function changePass(Request $request){
@@ -114,10 +123,10 @@ class PerfilController extends Controller
         print_r($novaPass.'||||');
         print_r($novaPass2);
         if($user->password == $oldPass){
-            
+
             if($oldPass == $novaPass){
                 //dá erro
-               
+
             }
             elseif($novaPass == $novaPass2){
                 error_log('update'); */
@@ -126,7 +135,7 @@ class PerfilController extends Controller
         }
         else{ */
             //dá erro
-        
+
         // f (password_verify('wegroup', $hash)) {
         //     echo 'Password is valid!';
         // } else {
@@ -140,18 +149,21 @@ class PerfilController extends Controller
 
     	// Handle the user upload of avatar
     	if($request->hasFile('avatar')){
+        $s3= Storage::disk("s3");
+        $s3->delete(Auth::user()->avatar);
     		$avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-    		Image::make($avatar)->resize(300, 300)->save(public_path('images/' . $filename ));
 
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            $s3filepath = "images/" . $filename;
+        $path= $s3 -> putFileAs('images', $avatar, $filename, 'public' );
+
+
+        //Image::make()->resize(300, 300);
     		$user = Auth::user();
-    		$user->avatar = $filename;
+    		$user->avatar = $path;
     		$user->save();
     	}
 
     	return redirect()->action('PerfilController@perfilDocente');
-        
-
     }
-    
 }

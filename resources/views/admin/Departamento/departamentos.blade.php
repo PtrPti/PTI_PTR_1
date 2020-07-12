@@ -122,7 +122,7 @@
                     </div>
                     <div class="row group">
                         <div class="col-md-12">
-                            <p>Nota: Só são permitidos ficheiros .csv. O ficheiro tem de ter o formato: NomeDepartamento,Código</p>
+                            <p>Nota: Só são permitidos ficheiros .csv. O ficheiro tem de ter o formato: Nome,Código</p>
                         </div>
                     </div>
                     <div class="row row-btn">

@@ -30,6 +30,14 @@
     </tbody>
 </table>
 
+<div class="row-btn">
+    <form action="/exportExcel" method="GET" name="excel" id="excel">
+        <input type="hidden" name="table" value="" id="excelData">
+        <input type="hidden" name="title" value="Disciplinas">
+        <button type="submit" onclick="exportExcel()">Exportar excel <i class="fas fa-file-excel"></i></button>
+    </form>
+</div>
+
 @if(isset($curso) || isset($semestre) || isset($ano_letivo))
     {{$cadeiras->appends(['campos' => ['curso' => $curso, 'semestre' => $semestre, 'ano_letivo' => $ano_letivo]])->links()}}
 @else

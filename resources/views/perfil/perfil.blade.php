@@ -3,14 +3,12 @@
 @section('content')
 
 <div class="row-title breadcrums">
-    
-    
-    <img class="img_profile" src="/images/{{ $user_info->avatar }}" width=10% style="position:fixed;  left:350px; border-radius: 50%;">
+    <img class="img_profile" src="{{ $avatar }}" style="position:fixed;  left:340px; border-radius: 50%;width: 170px;height: 170px;">
     <h2 class="nome_profile">{{Auth::user()->getUserName()}}</h2>
     <!-- <button class="btn btn-primary btn_perfil">{{ __('change.mudarImagemPerfil') }}</button> -->
 
     <form enctype="multipart/form-data" method="post" action="{{route('profile_update')}}" >
-        
+
         <input type="file" name="avatar" class=" btn_update " >
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="submit" class="btn btn-primary btn_update1" value="{{ __('change.mudarImagemPerfil') }}">
@@ -21,16 +19,11 @@
         @if (Auth::user()->isProfessor())
             <h5 class="t1">{{ __('change.estatuto') }}: {{ __('change.professor') }} </h5>
             <h5 class="tnum">{{ __('change.numDocente') }}: {{$user_info->numero}} </h5>
-
         @else
             <h5 class="t1">{{ __('change.estatuto') }}: {{ __('change.aluno') }} </h5>
             <h5 class="tnum">{{ __('change.numeroAluno') }}: {{$user_info->numero}} </h5>
-                
         @endif
-
 </div>
-
-
 
 <div class="nav-tabs_perfil">
     @if (Auth::user()->isAluno())
@@ -38,20 +31,17 @@
         <div class="tab_perfil" id="tab_perfil2" onclick="changeTab_perfil(2)"> {{ __('change.pontos') }} </div>
         <div class="tab_perfil" id="tab_perfil3" onclick="changeTab_perfil(3)"> {{ __('change.gerirConta') }} </div>
 
-        @else 
+        @else
         <div class="tab_perfil tab_perfil-active" id="tab_perfil1" onclick="changeTab_perfil(1)">{{ __('change.sobre') }}</div>
         <div class="tab_perfil" id="tab_perfil2" onclick="changeTab_perfil(3)"> {{ __('change.gerirConta') }} </div>
     @endif
-    
 </div>
-
 
 <div class="tab-container_perfil" id="tab_perfil-1">
     <h5 class="t2">{{ __('change.disciplinas') }}: </h5>
         @foreach($disciplinas as $disciplina)
-        <a href="{{route('disciplina', ['id' => $disciplina->id])}}" class="t3"><ul> {{$disciplina->nome}} </ul></a>
+            <a href="{{route('disciplina', ['id' => $disciplina->id])}}" class="t3"><ul> {{$disciplina->nome}} </ul></a>
         @endforeach
-
 </div>
 
 <div class="tab-container_perfil" id="tab_perfil-2">
@@ -60,20 +50,21 @@
             <tr>
                 <th >Projetos</th>
                 <th>Avaliação Atribuída</th>
-                
             </tr>
 	    </thead>
         <tbody style="text-align:center;">
+        @foreach($resultados as $r)
             <tr>
-            @foreach($projetos_avaliacao as $pa)
-                <td >  {{$pa->nome}}</td>
-                <td> {{$media}} </td> 
-                @endforeach   
+                <td > {{$r->nome}}  </td>
+                <td> {{$r->nota}} </td>
             </tr>
+        @endforeach
+
+
         </tbody>
     </table>
-   
-    
+
+
 </div>
 
 <div class="tab-container_perfil" id="tab_perfil-3">
@@ -82,7 +73,6 @@
         {{ __('change.gerirConta') }}</h3>
 
         <table class="tablePerfil">
-           
             <tr>
                 <td class="primeira_coluna_perfil">{{ __('change.nome') }}</td>
                 <td>{{$user_info->nome}}</td>
@@ -101,15 +91,13 @@
         </table>
 
         <!-- Modal verde -->
-
-        
         <div id="Nome" class="modal">
             <div  class="modal-content" id="changeUser">
                 <div class="modal-header">
                     <h6 class="modal-title">{{ __('change.altereNome') }}</h6>
                     <span class="closeNome" style="margin-top: 5px;margin-right: 15px; cursor:pointer;">&times;</span>
-                </div> 
-               
+                </div>
+
                 <div class="modal-body">
                     <form method="post" action="{{route('changeNome')}}">
                     {{csrf_field()}}
@@ -126,14 +114,14 @@
                     <div class="row row-btn">
                         <div class="col-md-12">
                             <button type='submit' class="btn btn-primary "> {{ __('change.alterar') }}</button>
-                           
+
                         </div>
                     </div>
-            
+
                     </form>
                 </div>
             </div>
-        </div> 
+        </div>
 
 
         <div id="Email" class="modal">
@@ -141,8 +129,8 @@
                 <div class="modal-header">
                     <h6 class="modal-title">{{ __('change.altereEmail') }}</h6>
                     <span class="closeEmail" style="margin-top: 5px;margin-right: 15px; cursor:pointer;">&times;</span>
-                </div> 
-               
+                </div>
+
                 <div class="modal-body">
                     <form method="post" action="{{route('changeEmail')}}">
                     {{csrf_field()}}
@@ -159,14 +147,14 @@
                     <div class="row row-btn">
                         <div class="col-md-12">
                             <button type='submit' class="btn btn-primary "> {{ __('change.alterar') }}</button>
-                           
+
                         </div>
                     </div>
-            
+
                     </form>
                 </div>
             </div>
-        </div> 
+        </div>
 
 
         <div id="Password" class="modal">
@@ -174,8 +162,8 @@
                 <div class="modal-header">
                     <h6 class="modal-title">{{ __('change.altereSuaPalavraPasse') }}</h6>
                     <span class="closePass" style="margin-top: 5px;margin-right: 15px; cursor:pointer;">&times;</span>
-                </div> 
-               
+                </div>
+
                 <div class="modal-body">
                     <form method="post" action="{{route('changePass')}}">
                     {{csrf_field()}}
@@ -192,18 +180,18 @@
                     <div class="row row-btn">
                         <div class="col-md-12">
                             <button type='submit' class="btn btn-primary "> {{ __('change.alterar') }}</button>
-                           
+
                         </div>
                     </div>
-            
+
                     </form>
                 </div>
             </div>
-        </div> 
+        </div>
 
 
 
-       
+
 
 
 
@@ -213,7 +201,7 @@ $(document).ready(function () {
         changeTab(<?php echo $active_tab ?>);
     });
 
-    
+
 
 
 
@@ -277,7 +265,7 @@ $(document).ready(function () {
         }
       });
     }
-    
+
     function changeEmail() {
         $.ajax({
             url: '/changeEmail',
@@ -304,11 +292,11 @@ $(document).ready(function () {
         });
     }
    /*  function checkPass(pass){
-        
+
         var atualPass = bcrypt($('#atualPass').val());
         var novaPass = bcrypt($('#novaPass').val());
         var repNovaPass = bcrypt($('#repNovaPass').val());
-        
+
         if(pass == atualPass){
             if(novaPass == repNovaPass){
                 changePass();

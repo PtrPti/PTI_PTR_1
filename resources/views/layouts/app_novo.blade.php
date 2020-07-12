@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'WeGroup') }}</title>    
+    <title>{{ config('app.name', 'WeGroup') }}</title>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
@@ -17,7 +17,7 @@
     <!-- <script src="{{ asset('js/app.js') }}"></script> -->
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/novo.js') }}"></script>    
+    <script src="{{ asset('js/novo.js') }}"></script>
 
     <!-- FontAwesome Icons -->
     <script src="https://kit.fontawesome.com/f12fb584ff.js" crossorigin="anonymous"></script>
@@ -48,16 +48,11 @@
     <!-- <span class="notifNum">2</span> -->
 
     <div class="languages">
-        
         <ul class="navbar-nav mr-auto">
-            
                 <li class="nav-item ">
-                
                     <a class="pt" href="{{ url('locale/PT') }}" ><img src="{{ asset('images/pt.png') }}" width=29px ></a>
                     <a class="en" href="{{ url('locale/EN') }}" ><img src="{{ asset('images/uk.png') }}" width=29px ></a>
                 </li>
-
-           
         </ul>
     </div>
 
@@ -70,9 +65,12 @@
             </li>
 
             <li class="navsidebar-text">
-                <img class="img_profile" src="/images/{{ Auth::user()->avatar }}" width=37px style=" border-radius: 50%; margin-right:10px;">
+                @if (Auth::user()->avatar ==null)
+                    <img class="img_profile" src="{{Storage::disk('s3')->url('images/default.png')}}" width=37px style=" border-radius: 50%; margin-right:10px;">
+                @else
+                    <img class="img_profile" src="{{Storage::disk('s3')->url(Auth::user()->avatar)}}" width=45px height=45px style=" border-radius:50%; margin-right:10px;">
+                @endif
                 <span>{{ __('change.ola') }}, {{Auth::user()->getUserName()}}</span>
-                
             </li>
 
             @if (!Auth::user()->isAdmin())
@@ -89,7 +87,7 @@
                         <i id="i-disciplina" class="caret-icon fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-container">
-                        @foreach($disciplinas as $d)                
+                        @foreach($disciplinas as $d)
                             <a href="{{ route('disciplina', ['id' => $d->id]) }}" >{{$d->nome}}</a>
                         @endforeach
                     </div>
@@ -239,12 +237,12 @@
         channel.bind('my-event', function (data) {
             if (my_id == data.from) {
                 $('#' + data.to).trigger('click', [false]);
-            }   
+            }
             else if (my_id == data.to) {
             if (receiver_id == data.from) {
                 // if receiver is selected, reload the selected user ...
                 $('#' + data.from).trigger('click', [false]);
-            } 
+            }
             else {
                 // if receiver is not seleted, add notification for that user
                 var pending = parseInt($('#' + data.from).find('.pending').html());
@@ -284,7 +282,7 @@
                     }
                 }
             }
-            $.ajax({    
+            $.ajax({
                     type: "get",
                     url: "/alunomessage/" + receiver_id, // need to create this route
                     data: "",
@@ -294,7 +292,7 @@
                         scrollToBottomFunc();
                     }
                 });
-        });      
+        });
 
         $(document).on('keyup', '.write_msg', function (e) {
             var message = $(this).val();
@@ -307,9 +305,9 @@
                     url: "message", // need to create this post route
                     data: datastr,
                     cache: false,
-                    success: function (data) {         
+                    success: function (data) {
                         $('.message-wrapper').html(data.html);
-                        scrollToBottomFunc();            
+                        scrollToBottomFunc();
                     },
                     error: function (jqXHR, status, err) {
                     },
@@ -355,7 +353,7 @@
         //             $(".inbox_chat").html(data.html);
         //         },
         //     })
-        // });  
+        // });
     });
 
     // make a function to scroll down auto
@@ -380,7 +378,7 @@
                         $(".inbox_chat").html(data.html);
                     },
                 })
-            });  
+            });
         });
     </script>
 @elseif (Auth::user()->isProfessor())
@@ -398,7 +396,7 @@
                         $(".inbox_chat").html(data.html);
                     },
                 })
-            });  
+            });
         });
     </script>
 @endif

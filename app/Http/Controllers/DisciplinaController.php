@@ -83,7 +83,7 @@ class DisciplinaController extends Controller
         $docentes = User::join('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')
                           ->where('users.perfil_id', 2)
                           ->where('users_cadeiras.cadeira_id', $id)->get();
-        
+
         $projetos_cadeira = Projeto::where('cadeira_id', $id)->get();
 
         $duvidas = DB::select('select fd.*, u1.nome as primeiro, u2.nome as ultimo, count(fm.id) as totalMensagens
@@ -96,7 +96,7 @@ class DisciplinaController extends Controller
                                 on fd.id = fm.forum_duvida_id
                             where fd.cadeira_id = (?)
                             group by fd.id', [$id]);
-        
+
         $lista_alunos = UserCadeira::join('users', 'users_cadeiras.user_id', '=', 'users.id')->join('users_info', 'users.id', '=', 'users_info.user_id')->
                             where('users_cadeiras.cadeira_id', $id)->
                             where('users.perfil_id', 1)->get();
@@ -108,8 +108,8 @@ class DisciplinaController extends Controller
         }
 
         $avaliacao = DB::table('avaliacao')->select('id','cadeira_id', 'mensagem_criterios')->where('cadeira_id', $id)->get();
-    
-  
+
+
 
         return view('disciplina.indexDisciplina', compact('disciplinas', 'projetos', 'utilizadores', 'disciplina', 'docentes', 'projetos_cadeira', 'duvidas', 'lista_alunos', 'active_tab', 'avaliacao'));
     }
@@ -125,7 +125,7 @@ class DisciplinaController extends Controller
         $projetos->data_inicio = DateTime::createFromFormat('Y-m-d', $request->datainicio);
         $projetos->data_fim = DateTime::createFromFormat('Y-m-d', $request->datafim);
 
-        $projetos->save(); 
+        $projetos->save();
 
         return response()->json(['title' => 'Sucesso', 'msg' => 'Projeto criado com sucesso', 'redirect' => '/Home/Disciplina/'. $request->cadeira_id  ]);
     }
@@ -136,7 +136,7 @@ class DisciplinaController extends Controller
         $mensagens = DB::select('select fm.*, u.nome from forum_mensagens fm
                                 inner join users u
                                 on fm.user_id = u.id
-                                where forum_duvida_id = (?) 
+                                where forum_duvida_id = (?)
                                 order by bloco asc, created_at asc', [$id]);
 
         $duvida = ForumDuvidas::where('id', $id)->first();
@@ -185,7 +185,7 @@ class DisciplinaController extends Controller
         $pertenceGrupo = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
                                     ->where('grupos.projeto_id', $id)
                                     ->where('users_grupos.user_id', $user->id)->first();
-        
+
         $projFicheiros = ProjetoFicheiro::where('projeto_id', $id)->orderBy('link', 'asc')->get();
 
         $data = array(
@@ -204,7 +204,6 @@ class DisciplinaController extends Controller
         $id = $_POST['projeto_id'];
         $n_grupos = $_POST['n_grupos'];
         $entrar = $_POST['entrar'];
-        $primeiro_numero = $_POST['primeiro_numero'];
 
         $projeto = Projeto::where('id', $id)->first();
 
@@ -253,11 +252,15 @@ class DisciplinaController extends Controller
         $projetoId = $_POST['projeto_id'];
 
         if (Input::hasFile('projetoFile')) {
-            $filename = $request->projeto_id . '_' . $request->file('projetoFile')->getClientOriginalName();
-            $request->file('projetoFile')->storeAs('public/projeto', $filename);
+          $s3= Storage::disk("s3");
+            $file = $request->file('projetoFile');
+            $filename = $file->getClientOriginalName();
+            $s3filepath = "ficheiros/projetos". $projetoId;
+            $path= $s3 -> putFileAs($s3filepath, $file, $filename, 'public' );
+
 
             $ficheiro = new ProjetoFicheiro();
-            $ficheiro->nome = $filename;
+            $ficheiro->nome = $path;
             $ficheiro->projeto_id = $request->projeto_id;
             $ficheiro->save();
         }
@@ -270,7 +273,7 @@ class DisciplinaController extends Controller
         $nome = $_POST['link'];
         $link = $_POST['url'];
         $projetoId = $_POST['projeto_id'];
-        
+
         $site = new ProjetoFicheiro;
 
         $site->projeto_id = $projetoId;
@@ -291,14 +294,14 @@ class DisciplinaController extends Controller
         $novoTopico->ultimo_user = $user->id;
         $novoTopico->cadeira_id = $request->cadeira_id;
         $novoTopico->save();
-        
+
         $novaMensagem = new ForumMensagens;
         $novaMensagem->forum_duvida_id = $novoTopico->id;
         $novaMensagem->user_id = $user->id;
         $novaMensagem->mensagem = $request->mensagem;
         $novaMensagem->bloco = 0;
         $novaMensagem->save();
-        
+
         return response()->json(['title' => 'Sucesso', 'msg' => 'Tópico criado com sucesso', 'redirect' => '/Home/Disciplina/'. $request->cadeira_id . '/5' ]);
     }
 
@@ -312,7 +315,7 @@ class DisciplinaController extends Controller
         $resposta->resposta_a = $request->mensagem_id;
         $resposta->forum_duvida_id = $request->duvida_id;
         $resposta->user_id = $user->id;
-        
+
         if ($bloco[0]->bloco == null) { //criar um novo nivel -> neste caso é a primeira resposta de todas ou uma respota a outra resposta
             $bloco_pai = DB::select('select bloco from forum_mensagens where forum_duvida_id = (?) and id = (?)', [$request->duvida_id, $request->mensagem_id]); //vai buscar o bloco do pai/nivel superior
             if ($bloco_pai[0]->bloco == 0) { //resposta a mensagem de criacao do topico (1a mensagem de todas)
@@ -340,15 +343,12 @@ class DisciplinaController extends Controller
 
         $msg_criterios = $_POST['mensagem_criterios'];
         $cadeiraId = $_POST['cadeira_id'];
-        
+
         $avaliacao = new Avaliacao;
         $avaliacao->mensagem_criterios = $request->mensagem_criterios;
         $avaliacao->cadeira_id = $request->cadeira_id;
         $avaliacao->save();
-        //$avaliacaoId = $avaliacao->id;
 
-
-        //return response()->json(['title' => 'Sucesso', 'msg' => 'Critério criado com sucesso', 'redirect' => '/Home/Disciplina'. $request->cadeira_id . '/2' ]);
         return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id, 'tab'=> 2]);
     }
 
@@ -359,10 +359,8 @@ class DisciplinaController extends Controller
         $mensagem = DB::table('avaliacao')->select('mensagem_criterios')->where('cadeira_id', $id_cadeira )->first();
 
         $data = array(
-            
             'mensagem_criterios'  => $mensagem,
             'id_cadeira'=> $id_cadeira
-            
         );
 
         $returnHTML = view('disciplina.indexDisciplina')->with($data)->render();
@@ -371,7 +369,7 @@ class DisciplinaController extends Controller
     }
 
     public function changeEvaluation(Request $request){
-        
+
         $nova_mensagem = $_POST['nova_mensagem'];
         $cadeiraId = $_POST['cadeira_id'];
         $id = $_POST['id'];
@@ -385,7 +383,7 @@ class DisciplinaController extends Controller
         $id = $_POST['id'];
 
         $mensagem = DB::table('avaliacao')->select('mensagem_criterios')->where('id', $id)->where('cadeira_id', $cadeiraId )->delete();
-        
+
         return redirect()->action('DisciplinaController@index', ['id'=> $request->cadeira_id,  'tab'=> 2]);
     }
 
@@ -396,7 +394,7 @@ class DisciplinaController extends Controller
         $cursos_id = [];
         $departamentos_id = [];
         $y = CursoCadeira::select('curso_id')->where('cadeira_id',  $cadeiraId)->get();
-        
+
         foreach($y as $y1 ){
             array_push($cursos_id, $y1->curso_id);
         }
@@ -405,7 +403,7 @@ class DisciplinaController extends Controller
         foreach($x as $x1 ){
             array_push($departamentos_id, $x1->departamento_id);
         }
-       
+
 
         $users = User::leftJoin('users_cadeiras', 'users.id', '=', 'users_cadeiras.user_id')->join('users_info', 'users.id', '=', 'users_info.user_id')->select('nome', 'numero', 'users.id as id')->where(function($query) use ($cadeiraId) {
             $query->where('cadeira_id', '!=', $cadeiraId)

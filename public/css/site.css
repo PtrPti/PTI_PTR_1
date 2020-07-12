@@ -314,51 +314,65 @@ main>div {
 .incoming_msg_img {
   display: inline-block;
   width: 6%;
+  
 }
-  .incoming_msg_img img{
+.incoming_msg_img img{
     width: 30px;
   }
+
 .received_msg {
   display: inline-block;
   padding: 0 0 0 10px;
   vertical-align: top;
-  width: 92%;
+  max-width: 85%;
  }
+
  .received_withd_msg p {
   background: #339989 none repeat scroll 0 0;
-  border-radius: 3px;
+  border-radius: 10px 10px 10px 0px;
   color: white;
   font-size: 14px;
   margin: 0;
   padding: 5px 10px 5px 12px;
   width: 100%;
 }
+
 .time_date {
   color: #747474;
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   margin: 4px 0 0;
 }
-.received_withd_msg { width: 57%;}
+.received_withd_msg { 
+  max-width: 85%;
+}
+
 .mesgs {
   float: left;
   padding: 30px 15px 0 25px;
   width: 60%;
 }
-.sent_msg p {
+.sent_withd_msg p {
   background: grey none repeat scroll 0 0;
-  border-radius: 3px;
+  border-radius: 10px 10px 0px 10px;
   font-size: 14px;
   margin: 0; color:#fff;
   padding: 5px 10px 5px 12px;
   width:100%;
 }
+
 .outgoing_msg{ 
   overflow: hidden;
 }
+
+.msg_user{
+  font-weight: 500;
+  color: #3a3a3a;
+}
 .sent_msg {
   float: right;
-  width: 46%;
+  margin-right: 6px;
+  max-width: 85%;
 }
 .input_msg_write input {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -367,6 +381,21 @@ main>div {
   font-size: 15px;
   min-height: 48px;
   width: 100%;
+}
+.inpFeed{
+  width: 90%;
+  border: 1px solid grey;
+  border-radius: 12px;
+  background: #c5c5c5;
+}
+#sendFeedbackForm button{
+border-radius: 50%;
+border: 1px solid grey;
+background: #c5c5c5;
+}
+.mensagens_feedback{
+  overflow-y: auto;
+  height: 285px;
 }
 .type_msg {
   border-top: 1px solid #c4c4c4;
@@ -460,6 +489,14 @@ main>div {
   flex-wrap: wrap;
   margin-top: 15px;
 }
+
+.box-container_projetos {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+
 
 .box {
   background-color: #acc;
@@ -583,8 +620,7 @@ main>div {
   text-align: center;
 }
 
-.tableForum tr:nth-child(even){ background-color: #f2f2f2 }
-.tableForum tr:nth-child(odd){ background-color: #CCE8CC }
+
 
 .tableForum td {
   padding: 8px;
@@ -600,9 +636,14 @@ main>div {
 .tableForum i {
   cursor: pointer;
 }
+.tableForum tr {
+  background-color: #8eb5ad87;
+  
+}
 
-.tableForum a:hover {
-  color: #339989;
+.tableForum tr:hover {
+  background-color: #339989;
+  cursor: pointer;
 }
 
 .tableForum th {
@@ -614,7 +655,7 @@ main>div {
 
 /*INICIO MODAL*/
 .modal-header {
-  background-color: #339989;
+  background-color: #3da192;
   color: white;
 }
 

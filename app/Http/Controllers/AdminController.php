@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\User;
 use App\UserInfo;
 use App\AnoLetivo;
@@ -15,6 +16,7 @@ use App\Perfil;
 use App\UserCadeira;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Requests\AdminEditUser;
@@ -26,6 +28,8 @@ use App\Http\Requests\AdminEditCurso;
 use App\Http\Requests\AddCsvFile;
 use Auth;
 use DateTime;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class AdminController extends Controller
 {
@@ -45,7 +49,7 @@ class AdminController extends Controller
 
     #Ano letivo
         public function getAnosLetivos(Request $request) {
-            $anosLetivos = AnoLetivo::paginate(10);
+            $anosLetivos = AnoLetivo::orderBy('ano')->paginate(10);
             return view('admin.AnoLetivo.anosletivos', compact('anosLetivos'));
         }
 
@@ -159,7 +163,8 @@ class AdminController extends Controller
 
     #Semestre
         public function getSemestres(Request $request) {
-            $semestres = Semestre::join('ano_letivo', 'semestre.ano_letivo_id', '=', 'ano_letivo.id')->select('semestre.*', 'ano_letivo.ano', 'ano_letivo.id as ano_letivo_id')->paginate(10);
+            $semestres = Semestre::join('ano_letivo', 'semestre.ano_letivo_id', '=', 'ano_letivo.id')->select('semestre.*', 'ano_letivo.ano', 'ano_letivo.id as ano_letivo_id')->
+            orderBy('ano_letivo.ano')->orderBy('semestre.semestre')->paginate(10);
             $anosLetivos = AnoLetivo::select('ano', 'id')->orderBy('ano', 'asc')->get();
             return view('admin.Semestre.semestres', compact('semestres', 'anosLetivos'));
         }
@@ -230,7 +235,7 @@ class AdminController extends Controller
                         else {
                             $semestre = new Semestre;
 
-                            $semestre = mb_convert_encoding($line[0], "UTF-8", "auto");
+                            $sem = mb_convert_encoding($line[0], "UTF-8", "auto");
                             $di = mb_convert_encoding($line[1], "UTF-8", "auto");
                             $mi = mb_convert_encoding($line[2], "UTF-8", "auto");
                             $ai = mb_convert_encoding($line[3], "UTF-8", "auto");
@@ -244,11 +249,11 @@ class AdminController extends Controller
                                 $curso_id = intval($ano_letivo);
                             }
                             else {
-                                $a = Ano_lteivo::select('id')->where('ano', 'like', '%'.$ano_letivo.'%')->first();
+                                $a = AnoLetivo::select('id')->where('ano', 'like', '%'.$ano_letivo.'%')->first();
                                 $ano_letivo_id = $a->id;
                             }
 
-                            $semestre->semestre = $semestre;
+                            $semestre->semestre = $sem;
                             $semestre->dia_inicio = $di;
                             $semestre->mes_inicio = $mi;
                             $semestre->ano_inicio = $ai;
@@ -702,7 +707,7 @@ class AdminController extends Controller
                         join('cursos', 'users_info.curso_id', '=', 'cursos.id')->
                         select('users.id as userId', 'users.nome as nome', 'users.email as email','users.active', 'users_info.*', 'perfis.nome as perfil', 'perfis.id as perfil_id', 'departamentos.id as departamento_id',
                              'departamentos.nome as departamento', 'cursos.id as cruso_id', 'cursos.nome as curso')->
-                        where('users.perfil_id', '!=', 3)->paginate(10);
+                        where('users.perfil_id', '!=', 3)->orderBy('users.nome')->paginate(10);
             $departamentos = Departamento::select('id', 'nome')->orderBy('nome')->get();
             $cursos = Curso::select('id', 'nome')->orderBy('nome')->get();
             $perfis = Perfil::select('id', 'nome')->where('id', '!=', 3)->orderBy('nome')->get();
@@ -901,7 +906,52 @@ class AdminController extends Controller
             $user->save();
             return response()->json(['title' => 'Sucesso', 'msg' => 'Utilizador ativado com sucesso', 'redirect' => '/Admin/Utilizadores' ]);
         }
-    #Utilizadores    
+
+        public function exportUsersExcel(Request $request) {            
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+            $spreadsheet = $reader->loadFromString($request->table);
+            $title = $request->title;
+            
+            $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+            
+            ob_start();
+            $writer->save('php://output');
+            $content = ob_get_contents();
+            ob_end_clean();
+
+            Storage::disk('public')->put($title.".xls", $content);
+            $file_path = storage_path() . '\app\public\\'.$title.'.xls';
+            $headers = [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Length' => filesize($file_path),
+                'Content-Disposition' => 'attachment; filename="'.$title.'.xls"',
+
+            ];
+            return response()->download($file_path)->deleteFileAfterSend($file_path);            
+        }
+    #Utilizadores
+
+    public function exportExcel(Request $request) {            
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+        $spreadsheet = $reader->loadFromString($request->table);
+        $title = $request->title;
+        
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+        
+        ob_start();
+        $writer->save('php://output');
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        Storage::disk('public')->put($title.".xls", $content);
+        $file_path = storage_path() . '\app\public\\'.$title.'.xls';
+        $headers = [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Length' => filesize($file_path),
+            'Content-Disposition' => 'attachment; filename="'.$title.'.xls"',
+        ];
+        return response()->download($file_path)->deleteFileAfterSend($file_path);            
+    }
 
     public function changeAnoLetivoId(Request $request, int $id) {
         $html = '<option value="">-- Selecionar semestre --</option>';

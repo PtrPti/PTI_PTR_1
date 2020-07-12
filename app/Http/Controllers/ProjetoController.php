@@ -70,12 +70,13 @@ class ProjetoController extends Controller
         #disciplina (nome)
         $disciplina = Cadeira::where('id', $projeto->cadeira_id)->first();
         #ficheiros grupo
+
         $ficheiros = GrupoFicheiros::where('grupo_id',$id)->where('pasta_id', null)->orderBy('is_folder','desc')->orderBy('notas', 'asc')->orderBy('link', 'asc')->orderBy('nome', 'asc')->get();
         $subFicheiros = GrupoFicheiros::where('grupo_id',$id)->where('pasta_id', '!=', null)->orderBy('is_folder','desc')->orderBy('nome', 'asc')->get();
-
+        //$ficheiros =  Storage::disk('s3')->files("ficheiros/".$id);
         $pastasSelect = GrupoFicheiros::where('grupo_id', $id)->where('is_folder', 1)->where('pasta_id', null)->orderBy('nome', 'asc')->get();
 
-        #tarefas nao feitas 
+        #tarefas nao feitas
         $tarefasNaoFeitas = DB::select('call GetTarefas(?,?,?)', [$id, false, null]);
         #tarefas feitas
         $tarefasFeitas = DB::select('call GetTarefas(?,?,?)', [$id, true, null]);
@@ -86,9 +87,9 @@ class ProjetoController extends Controller
             array_push($ids, $tarefa->id);
         }
         $ficheirosTarefas = TarefasFicheiros::whereIn('tarefa_id', $ids )->get();
-        
+
         #feedback
-        $feedbacks = Feedback::where('grupo_id', $id)->orderBy('created_at', 'desc')->get();
+        $feedbacks = Feedback::where('grupo_id', $id)->whereNull('mensagem_id')->orderBy('created_at', 'desc')->get();
         #membros
         $membros = UsersGrupos::join('users', 'users_grupos.user_id', '=', 'users.id')->
                     join('users_info', 'users.id', '=', 'users_info.user_id')
@@ -99,21 +100,29 @@ class ProjetoController extends Controller
         $first = GrupoFicheiros::where('link', null)->where('notas', null)->where('is_folder', false)->where('grupo_id', $id)->select('id', 'nome', DB::raw("'grupo' as tipo"));
         $feedFicheiros = TarefasFicheiros::where('link', null)->where('notas', null)->whereIn('tarefa_id', $tarefasIds)->select('id', 'nome', DB::raw("'ficheiro' as tipo"))->union($first)->get();
         #avaliacoes dos membros
-        $avaliacoes = AvaliacaoMembros::join('users', 'avaliacao_membros.membro_avaliado', '=', 'users.id')->where('grupo_id',$id)->select('users.id', 'users.nome','avaliacao_membros.avaliado_por', 'avaliacao_membros.grupo_id', 'avaliacao_membros.nota')->get();
+        $avaliacoes = AvaliacaoMembros::join('users', 'avaliacao_membros.membro_avaliado', '=', 'users.id')->where('grupo_id',$id)->where('avaliado_por', $user->id)->select('users.id', 'users.nome','avaliacao_membros.avaliado_por', 'avaliacao_membros.grupo_id', 'avaliacao_membros.nota')->get();
+    
         $avaliacoesDocente = AvaliacaoDocente::join('users', 'avaliacao_docente.user_id', '=', 'users.id')->where('grupo_id',$id)->select('users.id', 'users.nome', 'avaliacao_docente.avaliacao')->get();
         $active_tab = $tab;
-        
+
         Session::has('search') ? Session::forget('search') : null;
 
         return view('grupo.indexGrupo', compact('disciplinas','projetos','utilizadores','grupo','disciplina','projeto',
-                                                'tarefasNaoFeitas', 'tarefasFeitas','ficheirosTarefas', 'feedbacks', 'active_tab', 'ficheiros', 
+                                                'tarefasNaoFeitas', 'tarefasFeitas','ficheirosTarefas', 'feedbacks', 'active_tab', 'ficheiros',
                                                 'subFicheiros', 'progresso', 'membros', 'pastasSelect', 'feedFicheiros', 'avaliacoes', 'avaliacoesDocente'));
     }
 
     public function verFeedback(Request $request) {
         $id = $_GET['id'];
+        $user = $_GET['user'];
 
-        $feedback = Feedback::leftJoin('users', 'feedback.docente_id', '=', 'users.id')->where('feedback.id', $id)->first();
+        //$feedback = Feedback::leftJoin('users', 'feedback.docente_id', '=', 'users.id')->where('feedback.id', $id)->first();
+        $assunto = Feedback::where('id',$id)->get();
+        $feedback = Feedback::leftJoin('users as u1', 'feedback.user_id', '=', 'u1.id')
+                                ->leftJoin('users as u2', 'feedback.docente_id', '=', 'u2.id' )
+                                ->select('feedback.*', 'u1.nome as aluno', 'u2.nome as docente')
+                                ->where('feedback.mensagem_id',$id)
+                                ->orderBy('feedback.created_at', 'asc')->get();
         $feedbackFicheiros = FeedbackFicheiros::leftJoin('tarefas_ficheiros', 'feedback_ficheiros.tarefa_ficheiro_id', '=', 'tarefas_ficheiros.id')
                                                 ->leftJoin('grupos_ficheiros', 'feedback_ficheiros.grupo_ficheiro_id', '=', 'grupos_ficheiros.id')
                                                 ->select('tarefas_ficheiros.id as tf_id', 'tarefas_ficheiros.nome as tf_nome', 'grupos_ficheiros.id as gf_id', 'grupos_ficheiros.nome as gf_nome')
@@ -124,6 +133,49 @@ class ProjetoController extends Controller
                             select('projetos.*')->where('feedback.id', $id)->first();
 
         $data = array(
+            'assunto'  => $assunto,
+            'feedback'  => $feedback,
+            'feedbackFicheiros'  => $feedbackFicheiros,
+            'projeto' => $projeto
+        );
+
+        $returnHTML = view('grupo.feedbackMensagens')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+    }
+
+    public function sendFeedback(Request $request) {
+        $id = $_POST['id'];
+        $grupoId = $_POST['grupo_id'];
+        $alunoId = $_POST['aluno_id'];
+        $docenteId = $_POST['docente_id'];
+        $mensagem = $_POST['mensagem'];
+
+        $newFeedback = new Feedback;
+        $newFeedback->mensagem_id = $id;
+        $newFeedback->mensagem = $mensagem;
+        $newFeedback->grupo_id = $grupoId;
+
+        if ( $docenteId == "" ){
+            $newFeedback->user_id = $alunoId;
+        } else {
+            $newFeedback->docente_id = $docenteId;
+        }
+
+        $newFeedback->save();
+
+        $assunto = Feedback::where('id',$id)->get();
+        $feedback = Feedback::where('mensagem_id',$id)->orderBy('created_at', 'asc')->get();
+        $feedbackFicheiros = FeedbackFicheiros::leftJoin('tarefas_ficheiros', 'feedback_ficheiros.tarefa_ficheiro_id', '=', 'tarefas_ficheiros.id')
+                                                ->leftJoin('grupos_ficheiros', 'feedback_ficheiros.grupo_ficheiro_id', '=', 'grupos_ficheiros.id')
+                                                ->select('tarefas_ficheiros.id as tf_id', 'tarefas_ficheiros.nome as tf_nome', 'grupos_ficheiros.id as gf_id', 'grupos_ficheiros.nome as gf_nome')
+                                                ->where('feedback_ficheiros.feedback_id', $id)->get();
+
+        $projeto = Feedback::join('grupos', 'feedback.grupo_id', '=', 'grupos.id')->
+                            join('projetos', 'grupos.projeto_id', '=', 'projetos.id')->
+                            select('projetos.*')->where('feedback.id', $id)->first();
+
+        $data = array(
+            'assunto'  => $assunto,
             'feedback'  => $feedback,
             'feedbackFicheiros'  => $feedbackFicheiros,
             'projeto' => $projeto
@@ -167,6 +219,14 @@ class ProjetoController extends Controller
         $grupoId = $_POST['grupo_id'];
         $projetoId = $_POST['projeto_id'];
 
+        if( $tarefaAssociada == "" ){
+            $ordem = Tarefa::where('projeto_id', $projetoId)->whereNull('tarefa_id')->max('ordem');
+            $ordem = $ordem + 1;
+        }else{
+            $ordem = Tarefa::where('projeto_id', $projetoId)->where('tarefa_id',$tarefaAssociada)->max('ordem');
+            $ordem = $ordem + 1;
+        }
+        
         $novaTarefa = new Tarefa;
         $novaTarefa->nome = $nome;
         $novaTarefa->user_id = $membro == "" ? null : $membro;
@@ -174,6 +234,7 @@ class ProjetoController extends Controller
         $novaTarefa->projeto_id = $projetoId;
         $novaTarefa->prazo = $prazo == "" ? null : $membro;
         $novaTarefa->tarefa_id = $tarefaAssociada == "" ? null : $tarefaAssociada;
+        $novaTarefa->ordem = $ordem;
         $novaTarefa->save();
 
         return response()->json(['title' => 'Sucesso', 'msg' => 'Tarefa criada com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
@@ -182,7 +243,25 @@ class ProjetoController extends Controller
     public function editTarefa(Request $request) {
         $id = $_GET['tarefa_id'];
         $tarefa = Tarefa::find($id);
-        return response()->json(array('nome'=>$tarefa->nome, 'membro'=>$tarefa->user_id, 'prazo'=>$tarefa->prazo, 'tarefaAssoc'=>$tarefa->tarefa_id));
+        $projetoId = $tarefa->projeto_id;
+
+        if(is_null($tarefa->tarefa_id) ){
+            $ordens = Tarefa::select('nome')->where('projeto_id', $projetoId)->where('id','!=',$id)->whereNull('tarefa_id')->orderBy('ordem')->get();
+        }else{
+            $ordens = Tarefa::select('nome')->where('tarefa_id',$tarefa->tarefa_id)->where('id','!=',$id)->orderBy('ordem')->get();
+        }   
+        $tarefasNomes = array();
+        foreach ($ordens as $ord){
+            array_push($tarefasNomes,$ord->nome);
+        }
+        return response()->json(
+            array(  'nome'=>$tarefa->nome, 
+                    'membro'=>$tarefa->user_id, 
+                    'prazo'=>$tarefa->prazo, 
+                    'tarefaAssoc'=>$tarefa->tarefa_id,
+                    'tarefasNomes'=> $tarefasNomes,
+                    'ordem' => $tarefa->ordem
+                ));
     }
 
     public function editTarefaPost(TarefaPost $request) {
@@ -192,12 +271,58 @@ class ProjetoController extends Controller
         $tarefaAssociada = $_POST['tarefaAssociada'];
         $prazo = $_POST['prazo'];
         $grupoId = $_POST['grupo_id'];
+        $ordemNova = $_POST['ordem'];
 
         $tarefa = Tarefa::find($id);
+
+        $projetoId = $tarefa->projeto_id;
         $tarefa->nome = $nome;
         $tarefa->user_id = $membro == "" ? null : $membro;
         $tarefa->prazo = $prazo == "" ? null : $membro;
         $tarefa->tarefa_id = $tarefaAssociada == "" ? null : $tarefaAssociada;
+        
+        $ordemAnt = $tarefa->ordem;
+        
+        if ($ordemAnt > $ordemNova){
+            if( $tarefaAssociada == "" ){
+                $tarefasUp = Tarefa::where('projeto_id', $projetoId)->where('ordem','>=', $ordemNova)->whereNull('tarefa_id')->get();
+                foreach($tarefasUp as $taref){
+                    $ord = $taref->ordem + 1;
+                    $taref->ordem = $ord;
+                    $taref->save();
+                }
+            }else{
+                $tarefasUp = Tarefa::where('projeto_id', $projetoId)->where('ordem','>=', $ordemNova)->where('tarefa_id',$tarefaAssociada)->get();
+                foreach($tarefasUp as $taref){
+                    $ord = $taref->ordem + 1;
+                    $taref->ordem = $ord;
+                    $taref->save();
+                }
+            }
+
+        } else {
+            if( $tarefaAssociada == "" ){
+                error_log($ordemAnt); 
+                error_log($ordemNova);
+                $tarefasUp = Tarefa::where('projeto_id', $projetoId)->whereBetween('ordem', [$ordemAnt+1, $ordemNova])->whereNull('tarefa_id')->get();
+                
+                foreach($tarefasUp as $taref){
+                    $ord = $taref->ordem - 1;
+                    $taref->ordem = $ord;
+                    $taref->save();
+                }
+            }else{
+                $tarefasUp = Tarefa::where('projeto_id', $projetoId)->where('tarefa_id',$tarefaAssociada)->whereBetween('ordem', [$ordemAnt+1, $ordemNova])->get();
+                foreach($tarefasUp as $taref){
+                    $ord = $taref->ordem - 1;
+                    $taref->ordem = $ord;
+                    $taref->save();
+                }
+            }
+        }
+
+        $tarefa->ordem = $ordemNova;
+           
         $tarefa->save();
 
         return response()->json(['title' => 'Sucesso', 'msg' => 'Tarefa alterada com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
@@ -206,7 +331,7 @@ class ProjetoController extends Controller
     public function checkTarefa(Request $request) {
         $id = $_POST['id'];
         $val = $_POST['val'] == "false" ? FALSE : TRUE;
-        $finished_time = $val == TRUE ? date('Y-m-d H:i:s') : null; 
+        $finished_time = $val == TRUE ? date('Y-m-d H:i:s') : null;
 
         if ($_POST['changePai'] == "true") {
             $pai = Tarefa::select('tarefa_id')->where('id',$id)->first();
@@ -221,9 +346,9 @@ class ProjetoController extends Controller
         $tarefa->save();
 
         // Id do grupo
-        $grupo = Tarefa::select('grupo_id')->where('id',$id)->first();    
-        $progresso = $this->barraProgresso($grupo->grupo_id);        
-        
+        $grupo = Tarefa::select('grupo_id')->where('id',$id)->first();
+        $progresso = $this->barraProgresso($grupo->grupo_id);
+
         if ($_POST['update'] == "true") {
             $projeto = Projeto::join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->select('projetos.*')->where('grupos.id', $grupo->grupo_id)->first();
 
@@ -239,7 +364,7 @@ class ProjetoController extends Controller
             #membros
             $membros = UsersGrupos::join('users', 'users_grupos.user_id', '=', 'users.id')->select('users.id', 'users.nome')->where('users_grupos.grupo_id', $grupo->grupo_id)->get();
 
-            $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 
+            $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas,
                         'grupo_id' => $grupo->grupo_id, 'membros'=>$membros, 'projeto' => $projeto, 'ficheirosTarefas' => $ficheirosTarefas);
             $returnHTML = view('grupo.tarefas')->with($data)->render();
             return response()->json(array('html' => $returnHTML, 'title' => 'Sucesso', 'msg' => 'Tarefa alterada com sucesso'));
@@ -299,7 +424,7 @@ class ProjetoController extends Controller
         $nome = $_POST['nomeLink'];
         $link = $_POST['url'];
         $grupoId = $_POST['grupo_id'];
-        
+
         $site = new GrupoFicheiros;
 
         $site->grupo_id = $grupoId;
@@ -331,11 +456,18 @@ class ProjetoController extends Controller
         $pastaId = $_POST['filePasta'];
 
         if (Input::hasFile('grupoFile')) {
-            $filename = $grupoId . '_' . $request->file('grupoFile')->getClientOriginalName();
-            $request->file('grupoFile')->storeAs('public/grupo', $filename);
+          $s3= Storage::disk("s3");
+            $file = $request->file('grupoFile');
+            $filename = $file->getClientOriginalName();
+            //$request->file('grupoFile')->storeAs('public/grupo', $filename);
+
+            $s3filepath = "ficheiros/grupos". $grupoId;
+            $path= $s3 -> putFileAs($s3filepath, $file, $filename, 'public' );
+
 
             $ficheiro = new GrupoFicheiros();
-            $ficheiro->nome = $filename;
+            $ficheiro->nome = $path;
+            //$ficheiro->filepath= $s3filepath;
             $ficheiro->grupo_id = $grupoId;
             $ficheiro->is_folder = FALSE;
             $ficheiro->pasta_id = $pastaId == "" ? null : $pastaId;
@@ -350,12 +482,16 @@ class ProjetoController extends Controller
         $grupoId = $_POST['grupo_id'];
 
         if (Input::hasFile('grupoFile')) {
-            $filename = $tarefaId . '_' . $request->file('grupoFile')->getClientOriginalName();
-            $request->file('grupoFile')->storeAs('public/tarefa', $filename);
+          $s3= Storage::disk("s3");
+          $file = $request->file('grupoFile');
+          $filename = $file->getClientOriginalName();
+
+          $s3filepath = "ficheiros/tarefa". $tarefaId ;
+          $path= $s3 -> putFileAs($s3filepath, $file, $filename, 'public' );
 
             $file = new TarefasFicheiros;
             $file->tarefa_id = $tarefaId;
-            $file->nome = $filename;
+            $file->nome = $path;
             $file->save();
         }
 
@@ -371,42 +507,45 @@ class ProjetoController extends Controller
 
         $progresso = $this->barraProgresso($grupoId);
         $membros = $membros = UsersGrupos::join('users', 'users_grupos.user_id', '=', 'users.id')->select('users.id', 'users.nome')->where('users_grupos.grupo_id', $grupoId)->get();
-        
+
         if ($clear == "true") {
             $tarefasNaoFeitas = DB::select('call GetTarefas(?,?,?)', [$grupoId, false, null]);
-            $tarefasFeitas = DB::select('call GetTarefas(?,?,?)', [$grupoId, true, null]);            
+            $tarefasFeitas = DB::select('call GetTarefas(?,?,?)', [$grupoId, true, null]);
         }
         else{
             $tarefasNaoFeitas = DB::select('call GetTarefas(?,?,?)', [$grupoId, false, $search]);
             $tarefasFeitas = DB::select('call GetTarefas(?,?,?)', [$grupoId, true, $search]);
         }
-        
-        $projeto = Projeto::join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->select('projetos.*')->where('grupos.id', $grupoId)->first();
 
-        $tarefasIds = Tarefa::select('id')->where('grupo_id', $grupoId)->get();
-        $ids = [];
-        foreach ($tarefasIds as $tarefa) {
-            array_push($ids, $tarefa->id);
-        }
-        $ficheirosTarefas = TarefasFicheiros::whereIn('tarefa_id', $ids )->get();
-
-        $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 'grupo_id' => $grupoId, 'membros' => $membros, 'projeto' => $projetos, 'ficheirosTarefas' => $ficheirosTarefas);
+        $data = array('progresso' => $progresso, 'tarefasNaoFeitas' => $tarefasNaoFeitas, 'tarefasFeitas' => $tarefasFeitas, 'grupo_id' => $grupoId, 'membros' => $membros);
 
         $returnHTML = view('grupo.tarefas')->with($data)->render();
         return response()->json(array('html' => $returnHTML));
     }
 
     public function createFeedback(CreateFeedback $request) {
-        $mensagem = $_POST['message'];
         $grupoId = $_POST['grupo_id'];
+        $alunoId = $_POST['aluno_id'];
+        $assunto = $_POST['assunto'];
+        $mensagem = $_POST['message'];
         $ids = explode(',' , $_POST['files_ids']);
 
-        $feedback = new Feedback;
-        $feedback->mensagem_grupo = $mensagem;
-        // $feedback->mensagem_docente = null;
-        $feedback->grupo_id = $grupoId;
-        $feedback->save();
-        $feedbackId = $feedback->id;
+        // Assunto do feedback
+        $feedback1 = new Feedback;
+        $feedback1->mensagem = $assunto;
+        $feedback1->grupo_id = $grupoId;
+        $feedback1->user_id = $alunoId;
+        $feedback1->save();
+
+        // Mensagem referente ao Assunto 
+        $feedback2 = new Feedback;
+        $feedback2->mensagem = $mensagem;
+        $feedback2->grupo_id = $grupoId;
+        $feedback2->user_id = $alunoId;
+        $feedback2->mensagem_id = $feedback1->id;
+        $feedback2->save();
+
+        $feedbackId = $feedback1->id;
 
         for($i = 0; $i < sizeof($ids) - 1; $i++) {
             $feedbackFicheiro = new FeedbackFicheiros;
@@ -416,31 +555,28 @@ class ProjetoController extends Controller
                 $feedbackFicheiro->grupo_ficheiro_id = explode('_' , $ids[$i])[0];
             }
             else {
-                $feedbackFicheiro->tarefa_ficheiro_id = explode('_' , $ids[$i])[0];                
+                $feedbackFicheiro->tarefa_ficheiro_id = explode('_' , $ids[$i])[0];
             }
             $feedbackFicheiro->save();
         }
 
+        
+
         return response()->json(['title' => 'Sucesso', 'msg' => 'Feedback criado com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/2' ]);
     }
 
-    public function addMensagemFeedbackDocente(Request $request){
-        $this->validate($request, [
-            'mensagem_docente' => 'bail|required|string|max:4000',]);
-
-        $id = $request->grupo_id;
-        $feedback = Feedback::find($_POST['id']);
-        $feedback->mensagem_docente = $request->mensagem_docente;
-        $feedback->docente_id =$request->docente_id;
-        $feedback->vista_docente = TRUE;
-
-        $feedback->save();
-    
-        return redirect()->action('ProjetoController@GrupoDocente', ['id_grupo' => $id] );
-    }
-
-    public function addAvaliacao (Request $request) {     
+    public function addAvaliacao (Request $request) {
         $lista_membros = UsersGrupos::where('grupo_id', $request->grupo_id)->get();
+
+        /* for($i = 0; $i < sizeof($lista_membros) - 1; $i++) {
+            $aval = new AvaliacaoMembros;
+            $aval->avaliado_por = Auth::user()->getUser()->id;
+            $aval->membro_avaliado = $lista_membros[$i]->user_id;
+            $aval->grupo_id = $request->grupo_id;
+            $nota_membro = "nota_".$lista_membros[$i]->user_id;
+            $aval->nota = $request->$nota_membro;
+            $aval->save();
+        } */
 
         foreach($lista_membros as $membro){
             $aval = new AvaliacaoMembros;
@@ -455,9 +591,9 @@ class ProjetoController extends Controller
         return redirect()->action('ProjetoController@index',['id'=>$request->grupo_id, 'tab'=>4]);
     }
 
-    public function avaliar (Request $request) {     
+    public function avaliar(Request $request) {     
         $lista_membros = UsersGrupos::where('grupo_id', $request->grupo_id)->get();
-        
+
         foreach($lista_membros as $membro){
             $aval = new AvaliacaoDocente;
             $aval->user_id = $membro->user_id;
@@ -469,10 +605,10 @@ class ProjetoController extends Controller
 
         return redirect()->action('ProjetoController@index',['id'=>$request->grupo_id, 'tab'=>4]);
     }
-    
+
     public function infoNota(Request $request) {
-        $tipo = $_GET['tipo']; 
-        $id = $_GET['id'];  
+        $tipo = $_GET['tipo'];
+        $id = $_GET['id'];
 
         if($tipo == 'grupo'){
             $nota = GrupoFicheiros::where('id',$id)->get();
@@ -487,7 +623,7 @@ class ProjetoController extends Controller
     }
 
     public function saveNota(Request $request) {
-        $tipo = $_GET['tipo']; 
+        $tipo = $_GET['tipo'];
         $id = $_GET['id'];
         $nota = $_GET['nota'];
 
@@ -509,30 +645,71 @@ class ProjetoController extends Controller
     }
 
     public function remover(Request $request) {
-        $tipo = $_GET['tipo']; 
+        $tipo = $_GET['tipo'];
         $id = $_GET['id'];
         $grupoId = $_GET['grupoId'];
-        
+
         if($tipo == 'grupo'){
-            
+
             $ficheiro = GrupoFicheiros::find($id);
             if ($ficheiro->is_folder){
                 $deletedRows = GrupoFicheiros::where('pasta_id', $id)->delete();
+
             } else{
-                if(Storage::disk('local')->exists($ficheiro->nome)){
-                    Storage::delete($ficheiro->nome); 
+                if(Storage::disk('s3')->exists($ficheiro->nome)){
+                    //Storage::delete($ficheiro->nome);
+                    Storage::disk('s3')->delete($ficheiro->nome);
                 }
             }
             $ficheiro->delete();
-            
+
         } else {
             $ficheiro = TarefasFicheiros::find($id);
-            if(Storage::disk('local')->exists($ficheiro->nome)){
-                Storage::delete($ficheiro->nome); 
-            }
+              if(Storage::disk('s3')->exists($ficheiro->nome)){
+                  //Storage::delete($ficheiro->nome);
+                  Storage::disk('s3')->delete($ficheiro->nome);
+              }
             $ficheiro->delete();
         }
 
         return response()->json(['title' => 'Sucesso', 'msg' => 'Removido com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
+    }
+
+
+    public function search_projetos(Request $request){
+        $user = Auth::user()->getUser();
+        $user_id = $user->id;
+        $search = $_GET['search'];
+
+        $query_p = Projeto::join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')->join('users_cadeiras', 'cadeiras.id', '=', 'users_cadeiras.cadeira_id')
+        ->join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->join('users_grupos', 'grupos.id', '=', 'users_grupos.grupo_id')
+        ->where('users_grupos.user_id', '=', $user_id)
+        ->where('users_cadeiras.user_id', '=', $user_id)->select('projetos.id as id', 'projetos.nome as nome', 'cadeiras.nome as cadeira', 'grupos.id as grupo_id', 'grupos.numero as numero', 'users_grupos.favorito as favorito', 'users_grupos.id as usersGrupos_id');
+
+        $projetos = $query_p->where('projetos.nome', 'like', '%'.$search.'%')->get();
+       
+
+        // $query_p = "select p.id as id, p.nome as nome, c.nome as cadeira, g.id as grupo_id, g.numero as numero, ug.favorito as favorito, ug.id as usersGrupos_id
+        //             from projetos p
+        //             inner join cadeiras c
+        //                 on p.cadeira_id = c.id
+        //             inner join users_cadeiras uc
+        //                 on c.id = uc.cadeira_id and uc.user_id = ?
+        //             inner join grupos g
+        //                 on p.id = g.projeto_id
+        //             inner join users_grupos ug
+        //                 on g.id = ug.grupo_id and ug.user_id = ?";
+
+        // $projetos = Projeto::select($query_p, [$user->id])->where(function($query) use($search) {
+           
+        //     $query->where('projetos.nome', 'like', '%'.$search.'%')->get();});
+        //print_r($projetos);
+        $data = ['projetos'=> $projetos, 'mensagem' => 'Não foram encontrados Projetos'];
+        
+        $returnHTML = view('filtroProjeto')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+       
+
+
     }
 }
