@@ -48,7 +48,7 @@
             <tr id="user_{{$user->id}}">
                 <td>{{$user->nome}}</td>
                 <td>{{$user->numero}}</td>
-                <td>{{$user->email}}</td>
+                <td><a href="mailto:{{$user->email}}">{{$user->email}}</a></td>
             </tr>
         @endforeach
     @endisset
