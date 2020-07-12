@@ -64,12 +64,15 @@
             </tr>
 	    </thead>
         <tbody style="text-align:center;">
+        @foreach($resultados as $r)
             <tr>
-            @foreach($projetos_avaliacao as $pa)
-                <td >  {{$pa->nome}}</td>
-                <td> {{$media}} </td> 
-                @endforeach   
+                <td > {{$r->nome}}  </td>  
+                <td> {{$r->nota}} </td>
+                     
             </tr>
+        @endforeach
+           
+            
         </tbody>
     </table>
    

@@ -2,7 +2,7 @@
     <h4><b>{{ __('change.docentes') }}</b></h4>
     <ul>
         @foreach($docentes as $docente)
-            <li><b>{{$docente->nome}}</b> ({{$docente->email}})</li>
+            <li><b>{{$docente->nome}}</b> <a href="mailto:{{$docente->email}}">({{$docente->email}})</a></li>
         @endforeach
     </ul>
 @endif

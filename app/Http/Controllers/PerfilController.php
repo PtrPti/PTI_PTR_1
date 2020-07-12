@@ -65,15 +65,22 @@ class PerfilController extends Controller
 
         $cursos = Curso::where('departamento_id', $request->departamento_id)->orderBy('nome')->get();
 
-        $user_info = UserInfo::join('users_info', 'users.id', '=', 'users_info.user_id')->where('users.id', $user->id)->get();
+        $user_info = UserInfo::join('users', 'users_info.user_id', '=', 'users.id')->where('users.id', $user->id)->first();
 
         $lista_alunos = UserCadeira::join('users', 'users_cadeiras.user_id', '=', 'users.id')->join('users_info', 'users.id', '=', 'users_info.user_id')->
                             where('users_cadeiras.cadeira_id', $user->id)->
                             where('users.perfil_id', 1)->get();
 
         //$resultados = AvaliacaoMembros::join('avaliacao_membros', 'users.id', '=', 'avaliacao_membros.membro_avaliado')->where('users.id', $user->id)->get();
-        $resultados = AvaliacaoMembros::select('nota')->where('membro_avaliado', $user->id)->get();
-        $media = AvaliacaoMembros::avg('nota');
+        $resultados = DB::select(DB::raw('select avg(nota) as nota, p.nome from avaliacao_membros am
+                                            join grupos g
+                                            on am.grupo_id = g.id
+                                            join projetos p
+                                            on g.projeto_id = p.id
+                                            where membro_avaliado = ? group by am.grupo_id'), [$user->id]);
+                                            
+  
+
 
         //$projetos_avaliacao = Grupo::join('grupos', 'avaliacao_membros.grupo_id', '=', 'grupos.id')->get();
         //$projetos_avaliacao = Grupos::join('projetos', 'grupos.projeto_id', '=', 'projetos.id')->where('grupos.id', $id)->get();
@@ -81,7 +88,7 @@ class PerfilController extends Controller
         
 
 
-        return view ('perfil.perfil', compact('user', 'user_info','disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'media', 'projetos_avaliacao'));
+        return view ('perfil.perfil', compact('user', 'user_info','disciplinas', 'cadeiras','projetos', 'utilizadores', 'active_tab', 'cursos', 'lista_alunos', 'resultados', 'projetos_avaliacao'));
         
     }
 

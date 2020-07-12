@@ -461,6 +461,14 @@ main>div {
   margin-top: 15px;
 }
 
+.box-container_projetos {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+
+
 .box {
   background-color: #acc;
   padding: 15px 50px;

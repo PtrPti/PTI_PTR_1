@@ -99,7 +99,8 @@ class ProjetoController extends Controller
         $first = GrupoFicheiros::where('link', null)->where('notas', null)->where('is_folder', false)->where('grupo_id', $id)->select('id', 'nome', DB::raw("'grupo' as tipo"));
         $feedFicheiros = TarefasFicheiros::where('link', null)->where('notas', null)->whereIn('tarefa_id', $tarefasIds)->select('id', 'nome', DB::raw("'ficheiro' as tipo"))->union($first)->get();
         #avaliacoes dos membros
-        $avaliacoes = AvaliacaoMembros::join('users', 'avaliacao_membros.membro_avaliado', '=', 'users.id')->where('grupo_id',$id)->select('users.id', 'users.nome','avaliacao_membros.avaliado_por', 'avaliacao_membros.grupo_id', 'avaliacao_membros.nota')->get();
+        $avaliacoes = AvaliacaoMembros::join('users', 'avaliacao_membros.membro_avaliado', '=', 'users.id')->where('grupo_id',$id)->where('avaliado_por', $user->id)->select('users.id', 'users.nome','avaliacao_membros.avaliado_por', 'avaliacao_membros.grupo_id', 'avaliacao_membros.nota')->get();
+    
         $avaliacoesDocente = AvaliacaoDocente::join('users', 'avaliacao_docente.user_id', '=', 'users.id')->where('grupo_id',$id)->select('users.id', 'users.nome', 'avaliacao_docente.avaliacao')->get();
         $active_tab = $tab;
         
@@ -520,5 +521,43 @@ class ProjetoController extends Controller
         }
 
         return response()->json(['title' => 'Sucesso', 'msg' => 'Removido com sucesso', 'redirect' => '/Home/Projeto/Grupo/'. $grupoId . '/1' ]);
+    }
+
+
+    public function search_projetos(Request $request){
+        $user = Auth::user()->getUser();
+        $user_id = $user->id;
+        $search = $_GET['search'];
+
+        $query_p = Projeto::join('cadeiras', 'projetos.cadeira_id', '=', 'cadeiras.id')->join('users_cadeiras', 'cadeiras.id', '=', 'users_cadeiras.cadeira_id')
+        ->join('grupos', 'projetos.id', '=', 'grupos.projeto_id')->join('users_grupos', 'grupos.id', '=', 'users_grupos.grupo_id')
+        ->where('users_grupos.user_id', '=', $user_id)
+        ->where('users_cadeiras.user_id', '=', $user_id)->select('projetos.id as id', 'projetos.nome as nome', 'cadeiras.nome as cadeira', 'grupos.id as grupo_id', 'grupos.numero as numero', 'users_grupos.favorito as favorito', 'users_grupos.id as usersGrupos_id');
+
+        $projetos = $query_p->where('projetos.nome', 'like', '%'.$search.'%')->get();
+       
+
+        // $query_p = "select p.id as id, p.nome as nome, c.nome as cadeira, g.id as grupo_id, g.numero as numero, ug.favorito as favorito, ug.id as usersGrupos_id
+        //             from projetos p
+        //             inner join cadeiras c
+        //                 on p.cadeira_id = c.id
+        //             inner join users_cadeiras uc
+        //                 on c.id = uc.cadeira_id and uc.user_id = ?
+        //             inner join grupos g
+        //                 on p.id = g.projeto_id
+        //             inner join users_grupos ug
+        //                 on g.id = ug.grupo_id and ug.user_id = ?";
+
+        // $projetos = Projeto::select($query_p, [$user->id])->where(function($query) use($search) {
+           
+        //     $query->where('projetos.nome', 'like', '%'.$search.'%')->get();});
+        //print_r($projetos);
+        $data = ['projetos'=> $projetos, 'mensagem' => 'Não foram encontrados Projetos'];
+        
+        $returnHTML = view('filtroProjeto')->with($data)->render();
+        return response()->json(array('html'=>$returnHTML));
+       
+
+
     }
 }

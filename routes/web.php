@@ -23,9 +23,9 @@ Auth::routes();
     
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('locale/{locale}', )->name('languages');
+Route::get('locale/{lang}', )->name('languages');
 
-Route::get('locale/{locale}', function ($locale) {
+Route::get('locale/{lang}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();
 });
@@ -126,6 +126,8 @@ Route::post('/eraiseEvaluation', 'DisciplinaController@eraiseEvaluation')->name(
 
 Route::get('/search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
 Route::post('/addAluno', 'DisciplinaController@addAluno')->name('addAluno');
+
+Route::get('/search_projeto', 'ProjetoController@search_projetos')->name('search_projeto');
 
 Route::get('/Home/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
 
