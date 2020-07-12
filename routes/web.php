@@ -23,9 +23,9 @@ Auth::routes();
     
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('locale/{locale}', )->name('languages');
+Route::get('locale/{lang}', )->name('languages');
 
-Route::get('locale/{locale}', function ($locale) {
+Route::get('locale/{lang}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();
 });
@@ -101,9 +101,13 @@ Route::get('searchDepartamentos', 'AdminController@searchDepartamentos')->middle
 Route::get('searchCursos', 'AdminController@searchCursos')->middleware('checkUserRole:3');
 Route::get('searchUsers', 'AdminController@searchUsers')->middleware('checkUserRole:3');
 
+Route::post('lockUser', 'AdminController@lockUser')->middleware('checkUserRole:3');
+Route::post('unlockUser', 'AdminController@unlockUser')->middleware('checkUserRole:3');
+
 //---------------- NOVO ----------------//
 Route::get('/Home', 'HomeController@home')->name('home');
 Route::get('/filterProj', 'HomeController@filterProj');
+Route::post('/changeFavorito', 'HomeController@changeFavorito');
 
 Route::get('/Home/Disciplina/{id}/{tab?}/{proj?}', 'DisciplinaController@index')->name('disciplina');
 Route::post('criarProjeto', 'DisciplinaController@criarProjeto');
@@ -127,6 +131,8 @@ Route::post('/eraiseEvaluation', 'DisciplinaController@eraiseEvaluation')->name(
 Route::get('/search_alunos', 'DisciplinaController@search_alunos')->name('search_alunos');
 Route::post('/addAluno', 'DisciplinaController@addAluno')->name('addAluno');
 
+Route::get('/search_projeto', 'ProjetoController@search_projetos')->name('search_projeto');
+
 Route::get('/Home/Projeto/Grupo/{id}/{tab?}', 'ProjetoController@index')->name('projeto'); #id = grupo_id
 
 Route::post('createTarefa', 'ProjetoController@createTarefa');
@@ -147,6 +153,7 @@ Route::post('addNotaTarefa', 'ProjetoController@addNotaTarefa');
 Route::get('verFeedback', 'ProjetoController@verFeedback');
 Route::post('createFeedback', 'ProjetoController@createFeedback');
 Route::post('sendFeedback', 'ProjetoController@sendFeedback');
+Route::post('addMensagemFeedbackDocente', 'ProjetoController@addMensagemFeedbackDocente');
 
 Route::post('addAvaliacao', 'ProjetoController@addAvaliacao')->name('addAvaliacao');
 Route::post('avaliar', 'ProjetoController@avaliar')->name('avaliar');

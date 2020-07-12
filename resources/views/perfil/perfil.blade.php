@@ -55,7 +55,28 @@
 </div>
 
 <div class="tab-container_perfil" id="tab_perfil-2">
-{{ __('change.pontos') }}
+    <table class="table" style="margin-top:40px;">
+        <thead class="table-success" style="text-align:center;">
+            <tr>
+                <th >Projetos</th>
+                <th>Avaliação Atribuída</th>
+                
+            </tr>
+	    </thead>
+        <tbody style="text-align:center;">
+        @foreach($resultados as $r)
+            <tr>
+                <td > {{$r->nome}}  </td>  
+                <td> {{$r->nota}} </td>
+                     
+            </tr>
+        @endforeach
+           
+            
+        </tbody>
+    </table>
+   
+    
 </div>
 
 <div class="tab-container_perfil" id="tab_perfil-3">

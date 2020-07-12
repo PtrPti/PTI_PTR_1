@@ -9,6 +9,7 @@
             <th>Departamento</th>
             <th>Curso</th>
             <th>Perfil</th>
+            <th>Ativo</th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +18,11 @@
                 <td>
                     <i class="fas fa-edit" onclick="EditModal({{$user->userId}}, 'User', 'Editar utilizador')" role="button" data-toggle="modal" data-target="#edit"></i>
                     <a href="{{ route ('editUserForm', ['id' => $user->userId])}}"><i class="fas fa-hand-point-up"></i></a>
+                    @if($user->active)
+                        <i class="fas fa-lock" onclick="changeUser({{$user->userId}}, '/lockUser')"></i>
+                    @else
+                        <i class="fas fa-lock-open" onclick="changeUser({{$user->userId}}, '/unlockUser')"></i>
+                    @endif
                 </td>
                 <td>{{$user->nome}}</td>
                 <td>{{$user->numero}}</td>
@@ -25,6 +31,7 @@
                 <td>{{$user->departamento}}</td>
                 <td>{{$user->curso}}</td>
                 <td>{{$user->perfil}}</td>
+                <td>{{$user->active}}</td>
             </tr>
         @endforeach
     </tbody>
@@ -44,4 +51,19 @@
             SearchInput('/searchUsers', page);
         });
     });
+
+    function changeUser(id, url) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {'id': id},
+            success: function (data) {
+                var msg = "<span class='gritter-text'>" + data.msg + "</span>";
+
+                AddGritter(data.title, msg, 'success');
+
+                window.location.href = data.redirect;
+            },
+        });
+    }
 </script>

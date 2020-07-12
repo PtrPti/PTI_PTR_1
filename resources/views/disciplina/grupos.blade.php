@@ -109,7 +109,7 @@
         @isset($projeto)
             @if($projeto->data_fim >= date('Y-m-d H:i:s'))
                 @if (Auth::user()->isProfessor())
-                    <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1)"><i class="fas fa-plus"></i> {{ __('change.adicionarGrupo') }} </button>
+                    <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id?>, 1)"><i class="fas fa-plus"></i> {{ __('change.adicionarGrupo') }} </button>
                     <button type="button" class="add-button" data-toggle="modal" data-target="#addGrupo"><i class="fas fa-plus"></i> {{ __('change.adicionarmGrupo') }}</button>            
 
                     <div class="modal fade" id="addGrupo" tabindex="-1" role="dialog" aria-labelledby="addGrupo" aria-hidden="true">
@@ -129,16 +129,21 @@
                                         <input type="hidden" name="entrar" value="false">
                                         <div class="row group">
                                             <div class="col-md-12">
-                                                <input type="number" name="n_grupos" min="1" max="10" value="0" class="display-input" id="n_grupos">
+                                                <input type="number" name="n_grupos" min="1" max="50" value="0" class="display-input" id="n_grupos">
                                                 <span class="highlight"></span>
                                                 <span class="bar"></span>
                                                 <label for="n_grupos" class="labelTextModal">{{ __('change.numGrupos') }}</label>
+
+                                                <input type="number" name="primeiro_numero" min="1" value="0" class="display-input" id="primeiro_numero" style="margin-top: 30px;">
+                                                <span class="highlight"></span>
+                                                <span class="bar"></span>
+                                                <label for="primeiro_numero" class="labelTextModal">{{ __('change.primeiroGrupo') }}</label>
                                             </div>
                                         </div>
                                         <div class="row row-btn">
                                             <div class="col-md-12">
                                                 <button type="button" class="btn btn-primary" onclick="Save('addMultGrupos', '/addGrupo')">{{ __('change.criar') }}</button>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('change.fechar') }}</button>
+                                                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('change.fechar') }}</button> -->
                                             </div>
                                         </div>
                                     </form>
@@ -242,7 +247,7 @@
             type: 'POST',
             dataType: 'json',
             success: 'success',
-            data: {'projeto_id': id, 'n_grupos': grupos, 'entrar': entrar, 'cadeira_id': <?php if (isset($projeto))echo $projeto->cadeira_id ?>},
+            data: {'projeto_id': id, 'n_grupos': grupos, 'entrar': entrar, 'primeiro_numero': null,'cadeira_id': <?php if (isset($projeto)) echo $projeto->cadeira_id; else echo 0;?>, "_token": "{{ csrf_token() }}"},
             success: function(data) {
                 ShowGrupos(id);
                 AddGritter('Sucesso', '<span class="gritter-text">Grupo criado com sucesso</span>', 'success');

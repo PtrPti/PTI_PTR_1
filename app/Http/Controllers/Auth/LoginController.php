@@ -48,4 +48,27 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Handle an authentication attempt.
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return Response
+     */
+    public function authenticate(Request $request)
+    {
+        error_log();
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => 1])) {
+            if (Auth::user()->isAluno() || Auth::user()->isProfessor()) {
+                return route('home');
+            }
+            else if (Auth::user()->isAdmin()) {
+                return route('homeAdmin');
+            }
+            else {
+                return redirect()->intended('welcome');
+            }
+        }
+    }
 }

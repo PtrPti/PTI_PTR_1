@@ -13,6 +13,7 @@ return [
     'avaliar' => 'Evaluation',
     'ola'=> 'Hi',
     'perfil'=> 'Profile',
+    'primeiroGrupo' => 'First Group Number',
     'conversas'=> 'Conversations',
     'criar_topico'=> 'Create Topic',
     'assunto'=> 'Subject Matter',

@@ -104,5 +104,18 @@
             }
         });
     }
+    function AddCreateFeedback(id) {
+        $.ajax({
+            url: '/addMensagemFeedbackDocente',
+            type: 'POST',
+            dataType: 'json',
+            success: 'success',
+            data: {'id': id},
+            success: function(data) {
+                $("#ModalFeedback p" ).text(data.message);
+                $("#ModalFeedback").show();
+            }
+        });
+    }
 
 </script>

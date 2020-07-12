@@ -61,4 +61,34 @@
 </div>
 
 <?php $__env->stopSection(); ?>
+
+<script>
+    function changeVal(val, usersGrupos_id){
+      $.ajax({
+        url: '/changeFavorito',
+        type: 'POST',
+        dataType: 'json',
+        success: 'success',
+        data: {'usersGrupos_id': usersGrupos_id, 'val': val, '_token':'<?php echo e(csrf_token()); ?>'},
+        success: function(data){
+          window.location.href = '/Home';
+        }
+      });
+    }
+    function filterProj(){
+      $.ajax({
+        url: '/filterProj',
+        type: 'GET',
+        dataType: 'json',
+        success: 'success',
+        data: {'favoritos': $('#favoritos').is(":checked"),
+           'em_curso': $('#em_curso').is(":checked"), 
+           'terminados': $('#terminados').is(":checked")
+          },
+        success: function(data){
+          $(".grupos").replaceWith(data.html);
+        }
+      });
+    }
+</script>
 <?php echo $__env->make('layouts.app_novo', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

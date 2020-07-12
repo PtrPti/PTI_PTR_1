@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddActiveCursosCadeiras' => $baseDir . '/database/migrations/2020_06_22_131723_add_active_cursos_cadeiras.php',
+    'AddActiveUsers' => $baseDir . '/database/migrations/2020_07_03_133003_add_active_users.php',
     'AddAnoLetivoTables' => $baseDir . '/database/migrations/2020_06_22_130500_add_ano_letivo_tables.php',
     'AddAssuntoEAssuntoIdToFeedback' => $baseDir . '/database/migrations/2020_07_08_145340_add_assunto_e_assuntoId_to_feedback.php',
     'AddAvatarToUsersTable' => $baseDir . '/database/migrations/2020_07_01_174636_add_avatar_to_users_table.php',
