@@ -24,8 +24,7 @@ class AddCsvFile extends FormRequest
     public function rules()
     {
         return [
-            // 'csvfile' => 'required|file|mimes:csv',
-            'csvfile' => 'required|file',
+            'csvfile' => 'required|file|mimes:csv,txt',
         ];
     }
 
@@ -50,7 +49,7 @@ class AddCsvFile extends FormRequest
     {
         return [
             'csvfile.required' => 'O campo :attribute é obrigatório',
-            // 'csvfile.mimes' => 'O campo :attribute tem de ser um ficheiro .csv',
+            'csvfile.mimes' => 'O campo :attribute tem de ser um ficheiro .csv',
         ];
     }
 }

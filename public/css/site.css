@@ -2033,3 +2033,21 @@ select:-moz-focusring {
   padding-left: 2px;
   padding-right: 7px;
 }
+
+.alert {
+  width: 15%;
+  position: absolute !important;
+  top: 5px !important;
+  font-size:13px;
+}
+
+.alert ul {
+  padding: 0;
+}
+
+.closeAlert {
+  position:absolute;
+  right: 5px;
+  top: 0;
+  cursor: pointer;
+}

@@ -214,11 +214,11 @@ class DisciplinaController extends Controller
         if ($primeiro_numero != null){
             $numero = $primeiro_numero - 1;
         }
-        
+    
         $i = 1;
         $var_bool = TRUE;
         while ($var_bool == TRUE){
-            if($i <= $n_grupos){ 
+            if($i <= $n_grupos){  
                 if (Grupo::where('numero', $numero + 1)->where('projeto_id', $id)->first()== null){
                     $grupo = new Grupo;
                     $grupo->projeto_id = $id;

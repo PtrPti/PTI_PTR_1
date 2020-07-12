@@ -8,12 +8,12 @@
 
 <div class="row-add admin">
     <button id="add_button" class="add-button" data-toggle="modal" data-target="#create">Adicionar registo</button>
-    <button id="add_button" class="add-button" data-toggle="modal" data-target="#addCsvFile">Importar ficheiro</button>
+    <button id="add_button_csv" class="add-button" data-toggle="modal" data-target="#addCsvFile">Importar ficheiro</button>
 </div>
 
 <div class="search-row">
     <select name="search_departamento" id="search-departamento" class="select-input search-select" onchange="SearchInput('/searchCursos')">
-        <option value="" id="">--Selecionar departamentp--</option>
+        <option value="" id="">--Selecionar departamento--</option>
         @foreach($departamentos as $d)
             <option value="{{$d->id}}">{{$d->nome}}</option>
         @endforeach
@@ -184,5 +184,21 @@
     </div>
 </div>
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <span class="closeAlert" onclick="CloseAlert()">X</span>  
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+
+    <script>
+        function CloseAlert() {
+            $('.alert').css('display', 'none');
+        }
+    </script>
+@endif
 
 @endsection
