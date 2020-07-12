@@ -4684,7 +4684,6 @@ return array(
     'UpdateHelper\\UpdateHelper' => $vendorDir . '/kylekatarnls/update-helper/src/UpdateHelper/UpdateHelper.php',
     'UpdateHelper\\UpdateHelperInterface' => $vendorDir . '/kylekatarnls/update-helper/src/UpdateHelper/UpdateHelperInterface.php',
     'Webmozart\\Assert\\Assert' => $vendorDir . '/webmozart/assert/src/Assert.php',
-    'Webmozart\\Assert\\Mixin' => $vendorDir . '/webmozart/assert/src/Mixin.php',
     'XdgBaseDir\\Xdg' => $vendorDir . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
     'ZipStream\\Bigint' => $vendorDir . '/maennchen/zipstream-php/src/Bigint.php',
     'ZipStream\\DeflateStream' => $vendorDir . '/maennchen/zipstream-php/src/DeflateStream.php',
