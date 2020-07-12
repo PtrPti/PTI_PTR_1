@@ -52,19 +52,19 @@
                     @if(!is_null($tnf->atribuido))
                         <div class='nameUser'><span>{{ $tnf->atribuido }}</span></div>
                     @endif
-                    
+
                     <button type="button" data-toggle="dropdown" id='fich{{ $tnf->id }}' class='ficheirosbtn' aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-paperclip"></i><i class="fas fa-caret-down"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="fich{{ $tnf->id }}">
                         @foreach($ficheirosTarefas as $fich)
                             @if($fich->tarefa_id === $tnf->id)
-                                @if(is_null($fich->link) and is_null($fich->notas))
+                                @if(is_null($fich->link) and is_null($fich->notas)  and !is_null($fich->nome))
                                     <li>
                                     @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                         <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                     @endif
-                                    <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</a></li>
+                                    <a href="{{ url('/download', ['id' => $fich->id, 'local' => 'tarefa']) }}"><i class="fas fa-file"></i>{{ explode("/", $fich->nome)[2] }}</a></li>
                                 @elseif(!is_null($fich->link))
                                     @if(!is_null($fich->nome))
                                         <li>
@@ -72,7 +72,7 @@
                                             <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                         @endif
                                         <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</a></li>
-                                    @else 
+                                    @else
                                         <li>
                                         @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                             <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
@@ -89,13 +89,13 @@
                             @endif
                         @endforeach
                     </ul>
-                    
+
                 </div>
             </div>
         <?php $tarefaPai++; ?>
     @else
             <div class="divSubTarefa {{$tnf->tarefa_id}}" id="{{$tnf->id}}">
-                <div class='tarefa'>                    
+                <div class='tarefa'>
                     <label class="containerCheckbox">{{ $tnf->nome }}
                         <input type="hidden" value="">
                         @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
@@ -124,12 +124,12 @@
                         <ul class="dropdown-menu" aria-labelledby="fich{{ $tnf->id }}">
                             @foreach($ficheirosTarefas as $fich)
                                 @if($fich->tarefa_id === $tnf->id)
-                                    @if(is_null($fich->link) and is_null($fich->notas))
+                                    @if(is_null($fich->link) and is_null($fich->notas) and !is_null($fich->nome))
                                         <li>
                                         @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                             <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                         @endif
-                                        <a href="{{ url('/download', ['folder' => 'grupo', 'filename' => $fich->nome]) }}"><i class="fas fa-file"></i>{{ explode("_", $fich->nome, 2)[1] }}</a></li>
+                                        <a href="{{ url('/download', ['id' => $fich->id, 'local' => 'tarefa']) }}"><i class="fas fa-file"></i>{{ explode("/", $fich->nome)[2] }}</a></li>
                                     @elseif(!is_null($fich->link))
                                         @if(!is_null($fich->nome))
                                             <li>
@@ -137,7 +137,7 @@
                                                 <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
                                             @endif
                                             <a href="{{$fich->link}}" target="_blank"><i class="fas fa-link"></i>{{ str_limit($fich->nome, $limit = 25, $end = '...') }}</a></li>
-                                        @else 
+                                        @else
                                             <li>
                                             @if (Auth::user()->isAluno() && $projeto->data_fim >= date('Y-m-d H:i:s'))
                                                 <i class="remove fas fa-times-circle" onclick="remover('tarefa',{{ $fich->id }},{{ $grupo->id }})"></i>
@@ -155,7 +155,7 @@
                             @endforeach
                         </ul>
                     </div>
-                    
+
                 </div>
             </div>
             @if(Session::has('search'))
@@ -280,7 +280,7 @@
                                 <label for="typeAddTarefa" class="labelTextModal">{{ __('change.criar_adicionar') }}</label>
                             </div>
                         </div>
-                        
+
                         <div id="modalT-1" class="modal-tab"><!-- Nota -->
                             <div class="row group">
                                 <div class="col-md-12">
@@ -342,7 +342,7 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                                 </div>
                             </div>
-                        </div>                     
+                        </div>
                     </form>
                 </div>
             </div>
@@ -368,7 +368,7 @@
                     @else
                         <input type="hidden" name="grupo_id" id="grupo_id" value="{{$grupo->id}}">
                     @endif
-                    
+
                     <!-- <div id="editT-1" class="modal-tab"> -->
                         <div class="row group">
                             <div class="col-md-6">
@@ -425,12 +425,12 @@
 
 <script>
     $(document).ready(function(){
-    
+
         $('.ficheirosTarefa').each(function() {
             if($(this).find( "li" ).length == 0 ){
                 $(this).children('button').hide();
             }
-        });     
+        });
 
         $(".addToTarefa").click(function(){ // Click to only happen on announce links
             $('.modal-tab').css('display', 'none');
@@ -452,7 +452,7 @@
             $(element).css('visibility', 'hidden');
         }
     });
-    
+
     $('.open-subTask').click(function() {
         if($(this).hasClass('fa-chevron-circle-down')) {
             $(this).removeClass('fa-chevron-circle-down');
@@ -563,13 +563,13 @@
                 $("#membro_" + data.membro).prop('selected', true);
                 if (data.membro != null) {
                     $("#editTarefaForm #membro").addClass('used');
-                } 
+                }
                 else {
                     $("#membro_0").prop('selected', true);
                 }
 
                 $("#assoc_" + data.tarefaAssoc).prop('selected', true);
-                if (data.tarefaAssoc != null){                    
+                if (data.tarefaAssoc != null){
                     $("#editTarefaForm #tarefaAssociada").addClass('used');
                 }
                 else {

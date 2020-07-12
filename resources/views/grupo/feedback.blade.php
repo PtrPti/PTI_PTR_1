@@ -42,13 +42,13 @@
                                     <!-- <span class="hida">Escolher ficheiros</span> -->
                                     <p class="multiSel">
                                         {{ __('change.escolherFicheirosFeedback') }}
-                                        
+
                                     </p>
                                     <div class="multiSelect">
                                         <ul>
                                             @foreach($feedFicheiros as $ff)
                                                 <li>
-                                                    <input class="{{$ff->tipo}}" id="{{$ff->id}}" type="checkbox" name="file" value="{{$ff->id}}" />{{ explode("_", $ff->nome, 2)[1] }}
+                                                    <input class="{{$ff->tipo}}" id="{{$ff->id}}" type="checkbox" name="file" value="{{$ff->id}}" />{{ explode("/", $ff->nome)[2] }}
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -93,7 +93,7 @@
             var text = $(this).parent().text();
             var tipo = $(this)[0].className;
             var id = $(this)[0].id;
-            
+
             var files = $('.multiSel span').length;
 
             if (!$(this).is(':checked')) {

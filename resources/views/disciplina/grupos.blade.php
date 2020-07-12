@@ -1,5 +1,5 @@
 <div class="back-links">
-    
+
     <a href="#" onclick="changeTab(1)">Pág. Inicial</a> > <b><span class="breadcrum"></span></b> @isset($projeto)<span> - Termina em: {{ $projeto->data_fim }}</span>@endisset
 </div>
 
@@ -19,8 +19,8 @@
     @isset($projFicheiros)
         <ul class="grupoFiles">
             @foreach($projFicheiros as $ficheiro)
-                @if(is_null($ficheiro->link))
-                    <li><i class="fas fa-file"></i><a href="{{ url('/download', ['folder' => 'projeto', 'filename' => $ficheiro->nome]) }}">{{ explode("_", $ficheiro->nome, 2)[1] }}</a></li>
+                @if(is_null($ficheiro->link) and !is_null($ficheiro->nome))
+                    <li><i class="fas fa-file"></i><a href="{{ url('/download', ['id' => $ficheiro->id, 'local' => 'projeto']) }}">{{ explode("/", $ficheiro->nome)[2] }}</a></li>
                 @else
                     @if(is_null($ficheiro->nome))
                         <li><i class="fas fa-link"></i><a href="{{$ficheiro->link}}" target="_blank">{{ str_limit($ficheiro->link, $limit = 20, $end = '...') }}</a></li>
@@ -95,7 +95,7 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: inline-block !important">{{ __('change.fechar') }}</button>
                                     </div>
                                 </div>
-                            </div>                      
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -109,8 +109,8 @@
         @isset($projeto)
             @if($projeto->data_fim >= date('Y-m-d H:i:s'))
                 @if (Auth::user()->isProfessor())
-                    <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id?>, 1)"><i class="fas fa-plus"></i> {{ __('change.adicionarGrupo') }} </button>
-                    <button type="button" class="add-button" data-toggle="modal" data-target="#addGrupo"><i class="fas fa-plus"></i> {{ __('change.adicionarmGrupo') }}</button>            
+                    <button type="button" class="add-button" onclick="AddGrupo(<?php echo $projeto->id ?>, 1)"><i class="fas fa-plus"></i> {{ __('change.adicionarGrupo') }} </button>
+                    <button type="button" class="add-button" data-toggle="modal" data-target="#addGrupo"><i class="fas fa-plus"></i> {{ __('change.adicionarmGrupo') }}</button>
 
                     <div class="modal fade" id="addGrupo" tabindex="-1" role="dialog" aria-labelledby="addGrupo" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -133,17 +133,12 @@
                                                 <span class="highlight"></span>
                                                 <span class="bar"></span>
                                                 <label for="n_grupos" class="labelTextModal">{{ __('change.numGrupos') }}</label>
-
-                                                <input type="number" name="primeiro_numero" min="1" value="0" class="display-input" id="primeiro_numero" style="margin-top: 30px;">
-                                                <span class="highlight"></span>
-                                                <span class="bar"></span>
-                                                <label for="primeiro_numero" class="labelTextModal">{{ __('change.primeiroGrupo') }}</label>
                                             </div>
                                         </div>
                                         <div class="row row-btn">
                                             <div class="col-md-12">
                                                 <button type="button" class="btn btn-primary" onclick="Save('addMultGrupos', '/addGrupo')">{{ __('change.criar') }}</button>
-                                                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('change.fechar') }}</button> -->
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('change.fechar') }}</button>
                                             </div>
                                         </div>
                                     </form>
@@ -198,8 +193,8 @@
                     </td>
                     <td>{{$grupo->total_membros}} / {{$projeto->n_max_elementos}}</td>
                     <td>{{$grupo->elementos}}</td>
-                    <td>            
-                        <?php 
+                    <td>
+                        <?php
                             if ($pertenceGrupo != NULL) {
                                 if($grupo->id == $pertenceGrupo->grupo_id) {
                                     echo "<button type='button' class='buttun_group' onclick='removeUser($grupo->id, $projeto->id)'>Sair do Grupo</button>", csrf_field();
@@ -207,7 +202,7 @@
                                 else {
                                     echo " ";
                                 }
-                                $inGroup = True; 
+                                $inGroup = True;
                             }
                             else {
                                 if($grupo->total_membros == $projeto->n_max_elementos) {
@@ -217,7 +212,7 @@
                                 else {
                                     echo "<button type='button' class='buttun_group' onclick='addUser($grupo->id, $projeto->id)'>Entrar No Grupo</button>", csrf_field();
                                 }
-                            }            
+                            }
                         ?>
                     </td>
                 </tr>
@@ -247,14 +242,14 @@
             type: 'POST',
             dataType: 'json',
             success: 'success',
-            data: {'projeto_id': id, 'n_grupos': grupos, 'entrar': entrar, 'primeiro_numero': null,'cadeira_id': <?php if (isset($projeto)) echo $projeto->cadeira_id; else echo 0;?>, "_token": "{{ csrf_token() }}"},
+            data: {'projeto_id': id, 'n_grupos': grupos, 'entrar': entrar, 'cadeira_id': <?php if (isset($projeto))echo $projeto->cadeira_id ?>},
             success: function(data) {
                 ShowGrupos(id);
                 AddGritter('Sucesso', '<span class="gritter-text">Grupo criado com sucesso</span>', 'success');
             }
         });
     }
-    
+
     function DeleteGroup(id) {
         if (confirm('Tem a certeza que deseja apagar o grupo ?')) {
             $.ajax({
@@ -284,7 +279,7 @@
             });
         }
     }
-    
+
     function addUser(grupo_id) {
         $.ajax({
             url: '/addUser',

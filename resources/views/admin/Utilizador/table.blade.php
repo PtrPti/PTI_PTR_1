@@ -37,6 +37,14 @@
     </tbody>
 </table>
 
+<div class="row-btn">
+    <form action="/exportExcel" method="GET" name="excel" id="excel">
+        <input type="hidden" name="table" value="" id="excelData">
+        <input type="hidden" name="title" value="Utilizadores">
+        <button type="submit" onclick="exportExcel()">Exportar excel <i class="fas fa-file-excel"></i></button>
+    </form>
+</div>
+
 @if(isset($cudepartamentorso) || isset($curso) || isset($perfil))
     {{$users->appends(['campos' => ['departamento' => $departamento, 'curso' => $curso, 'perfil' => $perfil]])->links()}}
 @else

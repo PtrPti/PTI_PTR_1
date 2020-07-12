@@ -47,17 +47,12 @@
     </div> -->
     <!-- <span class="notifNum">2</span> -->
 
-    <div class="languages">
-        
-        <ul class="navbar-nav mr-auto">
-            
-                <li class="nav-item ">
-                
+    <div class="languages">        
+        <ul class="navbar-nav mr-auto">            
+                <li class="nav-item ">                
                     <a class="pt" href="{{ url('locale/PT') }}" ><img src="{{ asset('images/pt.png') }}" width=29px ></a>
                     <a class="en" href="{{ url('locale/EN') }}" ><img src="{{ asset('images/uk.png') }}" width=29px ></a>
-                </li>
-
-           
+                </li>           
         </ul>
     </div>
 
@@ -70,9 +65,12 @@
             </li>
 
             <li class="navsidebar-text">
-                <img class="img_profile" src="/images/{{ Auth::user()->avatar }}" width=37px style=" border-radius: 50%; margin-right:10px;">
+                @if (Auth::user()->avatar ==null)
+                    <img class="img_profile" src="{{Storage::disk('s3')->url('images/default.png')}}" width=37px style=" border-radius: 50%; margin-right:10px;">
+                @else
+                    <img class="img_profile" src="{{Storage::disk('s3')->url(Auth::user()->avatar)}}" width=37px style=" border-radius: 50%; margin-right:10px;">
+                @endif
                 <span>{{ __('change.ola') }}, {{Auth::user()->getUserName()}}</span>
-                
             </li>
 
             @if (!Auth::user()->isAdmin())

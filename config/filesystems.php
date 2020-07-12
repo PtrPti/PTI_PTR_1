@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+    'cloud' => env('arn:aws:s3:::uploadedfileswegroup', 's3'),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,10 +57,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_KEY'),
-            'secret' => env('AWS_SECRET'),
-            'region' => env('AWS_REGION'),
-            'bucket' => env('AWS_BUCKET'),
+            'key' => 'AKIAJRD3OVZYYJAXNPYA',
+            'secret' => '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',
+            'region' => 'eu-west-3',
+            'bucket' => 'uploadedfileswegroup',
         ],
 
     ],

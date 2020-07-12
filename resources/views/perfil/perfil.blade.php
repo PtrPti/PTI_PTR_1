@@ -2,10 +2,8 @@
 
 @section('content')
 
-<div class="row-title breadcrums">
-    
-    
-    <img class="img_profile" src="/images/{{ $user_info->avatar }}" width=10% style="position:fixed;  left:350px; border-radius: 50%;">
+<div class="row-title breadcrums">    
+    <img class="img_profile" src="{{ $avatar }}" width=10% style="position:fixed;  left:270px; border-radius: 50%;width: 300px;height: auto;">
     <h2 class="nome_profile">{{Auth::user()->getUserName()}}</h2>
     <!-- <button class="btn btn-primary btn_perfil">{{ __('change.mudarImagemPerfil') }}</button> -->
 
@@ -21,16 +19,11 @@
         @if (Auth::user()->isProfessor())
             <h5 class="t1">{{ __('change.estatuto') }}: {{ __('change.professor') }} </h5>
             <h5 class="tnum">{{ __('change.numDocente') }}: {{$user_info->numero}} </h5>
-
         @else
             <h5 class="t1">{{ __('change.estatuto') }}: {{ __('change.aluno') }} </h5>
-            <h5 class="tnum">{{ __('change.numeroAluno') }}: {{$user_info->numero}} </h5>
-                
+            <h5 class="tnum">{{ __('change.numeroAluno') }}: {{$user_info->numero}} </h5>                
         @endif
-
 </div>
-
-
 
 <div class="nav-tabs_perfil">
     @if (Auth::user()->isAluno())
@@ -41,17 +34,14 @@
         @else 
         <div class="tab_perfil tab_perfil-active" id="tab_perfil1" onclick="changeTab_perfil(1)">{{ __('change.sobre') }}</div>
         <div class="tab_perfil" id="tab_perfil2" onclick="changeTab_perfil(3)"> {{ __('change.gerirConta') }} </div>
-    @endif
-    
+    @endif    
 </div>
-
 
 <div class="tab-container_perfil" id="tab_perfil-1">
     <h5 class="t2">{{ __('change.disciplinas') }}: </h5>
         @foreach($disciplinas as $disciplina)
-        <a href="{{route('disciplina', ['id' => $disciplina->id])}}" class="t3"><ul> {{$disciplina->nome}} </ul></a>
+            <a href="{{route('disciplina', ['id' => $disciplina->id])}}" class="t3"><ul> {{$disciplina->nome}} </ul></a>
         @endforeach
-
 </div>
 
 <div class="tab-container_perfil" id="tab_perfil-2">
@@ -59,8 +49,7 @@
         <thead class="table-success" style="text-align:center;">
             <tr>
                 <th >Projetos</th>
-                <th>Avaliação Atribuída</th>
-                
+                <th>Avaliação Atribuída</th>                
             </tr>
 	    </thead>
         <tbody style="text-align:center;">
@@ -68,7 +57,7 @@
             @foreach($projetos_avaliacao as $pa)
                 <td >  {{$pa->nome}}</td>
                 <td> {{$media}} </td> 
-                @endforeach   
+            @endforeach   
             </tr>
         </tbody>
     </table>
@@ -81,8 +70,7 @@
         <h3 style="text-align:center; color: #636b6f;padding: 0 35px;font-size: 13px;font-weight: 600;letter-spacing: .1rem;text-decoration: none;text-transform: uppercase;">
         {{ __('change.gerirConta') }}</h3>
 
-        <table class="tablePerfil">
-           
+        <table class="tablePerfil">           
             <tr>
                 <td class="primeira_coluna_perfil">{{ __('change.nome') }}</td>
                 <td>{{$user_info->nome}}</td>
@@ -100,9 +88,7 @@
             </tr>
         </table>
 
-        <!-- Modal verde -->
-
-        
+        <!-- Modal verde -->        
         <div id="Nome" class="modal">
             <div  class="modal-content" id="changeUser">
                 <div class="modal-header">
