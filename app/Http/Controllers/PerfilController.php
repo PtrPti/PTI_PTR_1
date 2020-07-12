@@ -149,16 +149,17 @@ class PerfilController extends Controller
 
     	// Handle the user upload of avatar
     	if($request->hasFile('avatar')){
-        $s3= Storage::disk("s3");
-        $s3->delete(Auth::user()->avatar);
-    		$avatar = $request->file('avatar');
+            $s3= Storage::disk("s3");
+            if(Auth::user()->avatar != 'images/default.png') {
+                $s3->delete(Auth::user()->avatar);
+            }
+            $avatar = $request->file('avatar');
 
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
             $s3filepath = "images/" . $filename;
-        $path= $s3 -> putFileAs('images', $avatar, $filename, 'public' );
+            $path= $s3 -> putFileAs('images', $avatar, $filename, 'public' );
 
-
-        //Image::make()->resize(300, 300);
+            //Image::make()->resize(300, 300);
     		$user = Auth::user();
     		$user->avatar = $path;
     		$user->save();
