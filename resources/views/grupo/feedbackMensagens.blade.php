@@ -31,12 +31,28 @@
             </div>
         </div>
     @endif
-    @if(($feedback->mensagem_grupo == null || $feedback->mensagem_grupo == "") && $projeto->data_fim >= date('Y-m-d H:i:s'))
+    @if(($feedback->mensagem_grupo != null || $feedback->mensagem_grupo == "") && $projeto->data_fim >= date('Y-m-d H:i:s'))
         <div class="type_msg">
             <div class="input_msg_write">
                 <input type="text" class="write_msg" placeholder="Type a message" />
-                <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                <button class="msg_send_btn" type="button" onclick="AddCreateFeedback({{ $feedback->id }})"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>
     @endif
 </div>
+
+<script>
+    function AddCreateFeedback(id) {
+        $.ajax({
+            url: '/addMensagemFeedbackDocente',
+            type: 'POST',
+            dataType: 'json',
+            success: 'success',
+            data: {'id': id},
+            success: function(data) {
+                $("#ModalFeedback p" ).text(data.message);
+                $("#ModalFeedback").show();
+            }
+        });
+    }
+</script>
