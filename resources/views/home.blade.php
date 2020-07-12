@@ -98,8 +98,9 @@
           if ($('#terminados').is(":checked")){
             $('#terminados').checked = true;
           }
-          console.log(data.html)
-          $("#grupos").replaceWith(data.html);
+          console.log(data.html);
+          $("#grupos").empty();
+          $("#grupos").html(data.html);
         }
       });
     }

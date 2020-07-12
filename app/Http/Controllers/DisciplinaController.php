@@ -179,7 +179,8 @@ class DisciplinaController extends Controller
                                     on ug.user_id = u.id
                                 where g.projeto_id = (?)
                                 group by
-                                    g.id, g.numero, 'total_membros', 'elementos'", [$id]);
+                                    g.id, g.numero, 'total_membros', 'elementos'
+                                order by g.numero", [$id]);
                                     
         $pertenceGrupo = UsersGrupos::join('grupos', 'users_grupos.grupo_id', '=', 'grupos.id')
                                     ->where('grupos.projeto_id', $id)
@@ -213,32 +214,28 @@ class DisciplinaController extends Controller
         if ($primeiro_numero != null){
             $numero = $primeiro_numero - 1;
         }
-
-        // for ($i = 1; $i <= $n_grupos; $i++, $numero++) {
-        //     $grupo = new Grupo;
-        //     $grupo->projeto_id = $id;
-        //     $grupo->numero = $numero + 1;
-        //     $grupo->save();
-            
-        //     if($entrar == "true") {                
-        //         UsersGrupos::insert(["user_id" => $user->id, "grupo_id" => $grupo->id]);
-        //     }
+        
         $i = 1;
-        while ($i <= $n_grupos) {
-            if (Grupo::where('numero', $numero + 1)->where('projeto_id', $id)->first() == null){
-                $grupo = new Grupo;
-                $grupo->projeto_id = $id;
-                $grupo->numero = $numero + 1;
-                $grupo->save();
-                
-                if($entrar == "true") {                
-                    UsersGrupos::insert(["user_id" => $user->id, "grupo_id" => $grupo->id]);
+        $var_bool = TRUE;
+        while ($var_bool == TRUE){
+            if($i < $n_grupos){ 
+                if (Grupo::where('numero', $numero + 1)->where('projeto_id', $id)->first()== null){
+                    $grupo = new Grupo;
+                    $grupo->projeto_id = $id;
+                    $grupo->numero = $numero + 1;
+                    $grupo->save();
+                    
+                    if($entrar == "true") {                
+                        UsersGrupos::insert(["user_id" => $user->id, "grupo_id" => $grupo->id]);
+                    }
+                    $i ++;
+                    $numero ++;
+                }else{
+                    $i --;
+                    $numero ++;
                 }
-                $i ++;
-                $numero ++;
             }else{
-                $i --;
-                $numero ++;
+                $var_bool = FALSE;
             }
         }
 
