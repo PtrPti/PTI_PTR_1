@@ -217,6 +217,7 @@ class DisciplinaController extends Controller
     
         $i = 1;
         $var_bool = TRUE;
+        error_log($n_grupos);
         while ($var_bool == TRUE){
             if($i <= $n_grupos){  
                 if (Grupo::where('numero', $numero + 1)->where('projeto_id', $id)->first()== null){
@@ -228,10 +229,9 @@ class DisciplinaController extends Controller
                     if($entrar == "true") {                
                         UsersGrupos::insert(["user_id" => $user->id, "grupo_id" => $grupo->id]);
                     }
-                    $i ++;
+                    $i++;
                     $numero ++;
                 }else{
-                    $i --;
                     $numero ++;
                 }
             }else{

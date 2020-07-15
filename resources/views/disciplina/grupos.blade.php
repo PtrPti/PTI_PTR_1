@@ -134,7 +134,7 @@
                                                 <span class="bar"></span>
                                                 <label for="n_grupos" class="labelTextModal">{{ __('change.numGrupos') }}</label>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-12" style="margin-top: 15px;">
                                                 <input type="number" name="primeiro_numero" min="1" max="50" value="0" class="display-input" id="n_grupos">
                                                 <span class="highlight"></span>
                                                 <span class="bar"></span>
