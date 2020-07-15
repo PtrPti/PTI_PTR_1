@@ -22,7 +22,7 @@ class CadeirasTableSeeder extends Seeder
             ['nome' => 'Introdução às Tecnologias Web', 'codigo' => '8', 'ano' => '1', 'active' => '1'],
             ['nome' => 'Redes de Computadores', 'codigo' => '9', 'ano' => '1', 'active' => '1'],
             ['nome' => 'Base de Dados', 'codigo' => '10', 'ano' => '2', 'active' => '1'],
-            ['nome' => 'Fundamentos e Técnincas de Visualização', 'codigo' => '11', 'ano' => '2', 'active' => '1'],
+            ['nome' => 'Fundamentos e Técnicas de Visualização', 'codigo' => '11', 'ano' => '2', 'active' => '1'],
             ['nome' => 'Interação com Computadores', 'codigo' => '12', 'ano' => '2', 'active' => '1'],
             ['nome' => 'Programação Centrada em Objetos', 'codigo' => '13', 'ano' => '2', 'active' => '1'],
             ['nome' => 'Sistemas Operativos', 'codigo' => '14', 'ano' => '2', 'active' => '1'],
